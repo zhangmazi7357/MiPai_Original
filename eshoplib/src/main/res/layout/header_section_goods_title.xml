@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--二手物品商品 标题 section header-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#efefef"
+        android:gravity="center_vertical"
+        android:id="@+id/tv_title"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

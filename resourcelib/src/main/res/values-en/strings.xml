@@ -1,0 +1,414 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="SelectLanguage">Select Language</string>
+    <string name="Confirm">Confirm</string>
+
+    <string name="Login_Registration">Log in / Registration</string>
+    <string name="Login">Log in</string>
+    <string name="LoginwithMobileNo">Log in with Mobile No.</string>
+    <string name="Loginwith_EmailAddress">Log in with E-mail Address</string>
+    <string name="LoginwithWechat">Log in with Wechat</string>
+    <string name="Registration">Registration</string>
+    <string name="RegisterwithMobileNo">Register with Mobile No.</string>
+    <string name="RegisterwithEmailAddress">Register with E-mail Address</string>
+    <!--手机号登录-->
+    <string name="EnterPassword">Enter Password</string>
+    <string name="ForgotPassword">Forgot Password</string>
+    <!--手机号注册-->
+    <string name="RegisterwithMobileNo.">Register with Mobile No.</string>
+    <string name="MobileNo.">Mobile No.</string>
+    <string name="CNMobileonly">CN Mobile only</string>
+    <string name="SendSMScode">Send SMS code</string>
+    <string name="SMSCode">SMS Code</string>
+    <string name="SendSMSCode">Send SMS Code</string>
+    <string name="Password">Password</string>
+    <string name="EnterNewPassword">Enter New Password(6-20 characters)</string>
+    <string name="Change_Mobile">Change Mobile</string>
+    <string name="CN_Mobile_Only">CN Mobile only</string>
+    <!--绑定账号-->
+    <string name="Link_Mobile">Link Mobile</string>
+    <string name="Link_Email">Link E-mail</string>
+    <string name="CN_Mobile_only">CN Mobile only</string>
+    <string name="Enter_Email">Enter E-mail</string>
+    <!--输入手机号未注册-->
+    <string name="Cancel">Cancel</string>
+    <string name="Notregisteredyet">Not registered yet,register now?</string>
+    <!--忘记密码（手机号）-->
+    <string name="NewPassword">NewPassword</string>
+    <!--修改密码-->
+    <string name="UpdatePhonePassword">Change password with mobile number</string>
+    <string name="UpdateEmailPassword">Change password with E-mail</string>
+    <!--密码设置-->
+    <string name="SetPassword">Password Settings</string>
+    <!--邮箱登录-->
+    <string name="Email">E-mail</string>
+    <string name="EnterEmailAddress">Enter E-mail Address</string>
+    <string name="EmailNotregisteredyet">Not registered yet,register now?</string>
+    <string name="Change_Email">Change E-mail</string>
+    <!--忘记密码（邮箱）-->
+    <string name="EmailCode">Email Code</string>
+    <string name="EnterEmailCode">Enter E-mail Code</string>
+    <!--首页-->
+    <string name="Rent">Rent</string>
+    <string name="SecondhandGoods">Second-hand Goods</string>
+    <string name="AgentInformation">Agent Information</string>
+    <string name="NoticeBoard">Notice Board</string>
+    <string name="Beijing">Beijing</string>
+    <string name="Explorelist">一 Explore 一</string>
+    <string name="Homepage">Homepage</string>
+    <string name="Explore">Explore</string>
+    <string name="OnlineMall">Online Mall</string>
+    <string name="MyAccount">MyAccount</string>
+    <!--选择定位城市-->
+    <string name="SelectCity">Select City</string>
+    <string name="RealtimeLocation">Real-time Location</string>
+    <string name="OtherPopularCity">Other Popular City</string>
+
+    <!--完善资料-->
+    <string name="CompletePersonalInformatiom">Complete Personal Informatiom</string>
+    <string name="Skip">Skip</string>
+    <string name="Nickname">Nickname</string>
+    <string name="EnterNicknamecharacters16">Enter Nickname（1-16 characters）</string>
+    <string name="EnterNicknamecharacters">Enter Nickname</string>
+    <string name="Gender">Gender</string>
+    <string name="PleaseSelect">Please Select</string>
+    <string name="DateofBirth">Date of Birth</string>
+    <string name="PleaseSelectDateofBirth">Please Select Date of Birth</string>
+    <string name="Finish">Finish</string>
+    <string name="Current_Mobile_is">Your current Mobile Number is</string>
+    <string name="Current_Email_is">Your E-mail is</string>
+    <string name="phone_long_message">"Please log in with new mobile number next time. Your personal data will not be changed"</string>
+    <string name="email_long_message">"Please log in with new E-mail address next time.Your personal data will not be changed"</string>
+    <!--租房（选择区域）-->
+    <string name="ChooseArea">Choose Area</string>
+    <!--房源列表-->
+    <string name="EnterDistrictAddressorresidencename">Enter District, Address or residence\'s name</string>
+    <string name="Roomtype">Room type</string>
+    <string name="Rental">Rental</string>
+    <string name="Source">Type of house</string>
+    <string name="Facilitiesby">Facilities by</string>
+    <string name="RightNow">Right Now</string>
+    <string name="Apartmentsintotal2">Apartments in total %1$s</string>
+    <string name="Onebedroom">One bedroom</string>
+    <string name="Month">Month</string>
+    <string name="Releaseyourrequirements">Release your requirements</string>
+    <!--搜索-->
+    <string name="SearchHistory">Search History</string>
+    <string name="ClearAll">Clear All</string>
+    <!--筛选（来源）-->
+    <string name="Allsources">All sources</string>
+    <string name="Individual">Individual</string>
+    <string name="Apartments">Apartments</string>
+    <!--筛选（户型）-->
+    <string name="Allroomtypes">All room types</string>
+    <string name="Twobedroom">Two bedroom</string>
+    <string name="Threebedroom">Three bedroom</string>
+    <string name="Fourbedroom">Four bedroom</string>
+    <string name="Fivebedroom">Five bedroom</string>
+    <!--筛选（租金）-->
+    <string name="Nolimit">No limit</string>
+    <string name="Lessthan500RMB">Less than 500 RMB</string>
+    <string name="RMB500_1000">500-1,000 RMB</string>
+    <string name="RMB1000_2000">1,000-2,000 RMB</string>
+    <string name="RMB2000_3000">2,000-3,000 RMB</string>
+    <string name="RMB3000_5000">3,000-5,000 RMB</string>
+    <string name="RMB5000_8000">5,000-8,000 RMB</string>
+    <!--筛选（周边配套）-->
+    <string name="Hospital">Hospital</string>
+    <string name="Conveniencestore">Convenience store</string>
+    <string name="School">School</string>
+    <string name="Kindergarten">Kindergarten</string>
+    <string name="Clear">Clear All</string>
+    <!--发布租房意向-->
+    <string name="Requirements">Requirements</string>
+    <string name="Submit">Submit</string>
+    <string name="Name">Name</string>
+    <string name="PleaseEnterName">Please Enter</string>
+    <string name="PleaseEnterEmail">Please Enter</string>
+    <string name="Enter_Email2">Enter E-mail</string>
+    <string name="MobileNumber">Mobile Number</string>
+    <string name="PleaseEnterMobileNo">Please Enter</string>
+    <string name="Budget">Budget</string>
+    <string name="PleaseSelectBudget">Please Select</string>
+    <string name="Area">Area</string>
+    <string name="PleaseSelectArea">Please Selec</string>
+    <string name="PleaseSelectRoomType">Room Type</string>
+    <string name="Moveintime">Move in time</string>
+    <string name="PleaseSelectMoveintime">Please Select</string>
+    <string name="Numberofresidents">Number of residents</string>
+    <string name="PleaseSelectNumberofresidents">Please Select</string>
+    <string name="Pet">Pet</string>
+    <string name="PleaseSelectpet">Please Select </string>
+    <string name="IntentionDescription">Intention Description</string>
+    <string name="Favorite">Favorite</string>
+    <string name="otherRequire">Please let us know, if you have any other requirement</string>
+    <string name="hasPet">Yes</string>
+    <string name="noPet">No</string>
+    <string name="Singleoccupancy">Single occupancy</string>
+    <string name="Onepeoplefamilyormore">1 people family or more</string>
+    <string name="Twopeoplefamilyormore">2 people family or more</string>
+    <string name="Threepeoplefamilyormore">3 people family or more</string>
+    <string name="Fourpeoplefamilyormore">4 people family or more</string>
+    <string name="HouseDetails">Details</string>
+    <string name="SupportingService">Supporting Service</string>
+    <string name="NearbyFacililty">Nearby Facililty</string>
+    <string name="Transportation">Transportation</string>
+    <string name="Map">Map</string>
+    <string name="Roomtype2">Room Type</string>
+    <string name="RoomSize">Area</string>
+    <string name="Direction">Direction</string>
+    <string name="Floor">Floor</string>
+    <string name="Builtin">Built in</string>
+    <string name="Payment">Payment</string>
+    <!--时间相关-->
+    <string name="justnow">just now</string>
+    <string name="secondsago"> seconds ago</string>
+    <string name="halfminutesago">half minutes ago</string>
+    <string name="minutesago"> minutes ago</string>
+    <string name="hoursago"> hours ago</string>
+    <string name="yestday">yestday</string>
+    <string name="daysago"> days ago</string>
+    <string name="weeksago"> weeks ago</string>
+    <string name="lastmonth">last month</string>
+    <string name="monthsago"> months ago</string>
+    <string name="halfyear">half year ago</string>
+    <!--二手物品-->
+    <string name="classification">classification</string>
+    <string name="Price">Price</string>
+    <string name="Condition">Condition</string>
+    <string name="All">All</string>
+    <string name="Releasesecondhandgoods">Release second-hand goods</string>
+    <string name="Pleaseenterthenameoftheitem">Please enter the name of the item</string>
+    <string name="ProductDescription">Product Description</string>
+    <string name="Delete">Delete</string>
+    <string name="Replay">Replay</string>
+    <string name="Release">Release</string>
+    <string name="come">come</string>
+    <string name="Area2">Area</string>
+    <string name="WriteComments">Write Comments...</string>
+    <string name="goodsName">name</string>
+    <string name="UploadImages">Upload Images</string>
+    <string name="ReleaseCity">Release City</string>
+    <string name="Max9Pics">(Max. 9 Pics)</string>
+    <string name="PleaseSelectReleaseArea">Please Select</string>
+    <string name="PleaseSelectClassic">Please Select</string>
+    <string name="PleaseSelectCondition">Please Select</string>
+    <string name="PleaseEnterPrice">Please Enter</string>
+    <string name="MyRelease">My Release</string>
+    <string name="Myintention">My intention</string>
+    <string name="Myactivity">My activity</string>
+
+    <string name="Coupons">Coupons</string>
+    <string name="MyOrder">My Order</string>
+    <string name="Viewallorders">View all orders</string>
+    <string name="Topay">To pay"</string>
+    <string name="Tosend">To send</string>
+    <string name="Toreceive">To receive</string>
+    <string name="Toevaluate">To evaluate</string>
+    <string name="CustomerService">Customer Service</string>
+    <string name="ApplyforCooperation">Apply for Cooperation</string>
+    <string name="Tolet">To let</string>
+    <string name="Setupnewshop">Set up new shop</string>
+    <string name="Undertaking">Undertaking</string>
+    <string name="Partnership">Partnership</string>
+    <string name="Mainimage">Main image</string>
+    <!--我的消息-->
+    <string name="Mymessage">My message</string>
+    <string name="Systemmessage">System message</string>
+    <string name="OrderMessage">Order Message</string>
+    <string name="Replymessage">Reply message</string>
+    <string name="Messagedetails">Message details</string>
+    <string name="Issueanapplication">Issue an application</string>
+    <string name="SubmitAgencyApplication">Submit Agency Application</string>
+    <string name="Detailedinformationofagency">Detailed information of agency</string>
+    <string name="ApplyAgency">Apply Agency</string>
+    <!--我的-->
+    <string name="resources">resources</string>
+    <string name="Product">Product</string>
+    <string name="Usedgoods">Used goods</string>
+    <string name="Article">Article</string>
+    <string name="Releasetime">Release time</string>
+    <string name="Available">Available</string>
+    <string name="Notavailable">Not available</string>
+    <string name="Outofstock">Out of stock</string>
+    <string name="toAvailable">Available</string>
+    <string name="toNotavailable">Not available</string>
+    <string name="toOutofstock">Out of stock</string>
+    <string name="Edit">Edit</string>
+    <string name="Not_Linked">Not Linked</string>
+    <!--设置-->
+    <string name="Settings">Settings</string>
+    <string name="ShippingAddressManagement">Shipping Address Management</string>
+    <string name="AddVATDetailsinformation">Add VAT Details  information</string>
+
+    <string name="Notadded">Not added</string>
+    <string name="FAQ">FAQ</string>
+    <string name="FeedbackHelp">Feedback and  Help</string>
+    <string name="AboutUs">About Us</string>
+    <string name="UserAgreement">User Agreement</string>
+
+    <string name="Accountandsecurity">Account and security</string>
+    <string name="Cleanupcache">Clean up cache</string>
+    <string name="Logout">Logout</string>
+    <string name="Portrait">Portrait</string>
+    <string name="PersonalInformation">Personal Information</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="Save">Save</string>
+    <!--商城-->
+    <string name="EnterProductName">Enter Product Name</string>
+    <string name="Sales">Sales</string>
+    <string name="ProductDetails">Product Details</string>
+    <string name="StandardClassification">Standard Classification</string>
+    <string name="Amount">Amount</string>
+    <string name="Allproducts">All products</string>
+    <string name="Reviews">Reviews</string>
+    <string name="Help">Help</string>
+    <string name="AddtoShoppingCart">Add to Shopping Cart</string>
+    <string name="BuyNow">Buy Now</string>
+    <string name="Stock">Stock</string>
+    <string name="Deliveryaddress">Delivery address</string>
+    <string name="Addshippingaddress">Add shipping address</string>
+    <string name="Receiver">Receiver</string>
+    <string name="PleaseEnterReceiverName">Please Enter</string>
+    <string name="DetailedAddress">Detailed Address (Chinese Only)</string>
+    <string name="Shoppingcart">Shopping cart</string>
+    <string name="Selectall">Select all</string>
+    <string name="Total">Total:</string>
+    <string name="Statement">Statement</string>
+    <string name="Specification">Specification</string>
+    <string name="ConfirmOrder">Confirm Order</string>
+    <!--订单-->
+    <string name="Invoice">Invoice</string>
+    <string name="Freight">Freight</string>
+    <string name="FreeDelivery">Free Delivery</string>
+    <string name="Messagefrombuyer">Message from buyer</string>
+    <string name="ShopTotal">Total</string>
+    <string name="Personal">Personal</string>
+    <string name="SubmitOrder">Submit</string>
+    <string name="Methodofpayment">Method of payment</string>
+    <string name="WeChatpayment">WeChat payment</string>
+    <string name="Alipaypayment">Alipay payment</string>
+    <string name="PayPal">PayPal</string>
+    <string name="Payableamount">Payable amount</string>
+    <string name="Paidinamount">Paid in amount</string>
+    <string name="ConfirmPayment">Confirm Payment</string>
+    <string name="Cartisempty">Cart is empty</string>
+    <!--表单提交，我有房源，我要开店，承接业务，其他合作-->
+    <string name="CompanyName">Company Name</string>
+    <string name="Contactaddress">Contact address</string>
+    <string name="MainProducts">Main Products</string>
+    <string name="productscount">Products Count</string>
+    <string name="PleaseEnterCompanyName">Please enter</string>
+    <string name="PleaseEnterMainProducts">Please enter</string>
+    <string name="PleaseEnterProductsCount">Please enter</string>
+    <string name="DetailedAddress2">Detailed Address</string>
+    <string name="Max4Pics">(Max. 4 Pics)</string>
+    <string name="Max2Pics">(Max. 2 Pics)</string>
+    <string name="UploadDetailsimages">Upload Details  images</string>
+    <string name="Productsdescription">Products description</string>
+    <string name="Cooperationdetails">Cooperation details</string>
+    <string name="Servicearea">Service area</string>
+    <string name="PleaseEnterCooperationdetails">PleaseEnter</string>
+    <string name="PleaseEnterServicearea">PleaseEnter</string>
+    <string name="companyintroduction">company introduction</string>
+    <string name="Houseaddress">House address</string>
+    <string name="Propertyname">Property name</string>
+    <string name="Housetype">House type</string>
+    <string name="Decoration">Decoration</string>
+    <string name="Allocation">Allocation</string>
+
+    <string name="PleaseEnterHouseaddress">Please Enter</string>
+    <string name="PleaseEnterPropertyname">Please Enter</string>
+    <string name="PleaseSelectRoomType2">Please Enter</string>
+    <string name="PleaseRoomsize">Please Enter</string>
+    <string name="pleaseSelectRoomType3">Please Enter</string>
+    <string name="pleaseEnterDecoration">Please Enter</string>
+    <string name="pleaseEnterAllocation">Please Enter</string>
+    <string name="PleaseEnterPrice2">Please Enter</string>
+
+    <string name="TaxpayerIdentificationCode">Taxpayer Identification Code</string>
+    <string name="PleaseEnterTaxpayerIdentificationCode">Taxpayer Identification Code</string>
+    <string name="Registeredaddress">Registered address</string>
+    <string name="PleaseEnterRegisteredaddress">Please Enter</string>
+    <string name="RegisteredPhoneNumber">Registered Phone Number</string>
+    <string name="PleaseEnterRegisteredPhoneNumber">Please Enter</string>
+    <string name="Bank">Bank</string>
+    <string name="PleaseEnterBank">Please Enter </string>
+    <string name="BankAccount">Bank Account</string>
+    <string name="PleaseEnterBankAccount">Please Enter</string>
+    <string name="UploadImagesBusinessLicenseorTaxpayerqualificationregistrationform">Upload Images Business License or Taxpayer qualification registration form</string>
+    <string name="VATDetailsinformation">VAT Details  information</string>
+    <string name="Pleasewaitforauditpatiently">Please wait for audit patiently</string>
+    <string name="Submittedsuccessfully">Submitted successfully</string>
+    <string name="PaymentSuccessful">Payment Successful</string>
+    <string name="ViewOrder">View Order</string>
+    <string name="EshopHomepage">Homepage</string>
+    <string name="Cancelorder">Cancel order</string>
+    <string name="Payment2">Payment</string>
+    <string name="Logistics">Logistics</string>
+    <string name="Received">Received</string>
+    <string name="review">review</string>
+    <string name="Detailsoforder">Details of order</string>
+    <string name="Ordernumber">Order number</string>
+    <string name="Createdtime">Created time</string>
+    <string name="Paymenttime">Payment time</string>
+    <string name="Deliverytime">Delivery time</string>
+    <string name="Transactiontime">Transaction time</string>
+    <string name="Logisticdetails">Logistic details</string>
+    <string name="ExpressPhone">Phone No.</string>
+    <string name="allreview">All reviews</string>
+    <array name="nice">nice</array>
+    <array name="common">common</array>
+    <array name="bad">bad</array>
+    <string name="Releasereview">Release review</string>
+    <string name="Consultation">Consultation</string>
+    <string name="Coupondetails">Coupon details</string>
+    <string name="SubmitApplicationnandPay">Submit Applicationn and Pay</string>
+    <string name="Submitapplication">Submit application</string>
+    <string name="Userinformation">User\'s information</string>
+    <string name="Numberofpeople">Number of people</string>
+    <string name="Applyforregistration">Apply for registration</string>
+    <string name="Starttime">Starttime:</string>
+    <string name="Registrationdeadline">Registration deadline:</string>
+    <string name="RegistrationdPrice">price:</string>
+    <string name="EventDetails">Event Details</string>
+    <string name="ConfirmCancellationandRefund">Confirm Cancellation and Refund</string>
+    <string name="Alreadysignedup">Already signed up</string>
+    <string name="Cancelsign">Cancel</string>
+    <string name="ViewRefundProcess">View Refund Process</string>
+    <string name="Haveapplied">Have applied</string>
+    <string name="Apply">Apply</string>
+    <string name="Applyforreturningpurchase">Apply for returning purchase</string>
+    <string name="addlogistics">add logistics</string>
+    <string name="seeLogistics">Logistics</string>
+    <string name="Refundprocess">Refund process</string>
+    <string name="RefundAmount">Refund Amount</string>
+    <string name="Paymentamount">Payment amount</string>
+    <string name="Deducthandlingfee">Deduct handling fee</string>
+    <string name="RefundActual">Refund Actual</string>
+    <string name="RefundNote">Refund Note</string>
+    <string name="RefundID">Refund ID</string>
+    <string name="RefundReason">Refund Reason</string>
+    <string name="GoodsRefundNote">Refund Note</string>
+    <string name="EnterReturnNote">Enter Return Note</string>
+    <string name="UploadImagesforReturnGoods">Upload Images</string>
+    <string name="InvoiceType">Invoice Type</string>
+    <string name="Invoiceinformation">Invoice information</string>
+    <string name="Instruction">Instruction</string>
+    <string name="PaperInvoice">Paper Invoice</string>
+    <string name="VATInvoice">VAT Invoice</string>
+    <string name="InvoiceTitle">Invoice Title</string>
+    <string name="Company">Company"</string>
+    <string name="Details">Details</string>
+    <string name="EnterCompanyName">Enter Company Name</string>
+    <string name="Feedbackcontent">Feedback content</string>
+    <string name="PleaseEnterFeedbackcontent">Please Enter Feedback content</string>
+    <string name="payoff">是否可议价</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="sell">sell</string>
+
+
+
+
+</resources>

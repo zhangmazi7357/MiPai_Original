@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.hym.eshoplib.widgets.SlideDetailsLayout
+            android:id="@+id/sv_switch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:id="@+id/sv_goods_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="10dp"
+                             />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/iv_avatar"
+                            android:layout_toRightOf="@id/iv_avatar"
+                            android:text="华谊兄弟传媒工作室"
+                            android:textColor="@color/black" />
+
+                        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/ratingbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_name"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/iv_avatar"
+                            android:isIndicator="true"
+                            android:maxHeight="18dp"
+                            android:minHeight="18dp"
+                            android:rating="5"
+                            app:mrb_progressBackgroundTint="#f9b743"
+                            app:mrb_progressTint="#f9b743"
+                            app:mrb_secondaryProgressTint="#f9b743" />
+
+                        <TextView
+                            android:id="@+id/tv_years"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/iv_avatar"
+                            android:layout_toRightOf="@id/iv_avatar"
+                            android:text="从业时间：5年"
+                            android:textColor="@color/mipaiTextColorNormal"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@id/tv_years"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@id/iv_avatar"
+                            android:text="所在城市：北京"
+                            android:textColor="@color/mipaiTextColorNormal"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_times"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@id/tv_years"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="制作周期：30天"
+                            android:textColor="@color/mipaiTextColorNormal"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_years"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="15dp"
+                            android:text="￥：800"
+                            android:textColor="@android:color/holo_red_light" />
+
+                        <com.allen.library.SuperButton
+                            android:id="@+id/btn1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@id/tv_years"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:text="可开发票"
+                            android:textColor="@color/mipaiTextColorSelect"
+                            android:textSize="12sp"
+                            app:sCornersRadius="5dp"
+                            app:sSolidColor="#f3ebb8" />
+
+                        <com.allen.library.SuperButton
+                            android:id="@+id/btn_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_below="@id/tv_years"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@id/btn1"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:text="接受不满意全额退款"
+                            android:textColor="@color/mipaiTextColorSelect"
+                            android:textSize="12sp"
+                            app:sCornersRadius="5dp"
+                            app:sSolidColor="#f3ebb8" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#f1f1f1" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_current_goods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="类别"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/tv_current_goods"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="1"
+                            android:text="请选择类别 数量"
+                            android:textColor="@color/mipaiTextColorNormal" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#f1f1f1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="个人简介："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="5dp"
+                            android:text="多年从事影视广告、企业宣传片制作、能够运用FINACUT、AE、PHOTOSHOP等软件进行剪辑和处理。善于掌握迅速了解影片的主旨和创意,有效进行后期制作,帮助影片提高视觉渲染力。"
+                            android:textColor="@color/mipaiTextColorNormal" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="#f1f1f1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="从业经历："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="5dp"
+                            android:text="2015/2~至今 树果影视文化有限公司\n2012/9~2015/1 亦娱艺术（影视制作）\n"
+                            android:textColor="@color/mipaiTextColorNormal" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="#f1f1f1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="获得奖项："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="5dp"
+                            android:text="香港电影金像奖最佳剪辑奖提名"
+                            android:textColor="@color/mipaiTextColorNormal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_certificate" />
+
+                        <TextView
+                            android:id="@+id/tv_see_certificate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="查看获奖证书"
+                            android:textColor="@color/mipaiTextColorSelect" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="#f1f1f1" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="教育经历："
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="5dp"
+                            android:text="大连理工大学/本科"
+                            android:textColor="@color/mipaiTextColorNormal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_certificate" />
+
+                        <TextView
+                            android:id="@+id/tv_see_shcool"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="查看学历证书"
+                            android:textColor="@color/mipaiTextColorSelect" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="#f1f1f1" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#f1f1f1" />
+
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sDividerLineColor="#f1f1f1"
+                        app:sDividerLineHeight="1dp"
+                        app:sDividerLineType="bottom"
+                        app:sLeftTextColor="@color/mipaiTextColorNormal"
+                        app:sLeftTextString="评价：256"
+                        app:sRightTextColor="@color/mipaiTextColorNormal"
+                        app:sRightTextString="好评：80%"></com.allen.library.SuperTextView>
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--tl:tl_divider_color="#e1e1e1"-->
+                <!--tl:tl_divider_padding="0dp"-->
+                <!--tl:tl_divider_width="0.75dp"-->
+                <com.flyco.tablayout.CommonTabLayout
+                    android:id="@+id/tablayout_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    tl:tl_iconVisible="false"
+                    tl:tl_indicator_color="@color/mipaiTextColorSelect"
+                    tl:tl_indicator_height="2dp"
+                    tl:tl_indicator_margin_left="55dp"
+                    tl:tl_indicator_margin_right="55dp"
+                    tl:tl_textSelectColor="@color/mipaiTextColorSelect"
+                    tl:tl_textUnselectColor="@color/black"
+                    tl:tl_textsize="14sp"
+                    tl:tl_underline_color="@color/mipaiTextColorSelect" />
+
+                <LinearLayout
+                    android:id="@+id/ll_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="详情"
+                        android:textColor="@color/black" />
+
+                    <com.flyco.tablayout.CommonTabLayout
+                        android:id="@+id/tablayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        tl:tl_iconVisible="false"
+                        tl:tl_indicator_color="@color/mipaiTextColorSelect"
+                        tl:tl_indicator_height="2dp"
+                        tl:tl_indicator_margin_left="25dp"
+                        tl:tl_indicator_margin_right="25dp"
+                        tl:tl_textSelectColor="@color/mipaiTextColorSelect"
+                        tl:tl_textUnselectColor="@color/black"
+                        tl:tl_textsize="14sp"
+                        tl:tl_underline_color="@color/mipaiTextColorSelect" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_fragments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></FrameLayout>
+            </LinearLayout>
+        </com.hym.eshoplib.widgets.SlideDetailsLayout>
+
+        <cn.hym.superlib.widgets.view.ColorFilterImageView
+            android:id="@+id/iv_gotop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_golist_top"
+            android:visibility="gone" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_attach_business"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_attach_business"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="联系卖家"
+                android:textColor="@color/mipaiTextColorNormal"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_collect"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_collect_check"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="收藏"
+                android:textColor="@color/mipaiTextColorNormal"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#f1f1f1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_add_shoppingcart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="加入购物车"
+                android:textColor="@color/mipaiTextColorSelect"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_buy_now"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_toolbar_bg"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="立即预约"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

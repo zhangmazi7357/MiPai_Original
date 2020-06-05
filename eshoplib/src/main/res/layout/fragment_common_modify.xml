@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_input"
+            android:background="@color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+    <com.allen.library.SuperButton
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"
+        android:text="@string/Save"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="54dp"
+        app:sSelectorNormalColor="@color/jiuzhou_orange"
+        app:sSelectorPressedColor="@color/jiuzhou_orange_dark"
+        app:sUseSelector="true"
+        app:sCornersRadius="3dp"
+        android:id="@+id/btn_save"
+        android:visibility="gone"/>
+
+</LinearLayout>

@@ -1,0 +1,423 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">resourcelib</string>
+    <!--语言选择页面-->
+    <string name="language_zh" translatable="false">中文</string>
+    <string name="language_en" translatable="false">English</string>
+    <string name="language_ja" translatable="false">日本語の</string>
+    <string name="SelectLanguage">语言选择</string>
+    <string name="Confirm">确认</string>
+    <!--登录注册首页-->
+    <string name="Login_Registration">登录/注册</string>
+    <string name="Login">登录</string>
+    <string name="LoginwithMobileNo">手机号登录</string>
+    <string name="Loginwith_EmailAddress">邮箱登录</string>
+    <string name="LoginwithWechat">微信登录</string>
+    <string name="Registration">注册</string>
+    <string name="RegisterwithMobileNo">手机号注册</string>
+    <string name="RegisterwithEmailAddress">邮箱注册</string>
+    <string name="ReristerMeansAgree">注册即表示您同意</string>
+    <string name="agreement">《Beijinfo用户注册协议》</string>
+    <!--手机号登录-->
+    <string name="EnterPassword">请输入登录密码</string>
+    <string name="ForgotPassword">忘记密码</string>
+    <!--手机号注册-->
+    <string name="RegisterwithMobileNo.">手机号注册</string>
+    <string name="MobileNo.">手机号</string>
+    <string name="CNMobileonly">请输入大陆手机号</string>
+    <string name="SendSMScode">发送验证码</string>
+    <string name="SMSCode">验证码</string>
+    <string name="SendSMSCode">请输入短信验证码</string>
+    <string name="Password">密码</string>
+    <string name="EnterNewPassword">请输入6-20位密码</string>
+    <string name="Change_Mobile">更换手机号码</string>
+    <string name="CN_Mobile_Only">请输入新的大陆手机号</string>
+    <!--绑定账号-->
+    <string name="Link_Mobile">绑定手机号</string>
+    <string name="Link_Email">绑定邮箱号</string>
+    <string name="CN_Mobile_only">请输入绑定大陆手机号</string>
+    <string name="Enter_Email">请输入邮箱号</string>
+    <!--输入手机号未注册-->
+    <string name="Cancel">取消</string>
+    <string name="Notregisteredyet">输入的手机号未注册是否注册</string>
+    <!--忘记密码（手机号）-->
+    <string name="NewPassword">新密码</string>
+    <!--修改密码-->
+    <string name="UpdatePhonePassword">用手机号修改密码</string>
+    <string name="UpdateEmailPassword">用邮箱修改密码</string>
+    <!--密码设置-->
+    <string name="SetPassword">设置密码</string>
+    <!--邮箱登录-->
+    <string name="Email">邮箱号</string>
+    <string name="EnterEmailAddress">请输入注册邮箱号</string>
+    <string name="EmailNotregisteredyet">输入的邮箱未注册是否注册</string>
+    <string name="Change_Email">更换邮箱号码</string>
+    <!--忘记密码（邮箱）-->
+    <string name="EmailCode">邮箱验证码</string>
+    <string name="EnterEmailCode">请输入邮箱验证码</string>
+    <!--首页-->
+    <string name="Rent">地产租赁</string>
+    <string name="SecondhandGoods">二手物品</string>
+    <string name="AgentInformation">资询代办</string>
+    <string name="NoticeBoard">公告栏</string>
+    <string name="Beijing">北京</string>
+    <string name="Explorelist">一 精彩发现 一</string>
+    <string name="Homepage">首页</string>
+    <string name="Explore">资讯</string>
+    <string name="OnlineMall">商城</string>
+    <string name="MyAccount">我的</string>
+    <!--选择定位城市-->
+    <string name="SelectCity">选择城市</string>
+    <string name="RealtimeLocation">当前定位城市</string>
+    <string name="OtherPopularCity">开通城市</string>
+
+    <!--完善资料-->
+    <string name="CompletePersonalInformatiom">完善资料</string>
+    <string name="Skip">跳过</string>
+    <string name="Nickname">昵称</string>
+    <string name="EnterNicknamecharacters16"> 请输入昵称（1-16个文字）</string>
+    <string name="EnterNicknamecharacters">请输入昵称</string>
+    <string name="Gender">性别</string>
+    <string name="PleaseSelect">请选择性别</string>
+    <string name="DateofBirth">生日</string>
+    <string name="PleaseSelectDateofBirth">请选择出生日期</string>
+    <string name="Finish">完成</string>
+    <string name="Current_Mobile_is">您当前的手机号为</string>
+    <string name="Current_Email_is">您当前的邮箱号为</string>
+    <string name="phone_long_message">更换后个人信息不变，下次可以使用新手机号登录</string>
+    <string name="email_long_message">更换后个人信息不变，下次可以使用新邮箱号登录</string>
+    <!--租房（选择区域）-->
+    <string name="ChooseArea">选择区域</string>
+    <!--房源列表-->
+    <string name="EnterDistrictAddressorresidencename">请输入区域、小区名或地址</string>
+    <string name="Roomtype">期待户型</string>
+    <string name="Rental">租金</string>
+    <string name="Source">房屋类型</string>
+    <string name="Facilitiesby">更多</string>
+    <string name="RightNow">当前</string>
+    <string name="Apartmentsintotal2">共%1$s个房源</string>
+    <string name="Onebedroom">1居</string>
+    <string name="Month">月</string>
+    <string name="Releaseyourrequirements">发布租房意向</string>
+    <!--搜索-->
+    <string name="SearchHistory">搜索历史</string>
+    <string name="ClearAll">清除历史记录</string>
+    <!--筛选（来源）-->
+    <string name="Allsources">全部来源</string>
+    <string name="Individual">个人</string>
+    <string name="Apartments">公寓</string>
+    <!--筛选（户型）-->
+    <string name="Allroomtypes">户型全部</string>
+    <string name="Twobedroom">2居</string>
+    <string name="Threebedroom">3居</string>
+    <string name="Fourbedroom">4居</string>
+    <string name="Fivebedroom">5居</string>
+    <!--筛选（租金）-->
+    <string name="Nolimit">不限</string>
+    <string name="Lessthan500RMB">500 RMB以下</string>
+    <string name="RMB500_1000">500-1,000 RMB</string>
+    <string name="RMB1000_2000">1,000-2,000 RMB</string>
+    <string name="RMB2000_3000">2,000-3,000 RMB</string>
+    <string name="RMB3000_5000">3,000-5,000 RMB</string>
+    <string name="RMB5000_8000">5,000-8,000 RMB</string>
+    <!--筛选（周边配套）-->
+    <string name="Hospital">医院</string>
+    <string name="Conveniencestore">便利店</string>
+    <string name="School">学校</string>
+    <string name="Kindergarten">幼儿园</string>
+    <string name="Clear">清空条件</string>
+    <!--发布租房意向-->
+    <string name="Requirements">租房意向</string>
+    <string name="Submit">提交</string>
+    <string name="Name">姓名</string>
+    <string name="PleaseEnterName">请输入真实姓名</string>
+    <string name="PleaseEnterEmail">请输入正确的邮箱号码</string>
+    <string name="Enter_Email2">请输入新的邮箱号</string>
+    <string name="MobileNumber">手机号</string>
+    <string name="PleaseEnterMobileNo">请输入手机号码</string>
+    <string name="Budget">租金预算</string>
+    <string name="PleaseSelectBudget">请选择租金预算</string>
+    <string name="Area">期待区域</string>
+    <string name="PleaseSelectArea">请选择期待区域</string>
+    <string name="PleaseSelectRoomType">请选择期待户型</string>
+    <string name="Moveintime">入住时间</string>
+    <string name="PleaseSelectMoveintime">请选择入住时间</string>
+    <string name="Numberofresidents">入住人数</string>
+    <string name="PleaseSelectNumberofresidents">请选择入住人数</string>
+    <string name="Pet">宠物情况</string>
+    <string name="PleaseSelectpet">请选择宠物情况</string>
+    <string name="IntentionDescription">意向描述</string>
+    <string name="Favorite">我的收藏</string>
+    <string name="otherRequire">如果您有其他要求,请告诉我们</string>
+    <string name="hasPet">有宠物</string>
+    <string name="noPet">无宠物</string>
+    <string name="Singleoccupancy">单身入住</string>
+    <string name="Onepeoplefamilyormore">家庭1人入住</string>
+    <string name="Twopeoplefamilyormore">家庭2人入住</string>
+    <string name="Threepeoplefamilyormore">家庭3人入住</string>
+    <string name="Fourpeoplefamilyormore">家庭3人以上入住</string>
+    <string name="HouseDetails">详情介绍</string>
+    <string name="SupportingService">配套服务</string>
+    <string name="NearbyFacililty">周边设施</string>
+    <string name="Transportation">交通</string>
+    <string name="Map">地图</string>
+    <string name="Roomtype2">户型</string>
+    <string name="RoomSize">面积</string>
+    <string name="Direction">朝向</string>
+    <string name="Floor">楼层</string>
+    <string name="Builtin">建造年份</string>
+    <string name="Payment">支付方式</string>
+    <!--时间相关-->
+    <string name="justnow">刚刚</string>
+    <string name="secondsago">秒前</string>
+    <string name="halfminutesago">半分前</string>
+    <string name="minutesago">分前</string>
+    <string name="hoursago">小时前</string>
+    <string name="yestday">昨天</string>
+    <string name="daysago">天前</string>
+    <string name="weeksago">周前</string>
+    <string name="lastmonth">上个月</string>
+    <string name="monthsago">个月前</string>
+    <string name="halfyear">半年以前</string>
+
+    <!--二手物品-->
+    <string name="classification">分类</string>
+    <string name="Price">价格</string>
+    <string name="Condition">成色</string>
+    <string name="All">全部</string>
+    <string name="Releasesecondhandgoods">发布二手物品</string>
+    <string name="Pleaseenterthenameoftheitem">请输入物品名称</string>
+    <string name="ProductDescription">物品描述</string>
+    <string name="Delete">删除</string>
+    <string name="Replay">回复</string>
+    <string name="Release">发布</string>
+    <string name="come">来过</string>
+    <string name="Area2">区域</string>
+    <string name="WriteComments">写评论...</string>
+    <string name="goodsName">物品名称</string>
+    <string name="UploadImages">上传图片</string>
+    <string name="ReleaseCity">所在位置</string>
+    <string name="Max9Pics">(最多上传9张)</string>
+    <string name="PleaseSelectReleaseArea">请选择所在位置</string>
+    <string name="PleaseSelectClassic">请选择分类</string>
+    <string name="PleaseSelectCondition">请选择成色</string>
+    <string name="PleaseEnterPrice">请输入价格</string>
+    <string name="MyRelease">我的发布</string>
+    <string name="Myintention">我的意向</string>
+    <string name="Myactivity">我的活动</string>
+    <string name="Coupons">我的购物券</string>
+    <string name="MyOrder">我的订单</string>
+    <string name="Viewallorders">查看全部订单</string>
+    <string name="Topay">待付款</string>
+    <string name="Tosend">待发货</string>
+    <string name="Toreceive">待收货</string>
+    <string name="Toevaluate">待评价</string>
+    <string name="CustomerService">售后</string>
+    <string name="ApplyforCooperation">合作申请</string>
+    <string name="Tolet">我有房源</string>
+    <string name="Setupnewshop">我要开店</string>
+    <string name="Undertaking">委托业务</string>
+    <string name="Partnership">其他合作</string>
+    <string name="Mainimage">主图</string>
+    <!--我的消息-->
+    <string name="Mymessage">我的消息</string>
+    <string name="Systemmessage">系统消息</string>
+    <string name="OrderMessage">订单消息</string>
+    <string name="Replymessage">回复消息</string>
+    <string name="Messagedetails">消息详情</string>
+    <string name="Issueanapplication">发布代办申请</string>
+    <string name="SubmitAgencyApplication">提交代办申请</string>
+    <string name="Detailedinformationofagency">咨询代办详情</string>
+    <string name="ApplyAgency">代办申请</string>
+    <!--我的-->
+    <string name="resources">房源</string>
+    <string name="Product">商品</string>
+    <string name="Usedgoods">二手物品</string>
+    <string name="Article">文章</string>
+    <string name="Releasetime">发布时间</string>
+    <string name="Available">已上架</string>
+    <string name="Notavailable">已下架</string>
+    <string name="Outofstock">已售罄</string>
+    <string name="toAvailable">上架</string>
+    <string name="toNotavailable">下架</string>
+    <string name="toOutofstock">售罄</string>
+    <string name="Edit">编辑</string>
+    <string name="Not_Linked">未绑定</string>
+    <!--设置-->
+    <string name="Settings">设置</string>
+    <string name="ShippingAddressManagement">收货地址管理</string>
+    <string name="AddVATDetailsinformation">增票资质</string>
+
+    <string name="Notadded">未添加</string>
+    <string name="FAQ">常见问题</string>
+    <string name="FeedbackHelp">用户反馈</string>
+    <string name="AboutUs">关于我们</string>
+    <string name="UserAgreement">用户协议</string>
+
+    <string name="Accountandsecurity">账号与安全</string>
+    <string name="Cleanupcache">清除缓存</string>
+    <string name="Logout">退出登录</string>
+    <string name="Portrait">头像</string>
+    <string name="PersonalInformation">个人信息</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="Save">保存</string>
+    <!--商城-->
+    <string name="EnterProductName">请输入商品名</string>
+    <string name="Sales">销量</string>
+    <string name="ProductDetails">商品详情</string>
+    <string name="StandardClassification">请选择产品规格</string>
+    <string name="Amount">数量</string>
+    <string name="Allproducts">全部商品</string>
+    <string name="Reviews">商品评价</string>
+    <string name="Help">客服</string>
+    <string name="AddtoShoppingCart">加入购物车</string>
+    <string name="BuyNow">立即购买</string>
+    <string name="Stock">库存</string>
+    <string name="Deliveryaddress">收货地址</string>
+    <string name="Addshippingaddress">添加收货地址</string>
+    <string name="Receiver">收货人</string>
+    <string name="PleaseEnterReceiverName">请输入收货人姓名</string>
+    <string name="DetailedAddress">请填写详细地址，不少于5个字（必须为中文地址）</string>
+    <string name="Shoppingcart">购物车</string>
+    <string name="Selectall">全选</string>
+    <string name="Total">合计:</string>
+    <string name="Statement">去结算</string>
+    <string name="Specification">规格</string>
+    <string name="ConfirmOrder">确认订单</string>
+    <!--订单-->
+    <string name="Invoice">发票</string>
+    <string name="Freight">运费</string>
+    <string name="FreeDelivery">快递 免邮</string>
+    <string name="Messagefrombuyer">买家留言</string>
+    <string name="ShopTotal">小计</string>
+    <string name="Personal">个人</string>
+    <string name="SubmitOrder">提交订单</string>
+    <string name="Methodofpayment">选择支付方式</string>
+    <string name="WeChatpayment">微信支付</string>
+    <string name="Alipaypayment">支付宝</string>
+    <string name="PayPal">PayPal</string>
+    <string name="Payableamount">应付金额</string>
+    <string name="Paidinamount">实付金额</string>
+    <string name="ConfirmPayment">确认支付</string>
+    <string name="Cartisempty">购物车是空的...</string>
+    <!--表单提交，我有房源，我要开店，承接业务，其他合作-->
+    <string name="CompanyName">公司名称</string>
+    <string name="Contactaddress">联系地址</string>
+    <string name="MainProducts">主要经营类目</string>
+    <string name="productscount">商品类目数量</string>
+    <string name="PleaseEnterCompanyName">请输入公司名称</string>
+    <string name="PleaseEnterMainProducts">请输入主营类目</string>
+    <string name="PleaseEnterProductsCount">请输入主营商品类目数量</string>
+    <string name="DetailedAddress2">请输入详细地址</string>
+    <string name="Max4Pics">(最多上传4张)</string>
+    <string name="Max2Pics">(最多上传2张)</string>
+    <string name="UploadDetailsimages">上传资质图片</string>
+    <string name="Productsdescription">合作内容描述</string>
+    <string name="Cooperationdetails">合作概述</string>
+    <string name="Servicearea">服务地区</string>
+    <string name="PleaseEnterCooperationdetails">请输入合作概述</string>
+    <string name="PleaseEnterServicearea">请输入服务地区</string>
+    <string name="companyintroduction">公司介绍</string>
+    <string name="Houseaddress">楼盘地址</string>
+    <string name="Propertyname">楼盘名称</string>
+    <string name="Housetype">房源种类</string>
+    <string name="Decoration">装修</string>
+    <string name="Allocation">配置</string>
+    <string name="PleaseEnterHouseaddress">请输入楼盘地址</string>
+    <string name="PleaseEnterPropertyname">请输入楼盘名称</string>
+    <string name="PleaseSelectRoomType2">请选择房源种类</string>
+    <string name="PleaseRoomsize">请输入房源面积(㎡)</string>
+    <string name="pleaseSelectRoomType3">请选择户型</string>
+    <string name="pleaseEnterDecoration">请输入装修情况</string>
+    <string name="pleaseEnterAllocation">请输入配置情况</string>
+    <string name="PleaseEnterPrice2">请输入价格 RMB/月</string>
+
+    <string name="TaxpayerIdentificationCode">纳税人识别码</string>
+    <string name="PleaseEnterTaxpayerIdentificationCode">请输入识别码</string>
+    <string name="Registeredaddress">注册地址</string>
+    <string name="PleaseEnterRegisteredaddress">请输入注册地址</string>
+    <string name="RegisteredPhoneNumber">注册电话</string>
+    <string name="PleaseEnterRegisteredPhoneNumber">请输入注册电话</string>
+    <string name="Bank">开户银行</string>
+    <string name="PleaseEnterBank">请输入开户银行</string>
+    <string name="BankAccount">银行账户</string>
+    <string name="PleaseEnterBankAccount">请输入银行账户</string>
+    <string name="UploadImagesBusinessLicenseorTaxpayerqualificationregistrationform">上传营业执照照片或纳税人资格登记表</string>
+    <string name="VATDetailsinformation">增票资质</string>
+    <string name="Pleasewaitforauditpatiently">提交成功，请耐心等待审核</string>
+    <string name="Submittedsuccessfully">提交成功</string>
+    <string name="PaymentSuccessful">支付成功</string>
+    <string name="ViewOrder">查看订单</string>
+    <string name="EshopHomepage">返回商城</string>
+    <string name="Cancelorder">取消订单</string>
+    <string name="Payment2">付款</string>
+    <string name="Logistics">查看物流</string>
+    <string name="Received">确认收货</string>
+    <string name="review">去评价</string>
+    <string name="Detailsoforder">订单详情</string>
+    <string name="Ordernumber">订单编号</string>
+    <string name="Createdtime">创建时间</string>
+    <string name="Paymenttime">付款时间</string>
+    <string name="Deliverytime">发货时间</string>
+    <string name="Transactiontime">成交时间</string>
+    <string name="Logisticdetails">物流详情</string>
+    <string name="ExpressPhone">官方电话</string>
+    <string name="allreview">全部评价</string>
+    <string name="nice">好评</string>
+    <string name="common">中评</string>
+    <string name="bad">差评</string>
+    <string name="Releasereview">发布评价</string>
+    <string name="Consultation">客服咨询</string>
+    <string name="Coupondetails">购物券说明</string>
+    <string name="SubmitApplicationnandPay">提交申请并支付</string>
+    <string name="Submitapplication">提交申请</string>
+    <string name="Userinformation">用户信息</string>
+    <string name="Numberofpeople">人数</string>
+    <string name="Applyforregistration">申请报名</string>
+    <string name="Starttime">活动开始时间:</string>
+    <string name="Registrationdeadline">活动截止报名时间:</string>
+    <string name="RegistrationdPrice">报名费:</string>
+    <string name="EventDetails">活动详情</string>
+    <string name="ConfirmCancellationandRefund">确认取消报名并退款</string>
+    <string name="Alreadysignedup">已报名</string>
+    <string name="Cancelsign">取消报名</string>
+    <string name="ViewRefundProcess">查看退款进度</string>
+    <string name="Haveapplied">已申请</string>
+    <string name="Apply">可申请</string>
+    <string name="Applyforreturningpurchase">申请退货</string>
+    <string name="addlogistics">添加物流</string>
+    <string name="seeLogistics">查看物流</string>
+    <string name="Refundprocess">退款进度</string>
+    <string name="RefundAmount">退款金额</string>
+    <string name="Paymentamount">支付金额</string>
+    <string name="Deducthandlingfee">扣除手续费</string>
+    <string name="RefundActual">应退金额</string>
+    <string name="RefundNote">退款说明</string>
+    <string name="RefundID">退款编号</string>
+    <string name="RefundReason">退货原因</string>
+    <string name="GoodsRefundNote">退货说明</string>
+    <string name="EnterReturnNote">请输入退货说明（选填）</string>
+    <string name="UploadImagesforReturnGoods">上传凭证</string>
+    <string name="InvoiceType">发票类型</string>
+    <string name="Invoiceinformation">发票信息</string>
+    <string name="Instruction">发票须知</string>
+    <string name="PaperInvoice">纸制发票</string>
+    <string name="VATInvoice">增值税发票</string>
+    <string name="InvoiceTitle">发票抬头</string>
+    <string name="Company">单位</string>
+    <string name="Details">增票资质</string>
+    <string name="EnterCompanyName">请填写单位名称</string>
+    <string name="Feedbackcontent">反馈内容</string>
+    <string name="PleaseEnterFeedbackcontent">请输入反馈内容</string>
+    <string name="payoff">是否可议价</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="sell">卖</string>
+
+
+
+
+
+
+
+</resources>

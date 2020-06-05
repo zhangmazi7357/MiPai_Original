@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <!--空数据-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_shoppingcart_large"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/PaymentSuccessful"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:id="@+id/tv_message"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="140dp">
+
+        <com.allen.library.SuperButton
+            android:layout_width="138dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/mipaiTextColorSelect"
+            android:text="返回首页"
+            app:sSolidColor="#f3ebd8"
+            app:sCornersRadius="5dp"
+            android:id="@+id/btn_view_order"/>
+
+        <Button
+            android:layout_width="138dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/selector_btn"
+            android:textColor="@color/white"
+            android:text="查看订单"
+            android:id="@+id/btn_homepage"/>
+
+    </LinearLayout>
+</LinearLayout>

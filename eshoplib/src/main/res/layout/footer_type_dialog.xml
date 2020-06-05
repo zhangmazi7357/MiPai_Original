@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#f1f1f1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="数量"
+            android:textColor="@color/mipaiTextColorNormal"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="9sp"
+            android:textColor="#c7c7c7"
+            android:id="@+id/tv_sub_title"
+            tools:text="以秒钟为单位，如超出请增加购买数量"
+            android:visibility="visible"/>
+
+        <cn.hym.superlib.widgets.snapstep.SnappingStepper
+            android:id="@+id/stepper"
+            android:layout_width="90dp"
+            android:layout_height="21dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            tl:min="1" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#f1f1f1"/>
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:textColor="@color/black"
+         android:text="合作流程："
+         android:layout_marginLeft="10dp"
+         android:layout_marginTop="15dp"
+         android:layout_marginBottom="15dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_life_circle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="12sp"
+        android:textColor="#616161"
+        android:text="立即预约 —> 接受预约 —> 付款 —> 确认收货"/>
+</LinearLayout>

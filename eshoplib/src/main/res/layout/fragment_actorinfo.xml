@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:id="@+id/rl_sex">
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:required="true"
+            app:requiredText="性别"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:id="@+id/iv_right3"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_toLeftOf="@id/iv_right3"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/black"
+            android:id="@+id/tv_sex"/>
+        <View android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:id="@+id/rl_age">
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:requiredText="年龄"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:id="@+id/iv_right4"
+            android:textColor="@color/black"
+            android:text="岁 "/>
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv_right4"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:id="@+id/et_age"
+            android:maxLength="2"
+            android:hint="请输入年龄"
+            android:layout_marginRight="5dp"
+            android:textColorHint="#9c9c9c"
+            android:inputType="numberDecimal"
+            android:textSize="14sp"
+            android:gravity="right"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="身高"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/iv_right2"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_arrow_right"
+            android:text="cm"
+            android:textColor="@color/black" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/iv_right2"
+            android:background="@null"
+            android:hint="请输入身高"
+            android:inputType="numberDecimal"
+            android:src="@mipmap/ic_launcher_round"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="14sp"
+            android:maxLength="3"
+            android:gravity="right"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#eeeeee" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_weight"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="体重"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/iv_right5"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_arrow_right"
+            android:text="kg"
+            android:textColor="@color/black" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/tv_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_right5"
+            android:background="@null"
+            android:hint="请输入体重"
+            android:layout_marginRight="5dp"
+            android:inputType="numberDecimal"
+            android:src="@mipmap/ic_launcher_round"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="14sp"
+            android:maxLength="3"
+            android:gravity="right"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#eeeeee" />
+    </RelativeLayout>
+</LinearLayout>

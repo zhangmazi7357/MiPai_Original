@@ -1,0 +1,410 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!--语言选择页面-->
+    <string name="SelectLanguage">言語選択</string>
+    <string name="Confirm">確認</string>
+    <!--登录注册首页-->
+    <string name="Login_Registration">サインイン／アカウント</string>
+    <string name="Login">サインイン</string>
+    <string name="LoginwithMobileNo">携帯番号でサインイン</string>
+    <string name="Loginwith_EmailAddress">メールアドレスでサインイン</string>
+    <string name="LoginwithWechat">WeChatでサインイン</string>
+    <string name="Registration">アカウント</string>
+    <string name="RegisterwithMobileNo">携帯番号でアカウント作成</string>
+    <string name="RegisterwithEmailAddress">メールアドレスでアカウント作成</string>
+    <!--手机号登录-->
+    <string name="EnterPassword">パスワードを入力</string>
+    <string name="ForgotPassword">パスワードを忘れた方（携帯電話）</string>
+    <!--手机号注册-->
+    <string name="RegisterwithMobileNo.">携帯番号でアカウント作成</string>
+    <string name="MobileNo.">携帯番号</string>
+    <string name="CNMobileonly">中国大陸の携帯番号</string>
+    <string name="SendSMScode">送信</string>
+    <string name="SMSCode">認証コード</string>
+    <string name="SendSMSCode">SMSの認証番号を入力</string>
+    <string name="Password">パスワード</string>
+    <string name="EnterNewPassword">半角英数字6～20桁で入力</string>
+    <string name="Change_Mobile">新しい携帯番号に変更</string>
+    <string name="CN_Mobile_Only">中国大陸の携帯番号</string>
+    <!--绑定账号-->
+    <string name="Link_Mobile">携帯番号で登録</string>
+    <string name="Link_Email">メールアドレスで登録</string>
+    <string name="CN_Mobile_only">中国大陸の携帯番号</string>
+    <string name="Enter_Email">メールアドレス入力</string>
+    <!--输入手机号未注册-->
+    <string name="Cancel">キャンセル</string>
+    <string name="Notregisteredyet">入力された電話番号は登録されていません。登録しますか?</string>
+    <!--忘记密码（手机号）-->
+    <string name="NewPassword">新しいパスワード</string>
+    <!--修改密码-->
+    <string name="UpdatePhonePassword">携帯番号パスワードの変更</string>
+    <string name="UpdateEmailPassword">メールアドレスパスワードの変更</string>
+    <!--密码设置-->
+    <string name="SetPassword">パスワード設定</string>
+    <!--邮箱登录-->
+    <string name="Email">メールアドレス</string>
+    <string name="EnterEmailAddress">メールアドレスを入力</string>
+    <string name="EmailNotregisteredyet">入力されたメールアドレスは登録されていません。登録しますか?</string>
+    <string name="Change_Email">新しいメールアドレスに変更</string>
+    <!--忘记密码（邮箱）-->
+    <string name="EmailCode">Email Code認証コード</string>
+    <string name="EnterEmailCode">Email Codeの認証番号を入力</string>
+
+    <!--首页-->
+    <string name="Rent">物件情報</string>
+    <string name="SecondhandGoods">中古品</string>
+    <string name="AgentInformation">コンサル依頼</string>
+    <string name="NoticeBoard">掲示板</string>
+    <string name="Beijing">北京</string>
+    <string name="Explorelist">一 ベストトピックス 一</string>
+    <string name="Homepage">トップ</string>
+    <string name="Explore">トピックス</string>
+    <string name="OnlineMall">ショッピング</string>
+    <string name="MyAccount">マイページ</string>
+    <!--选择定位城市-->
+    <string name="SelectCity">都市を選択する</string>
+    <string name="RealtimeLocation">所在地</string>
+    <string name="OtherPopularCity">都市を開通する</string>
+
+    <!--完善资料-->
+    <string name="CompletePersonalInformatiom">補完登録</string>
+    <string name="Skip">スキップ</string>
+    <string name="Nickname">ニックネーム</string>
+    <string name="EnterNicknamecharacters16">1-16文字で入力して下さい</string>
+    <string name="EnterNicknamecharacters">で入力して下さい</string>
+    <string name="Gender">性别</string>
+    <string name="PleaseSelect">性別を選択</string>
+    <string name="DateofBirth">誕生日</string>
+    <string name="PleaseSelectDateofBirth">年月日を選択</string>
+    <string name="Finish">完了</string>
+    <string name="Current_Mobile_is">現在の携帯番号は</string>
+    <string name="Current_Email_is">現在のメールアドレスは</string>
+    <string name="phone_long_message">変更後は新しい携帯番号でサインインして下さい。その他の個人情報は変わりません</string>
+    <string name="email_long_message">"変更後は新しいメールアドレスでサインインして下さい。その他の個人情報は変わりません"</string>
+    <!--租房（选择区域）-->
+    <string name="ChooseArea">エリアで選択</string>
+    <!--房源列表-->
+    <string name="EnterDistrictAddressorresidencename">物件名から検索</string>
+    <string name="Roomtype">間取り</string>
+    <string name="Rental">家賃</string>
+    <string name="Source">家屋の種類</string>
+    <string name="Facilitiesby">周辺の施設</string>
+    <string name="RightNow">現在地</string>
+    <string name="Apartmentsintotal2">検索結果%1$s件</string>
+    <string name="Onebedroom">1居</string>
+    <string name="Month">月</string>
+    <string name="Releaseyourrequirements">問合せ</string>
+    <!--搜索-->
+    <string name="SearchHistory">検索履歴</string>
+    <string name="ClearAll">検索履歴を消去</string>
+    <!--筛选（来源）-->
+    <string name="Allsources">すべて 検索結果を表示</string>
+    <string name="Individual">個人オーナー物件</string>
+    <string name="Apartments">サービスアパートメント</string>
+    <!--筛选（租金）-->
+    <string name="Nolimit">上限なし</string>
+    <string name="Lessthan500RMB">500 以下</string>
+    <string name="RMB500_1000">500-1,000 RMB</string>
+    <string name="RMB1000_2000">1,000-2,000 RMB</string>
+    <string name="RMB2000_3000">2,000-3,000 RMB</string>
+    <string name="RMB3000_5000">3,000-5,000 RMB</string>
+    <string name="RMB5000_8000">5,000-8,000 RMB</string>
+    <!--筛选（周边配套）-->
+    <string name="Hospital">病院</string>
+    <string name="Conveniencestore">コンビニエンスストア</string>
+    <string name="School">学校</string>
+    <string name="Kindergarten">幼稚園</string>
+    <string name="Clear">条件をクリア</string>
+    <!--发布租房意向-->
+    <string name="Requirements">希望条件</string>
+    <string name="Submit">提出</string>
+    <string name="Name">氏名</string>
+    <string name="PleaseEnterName">氏名を入力</string>
+    <string name="PleaseEnterEmail">メールアドレスを入力r</string>
+    <string name="Enter_Email2">メールアドレス入力</string>
+    <string name="MobileNumber">携帯番号</string>
+    <string name="PleaseEnterMobileNo">中国大陸の携帯番号を入力</string>
+    <string name="Budget">ご予算</string>
+    <string name="PleaseSelectBudget">ご予算を選択</string>
+    <string name="Area">エリア</string>
+    <string name="PleaseSelectArea">エリアを選択</string>
+    <string name="PleaseSelectRoomType">間取りを選択</string>
+    <string name="Moveintime">入居日</string>
+    <string name="PleaseSelectMoveintime">入居日を選択</string>
+    <string name="Numberofresidents">居住人数</string>
+    <string name="PleaseSelectNumberofresidents">居住人数を選択</string>
+    <string name="Pet">ペット</string>
+    <string name="PleaseSelectpet">ペット有無を選択</string>
+    <string name="IntentionDescription">ご要望欄</string>
+    <string name="Favorite">ブックマーク</string>
+    <string name="otherRequire">Please let us know, if you have any other requirement</string>
+    <string name="hasPet">有り</string>
+    <string name="noPet">無し</string>
+    <string name="Singleoccupancy">単身</string>
+    <string name="Onepeoplefamilyormore">2人</string>
+    <string name="Twopeoplefamilyormore">3人</string>
+    <string name="Threepeoplefamilyormore">4人</string>
+    <string name="Fourpeoplefamilyormore">5人以上</string>
+    <string name="HouseDetails">もっと詳しく</string>
+    <string name="SupportingService">付帯サービス</string>
+    <string name="NearbyFacililty">周辺施設</string>
+    <string name="Transportation">公共交通</string>
+    <string name="Map">地図</string>
+    <string name="Roomtype2">間取り</string>
+    <string name="RoomSize">建築面積</string>
+    <string name="Direction">向き</string>
+    <string name="Floor">階層</string>
+    <string name="Builtin">開業年</string>
+    <string name="Payment">支払条件</string>
+    <!--时间相关-->
+    <string name="justnow">さっき</string>
+    <string name="secondsago"> 秒前</string>
+    <string name="halfminutesago">半分</string>
+    <string name="minutesago"> 分前</string>
+    <string name="hoursago"> 時間前"</string>
+    <string name="yestday">昨日</string>
+    <string name="daysago"> 日前</string>
+    <string name="weeksago"> 週間前</string>
+    <string name="lastmonth">先月</string>
+    <string name="monthsago"> ヶ月前</string>
+    <string name="halfyear">半年前に</string>
+    <!--二手物品-->
+    <string name="classification">ジャンル</string>
+    <string name="Price">価格</string>
+    <string name="Condition">商品の状態</string>
+    <string name="All">すべて</string>
+    <string name="Releasesecondhandgoods">商品名を入力</string>
+    <string name="Pleaseenterthenameoftheitem">中古品を出品する</string>
+    <string name="ProductDescription">商品説明</string>
+    <string name="Delete">削除</string>
+    <string name="Replay">回答数</string>
+    <string name="Release">にリリース</string>
+    <string name="come">来た</string>
+    <string name="Area2">エリア</string>
+    <string name="WriteComments">コメントを書く...</string>
+    <string name="goodsName">商品名</string>
+    <string name="UploadImages">写真をアップロード</string>
+    <string name="ReleaseCity">出品エリア</string>
+    <string name="Max9Pics">最多9枚</string>
+    <string name="PleaseSelectReleaseArea">エリアを選択</string>
+    <string name="PleaseSelectClassic">ジャンルを選択</string>
+    <string name="PleaseSelectCondition">状態を選択</string>
+    <string name="PleaseEnterPrice">販売価格を入力</string>
+    <string name="MyRelease">出品履歴</string>
+    <string name="Myintention">申請・条件</string>
+    <string name="Myactivity">イベント</string>
+
+    <string name="Coupons">Myクーポン残高</string>
+    <string name="MyOrder">取引履歴</string>
+    <string name="Viewallorders">全ての取引履歴を見る</string>
+    <string name="Topay">未払金</string>
+    <string name="Tosend">未発送</string>
+    <string name="Toreceive">未受領</string>
+    <string name="Toevaluate">レビュー</string>
+    <string name="CustomerService">カスタマーサービス</string>
+    <string name="ApplyforCooperation">申込申請</string>
+    <string name="Tolet">物件情報</string>
+    <string name="Setupnewshop">出店希望</string>
+    <string name="Undertaking">業務委託</string>
+    <string name="Partnership">その他業務協力</string>
+    <string name="Mainimage">メイン</string>
+    <!--我的消息-->
+    <string name="Mymessage">メッセージ</string>
+    <string name="Systemmessage">お知らせ</string>
+    <string name="OrderMessage">注文関連</string>
+    <string name="Replymessage">返信</string>
+    <string name="Messagedetails">お知らせ</string>
+    <string name="Issueanapplication">問合せ</string>
+    <string name="SubmitAgencyApplication">問合せ</string>
+    <string name="Detailedinformationofagency">コンサルティング詳細</string>
+    <string name="ApplyAgency">コンサルティング依頼受付</string>
+    <!--我的-->
+    <string name="resources">物件情報</string>
+    <string name="Product">商品</string>
+    <string name="Usedgoods">中古品</string>
+    <string name="Article">記事</string>
+    <string name="Releasetime">情報更新日</string>
+
+    <string name="Available">出品中</string>
+    <string name="Notavailable">未出品</string>
+    <string name="Outofstock">売り切れ</string>
+    <string name="toAvailable">出品する</string>
+    <string name="toNotavailable">撤去</string>
+    <string name="toOutofstock">完売</string>
+    <string name="Edit">編集</string>
+    <string name="Not_Linked">未登録</string>
+    <!--设置-->
+    <string name="Settings">設定</string>
+    <string name="ShippingAddressManagement">お届け先住所</string>
+    <string name="AddVATDetailsinformation">増値税領収書情報</string>
+
+    <string name="Notadded">添付無し</string>
+    <string name="FAQ">よくある質問</string>
+    <string name="FeedbackHelp">お客様の声</string>
+    <string name="AboutUs">beijinfoについて</string>
+    <string name="UserAgreement">利用規約</string>
+
+    <string name="Accountandsecurity">アカウントとセキュリティー</string>
+    <string name="Cleanupcache">履歴の消去</string>
+    <string name="Logout">ログアウト</string>
+    <string name="Portrait">プロフィール写真</string>
+    <string name="PersonalInformation">個人情報</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="Save">保存</string>
+    <!--商城-->
+    <string name="EnterProductName">商品名を入力</string>
+    <string name="Sales">累計販売数</string>
+    <string name="ProductDetails">商品の詳細</string>
+    <string name="StandardClassification">タイプ別</string>
+    <string name="Amount">数量</string>
+    <string name="Allproducts">商品アイテム数</string>
+    <string name="Reviews">商品レビュー</string>
+    <string name="Help">ヘルプ</string>
+    <string name="AddtoShoppingCart">カートに入れる</string>
+    <string name="BuyNow">今すぐ購入</string>
+    <string name="Stock">Stock</string>
+    <string name="Deliveryaddress">お届け先住所</string>
+    <string name="Addshippingaddress">お届け先住所</string>
+    <string name="Receiver">受領者</string>
+    <string name="PleaseEnterReceiverName">受取人名を入力</string>
+    <string name="DetailedAddress">住所を入力して下さい（必ず中国語で入力して下さい）</string>
+    <string name="Shoppingcart">カート</string>
+    <string name="Selectall">全て選択</string>
+    <string name="Total">合計:</string>
+    <string name="Statement">レジに進む</string>
+    <string name="Specification">规格</string>
+    <string name="ConfirmOrder">注文確認</string>
+    <!--订单-->
+    <string name="Invoice">領収書</string>
+    <string name="Freight">送料</string>
+    <string name="FreeDelivery">無料</string>
+    <string name="Messagefrombuyer">コメント欄</string>
+    <string name="ShopTotal">小計</string>
+    <string name="Personal">個人</string>
+    <string name="SubmitOrder">購入する</string>
+    <string name="Methodofpayment">选择支付方式</string>
+    <string name="WeChatpayment">微信支付</string>
+    <string name="Alipaypayment">支付宝</string>
+    <string name="PayPal">PayPal</string>
+    <string name="Payableamount">お買上げ額</string>
+    <string name="Paidinamount">合計</string>
+    <string name="ConfirmPayment">支払い確認</string>
+    <string name="Cartisempty">カートは空です</string>
+    <!--表单提交，我有房源，我要开店，承接业务，其他合作-->
+    <string name="CompanyName">会社名</string>
+    <string name="Contactaddress">住所</string>
+    <string name="MainProducts">主力商品を入力</string>
+    <string name="productscount">商品数量</string>
+    <string name="PleaseEnterCompanyName">会社名を入力</string>
+    <string name="PleaseEnterMainProducts">主力商品を入力</string>
+    <string name="PleaseEnterProductsCount">商品数量を入力</string>
+    <string name="DetailedAddress2">詳細住所</string>
+    <string name="Max4Pics">最多4枚</string>
+    <string name="Max2Pics">最多2枚</string>
+    <string name="UploadDetailsimages">ライセンスと商品画像をアップロード</string>
+    <string name="Productsdescription">商品詳細その他</string>
+    <string name="Cooperationdetails">業務概要</string>
+    <string name="Servicearea">サービスエリア</string>
+    <string name="PleaseEnterCooperationdetails">業務概要入力</string>
+    <string name="PleaseEnterServicearea">サービスエリア入力</string>
+    <string name="companyintroduction">会社概要</string>
+    <string name="Houseaddress">物件住所</string>
+    <string name="Propertyname">物件名</string>
+    <string name="Housetype">物件ジャンル</string>
+    <string name="Decoration">内装</string>
+    <string name="Allocation">設備</string>
+
+    <string name="PleaseEnterHouseaddress">住所を中国語で入力</string>
+    <string name="PleaseEnterPropertyname">正式名を入力</string>
+    <string name="PleaseSelectRoomType2">ジャンルを選択</string>
+    <string name="PleaseRoomsize">建築面積㎡を入力</string>
+    <string name="pleaseSelectRoomType3">間取りを選択</string>
+    <string name="pleaseEnterDecoration">内装状況を選択</string>
+    <string name="pleaseEnterAllocation">設備状況を選択</string>
+    <string name="PleaseEnterPrice2">価格を入力</string>
+
+
+    <string name="TaxpayerIdentificationCode">納税者識別番号</string>
+    <string name="PleaseEnterTaxpayerIdentificationCode">認識番号を入力</string>
+    <string name="Registeredaddress">住所</string>
+    <string name="PleaseEnterRegisteredaddress">会社住所を入力</string>
+    <string name="RegisteredPhoneNumber">登記上の電話番号</string>
+    <string name="PleaseEnterRegisteredPhoneNumber">電話番号を入力</string>
+    <string name="Bank">銀行名</string>
+    <string name="PleaseEnterBank">銀行名を入力 </string>
+    <string name="BankAccount">銀行口座番号</string>
+    <string name="PleaseEnterBankAccount">口座番号を入力</string>
+    <string name="UploadImagesBusinessLicenseorTaxpayerqualificationregistrationform">会社ライセンスまたは納税人資格登録表の画像をアップロードして下さい</string>
+    <string name="VATDetailsinformation">ライセンス資格</string>
+    <string name="Pleasewaitforauditpatiently">審査が終了するまでお待ち下さい</string>
+    <string name="Submittedsuccessfully">申請完了</string>
+    <string name="PaymentSuccessful">支払成功</string>
+    <string name="ViewOrder">注文確認</string>
+    <string name="EshopHomepage">トップページに戻る</string>
+    <string name="Cancelorder">キャンセル</string>
+    <string name="Payment2">支払い</string>
+    <string name="Logistics">配送状況を確認</string>
+    <string name="Received">受取確認</string>
+    <string name="review">レビュー</string>
+    <string name="Detailsoforder">注文詳細</string>
+    <string name="Ordernumber">ご注文 番号</string>
+    <string name="Createdtime">発注日時</string>
+    <string name="Paymenttime">支払い日時</string>
+    <string name="Deliverytime">出荷日時</string>
+    <string name="Transactiontime">完了日時</string>
+    <string name="Logisticdetails">商品配送の流れ</string>
+    <string name="ExpressPhone">電話</string>
+    <string name="allreview">商品レビュー</string>
+    <array name="nice">良い</array>
+    <array name="common">普通</array>
+    <array name="bad">悪い</array>
+    <string name="Releasereview">レビューを書く</string>
+    <string name="Consultation">問い合わせ</string>
+    <string name="Coupondetails">Myクーポン残高</string>
+    <string name="SubmitApplicationnandPay">登録</string>
+    <string name="Submitapplication">登録</string>
+    <string name="Userinformation">ユーザー情報</string>
+    <string name="Numberofpeople">数量</string>
+    <string name="Applyforregistration">お申込みn</string>
+    <string name="Starttime">イベント開始時間:</string>
+    <string name="Registrationdeadline">申し込み締切時間:</string>
+    <string name="RegistrationdPrice">报名费:</string>
+    <string name="EventDetails">イベント掲示板</string>
+    <string name="ConfirmCancellationandRefund">キャンセルして返金</string>
+    <string name="Alreadysignedup">申込み済み</string>
+    <string name="Cancelsign">キャンセル</string>
+    <string name="ViewRefundProcess">返金進捗状況確認</string>
+    <string name="Haveapplied">申請済み</string>
+    <string name="Apply">申請する</string>
+    <string name="Applyforreturningpurchase">返品申請</string>
+    <string name="addlogistics">物流会社名</string>
+    <string name="seeLogistics">配送状況を確認</string>
+    <string name="Refundprocess">返品状況</string>
+    <string name="RefundAmount">返金金額</string>
+    <string name="Paymentamount">支払い済み金額</string>
+    <string name="Deducthandlingfee">キャンセル手数料</string>
+    <string name="RefundActual">返金額合計</string>
+    <string name="RefundReason">返品理由</string>
+    <string name="GoodsRefundNote">返品説明</string>
+    <string name="EnterReturnNote">返品説明を入力</string>
+    <string name="UploadImagesforReturnGoods">伝票・領収書・商品をアップロード</string>
+    <string name="InvoiceType">領収書の種類</string>
+    <string name="Invoiceinformation">領収証情報</string>
+    <string name="Instruction">領収書について</string>
+    <string name="PaperInvoice">普通領収書</string>
+    <string name="VATInvoice">増値税領収書</string>
+    <string name="InvoiceTitle">領収書の宛名</string>
+    <string name="Company">会社</string>
+    <string name="Details">資格</string>
+    <string name="EnterCompanyName">会社名を入力</string>
+    <string name="Feedbackcontent">内容記載</string>
+    <string name="PleaseEnterFeedbackcontent">内容記載入力</string>
+    <string name="payoff">是否可议价</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="sell">売る</string>
+
+
+
+
+</resources>

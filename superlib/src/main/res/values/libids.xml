@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--toolbar相关id-->
+    <item type="id" name="ll_toolbar_bg"/>
+    <item type="id" name="head_status_bar"/>
+    <item type="id" name="toolbar"/>
+    <item type="id" name="tv_toolbar_title"/>
+    <item type="id" name="tv_toolbar_right"/>
+    <item type="id" name="iv_toolbar_right"/>
+    <item type="id" name="tv_middle"/>
+    <!--布局Id-->
+    <item type="id" name="fl_container"/>
+</resources>

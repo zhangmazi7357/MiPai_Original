@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><!--橙色边框-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/shape_graydadada_stroke_conner5"
+                    android:state_focused="true"/>
+    <item android:drawable="@drawable/shape_grayf1f1f1_solid_conner5"
+                    android:state_focused="false"/>
+</selector>

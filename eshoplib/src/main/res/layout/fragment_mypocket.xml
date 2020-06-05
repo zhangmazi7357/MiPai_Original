@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="账户余额（元）"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:id="@+id/tv_money"/>
+    </LinearLayout>
+    <com.allen.library.SuperTextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:sRightIconRes="@drawable/ic_arrow_right"
+        app:sRightTextColor="@color/jiuzhou_orange"
+        app:sLeftTextString="充值"
+        app:sLeftTextColor="@color/black"
+        app:sDividerLineType="bottom"
+        app:sDividerLineHeight="1px"
+        app:sDividerLineColor="#efefef"
+        app:sBottomDividerLineMarginLR="10dp"
+        android:id="@+id/tv_recharge"
+        app:sLeftTvDrawableLeft="@drawable/ic_recharge"
+        />
+    <com.allen.library.SuperTextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:sRightIconRes="@drawable/ic_arrow_right"
+        app:sRightTextColor="@color/jiuzhou_orange"
+        app:sLeftTextString="提现"
+        app:sLeftTextColor="@color/black"
+        app:sDividerLineColor="#efefef"
+        android:id="@+id/tv_getcash"
+        app:sLeftTvDrawableLeft="@drawable/ic_get_cash"
+
+        />
+
+
+</LinearLayout>

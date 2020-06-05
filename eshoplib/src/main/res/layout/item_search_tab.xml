@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.allen.library.SuperButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="10dp"
+    app:sCornersRadius="5dp"
+    app:sSolidColor="@color/white"
+    app:sStrokeColor="#b9b9b9"
+    android:textColor="@color/mipaiTextColorNormal"
+    app:sStrokeWidth="0.75dp"
+    android:text="你好">
+
+</com.allen.library.SuperButton>

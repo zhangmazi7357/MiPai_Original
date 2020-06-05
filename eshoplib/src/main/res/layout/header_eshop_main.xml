@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--商城首页header-->
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        tl:indicator_drawable_selected="@drawable/shape_orange_circle"
+        tl:indicator_drawable_unselected="@drawable/shape_white_circle" />
+    <fj.mtsortbutton.lib.DynamicSoreView
+        android:id="@+id/dynamicSoreView"
+        app:SoreNumber="10"
+        android:layout_width="match_parent"
+        android:paddingTop="15dp"
+        android:layout_height="165dp"/>
+</LinearLayout>

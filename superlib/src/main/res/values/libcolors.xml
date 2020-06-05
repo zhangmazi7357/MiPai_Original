@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--通用颜色-->
+    <color name="white">@android:color/white</color>
+    <color name="black">@android:color/black</color>
+    <color name="blue">#3293fe</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#536DFE</color>
+    <!--通用颜色-->
+     <!--自定义toolbar渐变色-->
+    <color name="toolbar_bg_start">#d9ba73</color>
+    <color name="toolbar_bg_center">#ad9359</color>
+    <color name="toolbar_bg_end"> #a39162</color>
+    <!--bottomebar默认颜色-->
+    <color name="bottombar_white">#ffffff</color>
+    <color name="bottombar_red">#ff0000</color>
+    <!--bottombar 选中颜色-->
+    <color name="bottombar_select_bg">#e98563</color>
+    <color name="bottombar_normal_bg">#fafafa</color>
+
+    <!--BaseMainActivity的BottomBar字体颜色-->
+    <color name="tab_normal_color">#919191</color>
+    <color name="tab_selected_color">#e98563</color>
+    <!--加减框自定义控件-->
+    <color name="cl_snappingstepper_button_normal">#237bb6</color>
+    <color name="cl_snappingstepper_button_press">#1f567b</color>
+    <color name="cl_snappingstepper_text_bg">#2b8ccd</color>
+    <color name="cl_snappingstepper_text">#000000</color>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:psd="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shape_white_solid_conner5"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="请输入支付密码"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_cancle"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#f1f1f1"
+            android:layout_marginLeft="10dp"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="￥1600.00"
+           android:gravity="center"
+           android:textSize="24sp"
+           android:textColor="@color/black"
+           android:padding="15dp"
+           android:textStyle="bold"
+           android:id="@+id/tv_money"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_sub_title"
+            android:text="额外扣除手续费"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#9c9c9c"/>
+        <com.hym.eshoplib.widgets.PayPsdInputView
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:inputType="number"
+            psd:maxCount="6"
+            psd:psdType="weChat"
+            psd:rectAngle="4dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/mipaiTextColorSelect"
+            android:text="忘记密码"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:textSize="12sp"
+            android:id="@+id/tv_forget_password"/>
+
+    </LinearLayout>
+</RelativeLayout>

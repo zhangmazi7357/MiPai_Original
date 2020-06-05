@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        tools:showIn="@layout/activity_goods_detail">
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/btn_help"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tl:sCenterTextColor="@color/black"
+            tl:sCenterTextSize="10sp"
+            tl:sCenterTextString="@string/Help"
+            tl:sDividerLineColor="@color/jiuzhou_orange"
+            tl:sDividerLineHeight="1px"
+            tl:sDividerLineType="top" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/jiuzhou_orange" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/btn_add_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            tl:sCenterTextColor="@color/jiuzhou_orange"
+            tl:sCenterTextString="@string/AddtoShoppingCart"
+            tl:sDividerLineColor="@color/jiuzhou_orange"
+            tl:sDividerLineHeight="1px"
+            tl:sDividerLineType="top" />
+
+        <TextView
+            android:id="@+id/tv_buy_now"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/resource_orange_f2927e"
+            android:gravity="center"
+            android:text="@string/BuyNow"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

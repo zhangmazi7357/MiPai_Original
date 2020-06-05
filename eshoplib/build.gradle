@@ -1,0 +1,135 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    configurations.all {
+        resolutionStrategy.eachDependency
+                { DependencyResolveDetails details ->
+                    def requested = details.requested
+                    if (requested.group == 'com.android.support') {
+                        if (!requested.name.startsWith("multidex")) {
+                            details.useVersion '28.0.0'
+                        }
+                    }
+                }
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 19
+        versionName "2.2.6"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86"
+            // abiFilters "armeabi", "armeabi-v7a", "x86",'arm64-v8a'
+            //abiFilters "armeabi-v7a", "x86"
+        }
+
+        manifestPlaceholders = [
+                "APP_KEY"     : "5bb414c3f1f556956600026f",
+                "CHANNEL_NAME": "",
+                "WX_APPID"    : "wx425c93f17a0de199",
+                "qqappid"     : "1106832236",
+                JPUSH_PKGNAME : "com.hym.eshoplib",
+                JPUSH_APPKEY  : "3283009c27ffcd63d7477f66", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
+    }
+    signingConfigs {
+        key {
+            storeFile file('../key/mipaiappkey.jks') //签名路径
+            keyAlias 'key0'
+            keyPassword 'liandao928'
+            storePassword 'liandao928'
+        }
+    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.key
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.key
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    implementation project(':superlib')
+    implementation project(':loginmodule')
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    implementation 'com.qht1003077897.timeline:timelinelibrary:0.1'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    //极光
+    implementation 'cn.jiguang.sdk:jpush:3.1.1'
+    // 此处以JPush 3.1.1 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.1.9'
+    // 此处以JCore 1.1.9 版本为例。
+    //沉浸式
+    // compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    implementation project(':jcvideoplayer-lib')
+    implementation 'com.github.anzaizai:EasyRefreshLayout:1.3.1'
+    //ratingbar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.0.2'
+    implementation project(':marqueelibrary')
+    // TinyPinyin核心包，约80KB
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation project(':IMKit')
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    implementation 'com.sunfusheng:marqueeview:1.3.3'
+    implementation project(':jiaozivideoplayer')
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+    implementation project(':android-push-settings-advisor-master')
+    implementation 'com.github.sun-sky:Marquee:1.0.0'
+    implementation project(':dialog')
+
+
+
+
+}
+

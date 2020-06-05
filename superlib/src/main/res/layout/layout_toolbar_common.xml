@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/ll_toolbar_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <!--用于设置透明状态栏模式下的panding,如果自定义此处，
+        则id必须使用head_status_bar否则无效果-->
+    <!-- android:background="@drawable/shape_toolbar_bg"-->
+    <View
+        android:id="@id/head_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_toolbar_bg" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        app:contentInsetStart="0dp">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            tools:text="北京" />
+
+        <TextView
+            android:id="@id/tv_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Toobar"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@id/tv_toolbar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="保存"
+            android:textColor="@color/mipaiTextColorSelect"
+            android:visibility="gone" />
+
+        <cn.hym.superlib.widgets.view.ColorFilterImageView
+            android:id="@id/iv_toolbar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <cn.hym.superlib.widgets.view.ColorFilterImageView
+            android:id="@+id/iv_toolbar_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:paddingRight="10dp"
+            android:visibility="gone" />
+
+        <com.ldoublem.thumbUplib.ThumbUpView
+            android:id="@+id/view_like"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:bgColor="@color/transparent"
+            app:cracksColor="@color/jiuzhou_orange"
+            app:edgeColor="@color/white"
+            app:fillColor="@color/resource_white" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#b9b9b9" />
+
+</LinearLayout>

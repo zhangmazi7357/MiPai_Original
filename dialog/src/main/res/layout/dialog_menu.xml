@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/dialog_conner15">
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/rv_dialog_menu_list"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           />
+   </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_dialog_menu_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_menu_item_height"
+        android:background="@drawable/dialog_conner15_bottom"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:text="确定"
+        android:textColor="@color/dialog_cancel"
+        android:textSize="16sp" />
+
+</LinearLayout>

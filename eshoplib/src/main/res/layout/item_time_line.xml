@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_height="90dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="10sp"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_time"/>
+        <com.bt.mylibrary.TimeLineMarkerView
+            android:layout_toRightOf="@id/tv_time"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            app:beginLine="#e1e1e1"
+            app:endLine="#e1e1e1"
+            app:oritation="false"
+            app:marker="@drawable/ic_right_small"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            app:lineSize="1px"
+            app:markerSize="14dp"
+            android:id="@+id/time_view"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/time_view"
+            android:textColor="@color/black"
+            android:id="@+id/tv_message"/>
+    </RelativeLayout>
+
+</LinearLayout>

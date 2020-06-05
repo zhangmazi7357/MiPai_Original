@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42dp" />
+
+    <TextView
+        android:id="@+id/tv_account_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_account_notify2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/text_color" />
+
+    <com.allen.library.SuperButton
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        app:sCornersRadius="5dp"
+        app:sSelectorNormalColor="@color/jiuzhou_orange"
+        app:sSelectorPressedColor="@color/jiuzhou_orange_dark"
+        app:sSolidColor="@color/jiuzhou_orange"
+        app:sUseSelector="true" />
+
+</LinearLayout>

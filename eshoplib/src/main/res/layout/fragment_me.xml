@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f1f1f1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:id="@+id/rl_godetail">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fl_avatar"
+                        android:layout_centerVertical="true">
+                        <ImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="66dp"
+                            android:layout_height="66dp"
+                            android:layout_marginRight="25dp"
+                            android:src="@drawable/ic_default_avantar"
+                            />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:id="@+id/iv_vip"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="45dp"
+                            android:src="@drawable/ic_business_circle"/>
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/fl_avatar"
+                        android:layout_toRightOf="@id/fl_avatar"
+                        android:text=""
+                        android:textColor="@color/black" />
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        android:id="@+id/ratingbar"
+                        android:layout_toRightOf="@id/fl_avatar"
+                        android:layout_centerVertical="true"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:clickable="false"
+                        android:isIndicator="true"
+                        android:maxHeight="18dp"
+                        android:minHeight="18dp"
+                        android:rating="5"
+                        android:stepSize="0.5"
+                        app:mrb_progressBackgroundTint="#f9b743"
+                        app:mrb_progressTint="#f9b743"
+                        app:mrb_secondaryProgressTint="#f9b743"
+                        android:visibility="gone"/>
+
+                    <!--<me.zhanghai.android.materialratingbar.MaterialRatingBar-->
+                        <!--android:id="@+id/ratingbar"-->
+                        <!--android:layout_width="80dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_toRightOf="@id/iv_avatar"-->
+                        <!--android:maxHeight="18dp"-->
+                        <!--android:minHeight="18dp"-->
+                        <!--android:rating="5"-->
+                        <!--android:stepSize="5"-->
+                        <!--app:mrb_progressBackgroundTint="#f9b743"-->
+                        <!--app:mrb_progressTint="#f9b743"-->
+                        <!--app:mrb_secondaryProgressTint="#f9b743"-->
+                        <!--android:visibility="gone"-->
+                        <!--/>-->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignBottom="@id/fl_avatar"
+                        android:layout_toRightOf="@id/fl_avatar"
+                        android:id="@+id/ll_function">
+                        <TextView
+                            android:id="@+id/tv_function"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="12sp"
+                            android:textColor="@color/mipaiTextColorSelect"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.75dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/mipaiTextColorSelect"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/ll_function"
+                        android:layout_alignBottom="@id/fl_avatar"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:id="@+id/ll_preview">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="进入我的工作室"
+                            android:textColor="@color/mipaiTextColorSelect"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_preview"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.75dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/mipaiTextColorSelect"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_go_Userdetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_right"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"/>
+                </RelativeLayout>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_myorder"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sBottomDividerLineMarginLR="10dp"
+                    app:sDividerLineColor="#e1e1e1"
+                    app:sDividerLineHeight="1px"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="我的订单"
+                    app:sRightMaxEms="100"
+                    app:sRightTextColor="@color/white"
+                    app:sRightTvDrawableRight="@drawable/ic_arrow_right"></com.allen.library.SuperTextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:background="@color/white"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_order_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_order_1"
+                        android:text="待接受预约"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_order_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_order_2"
+                        android:text="待付款"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"
+                       />
+
+                    <TextView
+                        android:id="@+id/tv_order_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_order_3"
+                        android:text="待收货"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_order_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_order_4"
+                        android:text="评价"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_order_5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_order_5"
+                        android:text="退款/售后"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_myMonye"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="我的钱包"
+                    app:sRightTextColor="@color/mipaiTextColorSelect"
+                    app:sRightTextString="500.00"
+                    app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_myCollect"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="我的收藏"
+                    app:sRightTextColor="@color/mipaiTextColorSelect"
+                    app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_myInviteCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="邀请码"
+                    app:sRightTextColor="@color/mipaiTextColorSelect"
+                    app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
+                <com.allen.library.SuperTextView
+                    android:id="@+id/tv_auth"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="认证信息"
+                    app:sRightTextColor="@color/mipaiTextColorSelect"
+                    app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
+
+                <com.allen.library.SuperTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    app:sBackgroundDrawableRes="@color/white"
+                    app:sBottomDividerLineMarginLR="10dp"
+                    app:sDividerLineColor="#e1e1e1"
+                    app:sDividerLineHeight="1px"
+                    app:sDividerLineType="bottom"
+                    app:sLeftTextColor="@color/black"
+                    app:sLeftTextString="客服中心"
+                    app:sRightMaxEms="100"
+                    app:sRightTextColor="@color/white"></com.allen.library.SuperTextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:background="@color/white">
+                    <TextView
+                        android:id="@+id/tv_tv_service_3"
+                        style="@style/common_tv_style"
+                        android:maxLines="5"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="发布需求请联系客服\n\n 400-900-5957"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="25dp"
+                        android:background="#e1e1e1"
+                        android:layout_marginTop="18dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_tv_service_2"
+                        style="@style/common_tv_style"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_custom_service"
+                        android:text="在线客服" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="25dp"
+                        android:background="#e1e1e1"
+                        android:layout_marginTop="18dp"/>
+                    <TextView
+                        android:id="@+id/tv_service_1"
+                        style="@style/common_tv_style"
+                        android:maxLines="5"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="需求投递至邮箱 \n\n 271883554@qq.com"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

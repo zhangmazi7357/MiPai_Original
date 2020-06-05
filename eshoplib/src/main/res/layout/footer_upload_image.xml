@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#e1e1e1" />
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:id="@+id/rtv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:requiredText="服务名称" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="宣传片拍摄、抖音短视频拍摄、电商视频拍摄"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_fuwu_name"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:id="@+id/rtv_service"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="#ff3333"
+            app:requiredText="服务名称" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="宣传片拍摄、抖音短视频拍摄、电商视频拍摄"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_shop_time"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="时长" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_shop_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="1分钟/3-5分钟"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_location"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:id="@+id/rtv_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="#ff3333"
+            app:requiredText="地点" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_location"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="北京、朝阳区"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_staffing"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="人员配置" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_staffing"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="策划+导演+剪辑+灯光+剪辑+配音"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_shooting_time"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="拍摄时间" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_shooting_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="需要天数"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_equipment"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="拍摄器材" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_equipment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="Canon5D3/SonyFs7"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_introduce"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="团队介绍" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="过往经验，成功案例"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_detail"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="详情" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_detailed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="产品详情"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_remarks"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="备注" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="产品备注"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_before_price"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="原价" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="原价"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:id="@+id/rtv_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="#ff3333"
+            app:requiredText="价格" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_present_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="价格"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_wrok_type"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="true"
+            app:requiredText="行业类型" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical|right"
+            android:hint="请选择行业类型"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_other"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="其他" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_other"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入产品相关说明（10字以内）"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="时间" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="1-3天"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_huazhuang"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="化妆师" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_huazhuang"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="过往经验、成功案例"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_sheyingshi"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="摄影师" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_sheyingshi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="过往经验，成功案例"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_shejishi"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="设计师" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_shejishi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="过往经验，成功案例"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_cehuashi"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="策划师" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_cehuashi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="过往经验、成功案例"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_paishe_count"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="拍摄张数" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_paishe_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="精修x张，底版几张"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_huazhuangping"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="化妆品" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/et_huazhuangping"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="使用品牌"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp"
+
+            />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
+
+    <LinearLayout
+        android:id="@+id/ll_type_title"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:id="@+id/tv_type_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="图片类型" />
+
+        <TextView
+            android:id="@+id/tv_immage_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical|right"
+            android:hint="请选择图片类型"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
+
+    <LinearLayout
+        android:id="@+id/ll_region"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <cn.hym.superlib.widgets.view.RequiredTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            app:required="false"
+            app:requiredText="所在地区" />
+
+        <TextView
+            android:id="@+id/tv_region"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_arrow_right"
+            android:gravity="center_vertical|right"
+            android:hint="请选择所在地区"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
+</LinearLayout>

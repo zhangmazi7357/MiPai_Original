@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--九州项目-->
+    <color name="jiuzhou_orange">#e98563</color>
+    <color name="jiuzhou_orange_dark">#cc6e4e</color>
+    <!--九州项目-->
+    <color name="mipaiTextColorSelect">#a3926c</color>
+    <color name="mipaiTextColorNormal">#616161</color>
+    <color name="btn_press_color">#efede8</color>
+    <color name="f3ebd8">#f3ebd8</color>
+    <!--通用颜色-->
+    <color name="resource_white">@android:color/white</color>
+    <color name="resource_orange_f9f1ef">#f9f1ef</color>
+    <color name="resource_orange_f2927e">#f2927e</color>
+    <color name="resource_yellow_f2deb3">#f2deb3</color>
+    <color name="resource_blue_cdd7ec">#cdd7ec</color>
+    <color name="resource_green_35c561">#35c561</color>
+    <color name="resource_purple_aeaeca">#aeaeca</color>
+    <color name="resource_gray_585858">#585858</color>
+    <color name="resource_gray_dac6bb">#dac6bb</color>
+    <color name="resource_gray_a0a0a0">#a0a0a0</color>
+    <color name="resource_gray_efefef">#efefef</color>
+    <color name="resource_gray_e1e1e1">#e1e1e1</color>
+    <color name="resource_gray_b9b9b9">#b9b9b9</color>
+    <color name="resource_gray_f6f6f6">#f6f6f6</color>
+    <color name="resource_gray_d1d1d1">#d1d1d1</color>
+    <color name="resource_gray_9c9c9c">#9c9c9c</color>
+    <color name="resource_gray_323232">#323232</color>
+    <color name="resource_gray_f1f1f1">#f1f1f1</color>
+
+
+    <!--通用颜色-->
+</resources>
