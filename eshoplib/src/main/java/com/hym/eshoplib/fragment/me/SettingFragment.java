@@ -29,6 +29,8 @@ import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.rong.imkit.RongIM;
@@ -118,24 +120,19 @@ public class SettingFragment extends BaseKitFragment {
                 start(AboutMipaiFragment.newInstance(new Bundle()));
                 break;
             case R.id.btn_logout:
-                showDialog("提示", "您确定要退出登录么",
-                        new DialogUtil.OnDialogHandleListener() {
-                            @Override
-                            public void onCancleClick(SweetAlertDialog sDialog) {
-                                sDialog.dismiss();
 
+                DialogManager.getInstance().initSimpleDialog(getContext(), "提示",
+                        "您确定要退出吗", "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
                             }
 
                             @Override
-                            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                sDialog.dismiss();
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
 
-                                //退出登录
-//                        UserUtil.setIsLogin(_mActivity,false);
-//                        UserUtil.saveToken(_mActivity,"");
-//                        ToastUtil.toast("退出登录成功");
-//                        _mActivity.finish();
-
+                                // 退出登录 ;
                                 LoginApi.logOut(_mActivity, new ResponseImpl<LocalTokenBean>() {
                                     @Override
                                     public void onSuccess(LocalTokenBean data) {
@@ -153,15 +150,11 @@ public class SettingFragment extends BaseKitFragment {
                                 }, LocalTokenBean.class);
 
                             }
-                        });
+                        }).show();
+
+
                 break;
         }
     }
 
-    private void showDialog(String title, String message, DialogUtil.OnDialogHandleListener listener) {
-        String confirm = getResources().getString(R.string.Confirm);
-        String cancle = getResources().getString(R.string.Cancel);
-        Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, title, message, cancle, confirm, listener);
-        pDialog.show();
-    }
 }

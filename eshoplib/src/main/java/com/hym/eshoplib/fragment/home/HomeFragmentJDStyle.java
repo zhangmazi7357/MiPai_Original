@@ -7,16 +7,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,9 +16,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -122,8 +119,10 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     @BindView(R.id.tv_left)
     TextView tvLeft;
+
     @BindView(R.id.et_search)
     ClearEditText etSearch;
+
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.fl_search)
@@ -185,8 +184,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     MarqueeView simpleMarqueeView;
     LinearLayoutManager linearLayoutManager;
     public int firstVisibleItem, lastVisibleItem, visibleCount;
-    private List<String> listTitles = new ArrayList<>();
-    private List<Fragment> fragments = new ArrayList<>();
     BaseListAdapter<HomeVadieoListBean.DataBean.VideoBean> adapter;
     List<HomeDataBean.DataBean.BannerBean> bannerBeen;
     List<HomeDataBean.DataBean.AgencyBean> agencyBeen;
@@ -200,16 +197,9 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     String key = "first_guide";
     private FirstPagerShopItemAdapter firstPagerShopItemAdapter;
     private TextView etInput;
-    private PopupWindow popupWindow;
     private TextView tvForMe;
     private ArrayList<SpecialTimeLimteBean.DataBean> firstPagerShopBeans;
-    private ArrayList<SpecialTimeLimteBean.DataBean> underList;
-    private TabFragment fragmentComment;
-    private TabFragment fragmentTakePhoto;
-    private TabFragment fragmentTakeVideo;
-    private CommentForMeBean commentForMeData;
-    private int itemHeight;
-    private int selectedPosition;
+
     private int tabSelect = 1;
     private static final int RLCOMMENT = 1;
     private static final int PHOTO = 2;
@@ -222,7 +212,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     private int commentPage;
     private int takePhotoPage;
     private int videoPger;
-    private SmartRefreshLayout footerRefrsh;
 
 
     public static HomeFragmentJDStyle newInstance(Bundle args) {
@@ -259,7 +248,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         // initrecyclerview();
         initRecycleview();
 
-        setlisteners();
+        setListeners();
 
         initMap();
 
@@ -419,7 +408,9 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         firstPagerShopBeans.add(dataBean1);
 
         firstPagerShopItemAdapter = new FirstPagerShopItemAdapter(firstPagerShopBeans);
+        // 一大溜作为 headerView
         View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_home_function_btns, null, false);
+
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.home_item_footer_view, null, false);
         findViews(header);
         initfooter(footer);
@@ -432,6 +423,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
         ScreenUtil.ViewAdapter(_mActivity, fl_banner, 16, 9);
 
+        //首页多布局 Adapter 点击事件
         firstPagerShopItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -518,20 +510,26 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         });
     }
 
+    // 获取到商品详情然后跳转到商品详情页;
     private void shopDetail(String case_id) {
+
         HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
             @Override
             public void onSuccess(GoodDetailModel data) {
                 if (data.getData().getType().equals("1")) {
+
                     Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
                     bundle.putSerializable("data", data);
                     bundle.putString("title", "产品详情");
+
                     ActionActivity.start(_mActivity, bundle);
                 } else if (data.getData().getType().equals("2")) {
+
                     Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopDetail);
                     bundle.putSerializable("data", data);
                     bundle.putString("title", "产品详情");
                     ActionActivity.start(_mActivity, bundle);
+
                 }
             }
 
@@ -734,13 +732,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 }
             }
         }
-//        else if(Rom.isVivo()){
-//            //vivo
-//            Logger.d("vivo");
-//        }else if(Rom.isOppo()){
-//            //oppo
-//            Logger.d("oppo");
-//        }
+
 
         if (!TextUtils.isEmpty(url)) {
             final Uri uri = Uri.parse(url);
@@ -819,8 +811,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }
     }
 
-
-    //跑马灯
+    //banner 左下角有个 “世界广播” 跑马灯
     private void initMarqueen() {
         final List<String> datas = new ArrayList<>();
         HomeApi.GetAccept(new ResponseImpl<TipsMessageBean>() {
@@ -833,27 +824,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             }
         }, TipsMessageBean.class);
     }
-
-//    private void initnewsMarqueen() {
-//        if (agencyBeen == null) {
-//            return;
-//        }
-//        final List<String> datas = new ArrayList<>();
-//        for (HomeDataBean.DataBean.AgencyBean bean : agencyBeen) {
-//            datas.add(bean.getTitle() + "");
-//        }
-//        newMarquee.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position, TextView textView) {
-//                Bundle bundle = getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_news_detail);
-//                bundle.putSerializable("data2", agencyBeen.get(position));
-//                ActionActivity.startForresult(HomeFragmentJDStyle.this, bundle,0x01);
-//            }
-//        });
-//        newMarquee.startWithList(datas);
-//
-//
-//    }
 
 
     private void updateBanner() {
@@ -927,7 +897,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         banner.update(data);*/
     }
 
-    private void setlisteners() {
+    private void setListeners() {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -1107,39 +1077,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         tvFunction9 = header.findViewById(R.id.ll_function_tab_9);
         tvFunction10 = header.findViewById(R.id.ll_function_tab_10);
 
-/*        TextView tvFunction1= header.findViewById(R.id.tv_function_1);
-        TextView tvFunction2= header.findViewById(R.id.tv_function_2);
-        TextView tvFunction3= header.findViewById(R.id.tv_function_3);
-        TextView tvFunction4= header.findViewById(R.id.tv_function_4);
-        TextView tvFunction5= header.findViewById(R.id.tv_function_5);
-        TextView tvFunction6= header.findViewById(R.id.tv_function_6);
-        TextView tvFunction7= header.findViewById(R.id.tv_function_7);
-        TextView tvFunction8= header.findViewById(R.id.tv_function_8);
-        TextView tvFunction9= header.findViewById(R.id.tv_function_9);
-        TextView tvFunction10= header.findViewById(R.id.tv_function_10);
 
-        tvFunction1.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction2.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction3.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction4.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction5.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction6.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction7.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction8.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction9.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvFunction10.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));*/
-
-        /*int height = (ScreenUtil.getScreenWidth(_mActivity) - ScreenUtil.dip2px(_mActivity, 4)) / 5;
-        tvFunction1.getLayoutParams().height = height;
-        tvFunction2.getLayoutParams().height = height;
-        tvFunction3.getLayoutParams().height = height;
-        tvFunction4.getLayoutParams().height = height;
-        tvFunction5.getLayoutParams().height = height;
-        tvFunction6.getLayoutParams().height = height;
-        tvFunction7.getLayoutParams().height = height;
-        tvFunction8.getLayoutParams().height = height;
-        tvFunction9.getLayoutParams().height = height;
-        tvFunction10.getLayoutParams().height = height;*/
         // setFunctionName();
         tv_more_news = header.findViewById(R.id.tv_more_news);
         tv_more_vadieos = header.findViewById(R.id.tv_more_vadieo);
@@ -1150,7 +1088,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         simpleMarqueeView = header.findViewById(R.id.simpleMarqueeView);
         fl_banner = header.findViewById(R.id.fl_banner);
         needsMarqueen = header.findViewById(R.id.upview1);
-        LinearLayout llayout = header.findViewById(R.id.ll_input);
         etInput = header.findViewById(R.id.et_input);
         tvForMe = header.findViewById(R.id.tv_for_me);
         //tvNeedTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
@@ -1181,10 +1118,11 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         for (int i = 0; i < data.size(); i = i + 2) {
             final int position = i;
             //设置滚动的单个布局
-            LinearLayout moreView = (LinearLayout) LayoutInflater.from(_mActivity).inflate(R.layout.item_view, null);
+            LinearLayout moreView = (LinearLayout) LayoutInflater.from(_mActivity)
+                    .inflate(R.layout.item_view, null);
             //初始化布局的控件
-            TextView tv1 = (TextView) moreView.findViewById(R.id.tv1);
-            TextView tv2 = (TextView) moreView.findViewById(R.id.tv2);
+            TextView tv1 = moreView.findViewById(R.id.tv1);
+            TextView tv2 = moreView.findViewById(R.id.tv2);
 
             /**
              * 设置监听
@@ -1194,7 +1132,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 public void onClick(View view) {
                     Bundle bundle = getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_news_detail);
                     bundle.putSerializable("data2", agencyBeen.get(position));
-                    ActionActivity.startForresult(HomeFragmentJDStyle.this, bundle, 0x01);
+                    ActionActivity.startForResult(HomeFragmentJDStyle.this, bundle, 0x01);
 
                 }
             });
@@ -1207,12 +1145,12 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     if (data.size() > position + 1) {
                         Bundle bundle = getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_news_detail);
                         bundle.putSerializable("data2", agencyBeen.get(position + 1));
-                        ActionActivity.startForresult(HomeFragmentJDStyle.this, bundle, 0x01);
+                        ActionActivity.startForResult(HomeFragmentJDStyle.this, bundle, 0x01);
                         // ToastUtil.toast(position + "你点击了" + data.get(position + 1).toString());
                     } else {
                         Bundle bundle = getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_news_detail);
                         bundle.putSerializable("data2", agencyBeen.get(0));
-                        ActionActivity.startForresult(HomeFragmentJDStyle.this, bundle, 0x01);
+                        ActionActivity.startForResult(HomeFragmentJDStyle.this, bundle, 0x01);
                         // ToastUtil.toast(position + "你点击了" + data.get(0).toString());
 
                     }
@@ -1235,26 +1173,10 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         needsMarqueen.setViews(views);
     }
 
-/*
-    private void setFunctionName() {
-        tvFunction1.setText(StringConstants.tab_1);
-        tvFunction2.setText(StringConstants.tab_2);
-        tvFunction3.setText(StringConstants.tab_3);
-        tvFunction4.setText(StringConstants.tab_4);
-        tvFunction5.setText(StringConstants.tab_5);
-        tvFunction6.setText(StringConstants.tab_6);
-        tvFunction7.setText(StringConstants.tab_7);
-        tvFunction8.setText(StringConstants.tab_8);
-        tvFunction9.setText(StringConstants.tab_9);
-        tvFunction10.setText(StringConstants.tab_10);
-
-
-    }
-*/
 
     int p = 1;
 
-    public void getVadieoList(final boolean refresh, final int pageNum) {
+    public void getVideoList(final boolean refresh, final int pageNum) {
 
         if (SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true)) {
             new Handler().postDelayed(new Runnable() {
@@ -1312,6 +1234,8 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
+        //这个...
         HomeApi.GetAdvert(new ResponseImpl<HomeDataBean>() {
             @Override
             public void onStart(int mark) {
@@ -1338,12 +1262,15 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 refreshLayout.finishRefresh(true);//传入false表示刷新失败
                 //banner
                 bannerBeen = data.getData().getBanner();
+
                 updateBanner();
                 //需求中心
                 agencyBeen = data.getData().getAgency();
+
+                // 跑马灯 搞两行
                 setViewTwoLines();
                 //initnewsMarqueen();
-                //获取预约
+                //限时特惠
                 initSpecialTimeLimteData();
                 if (tabSelect == 1) {
                     initHomeComment(1);
@@ -1352,23 +1279,28 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 } else if (tabSelect == 3) {
                     initVideoData(1);
                 }
+                //为我推荐
                 initCommentForMe();
+
+                // Banner 左下角的跑马灯 ;
                 initMarqueen();
+                // 显示需要引导的高亮布局
                 checkFirst(4);
                 hasinit = true;
                 //获取产品
                 p = 1;
-                //  getVadieoList(true, p);
+                //  getVideoList(true, p);
 
             }
 
             @Override
-            public void onDataError(String status, String errormessage) {
-                super.onDataError(status, errormessage);
+            public void onDataError(String status, String errorMessage) {
+                super.onDataError(status, errorMessage);
                 if (refreshLayout == null) {
                     return;
                 }
-                refreshLayout.finishRefresh(false);//传入false表示刷新失败
+
+                refreshLayout.finishRefresh(false);     //传入false表示刷新失败
             }
 
             @Override
@@ -1391,6 +1323,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, HomeDataBean.class);
     }
 
+    // 首页推荐
     private void initHomeComment(final int page) {
         commentPage = page;
         HomeApi.getHomeCommentData(page, new ResponseImpl<SpecialTimeLimteBean>() {
@@ -1415,6 +1348,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, SpecialTimeLimteBean.class);
     }
 
+    // 首页拍照片
     private void initHomeTakePhoto(int page) {
         takePhotoPage = page;
         HomeApi.getTakePhotoData(page, new ResponseImpl<SpecialTimeLimteBean>() {
@@ -1441,6 +1375,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, SpecialTimeLimteBean.class);
     }
 
+    // 首页拍视频
     private void initVideoData(final int page) {
         videoPger = page;
         HomeApi.getTakeVedioData(page, new ResponseImpl<SpecialTimeLimteBean>() {
@@ -1471,6 +1406,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, SpecialTimeLimteBean.class);
     }
 
+    // 觅拍严选
     private void initSelectData() {
         HomeApi.getStrictSelectData(1 + "", new ResponseImpl<SpecialTimeLimteBean>() {
 
@@ -1503,6 +1439,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, SpecialTimeLimteBean.class);
     }
 
+    // 中间部分 为我推荐
     private void initCommentForMe() {
         GoodsApi.getCommentForMeData(new ResponseImpl<CommentForMeBean>() {
             @Override
@@ -1531,6 +1468,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, CommentForMeBean.class);
     }
 
+    // 限时特惠
     private void initSpecialTimeLimteData() {
         HomeApi.getSpecialTimeLimteData(1 + "", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
@@ -1557,15 +1495,16 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }, SpecialTimeLimteBean.class);
     }
 
+    // 显示引导页   使用布局高亮 ;
     private void checkFirst(int guide) {
         /**
-         *  1. 广告片+diy既     s1=1   s2=2  引导=文案策划+导演+摄像师+剪辑师+演员/模特+化妆师 guide=1
-         *  2.宣传片+diy 既     s1=2  s2=2   引导=导演+摄像师+剪辑师+演员/模特+化妆师          guide=2
-         *  3.电商视频+diy 既  s1=3  s2=2   引导=摄像师+剪辑师+演员/模特+化妆师                guide=3
-         *  4.个人视频+diy 既  s1=4  s2=2   引导=摄像师+剪辑师+化妆师                          guide=4
-         *  5,视频团队                                                                         guide=5
-         *  6.第一个跳过第二个算则diy s1=0 s2=2 引导=导演+摄像师+剪辑师                        guide=6
-         *  0.不引导                                                                           guide=0
+         *  1.广告片+diy既     s1=1   s2=2   引导 = 文案策划+导演+摄像师+剪辑师+演员/模特+化妆师    guide=1
+         *  2.宣传片+diy 既     s1=2  s2=2   引导 = 导演+摄像师+剪辑师+演员/模特+化妆师           guide=2
+         *  3.电商视频+diy 既  s1=3  s2=2   引导 = 摄像师+剪辑师+演员/模特+化妆师                guide=3
+         *  4.个人视频+diy 既  s1=4  s2=2   引导 = 摄像师+剪辑师+化妆师                         guide=4
+         *  5,视频团队                                                                   guide=5
+         *  6.第一个跳过第二个算则diy s1=0 s2=2 引导=导演+摄像师+剪辑师                         guide=6
+         *  0.不引导                                                                     guide=0
          *
          *
          */
@@ -1690,24 +1629,21 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
+
+        // 布局中间部分 tab 默认选择第一个 “推荐”
         tabSelect = 1;
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     private HighLight mHightLight, mHightLight2;
 
     @Override
     public void onClick(View v) {
 
+        // 布局靠上网格布局中的 职位;
         int type = 1;
         switch (v.getId()) {
             case R.id.ll_function_tab_1:
@@ -1748,7 +1684,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         bundle.putInt("type", type);
         ActionActivity.start(_mActivity, bundle);
 
-
     }
 
     @Override
@@ -1765,6 +1700,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         Jzvd.releaseAllVideos();
     }
 
+    // 自动播放视频
     private void autoPlayVideo(RecyclerView view) {
         if (!JCUtils.isWifiConnected(getContext()) || SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true) == false) {
             return;
@@ -1809,19 +1745,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         Jzvd.releaseAllVideos();
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        simpleMarqueeView.startFlipping();
-//        newMarquee.startFlipping();
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        simpleMarqueeView.stopFlipping();
-//        newMarquee.stopFlipping();
-//    }
 
     @Override
     public void onSupportVisible() {
@@ -1835,24 +1758,19 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             ivToolbarRight.setVisibility(View.INVISIBLE);
 
         }
-//        if(!simpleMarqueeView.isFlipping()){
-//            simpleMarqueeView.startFlipping();
-//        }
-//        if(!newMarquee.isFlipping()){
-//            newMarquee.startFlipping();
-//        }
+
         simpleMarqueeView.startFlipping();
-        //newMarquee.startFlipping();
+
         needsMarqueen.startFlipping();
 
-        //initMarqueen();
-        //newMarquee.startFlipping();
+
     }
 
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
         Jzvd.releaseAllVideos();
+
         simpleMarqueeView.stopFlipping();
         // newMarquee.stopFlipping();
         needsMarqueen.stopFlipping();
@@ -1909,7 +1827,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void changeLogin(LoginEvent event) {
         ivToolbarRight.setVisibility(View.INVISIBLE);
-        //更新新闻 改变点赞状态
+
         HomeApi.getHomeData(new ResponseImpl<HomeDataBean>() {
 
             @Override
@@ -1922,9 +1840,11 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        unbinder.unbind();
         mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
         mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
     }

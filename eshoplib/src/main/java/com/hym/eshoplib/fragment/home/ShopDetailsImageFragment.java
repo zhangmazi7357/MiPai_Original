@@ -220,6 +220,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         tvReport.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvReport.getPaint().setAntiAlias(true);//抗锯齿
         tvBeforePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+
         mShareListener = new CustomShareListener(_mActivity);
 
         mShareAction = new ShareAction(_mActivity)
@@ -240,14 +241,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         rlCollection.setOnClickListener(this);
         tvAddShoppingcart.setOnClickListener(this);
         tvGoPay.setOnClickListener(this);
-     /*   bean = (NewsListBean.DataBean.InfoBean) getArguments().getSerializable("data");
-        bean2 = (HomeDataBean.DataBean.AgencyBean) getArguments().getSerializable("data2");
-        btnJoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startChat();
-            }
-        });*/
+
     }
 
     @Override
@@ -363,14 +357,10 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             }
         });
 
-       /* View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_image_detail, null, false);
-        //tv_title = header.findViewById(R.id.tv_title);
-        //tv_see_time = header.findViewById(R.id.tv_see_time);
-        adapter.addHeaderView(header);*/
         rvList.setAdapter(adapter);
         List<String> attachment = data.getData().getAttachment();
         adapter.setNewData(attachment);
-        // Glide.with(_mActivity).load(data.getData().getImage_default()).into(bnShop);
+
         HomeApi.getDetailComment("2", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(final SpecialTimeLimteBean data) {
@@ -424,6 +414,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             }
         }, SpecialTimeLimteBean.class);
 
+        // 分享按钮;
         setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -456,20 +447,6 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         });
 
 
-/*        rvView.setLayoutManager(new LinearLayoutManager(_mActivity, LinearLayoutManager.VERTICAL, false));
-        ArrayList<BasicInfo> al = new ArrayList<>();
-        BasicInfo f1 = new BasicInfo();
-        BasicInfo f2 = new BasicInfo();
-        BasicInfo f3 = new BasicInfo();
-        BasicInfo f4 = new BasicInfo();
-        BasicInfo f5 = new BasicInfo();
-        al.add(f1);
-        al.add(f2);
-        al.add(f3);
-        al.add(f4);
-        al.add(f5);
-        TakeInfoAdapter takeInfoAdapter = new TakeInfoAdapter(R.layout.take_item, al);
-        rvView.setAdapter(takeInfoAdapter);*/
     }
 
     private void showRing(int childCount, long round) {
@@ -740,6 +717,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
     }
 
+    // 付款的回调监听 ;
     private GoToPayDialogInterface listener = new GoToPayDialogInterface() {
         @Override
         public void getCoutn(int count) {
@@ -772,25 +750,31 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_add_shoppingcart:
+            case R.id.tv_add_shoppingcart:        // 加入购物车，现在是隐藏状态
                 showSelectTypeDialog(1);
                 break;
-            case R.id.tv_go_pay:
+            case R.id.tv_go_pay:            // 付款
                 if (db == null) {
                     ToastUtils.show("数据异常,请稍后再试");
                 }
-                MipaiDialogUtil.showGoToPayDialog(_mActivity, db.getPresent_price(), db.getTitle(), listener);
+                MipaiDialogUtil.showGoToPayDialog(_mActivity,
+                        db.getPresent_price(),
+                        db.getTitle(),
+                        listener);
                 // showSelectTypeDialog(2);
                 break;
-            case R.id.tv_report:
+            case R.id.tv_report:    // 举报
 
                 break;
             case R.id.rl_click_workhome:
-                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopDetail);
+
+                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
+                        ActionActivity.Action_ShopDetail);
                 bundle.putString("id", db.getContent_id());
                 ActionActivity.start(_mActivity, bundle);
+
                 break;
-            case R.id.rl_contact_him:
+            case R.id.rl_contact_him:     // 联系客服
                 if (data == null) {
                     ToastUtil.toast("数据异常");
                     return;
@@ -836,13 +820,14 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
                 }
                 break;
-            case R.id.rl_call_phone:
+            case R.id.rl_call_phone:            // 打电话
                 if (!TextUtils.isEmpty(data.getData().getTel())) {
                     Intent Intent = new Intent(android.content.Intent.ACTION_DIAL, Uri.parse("tel:" + data.getData().getTel()));
                     startActivity(Intent);
                 }
                 break;
-            case R.id.rl_collection:
+            case R.id.rl_collection:    //收藏按钮 ;
+
                 ShopApi.AddFavorite(data.getData().getContent_id(), "case", new ResponseImpl<AddFavouriteBean>() {
                     @Override
                     public void onSuccess(AddFavouriteBean data) {
@@ -861,6 +846,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
     }
 
+    // 开通 VIP
     private void getVipStatus(final MedetailBean data) {
         message_dialog = new MessageDialog.Builder(_mActivity).
                 setTitle("温馨提示").
@@ -892,7 +878,9 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
     private void share(MedetailBean data) {
         //分享到朋友圈
-        ShareAction mShareAction = new ShareAction(_mActivity).setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE);
+        ShareAction mShareAction = new ShareAction(_mActivity)
+                .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE);
+
         ShareBoardConfig config = new ShareBoardConfig();
         config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
 

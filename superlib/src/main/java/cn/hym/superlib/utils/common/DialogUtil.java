@@ -76,6 +76,7 @@ public class DialogUtil {
              @NonNull String cancleText,
              @NonNull String confirmText,
              final OnDialogHandleListener listener) {
+
         final SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
         pDialog.setTitleText(title);
         pDialog.setContentText(content);

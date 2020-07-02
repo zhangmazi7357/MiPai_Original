@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.me.Openshop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,8 @@ import android.os.Message;
 import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +38,12 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.DialogUtil;
+import cn.hym.superlib.utils.common.dialog.DialogView;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -183,6 +189,8 @@ public class OpenShopStep1 extends BaseKitFragment {
 
             }
         };
+
+
         isEdit = getArguments().getBoolean("isedit", false);
         SoftHideKeyBoardUtil.assistActivity(_mActivity);
         showBackButton();
@@ -642,18 +650,8 @@ public class OpenShopStep1 extends BaseKitFragment {
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您的信息尚未提交，确定退出吗？（点击“下一步”可保存当前页）", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
 
-            }
-
-            @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                _mActivity.finish();
-
-            }
-        }).show();
+        exitDialog();
         return true;
 
     }
@@ -687,4 +685,27 @@ public class OpenShopStep1 extends BaseKitFragment {
         }
 
     }
+
+    private void exitDialog() {
+        DialogManager.getInstance()
+                .initSimpleDialog(_mActivity,
+                        "提示",
+                        "确定退出吗",
+                        "取消",
+                        "确定",
+                        new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                _mActivity.finish();
+                            }
+                        }).show();
+
+
+    }
+
 }

@@ -134,7 +134,7 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
         from.startActivity(intent);
     }
 
-    public static void startForresult(Activity from, Bundle args, int reqCode) {
+    public static void startForResult(Activity from, Bundle args, int reqCode) {
         Intent intent = new Intent(from, ActionActivity.class);
         if (args != null) {
             intent.putExtras(args);
@@ -142,7 +142,7 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
         from.startActivityForResult(intent, reqCode);
     }
 
-    public static void startForresult(Fragment from, Bundle args, int reqCode) {
+    public static void startForResult(Fragment from, Bundle args, int reqCode) {
         Intent intent = new Intent(from.getActivity(), ActionActivity.class);
         if (args != null) {
             intent.putExtras(args);
@@ -196,10 +196,10 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                 case Action_guide:
                     fragment = GuideFragment_step_1.newInstance(getIntent().getExtras());
                     break;
-                case ShopDetail:
+                case ShopDetail:    // 图片商品详情 ;
                     fragment = ShopDetailsImageFragment.newInstance(getIntent().getExtras());
                     break;
-                case ShopVideoDetail:
+                case ShopVideoDetail:  // 视频商品详情;
                     fragment = ShopDetailsVideoFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Need_search:
@@ -214,7 +214,7 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                 case Action_ShopList:
                     fragment = ShopListFragment.newInstance(getIntent().getExtras());
                     break;
-                case Action_ShopDetail:
+                case Action_ShopDetail:   // 跳到工作室
                     fragment = GoodsDetaiFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_OrderDetail:

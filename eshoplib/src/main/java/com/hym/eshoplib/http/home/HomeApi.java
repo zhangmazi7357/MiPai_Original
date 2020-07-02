@@ -76,7 +76,6 @@ public class HomeApi {
         postFirstPager(request,"0",listener,clazz);
     }
 
-
     //觅拍严选
     public static <T>void getStrictSelectData(String page,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
@@ -128,6 +127,7 @@ public class HomeApi {
         post(request,listener,clazz);
 
     }
+
     //获取系统消息
     public static <T>void GetSystemMsg(String p,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
@@ -139,6 +139,7 @@ public class HomeApi {
         post(request,listener,clazz);
 
     }
+
     //定位区域切换
     public static <T>void ChangeRegion(String region_name,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
@@ -158,6 +159,7 @@ public class HomeApi {
         post(request,listener,clazz);
 
     }
+
     //获取订单消息
     public static <T>void GetMsg(String p,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
@@ -169,6 +171,7 @@ public class HomeApi {
         post(request,listener,clazz);
 
     }
+
     //消息已读
     public static <T>void ReadMsg(String msg_id,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();

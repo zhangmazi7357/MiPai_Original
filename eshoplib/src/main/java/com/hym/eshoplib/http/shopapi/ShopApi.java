@@ -24,6 +24,7 @@ import static cn.hym.superlib.utils.http.ApiExcuter.postTest;
  */
 
 public class ShopApi {
+
     //获取店铺信息
     public static <T> void getShopDetail(IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
@@ -572,7 +573,6 @@ public class ShopApi {
     /**
      * 详情页立即支付生成订单
      */
-
     public static <T>void CreateDetailOrder(Context context, String content_id, String buy_num, String case_id,
                                             IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();

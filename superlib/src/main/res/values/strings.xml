@@ -3,4 +3,7 @@
     <!--本地存储语言pref_key-->
     <string name="app_language_pref_key" translatable="false">app_language_pref_key</string>
 
+    <string name="share_cancel">取消分享</string>
+    <string name="share_platform">选择要分享的平台</string>
+
 </resources>

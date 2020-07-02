@@ -410,75 +410,7 @@
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
-                    <!-- <TextView
-                         android:id="@+id/tv_function_8"
-                         android:layout_width="0dp"
-                         android:layout_height="75dp"
-                         android:layout_weight="1"
-                         android:background="@drawable/selector_function_tab"
-                         android:drawableRight="@drawable/shape_diver_right"
-                         android:drawableTop="@drawable/ic_function_tab_8"
-                         android:gravity="center"
-                         android:paddingTop="5dp"
-                         android:text="照片摄影师"
-                         android:textColor="@color/black"
-                         android:textSize="12sp" />
 
-                     <TextView
-                         android:id="@+id/tv_function_6"
-                         android:layout_width="0dp"
-                         android:layout_height="75dp"
-                         android:layout_weight="1"
-                         android:background="@drawable/selector_function_tab"
-                         android:drawableRight="@drawable/shape_diver_right"
-                         android:drawableTop="@drawable/ic_function_tab_6"
-                         android:gravity="center"
-                         android:paddingTop="5dp"
-                         android:text="动画师"
-                         android:textColor="@color/black"
-                         android:textSize="12sp" />
-
-                     <TextView
-                         android:id="@+id/tv_function_7"
-                         android:layout_width="0dp"
-                         android:layout_height="75dp"
-                         android:layout_weight="1"
-                         android:background="@drawable/selector_function_tab"
-                         android:drawableRight="@drawable/shape_diver_right"
-                         android:drawableTop="@drawable/ic_function_tab_7"
-                         android:gravity="center"
-                         android:paddingTop="5dp"
-                         android:text="平面设计师"
-                         android:textColor="@color/black"
-                         android:textSize="12sp" />
-
-                     <TextView
-                         android:id="@+id/tv_function_1"
-                         android:layout_width="0dp"
-                         android:layout_height="75dp"
-                         android:layout_weight="1"
-                         android:background="@drawable/selector_function_tab"
-                         android:drawableBottom="@drawable/shape_diver_bottom"
-                         android:drawableRight="@drawable/shape_diver_right"
-                         android:drawableTop="@drawable/ic_function_tab_1"
-                         android:gravity="center"
-                         android:paddingTop="5dp"
-                         android:text="策划文案"
-                         android:textColor="@color/black"
-                         android:textSize="12sp" />
-
-                     <TextView
-                         android:id="@+id/tv_function_10"
-                         android:layout_width="0dp"
-                         android:layout_height="75dp"
-                         android:layout_weight="1"
-                         android:background="@drawable/selector_function_tab"
-                         android:drawableTop="@drawable/ic_function_tab_10"
-                         android:gravity="center"
-                         android:paddingTop="5dp"
-                         android:text="化妆师"
-                         android:textColor="@color/black"
-                         android:textSize="12sp" />-->
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

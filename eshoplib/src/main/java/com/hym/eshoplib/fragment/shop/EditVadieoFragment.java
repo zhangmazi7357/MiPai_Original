@@ -244,7 +244,7 @@ public class EditVadieoFragment extends BaseKitFragment {
             public void onClick(View v) {
                 Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectIndustry);
                 bundle.putString("type","1");
-                ActionActivity.startForresult(EditVadieoFragment.this, bundle,0x11);
+                ActionActivity.startForResult(EditVadieoFragment.this, bundle,0x11);
 
             }
         });
@@ -255,7 +255,7 @@ public class EditVadieoFragment extends BaseKitFragment {
             public void onClick(View v) {
                 Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectIndustry);
                 bundle.putString("type","2");
-                ActionActivity.startForresult(EditVadieoFragment.this, bundle,0x22);
+                ActionActivity.startForResult(EditVadieoFragment.this, bundle,0x22);
             }
         });
         tv_region=footer.findViewById(R.id.tv_region);
@@ -264,7 +264,7 @@ public class EditVadieoFragment extends BaseKitFragment {
             public void onClick(View v) {
                 Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectRegion);
                 bundle.putString("id",region_id);
-                ActionActivity.startForresult(EditVadieoFragment.this, bundle,0x33);
+                ActionActivity.startForResult(EditVadieoFragment.this, bundle,0x33);
             }
         });
         LinearLayout llOther = footer.findViewById(R.id.ll_other);

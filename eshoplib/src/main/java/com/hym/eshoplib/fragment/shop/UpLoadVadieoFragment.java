@@ -239,7 +239,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
                 // bundle.putString("id",industry_id);
                 bundle.putString("type", "1");
-                ActionActivity.startForresult(UpLoadVadieoFragment.this, bundle, 0x11);
+                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x11);
 
             }
         });
@@ -251,7 +251,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
                 // bundle.putString("id",industry_id);
                 bundle.putString("type", "2");
-                ActionActivity.startForresult(UpLoadVadieoFragment.this, bundle, 0x22);
+                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x22);
             }
         });
         tv_region = footer.findViewById(R.id.tv_region);
@@ -260,7 +260,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             public void onClick(View v) {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectRegion);
                 bundle.putString("id", region_id);
-                ActionActivity.startForresult(UpLoadVadieoFragment.this, bundle, 0x33);
+                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x33);
             }
         });
         LinearLayout llOther = footer.findViewById(R.id.ll_other);

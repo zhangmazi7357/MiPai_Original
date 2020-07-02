@@ -19,7 +19,7 @@
                 android:id="@+id/rv_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_weight="1"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

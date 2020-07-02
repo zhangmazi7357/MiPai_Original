@@ -1,10 +1,12 @@
 package com.hym.eshoplib.fragment.shop;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -268,9 +270,9 @@ public class ShopListFragment extends BaseKitFragment {
                     tv_male.setTextColor(ContextCompat.getColor(_mActivity, R.color.black));
                     et_min_age.getText().clear();
                     et_max_age.getText().clear();
-                    gender="";
-                    age_min="";
-                    age_max="";
+                    gender = "";
+                    age_min = "";
+                    age_max = "";
                 }
             });
             btn_confirm.setOnClickListener(new View.OnClickListener() {
@@ -300,9 +302,7 @@ public class ShopListFragment extends BaseKitFragment {
                 popupViews.add(view4);
             }
             //Logger.d("popsize="+popupViews.size()+",,header="+headers.size());
-            view2.setOnItemClickListener(new AdapterView.OnItemClickListener()
-
-            {
+            view2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //order=排序类别-非必须(1：时间，2：价格，3：好频率，4：星级，默认时间)
@@ -344,9 +344,7 @@ public class ShopListFragment extends BaseKitFragment {
                     goSearch();
                 }
             });
-            view3.setOnItemClickListener(new AdapterView.OnItemClickListener()
-
-            {
+            view3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     categoryAdapter.setCheckItem(position);
@@ -367,7 +365,7 @@ public class ShopListFragment extends BaseKitFragment {
             //init dropdownview
             dropDownMenu.setDropDownMenu(headers, popupViews, contentView);
             Bundle bundle = new Bundle();
-            bundle.putInt("type",current_type);
+            bundle.putInt("type", current_type);
             //fragment = ShopSourceListFragment.newInstance(getArguments());
             fragment = ShopSourceListFragment.newInstance(bundle);
             loadRootFragment(R.id.fl_fragment_container, fragment);

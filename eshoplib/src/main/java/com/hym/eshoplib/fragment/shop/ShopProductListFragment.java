@@ -108,7 +108,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
                                 bundle.putString("token", token);
                                 bundle.putString("cateId",getArguments().getString("cateId"));
-                                ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x01);
+                                ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
                             }
 
@@ -118,7 +118,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadImage);
                                 bundle.putString("token", token);
                                 bundle.putString("cateId",getArguments().getString("cateId"));
-                                ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x01);
+                                ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
                             }
                         });
@@ -220,14 +220,14 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                             bundle.putString("token", token);
                             bundle.putString("id", item.getCase_id());
                             bundle.putString("cateId",getArguments().getString("cateId"));
-                            ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x02);
+                            ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x02);
                         } else {
 
                             bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Edit_image);
                             bundle.putString("token", token);
                             bundle.putString("id", item.getCase_id());
                             bundle.putString("cateId",getArguments().getString("cateId"));
-                            ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x02);
+                            ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x02);
                         }
 
 
