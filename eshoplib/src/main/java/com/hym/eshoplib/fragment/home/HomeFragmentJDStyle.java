@@ -811,7 +811,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         }
     }
 
-    //banner 左下角有个 “世界广播” 跑马灯
+    //banner 左下角有个 “世界广播” 跑马灯  。。。。。
     private void initMarqueen() {
         final List<String> datas = new ArrayList<>();
         HomeApi.GetAccept(new ResponseImpl<TipsMessageBean>() {

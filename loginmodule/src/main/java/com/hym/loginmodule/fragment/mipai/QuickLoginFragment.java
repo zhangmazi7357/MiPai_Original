@@ -33,6 +33,7 @@ import cn.hym.superlib.utils.view.ScreenUtil;
  */
 
 public class QuickLoginFragment extends BaseLoginFragment {
+
     public static QuickLoginFragment newInstance(Bundle args) {
         QuickLoginFragment fragment = new QuickLoginFragment();
         fragment.setArguments(args);
