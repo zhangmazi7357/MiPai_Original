@@ -1,185 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <TextView
+        android:id="@+id/tv_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:textColor="#ff0000"
-        android:id="@+id/tv_tips"
         android:text="未通过"
+        android:textColor="#ff0000"
         android:textSize="12sp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f1f1f1"/>
+                android:background="#f1f1f1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="工作室头像"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    app:requiredText="工作室头像" />
+
                 <ImageView
+                    android:id="@+id/iv_upload_image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:id="@+id/iv_upload_image"
-                    android:src="@drawable/ic_upload_image"
                     android:layout_marginRight="10dp"
-                    />
+                    android:src="@drawable/ic_upload_image" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#f1f1f1"/>
+                android:background="#f1f1f1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="工作室名称"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="工作室名称" />
+
                 <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
                     android:id="@+id/et_name"
-                    android:hint="请输入工作室名称（1-16个字符）"
-                    android:textColorHint="#9c9c9c"
-                    android:textColor="@color/black"
-                    android:background="@null"
-                    android:textSize="12sp"
-                    android:maxLength="16"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#e1e1e1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
-                <cn.hym.superlib.widgets.view.RequiredTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:requiredText="工作室类别"
-                    android:gravity="center_vertical"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:background="@null"
                     android:gravity="center_vertical|right"
-                    android:id="@+id/tv_type"
-                    android:hint="请选择工作室类别"
+                    android:hint="请输入工作室名称（1-16个字符）"
+                    android:maxLength="16"
+                    android:textColor="@color/black"
                     android:textColorHint="#9c9c9c"
-                    android:textColor="#9c9c9c"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    />
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                />
+                android:background="#e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
-                <cn.hym.superlib.widgets.view.RequiredTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:requiredText="服务价格"
-                    android:gravity="center_vertical"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:layout_weight="1"
-                    android:id="@+id/tv_price"
-                    android:textColorHint="#9c9c9c"
-                    android:textColor="@color/black"
-                    android:drawableRight="@drawable/ic_arrow_right"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#e1e1e1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="所在城市"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="工作室类别" />
+
                 <TextView
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/tv_city"
-                    android:hint="请选择所在城市"
-                    android:textColorHint="#9c9c9c"
-                    android:textColor="@color/black"
-                    android:drawableRight="@drawable/ic_arrow_right"
                     android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    />
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择工作室类别"
+                    android:textColor="#9c9c9c"
+                    android:textColorHint="#9c9c9c"
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <cn.hym.superlib.widgets.view.RequiredTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    app:requiredText="服务价格" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/black"
+                    android:textColorHint="#9c9c9c"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <cn.hym.superlib.widgets.view.RequiredTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    app:requiredText="所在城市" />
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择所在城市"
+                    android:textColor="@color/black"
+                    android:textColorHint="#9c9c9c"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

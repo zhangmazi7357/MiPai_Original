@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.httplib.interfaces.IHttpResultListener;
 
 import java.util.Map;
@@ -94,6 +95,9 @@ public class ShopApi {
 
         request.AddParems("email", email);
         request.AddParems("attachment", attachment);
+
+        Log.e("ShopApi", "申请工作室 :" + new JSONObject().get(request).toString());
+
         post(request, listener, clazz);
 
     }
@@ -124,6 +128,8 @@ public class ShopApi {
 
         request.addParamsNotEmpty("email", email);
         request.addParamsNotEmpty("attachment", attachment);
+
+        Log.e("ShopApi", "EditShop: " + new JSONObject().get(request).toString());
         post(request, listener, clazz);
 
     }
@@ -269,7 +275,7 @@ public class ShopApi {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("NewAddProduction");
-        request.AddParems("token",UserUtil.getToken(App.instance));
+        request.AddParems("token", UserUtil.getToken(App.instance));
         request.AddParems("type", "2");
         request.addParamsNotEmpty("image_default", image_default);
         request.addParamsNotEmpty("attachment", attachment);
@@ -279,23 +285,23 @@ public class ShopApi {
         request.addParamsNotEmpty("region_id", region_id);
         request.addParamsNotEmpty("other", other);
 
-        request.AddParems("present_price",etPrice);
-        request.addParamsNotEmpty("original_price",originalPrice) ;
+        request.AddParems("present_price", etPrice);
+        request.addParamsNotEmpty("original_price", originalPrice);
         request.addParamsNotEmpty("staffing", staffing);
-        request.addParamsNotEmpty("shooting_time",shootingTime);
-        request.addParamsNotEmpty("equipment", equipment) ;
+        request.addParamsNotEmpty("shooting_time", shootingTime);
+        request.addParamsNotEmpty("equipment", equipment);
         request.addParamsNotEmpty("introduce", introduce);
         request.addParamsNotEmpty("details", detail);
-        request.addParamsNotEmpty("remarks", remarks) ;
+        request.addParamsNotEmpty("remarks", remarks);
 
-        request.addParamsNotEmpty("tyid", tyid) ;
-        request.addParamsNotEmpty("times", time) ;
-        request.addParamsNotEmpty("nums", paisheCount) ;
-        request.addParamsNotEmpty("dresser", huazhuang) ;
-        request.addParamsNotEmpty("photographer", sheyingshi) ;
-        request.addParamsNotEmpty("designer", shejishi) ;
-        request.addParamsNotEmpty("planner", cehua) ;
-        request.addParamsNotEmpty("cosmetics", huazhuangping) ;
+        request.addParamsNotEmpty("tyid", tyid);
+        request.addParamsNotEmpty("times", time);
+        request.addParamsNotEmpty("nums", paisheCount);
+        request.addParamsNotEmpty("dresser", huazhuang);
+        request.addParamsNotEmpty("photographer", sheyingshi);
+        request.addParamsNotEmpty("designer", shejishi);
+        request.addParamsNotEmpty("planner", cehua);
+        request.addParamsNotEmpty("cosmetics", huazhuangping);
 
         post(request, listener, clazz);
 
@@ -323,23 +329,23 @@ public class ShopApi {
         request.addParamsNotEmpty("other", other);
         request.addParamsNotEmpty("length", length);
 
-        request.AddParems("present_price",etPrice);
-        request.addParamsNotEmpty("original_price",originalPrice) ;
+        request.AddParems("present_price", etPrice);
+        request.addParamsNotEmpty("original_price", originalPrice);
         request.addParamsNotEmpty("staffing", staffing);
-        request.addParamsNotEmpty("shooting_time",shootingTime);
-        request.addParamsNotEmpty("equipment", equipment) ;
+        request.addParamsNotEmpty("shooting_time", shootingTime);
+        request.addParamsNotEmpty("equipment", equipment);
         request.addParamsNotEmpty("introduce", introduce);
         request.addParamsNotEmpty("details", detail);
-        request.addParamsNotEmpty("remarks", remarks) ;
+        request.addParamsNotEmpty("remarks", remarks);
 
-        request.addParamsNotEmpty("tyid", tyid) ;
-        request.addParamsNotEmpty("times", time) ;
-        request.addParamsNotEmpty("nums", paisheCount) ;
-        request.addParamsNotEmpty("dresser", huazhuang) ;
-        request.addParamsNotEmpty("photographer", sheyingshi) ;
-        request.addParamsNotEmpty("designer", shejishi) ;
-        request.addParamsNotEmpty("planner", cehua) ;
-        request.addParamsNotEmpty("cosmetics", huazhuangping) ;
+        request.addParamsNotEmpty("tyid", tyid);
+        request.addParamsNotEmpty("times", time);
+        request.addParamsNotEmpty("nums", paisheCount);
+        request.addParamsNotEmpty("dresser", huazhuang);
+        request.addParamsNotEmpty("photographer", sheyingshi);
+        request.addParamsNotEmpty("designer", shejishi);
+        request.addParamsNotEmpty("planner", cehua);
+        request.addParamsNotEmpty("cosmetics", huazhuangping);
         post(request, listener, clazz);
 
     }
@@ -363,23 +369,23 @@ public class ShopApi {
         request.addParamsNotEmpty("other", other);
         request.addParamsNotEmpty("length", length);
 
-        request.AddParems("present_price",etPrice);
-        request.addParamsNotEmpty("original_price",originalPrice) ;
+        request.AddParems("present_price", etPrice);
+        request.addParamsNotEmpty("original_price", originalPrice);
         request.addParamsNotEmpty("staffing", staffing);
-        request.addParamsNotEmpty("shooting_time",shootingTime);
-        request.addParamsNotEmpty("equipment", equipment) ;
+        request.addParamsNotEmpty("shooting_time", shootingTime);
+        request.addParamsNotEmpty("equipment", equipment);
         request.addParamsNotEmpty("introduce", introduce);
         request.addParamsNotEmpty("details", detail);
-        request.addParamsNotEmpty("remarks", remarks) ;
+        request.addParamsNotEmpty("remarks", remarks);
 
-        request.addParamsNotEmpty("tyid", tyid) ;
-        request.addParamsNotEmpty("times", time) ;
-        request.addParamsNotEmpty("nums", paisheCount) ;
-        request.addParamsNotEmpty("dresser", huazhuang) ;
-        request.addParamsNotEmpty("photographer", sheyingshi) ;
-        request.addParamsNotEmpty("designer", shejishi) ;
-        request.addParamsNotEmpty("planner", cehua) ;
-        request.addParamsNotEmpty("cosmetics", huazhuangping) ;
+        request.addParamsNotEmpty("tyid", tyid);
+        request.addParamsNotEmpty("times", time);
+        request.addParamsNotEmpty("nums", paisheCount);
+        request.addParamsNotEmpty("dresser", huazhuang);
+        request.addParamsNotEmpty("photographer", sheyingshi);
+        request.addParamsNotEmpty("designer", shejishi);
+        request.addParamsNotEmpty("planner", cehua);
+        request.addParamsNotEmpty("cosmetics", huazhuangping);
 
         post(request, listener, clazz);
 
@@ -407,23 +413,23 @@ public class ShopApi {
         request.addParamsNotEmpty("other", other);
         request.addParamsNotEmpty("length", length);
 
-        request.AddParems("present_price",etPrice);
-        request.addParamsNotEmpty("original_price",originalPrice) ;
+        request.AddParems("present_price", etPrice);
+        request.addParamsNotEmpty("original_price", originalPrice);
         request.addParamsNotEmpty("staffing", staffing);
-        request.addParamsNotEmpty("shooting_time",shootingTime);
-        request.addParamsNotEmpty("equipment", equipment) ;
+        request.addParamsNotEmpty("shooting_time", shootingTime);
+        request.addParamsNotEmpty("equipment", equipment);
         request.addParamsNotEmpty("introduce", introduce);
         request.addParamsNotEmpty("details", detail);
-        request.addParamsNotEmpty("remarks", remarks) ;
+        request.addParamsNotEmpty("remarks", remarks);
 
-        request.addParamsNotEmpty("tyid", tyid) ;
-        request.addParamsNotEmpty("times", time) ;
-        request.addParamsNotEmpty("nums", paisheCount) ;
-        request.addParamsNotEmpty("dresser", huazhuang) ;
-        request.addParamsNotEmpty("photographer", sheyingshi) ;
-        request.addParamsNotEmpty("designer", shejishi) ;
-        request.addParamsNotEmpty("planner", cehua) ;
-        request.addParamsNotEmpty("cosmetics", huazhuangping) ;
+        request.addParamsNotEmpty("tyid", tyid);
+        request.addParamsNotEmpty("times", time);
+        request.addParamsNotEmpty("nums", paisheCount);
+        request.addParamsNotEmpty("dresser", huazhuang);
+        request.addParamsNotEmpty("photographer", sheyingshi);
+        request.addParamsNotEmpty("designer", shejishi);
+        request.addParamsNotEmpty("planner", cehua);
+        request.addParamsNotEmpty("cosmetics", huazhuangping);
 
         //  request.addParamsNotEmpty("tyid", "4");
         // request.addParamsNotEmpty("present_price ", "1元");
@@ -573,23 +579,23 @@ public class ShopApi {
     /**
      * 详情页立即支付生成订单
      */
-    public static <T>void CreateDetailOrder(Context context, String content_id, String buy_num, String case_id,
-                                            IHttpResultListener<T> listener, Class<T> clazz){
-        HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
+    public static <T> void CreateDetailOrder(Context context, String content_id, String buy_num, String case_id,
+                                             IHttpResultListener<T> listener, Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Activity");
         request.setClassName("NewAdd");
         request.AddParems("token", UserUtil.getToken(context));
-        request.AddParems("type","1");//参数类型  1:立即购买，2:购物车-必须
-        request.AddParems("content_id",content_id);
-        request.AddParems("num",buy_num);
-        request.AddParems("category","1");
-        request.AddParems("cid",case_id);
+        request.AddParems("type", "1");//参数类型  1:立即购买，2:购物车-必须
+        request.AddParems("content_id", content_id);
+        request.AddParems("num", buy_num);
+        request.AddParems("category", "1");
+        request.AddParems("cid", case_id);
 /*
         if(!TextUtils.isEmpty(coupon_log_id)){
             request.AddParems("coupon_log_id",coupon_log_id);
         }
 */
-        post(request,listener,clazz);
+        post(request, listener, clazz);
 
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 public class PhotoUtil {
 
 
-    public static final int REQUEST_CODE_CAMARA=0x111;//请求码 拍照
+    public static final int REQUEST_CODE_CAMERA =0x111;//请求码 拍照
     public static final int REQUEST_CODE_GALARY=0x222;//请求码 手机相册
 
     public static void ShowDialog(final Fragment from , final int limt, final boolean isCrop,int type){
@@ -75,7 +75,7 @@ public class PhotoUtil {
                         .showCropGrid(true)
                         .openClickSound(true)
                         .selectionMedia(selectList)
-                        .forResult(REQUEST_CODE_CAMARA);
+                        .forResult(REQUEST_CODE_CAMERA);
 
             }
 
@@ -127,7 +127,7 @@ public class PhotoUtil {
               PicturesActivity.Start (
                       from,
                       PicturesActivity.TYPE_CAMERA,
-                      REQUEST_CODE_CAMARA,
+                      REQUEST_CODE_CAMERA,
                       limt,
                       isCrop);
 
@@ -177,7 +177,7 @@ public class PhotoUtil {
                         .showCropGrid(true)
                         .openClickSound(true)
                         .selectionMedia(selectList)
-                        .forResult(REQUEST_CODE_CAMARA);
+                        .forResult(REQUEST_CODE_CAMERA);
 
             }
 
@@ -247,7 +247,7 @@ public class PhotoUtil {
             datas=(ArrayList<TImage>)result.getSerializableExtra("images");
             switch (requestCode){
                 //相机
-                case REQUEST_CODE_CAMARA:
+                case REQUEST_CODE_CAMERA:
                     if(listener!=null){
                         listener.onResultCamara(datas);
                     }
@@ -268,9 +268,9 @@ public class PhotoUtil {
             datas= (ArrayList<LocalMedia>) result.getSerializableExtra(PictureConfig.EXTRA_RESULT_SELECTION);
             switch (requestCode){
                 //相机
-                case REQUEST_CODE_CAMARA:
+                case REQUEST_CODE_CAMERA:
                     if(listener!=null){
-                        listener.onResultCamara(datas);
+                        listener.onResultCamera(datas);
                     }
                     break;
                 //相册
@@ -289,7 +289,7 @@ public class PhotoUtil {
     }
     //使用pictureselecttor实现
     public interface OnImageResult2{
-        void onResultCamara(ArrayList<LocalMedia> resultCamara);
+        void onResultCamera(ArrayList<LocalMedia> resultCamara);
         void onResultGalary(ArrayList<LocalMedia> resultGalary);
     }
     public static String getFilePash(LocalMedia media){

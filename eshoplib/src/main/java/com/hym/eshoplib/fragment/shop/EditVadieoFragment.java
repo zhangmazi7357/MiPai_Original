@@ -703,7 +703,7 @@ public class EditVadieoFragment extends BaseKitFragment {
 //                   });
                    PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                        @Override
-                       public void onResultCamara(ArrayList<LocalMedia> resultCamara) {
+                       public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
                            File[] files;
                            ArrayList<File> arr = new ArrayList<>();
                            String url = PhotoUtil.getFilePash(resultCamara.get(0));

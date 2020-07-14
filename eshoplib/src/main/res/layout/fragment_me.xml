@@ -21,33 +21,34 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_godetail"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:id="@+id/rl_godetail">
+                    android:paddingRight="15dp">
 
                     <FrameLayout
+                        android:id="@+id/fl_avatar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/fl_avatar"
                         android:layout_centerVertical="true">
+
                         <ImageView
                             android:id="@+id/iv_avatar"
                             android:layout_width="66dp"
                             android:layout_height="66dp"
                             android:layout_marginRight="25dp"
-                            android:src="@drawable/ic_default_avantar"
-                            />
+                            android:src="@drawable/ic_default_avantar" />
+
                         <ImageView
+                            android:id="@+id/iv_vip"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:id="@+id/iv_vip"
                             android:layout_gravity="bottom"
                             android:layout_marginLeft="45dp"
-                            android:src="@drawable/ic_business_circle"/>
+                            android:src="@drawable/ic_business_circle" />
                     </FrameLayout>
 
 
@@ -59,83 +60,86 @@
                         android:layout_toRightOf="@id/fl_avatar"
                         android:text=""
                         android:textColor="@color/black" />
+
                     <me.zhanghai.android.materialratingbar.MaterialRatingBar
                         android:id="@+id/ratingbar"
-                        android:layout_toRightOf="@id/fl_avatar"
-                        android:layout_centerVertical="true"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@id/fl_avatar"
                         android:clickable="false"
                         android:isIndicator="true"
                         android:maxHeight="18dp"
                         android:minHeight="18dp"
                         android:rating="5"
                         android:stepSize="0.5"
+                        android:visibility="gone"
                         app:mrb_progressBackgroundTint="#f9b743"
                         app:mrb_progressTint="#f9b743"
-                        app:mrb_secondaryProgressTint="#f9b743"
-                        android:visibility="gone"/>
+                        app:mrb_secondaryProgressTint="#f9b743" />
 
                     <!--<me.zhanghai.android.materialratingbar.MaterialRatingBar-->
-                        <!--android:id="@+id/ratingbar"-->
-                        <!--android:layout_width="80dp"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_toRightOf="@id/iv_avatar"-->
-                        <!--android:maxHeight="18dp"-->
-                        <!--android:minHeight="18dp"-->
-                        <!--android:rating="5"-->
-                        <!--android:stepSize="5"-->
-                        <!--app:mrb_progressBackgroundTint="#f9b743"-->
-                        <!--app:mrb_progressTint="#f9b743"-->
-                        <!--app:mrb_secondaryProgressTint="#f9b743"-->
-                        <!--android:visibility="gone"-->
-                        <!--/>-->
+                    <!--android:id="@+id/ratingbar"-->
+                    <!--android:layout_width="80dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_toRightOf="@id/iv_avatar"-->
+                    <!--android:maxHeight="18dp"-->
+                    <!--android:minHeight="18dp"-->
+                    <!--android:rating="5"-->
+                    <!--android:stepSize="5"-->
+                    <!--app:mrb_progressBackgroundTint="#f9b743"-->
+                    <!--app:mrb_progressTint="#f9b743"-->
+                    <!--app:mrb_secondaryProgressTint="#f9b743"-->
+                    <!--android:visibility="gone"-->
+                    <!--/>-->
 
                     <LinearLayout
+                        android:id="@+id/ll_function"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_alignBottom="@id/fl_avatar"
                         android:layout_toRightOf="@id/fl_avatar"
-                        android:id="@+id/ll_function">
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tv_function"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:textSize="12sp"
                             android:textColor="@color/mipaiTextColorSelect"
-                            />
+                            android:textSize="12sp" />
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.75dp"
                             android:layout_marginTop="2dp"
-                            android:background="@color/mipaiTextColorSelect"/>
+                            android:background="@color/mipaiTextColorSelect" />
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/ll_preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_toRightOf="@id/ll_function"
                         android:layout_alignBottom="@id/fl_avatar"
                         android:layout_marginLeft="10dp"
-                        android:visibility="gone"
-                        android:id="@+id/ll_preview">
+                        android:layout_toRightOf="@id/ll_function"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
                         <TextView
+                            android:id="@+id/tv_preview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="进入我的工作室"
                             android:textColor="@color/mipaiTextColorSelect"
-                            android:textSize="12sp"
-                            android:id="@+id/tv_preview"
-                            />
+                            android:textSize="12sp" />
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.75dp"
                             android:layout_marginTop="2dp"
-                            android:background="@color/mipaiTextColorSelect"/>
+                            android:background="@color/mipaiTextColorSelect" />
                     </LinearLayout>
 
                     <ImageView
@@ -144,10 +148,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_arrow_right"
                         android:paddingLeft="20dp"
                         android:paddingTop="20dp"
-                        android:paddingBottom="20dp"/>
+                        android:paddingBottom="20dp"
+                        android:src="@drawable/ic_arrow_right" />
                 </RelativeLayout>
 
                 <com.allen.library.SuperTextView
@@ -176,68 +180,66 @@
                         android:id="@+id/tv_order_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_order_1"
-                        android:text="待接受预约"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="12sp"
                         android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:text="待接受预约"
                         android:textColor="@color/black"
-                        />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_order_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_order_2"
-                        android:text="待付款"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="12sp"
                         android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:text="待付款"
                         android:textColor="@color/black"
-                       />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_order_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_order_3"
-                        android:text="待收货"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="12sp"
                         android:drawablePadding="10dp"
-                        android:textColor="@color/black"/>
+                        android:gravity="center"
+                        android:text="待收货"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_order_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_order_4"
-                        android:text="评价"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="12sp"
                         android:drawablePadding="10dp"
-                        android:textColor="@color/black"/>
+                        android:gravity="center"
+                        android:text="评价"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_order_5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_order_5"
-                        android:text="退款/售后"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:textSize="12sp"
                         android:drawablePadding="10dp"
-                        android:textColor="@color/black"/>
+                        android:gravity="center"
+                        android:text="退款/售后"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <com.allen.library.SuperTextView
@@ -276,6 +278,7 @@
                     app:sLeftTextString="邀请码"
                     app:sRightTextColor="@color/mipaiTextColorSelect"
                     app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
+
                 <com.allen.library.SuperTextView
                     android:id="@+id/tv_auth"
                     android:layout_width="match_parent"
@@ -306,19 +309,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
                     android:background="@color/white">
+
                     <TextView
                         android:id="@+id/tv_tv_service_3"
                         style="@style/common_tv_style"
-                        android:maxLines="5"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="发布需求请联系客服\n\n 400-900-5957"/>
+                        android:maxLines="5"
+                        android:text="发布需求请联系客服\n\n 400-900-5957" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="25dp"
-                        android:background="#e1e1e1"
-                        android:layout_marginTop="18dp"/>
+                        android:layout_marginTop="18dp"
+                        android:background="#e1e1e1" />
 
                     <TextView
                         android:id="@+id/tv_tv_service_2"
@@ -327,20 +331,21 @@
                         android:layout_weight="1"
                         android:drawableTop="@drawable/ic_custom_service"
                         android:text="在线客服" />
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="25dp"
-                        android:background="#e1e1e1"
-                        android:layout_marginTop="18dp"/>
+                        android:layout_marginTop="18dp"
+                        android:background="#e1e1e1" />
+
                     <TextView
                         android:id="@+id/tv_service_1"
                         style="@style/common_tv_style"
-                        android:maxLines="5"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="需求投递至邮箱 \n\n 271883554@qq.com"
-                        />
+                        android:maxLines="5"
+                        android:text="需求投递至邮箱 \n\n 271883554@qq.com" />
 
                 </LinearLayout>
             </LinearLayout>
