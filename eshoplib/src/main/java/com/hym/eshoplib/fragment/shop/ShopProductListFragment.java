@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -92,7 +94,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
             public void onClick(View v) {
                 hideSoftInput();
                 //避免软键盘没收起时跳入新界面BUG
-                if(TextUtils.isEmpty(token)){
+                if (TextUtils.isEmpty(token)) {
                     ToastUtil.toast("数据或网络异常，请下拉刷新数据后重试");
                     return;
                 }
@@ -107,7 +109,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                                 dialog.dismiss();
                                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
                                 bundle.putString("token", token);
-                                bundle.putString("cateId",getArguments().getString("cateId"));
+                                bundle.putString("cateId", getArguments().getString("cateId"));
                                 ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
                             }
@@ -117,7 +119,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                                 dialog.dismiss();
                                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadImage);
                                 bundle.putString("token", token);
-                                bundle.putString("cateId",getArguments().getString("cateId"));
+                                bundle.putString("cateId", getArguments().getString("cateId"));
                                 ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
                             }
@@ -177,13 +179,13 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
 
             @Override
             public void dataRes(int code, String data) {
-               // super.dataRes(code, data);
-                Logger.d("sourceData="+data);
-                ShopProductsBean bean=JSON.parseObject(data,ShopProductsBean.class);
+                // super.dataRes(code, data);
+                Logger.d("sourceData=" + data);
+                ShopProductsBean bean = JSON.parseObject(data, ShopProductsBean.class);
                 id = bean.getData().getStore_id();
                 token = bean.getData().getQiniu_token();
                 type = getProducionsType(id);
-                Logger.d("id="+id+",token="+token);
+                Logger.d("id=" + id + ",token=" + token);
             }
         }, ShopProductsBean.class);
 
@@ -219,14 +221,14 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                             bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Edit_vadieo);
                             bundle.putString("token", token);
                             bundle.putString("id", item.getCase_id());
-                            bundle.putString("cateId",getArguments().getString("cateId"));
+                            bundle.putString("cateId", getArguments().getString("cateId"));
                             ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x02);
                         } else {
 
                             bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Edit_image);
                             bundle.putString("token", token);
                             bundle.putString("id", item.getCase_id());
-                            bundle.putString("cateId",getArguments().getString("cateId"));
+                            bundle.putString("cateId", getArguments().getString("cateId"));
                             ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x02);
                         }
 

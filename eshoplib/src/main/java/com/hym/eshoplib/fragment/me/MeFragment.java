@@ -346,7 +346,9 @@ public class MeFragment extends BaseKitFragment {
         switch (view.getId()) {
             case R.id.iv_avatar:
                 //头像
-                goUserCenter();
+//                goUserCenter();
+
+
                 break;
             case R.id.iv_go_Userdetail:
                 //右箭头
@@ -541,5 +543,6 @@ public class MeFragment extends BaseKitFragment {
         });
 
     }
+
 
 }

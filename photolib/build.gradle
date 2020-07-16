@@ -26,8 +26,10 @@ dependencies {
     androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'androidx.appcompat:appcompat:1.0.0'
+    compile 'androidx.appcompat:appcompat:1.1.0'
     testCompile 'junit:junit:4.12'
     compile project(':takephoto_library')
-    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    // PictureSelector；
+//    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
 }

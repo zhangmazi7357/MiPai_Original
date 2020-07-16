@@ -1,79 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/ll_root"
+    android:orientation="vertical"
     android:paddingTop="10dp">
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/fl"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <ImageView
+            android:id="@+id/iv_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:id="@+id/iv_icon"
-            android:scaleType="centerCrop"
             android:layout_margin="5dp"
-            />
+            android:scaleType="centerCrop" />
+
         <ImageView
+            android:id="@+id/iv_delete"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="right|top"
-            android:id="@+id/iv_delete"
-            android:src="@drawable/ic_close_x_red"/>
+            android:src="@drawable/ic_close_x_red" />
+
         <TextView
+            android:id="@+id/tv_time_long"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00:10"
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:id="@+id/tv_time_long"
+            android:drawableLeft="@drawable/ic_launcher"
             android:drawablePadding="5dp"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/video_icon"
-            />
+            android:text="00:10"
+            android:textColor="@color/white" />
+
         <com.allen.library.SuperButton
+            android:id="@+id/tv_main_image"
             android:layout_width="match_parent"
             android:layout_height="18dp"
-            android:textColor="@color/white"
-            android:text="@string/Mainimage"
             android:layout_gravity="bottom"
-            android:id="@+id/tv_main_image"
             android:gravity="center"
+            android:text="@string/Mainimage"
+            android:textColor="@color/white"
             android:textSize="12sp"
-            app:sSolidColor="@color/jiuzhou_orange"
+            android:visibility="gone"
             app:sCornersBottomLeftRadius="3dp"
             app:sCornersBottomRightRadius="3dp"
-            android:visibility="gone"/>
+            app:sSolidColor="@color/jiuzhou_orange" />
+
         <LinearLayout
+            android:id="@+id/ll_uploading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/ll_uploading"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/tv_percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:textColor="#c5c5c5"
                 android:gravity="center"
-                android:id="@+id/tv_percent"/>
+                android:textColor="#c5c5c5"
+                android:textSize="10sp" />
+
             <ProgressBar
+                android:id="@+id/progressbar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:max="100"
-                android:id="@+id/progressbar"
-                />
+                android:layout_marginRight="10dp"
+                android:max="100" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

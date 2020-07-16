@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +88,7 @@ public class MeDetailFragment extends BaseKitFragment {
     SuperTextView tvInvoice;
     private TimePickerView pvTime;
     MedetailBean bean;
+
     public static MeDetailFragment newInstance(Bundle args) {
         MeDetailFragment fragment = new MeDetailFragment();
         fragment.setArguments(args);
@@ -139,10 +142,10 @@ public class MeDetailFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        MeApi.getUserinfo("",new ResponseImpl<MedetailBean>() {
+        MeApi.getUserinfo("", new ResponseImpl<MedetailBean>() {
             @Override
             public void onSuccess(MedetailBean data) {
-                bean=data;
+                bean = data;
                 ImageUtil.getInstance().loadCircleImage(MeDetailFragment.this, data.getData().getAvatar(), ivHeadIcon);
                 tvName.setText(data.getData().getNickname() + "");
                 tvSex.setText(data.getData().getGender().equals("1") ? genders.get(0) : genders.get(1));
@@ -174,9 +177,9 @@ public class MeDetailFragment extends BaseKitFragment {
                 .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("年", "月", "日", "", "", "")
                 .isCenterLabel(false)
-                .setCancelColor(ContextCompat.getColor(_mActivity,R.color.mipaiTextColorSelect))
-                .setSubmitColor(ContextCompat.getColor(_mActivity,R.color.mipaiTextColorSelect))
-                .setTitleText("请选择出生年月日").setTitleColor(ContextCompat.getColor(_mActivity,R.color.mipaiTextColorNormal))
+                .setCancelColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect))
+                .setSubmitColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect))
+                .setTitleText("请选择出生年月日").setTitleColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorNormal))
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)
                 .setDate(endDate)
@@ -202,11 +205,12 @@ public class MeDetailFragment extends BaseKitFragment {
     }
 
 
-    @OnClick({R.id.rl_head_icon, R.id.rl_name, R.id.rl_sex, R.id.rl_age,R.id.tv_address, R.id.tv_invoice})
+    @OnClick({R.id.rl_head_icon, R.id.rl_name, R.id.rl_sex, R.id.rl_age, R.id.tv_address, R.id.tv_invoice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_head_icon:
-                PhotoUtil.ShowDialog(MeDetailFragment.this, 1, true,2);
+                PhotoUtil.ShowDialog(MeDetailFragment.this, 1, true, 2);
+//                PhotoManager.getInstance(_mActivity).showDialog();
                 break;
             case R.id.rl_name:
                 Bundle bundle = new Bundle();
@@ -224,8 +228,8 @@ public class MeDetailFragment extends BaseKitFragment {
 
                     }
                 });
-                builder .setCancelColor(ContextCompat.getColor(_mActivity,R.color.mipaiTextColorSelect))
-                        .setSubmitColor(ContextCompat.getColor(_mActivity,R.color.mipaiTextColorSelect));
+                builder.setCancelColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect))
+                        .setSubmitColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect));
                 //builder.setCancelColor(ContextCompat.getColor(_mActivity, R.color.gray));
                 //builder.setSubmitColor(ContextCompat.getColor(_mActivity, R.color.red));
                 pickerView = new OptionsPickerView(builder);
@@ -331,29 +335,29 @@ public class MeDetailFragment extends BaseKitFragment {
     }
 
     private void updateUserInfo(final String userName, final String gender, final String phone, final String age, final int type) {
-       // showProgressDialog();
+        // showProgressDialog();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 switch (type) {
-                            case 1:
-                                //修改昵称
-                                tvName.setText(userName);
-                                break;
-                            case 2:
-                                //修改性别
-                                if (gender.equals("1")) {
-                                    tvSex.setText(genders.get(0));
-                                }
-                                if (gender.equals("2")) {
-                                    tvSex.setText(genders.get(1));
-                                }
-                                break;
-                            case 4:
-                                //修改年龄
-                                tvAge.setText(age);
-                                break;
+                    case 1:
+                        //修改昵称
+                        tvName.setText(userName);
+                        break;
+                    case 2:
+                        //修改性别
+                        if (gender.equals("1")) {
+                            tvSex.setText(genders.get(0));
                         }
+                        if (gender.equals("2")) {
+                            tvSex.setText(genders.get(1));
+                        }
+                        break;
+                    case 4:
+                        //修改年龄
+                        tvAge.setText(age);
+                        break;
+                }
                 MeApi.updateUserInfo(userName, gender, phone, age, new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
@@ -396,14 +400,13 @@ public class MeDetailFragment extends BaseKitFragment {
         MeApi.updateUserHeadIcon(files, new ResponseImpl<ChangeAvantarBean>() {
             @Override
             public void onSuccess(ChangeAvantarBean data) {
-                if(bean!=null){
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserid(),bean.getData().getNickname() , Uri.parse(data.getData().getAvatar())));
+                if (bean != null) {
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(bean.getData().getUserid(), bean.getData().getNickname(), Uri.parse(data.getData().getAvatar())));
                 }
                 ToastUtil.toast("头像更新成功");
             }
         }, ChangeAvantarBean.class);
     }
-
 
 
 }

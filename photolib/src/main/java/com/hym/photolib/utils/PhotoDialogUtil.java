@@ -20,9 +20,9 @@ public class PhotoDialogUtil {
     protected static Dialog getSelectDialog(Context mContext, final onSelectPhotoType listener){
         final Dialog dialog= new Dialog(mContext, R.style.TakePhotoStyle);
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_take_photo_dialog, null);
-        TextView tv_concle= (TextView) view.findViewById(R.id.tv_cancle);
+        TextView tv_concle= (TextView) view.findViewById(R.id.tv_cancel);
         TextView tv_camera=(TextView)view.findViewById(R.id.tv_camera);
-        TextView tv_galary=(TextView)view.findViewById(R.id.tv_galary);
+        TextView tv_galary=(TextView)view.findViewById(R.id.tv_gallery);
         tv_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

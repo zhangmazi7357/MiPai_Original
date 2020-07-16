@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/shape_round_white"
-        android:layout_above="@id/tv_cancle"
+        android:layout_above="@id/tv_cancel"
         >
         <TextView
             android:layout_width="match_parent"

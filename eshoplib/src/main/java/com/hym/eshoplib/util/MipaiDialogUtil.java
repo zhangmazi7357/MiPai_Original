@@ -88,7 +88,7 @@ public class MipaiDialogUtil {
         if (listener_ok != null) {
             btn_ok.setOnClickListener(listener_ok);
         }
-        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancle);
+        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancel);
         if (!TextUtils.isEmpty(title)) {
             tv_cancle.setText(title);
         }
@@ -139,7 +139,7 @@ public class MipaiDialogUtil {
         if (!TextUtils.isEmpty(rightstr)) {
             btn_ok.setText(rightstr);
         }
-        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancle);
+        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancel);
         if (!showCancleIcon) {
             tv_cancle.setCompoundDrawables(null, null, null, null);
         }
@@ -300,7 +300,7 @@ public class MipaiDialogUtil {
     public static Dialog getAuthDialog(Context mContext, String title, String msg, final OnBtnSlectListener listener) {
         dialog = new Dialog(mContext, R.style.TakePhotoStyle);
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_auth_dialog, null);
-        TextView tv_concle = (TextView) view.findViewById(R.id.tv_cancle);
+        TextView tv_concle = (TextView) view.findViewById(R.id.tv_cancel);
         TextView tv_camera = (TextView) view.findViewById(R.id.tv_1);
         TextView tv_galary = (TextView) view.findViewById(R.id.tv_2);
         TextView tv_title = view.findViewById(R.id.tv_title);

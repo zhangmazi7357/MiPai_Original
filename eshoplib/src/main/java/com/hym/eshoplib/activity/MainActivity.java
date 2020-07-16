@@ -74,8 +74,7 @@ public class MainActivity extends BaseMainActivity {
     @Override
     public SupportFragment[] getSupportFragments() {
         fragments = new SupportFragment[5];
-        fragments[0] = HomeFragmentJDStyle.newInstance(getIntent().getExtras() == null ?
-                new Bundle() : getIntent().getExtras());
+        fragments[0] = HomeFragmentJDStyle.newInstance(getIntent().getExtras() == null ? new Bundle() : getIntent().getExtras());
         fragments[1] = MessageMainFragment.newInstance(getIntent().getExtras() == null ? new Bundle() : getIntent().getExtras());
         fragments[2] = TestFragment.newInstance(getIntent().getExtras() == null ? new Bundle() : getIntent().getExtras());
         fragments[3] = ShoppingcartFragment.newInstance(getIntent().getExtras() == null ? new Bundle() : getIntent().getExtras());

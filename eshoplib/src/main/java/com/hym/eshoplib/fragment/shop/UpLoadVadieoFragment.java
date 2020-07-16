@@ -1,13 +1,16 @@
 package com.hym.eshoplib.fragment.shop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +51,12 @@ import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.rong.common.FileUtils;
 
-import static com.luck.picture.lib.tools.DateUtils.timeParseMinute;
 
 /**
  * Created by 胡彦明 on 2018/9/11.
@@ -149,7 +154,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             }
         };
         qiniuToken = getArguments().getString("token", "");
-        Logger.d("传递的token="+qiniuToken);
+        Logger.d("传递的token=" + qiniuToken);
         setShowProgressDialog(false);
         showBackButton();
         setTitle("上传视频");
@@ -287,11 +292,11 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
 
-        RequiredTextView rs =  footer.findViewById(R.id.rtv_service);
+        RequiredTextView rs = footer.findViewById(R.id.rtv_service);
         rs.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rl =  footer.findViewById(R.id.rtv_location);
+        RequiredTextView rl = footer.findViewById(R.id.rtv_location);
         rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp =  footer.findViewById(R.id.rtv_price);
+        RequiredTextView rp = footer.findViewById(R.id.rtv_price);
         rp.setTextColor(Color.parseColor("#ff3333"));
         RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
         tvTitle.setTextColor(Color.parseColor("#ff3333"));
@@ -370,7 +375,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
             llTime.setVisibility(View.VISIBLE);
-            if (cateId.equals("1")){
+            if (cateId.equals("1")) {
                 llCehuashi.setVisibility(View.VISIBLE);
             }
             et_title.setHint("广告语创作、广告创意、视频创意");
@@ -508,23 +513,23 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
 //            return;
 //        }
         ShopApi.upLoadVideoProduct(image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation,
-                length,etPrice,remarks,originalPrice,staffing,shootingTime,equipment,
-                introduce,detail,tyid,shopTime,paisheCount,huazhuang,sheyingshi,shejishi,time,huazhuangping,cehua,
+                length, etPrice, remarks, originalPrice, staffing, shootingTime, equipment,
+                introduce, detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua,
                 new ResponseImpl<Object>() {
-            @Override
-            public void onSuccess(Object data) {
-                ToastUtil.toast("上传成功");
-                _mActivity.setResult(RESULT_OK);
-                setFragmentResult(RESULT_OK, new Bundle());
-                pop();
-            }
+                    @Override
+                    public void onSuccess(Object data) {
+                        ToastUtil.toast("上传成功");
+                        _mActivity.setResult(RESULT_OK);
+                        setFragmentResult(RESULT_OK, new Bundle());
+                        pop();
+                    }
 
-            @Override
-            public void onStart(int mark) {
-                setShowProgressDialog(true);
-                super.onStart(mark);
-            }
-        }, Object.class);
+                    @Override
+                    public void onStart(int mark) {
+                        setShowProgressDialog(true);
+                        super.onStart(mark);
+                    }
+                }, Object.class);
 
 
     }
@@ -695,18 +700,20 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您的产品还没有上传,您确定要退出么?", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
 
-            }
 
-            @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                pop();
+        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您的产品还没有上传,确定退出吗？",
+                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+                    @Override
+                    public void negativeClick(Dialog dialog) {
+                        dialog.dismiss();
+                    }
 
-            }
-        }).show();
+                    @Override
+                    public void positiveClick(Dialog dialog) {
+                        pop();
+                    }
+                }).show();
         return true;
 
     }
@@ -734,5 +741,16 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
         return time;
     }
 
+
+    private SimpleDateFormat msFormat = new SimpleDateFormat("mm:ss");
+
+    private String timeParseMinute(long duration) {
+        try {
+            return msFormat.format(duration);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0:00";
+        }
+    }
 
 }

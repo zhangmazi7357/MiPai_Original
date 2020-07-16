@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.jph.takephoto.model.CropOptions;
@@ -20,20 +21,22 @@ public class IntentUtils {
     private static final String TAG = IntentUtils.class.getName();
 
     /**
-     *  获取图片多选的Intent
+     * 获取图片多选的Intent
+     *
      * @param limit 最多选择图片张数的限制
-     * */
-    public static Intent getPickMultipleIntent(TContextWrap contextWrap, int limit){
+     */
+    public static Intent getPickMultipleIntent(TContextWrap contextWrap, int limit) {
         Intent intent = new Intent(contextWrap.getActivity(), AlbumSelectActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_LIMIT, limit>0? limit:1);
+        intent.putExtra(Constants.INTENT_EXTRA_LIMIT, limit > 0 ? limit : 1);
         return intent;
     }
 
     /**
      * 获取裁剪照片的Intent
+     *
      * @param targetUri 要裁剪的照片
      * @param outPutUri 裁剪完成的照片
-     * @param options 裁剪配置
+     * @param options   裁剪配置
      * @return
      */
     public static Intent getCropIntentWithOtherApp(Uri targetUri, Uri outPutUri, CropOptions options) {
@@ -43,11 +46,11 @@ public class IntentUtils {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(targetUri, "image/*");
         intent.putExtra("crop", "true");
-        if (options.getAspectX()*options.getAspectY()>0){
+        if (options.getAspectX() * options.getAspectY() > 0) {
             intent.putExtra("aspectX", options.getAspectX());
             intent.putExtra("aspectY", options.getAspectY());
         }
-        if (options.getOutputX()*options.getOutputY()>0){
+        if (options.getOutputX() * options.getOutputY() > 0) {
             intent.putExtra("outputX", options.getOutputX());
             intent.putExtra("outputY", options.getOutputY());
         }
@@ -61,6 +64,7 @@ public class IntentUtils {
 
     /**
      * 获取拍照的Intent
+     *
      * @return
      */
     public static Intent getCaptureIntent(Uri outPutUri) {
@@ -70,8 +74,10 @@ public class IntentUtils {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);//将拍取的照片保存到指定URI
         return intent;
     }
+
     /**
      * 获取选择照片的Intent
+     *
      * @return
      */
     public static Intent getPickIntentWithGallery() {
@@ -80,8 +86,10 @@ public class IntentUtils {
         intent.setType("image/*");//从所有图片中进行选择
         return intent;
     }
+
     /**
      * 获取从文件中选择照片的Intent
+     *
      * @return
      */
     public static Intent getPickIntentWithDocuments() {

@@ -32,7 +32,7 @@ dependencies {
     //分包
     compile 'androidx.multidex:multidex:2.0.0'
     //recyclerview
-    compile 'androidx.recyclerview:recyclerview:1.0.0'
+    compile 'androidx.recyclerview:recyclerview:1.1.0'
     //fragment
 //    api 'me.yokeyword:fragmentation:1.1.9'
     api 'me.yokeyword:fragmentationx:1.0.2'

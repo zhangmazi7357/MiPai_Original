@@ -34,6 +34,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,6 @@ import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.luck.picture.lib.tools.DateUtils.timeParseMinute;
 
 /**
  * Created by 胡彦明 on 2018/9/11.
@@ -776,5 +776,15 @@ public class EditVadieoFragment extends BaseKitFragment {
         return time;
     }
 
+    private SimpleDateFormat msFormat = new SimpleDateFormat("mm:ss");
+
+    private String timeParseMinute(long duration) {
+        try {
+            return msFormat.format(duration);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0:00";
+        }
+    }
 
 }

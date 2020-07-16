@@ -11,8 +11,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.provider.MediaStore;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +54,7 @@ public class AlbumSelectActivity extends HelperActivity {
     private final String[] projection = new String[]{
             MediaStore.Images.Media.BUCKET_ID,
             MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
-            MediaStore.Images.Media.DATA };
+            MediaStore.Images.Media.DATA};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

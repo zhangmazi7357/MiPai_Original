@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +68,7 @@ public class EditshopBaseInfo extends BaseKitFragment {
     private int MsgWhat;
     ShopTypeBean.DataBean typeBean;//记录工作室类型
     ServerCityBean.DataBean.InfoBean cityBean;//所在城市
+
     public static EditshopBaseInfo newInstance(Bundle args) {
         EditshopBaseInfo fragment = new EditshopBaseInfo();
         fragment.setArguments(args);
@@ -104,7 +107,6 @@ public class EditshopBaseInfo extends BaseKitFragment {
         setTitle("工作室基本信息");
 
 
-
     }
 
     @Override
@@ -113,16 +115,16 @@ public class EditshopBaseInfo extends BaseKitFragment {
             @Override
             public void onSuccess(final ShopDetailBean d) {
                 EditshopBaseInfo.this.data = d;
-                ImageUtil.getInstance().loadRoundCornerImage(EditshopBaseInfo.this, data.getData().getBase().getLogo(), ivUploadImage,5);
-                etName.setText(data.getData().getBase().getStore_name()+"");
-                tvType.setText(data.getData().getBase().getCategory_name()+"");
-                tvCity.setText(data.getData().getBase().getRegion_name()+"");
+                ImageUtil.getInstance().loadRoundCornerImage(EditshopBaseInfo.this, data.getData().getBase().getLogo(), ivUploadImage, 5);
+                etName.setText(data.getData().getBase().getStore_name() + "");
+                tvType.setText(data.getData().getBase().getCategory_name() + "");
+                tvCity.setText(data.getData().getBase().getRegion_name() + "");
                 ivUploadImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         MsgWhat = 1;
                         //PhotoUtil.ShowDialog(EditshopBaseInfo.this, 1, true);
-                        PhotoUtil.ShowDialog(EditshopBaseInfo.this, 1, true,2);
+                        PhotoUtil.ShowDialog(EditshopBaseInfo.this, 1, true, 2);
                     }
                 });
 //                tvType.setOnClickListener(new View.OnClickListener() {
@@ -150,15 +152,15 @@ public class EditshopBaseInfo extends BaseKitFragment {
                             return;
                         }
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("data",data);
+                        bundle.putSerializable("data", data);
                         start(EdityServicePriceFragment.newInstance(bundle));
                     }
                 });
                 setRight_tv("保存", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String name=etName.getText().toString();
-                        if(TextUtils.isEmpty(name)){
+                        String name = etName.getText().toString();
+                        if (TextUtils.isEmpty(name)) {
                             ToastUtil.toast("请输入工作室名称");
                             return;
                         }
@@ -175,7 +177,7 @@ public class EditshopBaseInfo extends BaseKitFragment {
                         ShopApi.EditShop(avantar, name, category_id,
                                 region_id, "", "",
                                 "", "", "",
-                                "", "","", new ResponseImpl<Object>() {
+                                "", "", "", new ResponseImpl<Object>() {
                                     @Override
                                     public void onStart(int mark) {
                                         setShowProgressDialog(true);
@@ -187,11 +189,11 @@ public class EditshopBaseInfo extends BaseKitFragment {
                                         ShopApi.getShopDetail(new ResponseImpl<ShopDetailBean>() {
                                             @Override
                                             public void onSuccess(ShopDetailBean data) {
-                                                RongIM.getInstance().refreshUserInfoCache(new UserInfo(data.getData().getBase().getUserid(),data.getData().getBase().getStore_name() , Uri.parse(data.getData().getBase().getLogo())));
+                                                RongIM.getInstance().refreshUserInfoCache(new UserInfo(data.getData().getBase().getUserid(), data.getData().getBase().getStore_name(), Uri.parse(data.getData().getBase().getLogo())));
                                                 ToastUtil.toast("修改成功");
                                                 pop();
                                             }
-                                        },ShopDetailBean.class);
+                                        }, ShopDetailBean.class);
 
 
                                     }
@@ -218,6 +220,7 @@ public class EditshopBaseInfo extends BaseKitFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -258,6 +261,8 @@ public class EditshopBaseInfo extends BaseKitFragment {
 //                }
 //            });
             PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
+
+
                 @Override
                 public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
                     File[] files;
@@ -293,6 +298,7 @@ public class EditshopBaseInfo extends BaseKitFragment {
         }
 
     }
+
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);

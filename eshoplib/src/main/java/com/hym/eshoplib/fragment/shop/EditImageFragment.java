@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +66,7 @@ public class EditImageFragment extends BaseKitFragment {
     RecyclerView rvList;
     Unbinder unbinder;
     String qiniuToken;
-    int imageType=-1;// 1 上传封面，2上传产品
+    int imageType = -1;// 1 上传封面，2上传产品
     ImageView iv_image;//封面
     TextView tv_add;//上传封面
     Handler handler;
@@ -118,9 +120,6 @@ public class EditImageFragment extends BaseKitFragment {
     }
 
 
-
-
-
     @Override
     public int getContentViewResId() {
         return R.layout.fragment_uploadimage;
@@ -138,17 +137,17 @@ public class EditImageFragment extends BaseKitFragment {
                 CommonApi.uploadFile(_mActivity, files, new ResponseImpl<UploadFilesBean>() {
                     @Override
                     public void onSuccess(UploadFilesBean data) {
-                        ImageUtil.getInstance().loadRoundCornerImage(EditImageFragment.this, url, iv_image,5);
+                        ImageUtil.getInstance().loadRoundCornerImage(EditImageFragment.this, url, iv_image, 5);
                         iv_image.setVisibility(View.VISIBLE);
                         tv_add.setVisibility(View.GONE);
-                        image_default=data.getData().getAttachment_id().get(0);
+                        image_default = data.getData().getAttachment_id().get(0);
                     }
-                },UploadFilesBean.class);
+                }, UploadFilesBean.class);
             }
         };
-        qiniuToken=getArguments().getString("token","");
-        id=getArguments().getString("id","");
-        if(TextUtils.isEmpty(qiniuToken)||TextUtils.isEmpty(id)){
+        qiniuToken = getArguments().getString("token", "");
+        id = getArguments().getString("id", "");
+        if (TextUtils.isEmpty(qiniuToken) || TextUtils.isEmpty(id)) {
             ToastUtil.toast("数据异常");
             pop();
             return;
@@ -180,8 +179,8 @@ public class EditImageFragment extends BaseKitFragment {
                     //ToastUtil.toast("普通图片");
                     //更换图片
                     ArrayList<String> images_str = new ArrayList<String>();
-                    for(int i=0;i<adapter.getData().size();i++){
-                        if(adapter.getData().get(i).getItemType()==1){
+                    for (int i = 0; i < adapter.getData().size(); i++) {
+                        if (adapter.getData().get(i).getItemType() == 1) {
                             images_str.add(adapter.getData().get(i).getImage().getCompressPath());
                         }
 
@@ -192,61 +191,61 @@ public class EditImageFragment extends BaseKitFragment {
                     ImagePagerActivity.startImagePagerActivity(_mActivity, images_str, position, imageSize);
                 } else {
                     //ToastUtil.toast("添加图片");
-                    imageType=2;
-                    PhotoUtil.ShowDialog(EditImageFragment.this, 10 - adapter.getData().size(), false,2);
+                    imageType = 2;
+                    PhotoUtil.ShowDialog(EditImageFragment.this, 10 - adapter.getData().size(), false, 2);
                 }
             }
         });
         View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_upload_image, null, false);
-        tv_upload_title=header.findViewById(R.id.tv_upload_title);
+        tv_upload_title = header.findViewById(R.id.tv_upload_title);
         tv_upload_title.setText("编辑产品");
-        tv_upload_subtitle=header.findViewById(R.id.tv_upload_subtitle);
+        tv_upload_subtitle = header.findViewById(R.id.tv_upload_subtitle);
         tv_upload_subtitle.setText("(请上传2M以内的产品，jpg／png格式)");
-        iv_image=header.findViewById(R.id.iv_image);
-        tv_add=header.findViewById(R.id.tv_add);
+        iv_image = header.findViewById(R.id.iv_image);
+        tv_add = header.findViewById(R.id.tv_add);
         iv_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageType=1;
-                PhotoUtil.ShowDialog(EditImageFragment.this, 1, false,2);
+                imageType = 1;
+                PhotoUtil.ShowDialog(EditImageFragment.this, 1, false, 2);
             }
         });
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageType=1;
-                PhotoUtil.ShowDialog(EditImageFragment.this, 1, false,2);
+                imageType = 1;
+                PhotoUtil.ShowDialog(EditImageFragment.this, 1, false, 2);
             }
         });
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_upload_image, null, false);
-        tv_industry=footer.findViewById(R.id.tv_type);
+        tv_industry = footer.findViewById(R.id.tv_type);
         tv_industry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectIndustry);
-               // bundle.putString("id",industry_id);
-                bundle.putString("type","1");
-                ActionActivity.startForResult(EditImageFragment.this, bundle,0x11);
+                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
+                // bundle.putString("id",industry_id);
+                bundle.putString("type", "1");
+                ActionActivity.startForResult(EditImageFragment.this, bundle, 0x11);
 
             }
         });
-        tv_image_type=footer.findViewById(R.id.tv_immage_type);
+        tv_image_type = footer.findViewById(R.id.tv_immage_type);
         tv_image_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectIndustry);
-               // bundle.putString("id",industry_id);
-                bundle.putString("type","3");
-                ActionActivity.startForResult(EditImageFragment.this, bundle,0x22);
+                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
+                // bundle.putString("id",industry_id);
+                bundle.putString("type", "3");
+                ActionActivity.startForResult(EditImageFragment.this, bundle, 0x22);
             }
         });
-        tv_region=footer.findViewById(R.id.tv_region);
+        tv_region = footer.findViewById(R.id.tv_region);
         tv_region.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,ActionActivity.Action_SelectRegion);
-                bundle.putString("id",region_id);
-                ActionActivity.startForResult(EditImageFragment.this, bundle,0x33);
+                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectRegion);
+                bundle.putString("id", region_id);
+                ActionActivity.startForResult(EditImageFragment.this, bundle, 0x33);
             }
         });
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
@@ -273,11 +272,11 @@ public class EditImageFragment extends BaseKitFragment {
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
 
-        RequiredTextView rs =  footer.findViewById(R.id.rtv_service);
+        RequiredTextView rs = footer.findViewById(R.id.rtv_service);
         rs.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rl =  footer.findViewById(R.id.rtv_location);
+        RequiredTextView rl = footer.findViewById(R.id.rtv_location);
         rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp =  footer.findViewById(R.id.rtv_price);
+        RequiredTextView rp = footer.findViewById(R.id.rtv_price);
         rp.setTextColor(Color.parseColor("#ff3333"));
         RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
         tvTitle.setTextColor(Color.parseColor("#ff3333"));
@@ -353,7 +352,7 @@ public class EditImageFragment extends BaseKitFragment {
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
             llTime.setVisibility(View.VISIBLE);
-            if (cateId.equals("1")){
+            if (cateId.equals("1")) {
                 llCehuashi.setVisibility(View.VISIBLE);
             }
             et_title.setHint("广告语创作、广告创意、视频创意");
@@ -386,16 +385,17 @@ public class EditImageFragment extends BaseKitFragment {
         adapter.addFooterView(footer);
 
     }
+
     //上传产品
     private void upLoad() {
-        String attachment=getAttachment();
-        Logger.d("attachment="+attachment);
-        if(TextUtils.isEmpty(attachment)){
+        String attachment = getAttachment();
+        Logger.d("attachment=" + attachment);
+        if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");
             return;
         }
-        String title=et_title.getText().toString();
-        if(TextUtils.isEmpty(title)){
+        String title = et_title.getText().toString();
+        if (TextUtils.isEmpty(title)) {
             ToastUtil.toast("请输入标题");
             return;
         }
@@ -491,32 +491,32 @@ public class EditImageFragment extends BaseKitFragment {
 //            ToastUtil.toast("请输入产品相关说明（10字以内）");
 //            return;
 //        }
-        ShopApi.editImageProduct(id,image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation,adapter.getData().get(0).getDuration(),
+        ShopApi.editImageProduct(id, image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation, adapter.getData().get(0).getDuration(),
                 etPrice, remarks, originalPrice, staffing, shootingTime, equipment, introduce,
-                detail,tyid,shopTime,paisheCount,huazhuang,sheyingshi,shejishi,time,huazhuangping,cehua,new ResponseImpl<Object>() {
-            @Override
-            public void onSuccess(Object data) {
-                ToastUtil.toast("修改成功");
-                _mActivity.setResult(RESULT_OK);
-                pop();
-            }
+                detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua, new ResponseImpl<Object>() {
+                    @Override
+                    public void onSuccess(Object data) {
+                        ToastUtil.toast("修改成功");
+                        _mActivity.setResult(RESULT_OK);
+                        pop();
+                    }
 
-            @Override
-            public void onStart(int mark) {
-                setShowProgressDialog(true);
-                super.onStart(mark);
-            }
-        },Object.class);
+                    @Override
+                    public void onStart(int mark) {
+                        setShowProgressDialog(true);
+                        super.onStart(mark);
+                    }
+                }, Object.class);
 
 
     }
 
     private String getAttachment() {
-        String result="";
-        for(int i=0;i<adapter.getData().size();i++){
-            String file_name=adapter.getData().get(i).getQiniuFileName();
-            if(!TextUtils.isEmpty(file_name)){
-                result+=file_name+",";
+        String result = "";
+        for (int i = 0; i < adapter.getData().size(); i++) {
+            String file_name = adapter.getData().get(i).getQiniuFileName();
+            if (!TextUtils.isEmpty(file_name)) {
+                result += file_name + ",";
             }
 
         }
@@ -531,7 +531,7 @@ public class EditImageFragment extends BaseKitFragment {
                 data = result;
                 et_title.setText(data.getData().getTitle() + "");
                 // 工作室信息
-                ImageUtil.getInstance().loadRoundCornerImage(EditImageFragment.this, data.getData().getImage_default(), iv_image,5);
+                ImageUtil.getInstance().loadRoundCornerImage(EditImageFragment.this, data.getData().getImage_default(), iv_image, 5);
                 iv_image.setVisibility(View.VISIBLE);
                 tv_add.setVisibility(View.GONE);
                 //产品信息
@@ -547,7 +547,7 @@ public class EditImageFragment extends BaseKitFragment {
                 etShejishi.setText(data.getDesigner());
                 etSheyingshi.setText(data.getPhotographer());
                 etHuazhuang.setText(data.getDresser());
-                etPaisheCount.setText(data.getNums()+"张");
+                etPaisheCount.setText(data.getNums() + "张");
                 etShopTime.setText(data.getTimes());
                 etDetail.setText(data.getDetails());
                 etIntroduce.setText(data.getIntroduce());
@@ -558,24 +558,24 @@ public class EditImageFragment extends BaseKitFragment {
                 etRemarks.setText(data.getRemarks());
                 etPresentPrice.setText(data.getPresent_price());
                 etLocatiom.setText(data.getOther());//可以复用
-                List<UpLoadImageBean>list=new ArrayList<>();
-                List<String>urls= EditImageFragment.this.data.getData().getAttachment();
-                if(urls!=null){
-                    for(int i=0;i<urls.size();i++){
-                        String url=urls.get(i);
-                        TImage tImage=new TImage(url, TImage.FromType.OTHER);
+                List<UpLoadImageBean> list = new ArrayList<>();
+                List<String> urls = EditImageFragment.this.data.getData().getAttachment();
+                if (urls != null) {
+                    for (int i = 0; i < urls.size(); i++) {
+                        String url = urls.get(i);
+                        TImage tImage = new TImage(url, TImage.FromType.OTHER);
                         tImage.setCompressPath(url);
-                        UpLoadImageBean bean=new UpLoadImageBean(tImage);
+                        UpLoadImageBean bean = new UpLoadImageBean(tImage);
                         bean.setDuration(EditImageFragment.this.data.getData().getLength());
                         bean.setHasUpload(true);
                         String subUrl = url.substring(url.indexOf("//") + 2);
-                        String finishUrl = subUrl.substring(subUrl.indexOf("/")+1);
+                        String finishUrl = subUrl.substring(subUrl.indexOf("/") + 1);
                         bean.setQiniuFileName(finishUrl);
                         //bean.setQiniuFileName(url.substring(url.indexOf("mobi/")+5));
                         list.add(bean);
                     }
                 }
-                if(list.size()<9){
+                if (list.size() < 9) {
                     list.add(new UpLoadImageBean());
                 }
                 adapter.setNewData(list);
@@ -598,29 +598,30 @@ public class EditImageFragment extends BaseKitFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == _mActivity.RESULT_OK) {
-           switch (requestCode){
-               case 0x11:
-                   //选择行业
-                   industry_id=data.getExtras().getString("id","");
-                   String name=data.getExtras().getString("name","");
-                   tv_industry.setText(name);
-                  // Logger.d("id="+industry_id+",name="+name);
-                   break;
-               case 0x22:
-                   //图片类型
-                   image_type_id=data.getExtras().getString("id","");
-                   tv_image_type.setText(data.getExtras().getString("name",""));
-                   break;
-               case 0x33:
-                   //所在地区
-                   region_id=data.getExtras().getString("id","");
-                   tv_region.setText(data.getExtras().getString("name",""));
-                   break;
-               default:
+            switch (requestCode) {
+                case 0x11:
+                    //选择行业
+                    industry_id = data.getExtras().getString("id", "");
+                    String name = data.getExtras().getString("name", "");
+                    tv_industry.setText(name);
+                    // Logger.d("id="+industry_id+",name="+name);
+                    break;
+                case 0x22:
+                    //图片类型
+                    image_type_id = data.getExtras().getString("id", "");
+                    tv_image_type.setText(data.getExtras().getString("name", ""));
+                    break;
+                case 0x33:
+                    //所在地区
+                    region_id = data.getExtras().getString("id", "");
+                    tv_region.setText(data.getExtras().getString("name", ""));
+                    break;
+                default:
 //                   PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
 //                       @Override
 //                       public void onResultCamara(ArrayList<TImage> resultCamara) {
@@ -667,49 +668,50 @@ public class EditImageFragment extends BaseKitFragment {
 //
 //                       }
 //                   });
-                   PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
-                       @Override
-                       public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
-                           if(imageType==1){
-                               File[] files;
-                               ArrayList<File> arr = new ArrayList<>();
-                               String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                               arr.add(new File(url));
-                               files = arr.toArray(new File[arr.size()]);
-                               Message message = handler.obtainMessage();
-                               Bundle bundle = new Bundle();
-                               message.obj = files;
-                               bundle.putString("url", url);
-                               message.setData(bundle);
-                               message.sendToTarget();
-                           }else {
-                               getImageData(resultCamara);
-                           }
-                       }
+                    PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
+                        @Override
+                        public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
+                            if (imageType == 1) {
+                                File[] files;
+                                ArrayList<File> arr = new ArrayList<>();
+                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                arr.add(new File(url));
+                                files = arr.toArray(new File[arr.size()]);
+                                Message message = handler.obtainMessage();
+                                Bundle bundle = new Bundle();
+                                message.obj = files;
+                                bundle.putString("url", url);
+                                message.setData(bundle);
+                                message.sendToTarget();
+                            } else {
+                                getImageData(resultCamara);
+                            }
+                        }
 
-                       @Override
-                       public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
-                           if(imageType==1){
-                               File[] files;
-                               ArrayList<File> arr = new ArrayList<>();
-                               String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                               arr.add(new File(url));
-                               files = arr.toArray(new File[arr.size()]);
-                               Message message = handler.obtainMessage();
-                               Bundle bundle = new Bundle();
-                               message.obj = files;
-                               bundle.putString("url", url);
-                               message.setData(bundle);
-                               message.sendToTarget();
-                           }else {
-                               getImageData(resultCamara);
-                           }
-                       }
-                   });
-           }
+                        @Override
+                        public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
+                            if (imageType == 1) {
+                                File[] files;
+                                ArrayList<File> arr = new ArrayList<>();
+                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                arr.add(new File(url));
+                                files = arr.toArray(new File[arr.size()]);
+                                Message message = handler.obtainMessage();
+                                Bundle bundle = new Bundle();
+                                message.obj = files;
+                                bundle.putString("url", url);
+                                message.setData(bundle);
+                                message.sendToTarget();
+                            } else {
+                                getImageData(resultCamara);
+                            }
+                        }
+                    });
+            }
         }
     }
-//    public List<UpLoadImageBean> getImageData(ArrayList<TImage> source) {
+
+    //    public List<UpLoadImageBean> getImageData(ArrayList<TImage> source) {
 //        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 //        for (TImage bean : source) {
 //            imageBeen.add(new UpLoadImageBean(bean));
@@ -749,46 +751,47 @@ public class EditImageFragment extends BaseKitFragment {
 //        }
 //        return imageBeen;
 //    }
-public List<UpLoadImageBean> getImageData(ArrayList<LocalMedia> source) {
-    List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
-    for (LocalMedia bean : source) {
-        TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
-        tImage.setCompressPath(PhotoUtil.getFilePash(bean));
-        imageBeen.add(new UpLoadImageBean(tImage));
-    }
-    int oldSize = adapter.getData().size();
-    if (oldSize == 0) {
-        //第一次添加
-        if (imageBeen.size() == 9) {
-            //一次性添加了9次图片，则直接加入
-            adapter.setNewData(imageBeen);
+    public List<UpLoadImageBean> getImageData(ArrayList<LocalMedia> source) {
+        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
+        for (LocalMedia bean : source) {
+            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            imageBeen.add(new UpLoadImageBean(tImage));
+        }
+        int oldSize = adapter.getData().size();
+        if (oldSize == 0) {
+            //第一次添加
+            if (imageBeen.size() == 9) {
+                //一次性添加了9次图片，则直接加入
+                adapter.setNewData(imageBeen);
+            } else {
+                //没有一次性添加完毕，则追加 addIcon
+                imageBeen.add(new UpLoadImageBean());
+                adapter.setNewData(imageBeen);
+
+            }
+        }//不是第一次添加，并且第二次就 加满
+        else if (imageBeen.size() + oldSize == 10) {
+            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
+            Logger.d("不是第一次");
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
+
         } else {
-            //没有一次性添加完毕，则追加 addIcon
+            //不是第一次添加。并且第二次也没加满
+            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
             imageBeen.add(new UpLoadImageBean());
-            adapter.setNewData(imageBeen);
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
 
         }
-    }//不是第一次添加，并且第二次就 加满
-    else if (imageBeen.size() + oldSize == 10) {
-        //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
-        Logger.d("不是第一次");
-        adapter.getData().remove(adapter.getData().size() - 1);
-        adapter.notifyDataSetChanged();
-        adapter.getData().addAll(imageBeen);
-        adapter.notifyDataSetChanged();
-
-    } else {
-        //不是第一次添加。并且第二次也没加满
-        //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
-        adapter.getData().remove(adapter.getData().size() - 1);
-        adapter.notifyDataSetChanged();
-        imageBeen.add(new UpLoadImageBean());
-        adapter.getData().addAll(imageBeen);
-        adapter.notifyDataSetChanged();
-
+        return imageBeen;
     }
-    return imageBeen;
-}
+
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
