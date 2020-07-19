@@ -8,5 +8,18 @@
     <string name="changeLike">点赞是很认真的行为，不许反悔哦:)</string>
     <string name="time">时&#8195;&#8195;长</string>
     <string name="local">地&#8195;&#8195;点</string>
+    <string name="mz_product_sort_hint">请选择产品分类</string>
+    <string name="mz_sub_product_sort_hint">请选择二级分类</string>
+    <string name="mz_product_sort_title">产品分类</string>
+    <string name="mz_sub_product_title">二级产品分类</string>
+    <string name="mz_product_tag_hint">请选择所属标签</string>
+    <string name="mz_product_tag">选择所属标签</string>
+    <string name="mz_location">摄影棚地址</string>
+    <string name="home_icon_1">职业形象照</string>
+    <string name="home_icon_2">短视频拍摄</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_location_peng">请输入摄影棚位置</string>
+
 
 </resources>

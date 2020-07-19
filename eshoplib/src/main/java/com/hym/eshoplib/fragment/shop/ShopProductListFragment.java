@@ -63,6 +63,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
     public void excuteLogic() {
         type = getProducionsType(getArguments().getString("type"));
         Logger.d("type=" + type);
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -103,27 +104,31 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                     public void run() {
                         final Bundle bundle = new Bundle();
                         bundle.putString("token", getArguments().getString("token", ""));
-                        DialogUtil.getSelectDialog(_mActivity, "视频", "图片", new DialogUtil.OnSelectDialogListener() {
-                            @Override
-                            public void onBtnOneClick(Dialog dialog) {
-                                dialog.dismiss();
-                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
-                                bundle.putString("token", token);
-                                bundle.putString("cateId", getArguments().getString("cateId"));
-                                ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
-                            }
+                        //设置工作室信息页 - 产品 - 上传产品 ;
+                        DialogUtil.getSelectDialog(_mActivity, "视频",
+                                "图片",
+                                new DialogUtil.OnSelectDialogListener() {
+                                    @Override
+                                    public void onBtnOneClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
+                                        bundle.putString("token", token);
+                                        bundle.putString("cateId", getArguments().getString("cateId"));
+                                        ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
 
-                            @Override
-                            public void onBtnTwoClick(Dialog dialog) {
-                                dialog.dismiss();
-                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadImage);
-                                bundle.putString("token", token);
-                                bundle.putString("cateId", getArguments().getString("cateId"));
-                                ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
+                                    }
 
-                            }
-                        });
+                                    @Override
+                                    public void onBtnTwoClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadImage);
+                                        bundle.putString("token", token);
+                                        bundle.putString("cateId", getArguments().getString("cateId"));
+                                        ActionActivity.startForResult(ShopProductListFragment.this, bundle, 0x01);
+
+                                    }
+                                });
 
                     }
                 }, 500);

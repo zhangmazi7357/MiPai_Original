@@ -1,7 +1,9 @@
 package com.hym.eshoplib.fragment.shop;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,14 +125,14 @@ public class ShopInfoFragment extends BaseKitFragment {
         }
         tvInvoice.setText(data.getData().getInvoice().equals("1") ? "可开发票" : "不提供发票");
         tvCircle.setText(TextUtils.isEmpty(data.getData().getJob()) ? "未填写" : "已填写");
-        if(data.getData().getBase().getCategory_id().equals("46")){
+        if (data.getData().getBase().getCategory_id().equals("46")) {
             tvActorInfo.setVisibility(View.VISIBLE);
             viderActorInfo.setVisibility(View.VISIBLE);
             tvActorInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_actor_info);
-                    bundle.putInt("type",1);
+                    bundle.putInt("type", 1);
                     ActionActivity.start(_mActivity, bundle);
                 }
             });

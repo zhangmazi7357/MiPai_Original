@@ -1,2 +1,2 @@
-
-include ':app', ':superlib', ':httplib', ':imagelib', ':photolib', ':takephoto_library', ':multipleimageselect', ':resourcelib', ':FJMtSortButtonLib', ':eshoplib', ':loginmodule', ':jcvideoplayer-lib', ':marqueelibrary', ':IMLib', ':IMKit', ':jiaozivideoplayer', ':android-push-settings-advisor-master', ':base', ':dialog'
+include ':lib_amap'
+include ':superlib', ':httplib', ':imagelib', ':photolib', ':takephoto_library', ':multipleimageselect', ':resourcelib', ':FJMtSortButtonLib', ':eshoplib', ':loginmodule', ':jcvideoplayer-lib', ':marqueelibrary', ':IMLib', ':IMKit', ':jiaozivideoplayer', ':android-push-settings-advisor-master', ':base', ':dialog'

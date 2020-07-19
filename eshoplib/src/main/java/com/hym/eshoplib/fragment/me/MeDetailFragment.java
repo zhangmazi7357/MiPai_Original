@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperTextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
@@ -54,6 +56,8 @@ import io.rong.imlib.model.UserInfo;
  */
 
 public class MeDetailFragment extends BaseKitFragment {
+
+
     @BindView(R.id.iv_right)
     ImageView ivRight;
     @BindView(R.id.iv_head_icon)
@@ -145,6 +149,9 @@ public class MeDetailFragment extends BaseKitFragment {
         MeApi.getUserinfo("", new ResponseImpl<MedetailBean>() {
             @Override
             public void onSuccess(MedetailBean data) {
+
+
+
                 bean = data;
                 ImageUtil.getInstance().loadCircleImage(MeDetailFragment.this, data.getData().getAvatar(), ivHeadIcon);
                 tvName.setText(data.getData().getNickname() + "");

@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.BuildConfig;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -761,6 +762,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         Logger.d("城市=" + amapLocation.getCity());
                         //tvLeft.setText(amapLocation.getCity());
                         final String city = amapLocation.getCity();
+
                         HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
                             @Override
                             public void onSuccess(RegionBean data) {
@@ -770,6 +772,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
                             }
                         }, RegionBean.class);
+
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         Logger.d("location Error, ErrCode:"
@@ -805,10 +808,14 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         mLocationOption.setLocationCacheEnable(false);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
+
+
         //启动定位
         if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
             mLocationClient.startLocation();
         }
+
+
     }
 
     //banner 左下角有个 “世界广播” 跑马灯  。。。。。
@@ -1064,7 +1071,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     com.sunsky.marqueeview.MarqueeView needsMarqueen;
 
-    // 唉  用个列表 他不香吗
+
     private void findViews(View header) {
         tvFunction1 = header.findViewById(R.id.ll_function_tab_1);
         tvFunction2 = header.findViewById(R.id.ll_function_tab_2);
@@ -1743,6 +1750,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
         }
         Jzvd.releaseAllVideos();
+
     }
 
 

@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="#e1e1e1" />
 
+    <!--    服务名称-->
     <LinearLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
@@ -21,14 +23,15 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <cn.hym.superlib.widgets.view.RequiredTextView
+        <TextView
             android:id="@+id/rtv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
-            app:requiredText="服务名称" />
+            android:text="服务名称"
+            android:textColor="@color/red" />
+
 
         <cn.hym.superlib.widgets.view.ClearEditText
             android:id="@+id/et_title"
@@ -42,44 +45,15 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_fuwu_name"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <cn.hym.superlib.widgets.view.RequiredTextView
-            android:id="@+id/rtv_service"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="#ff3333"
-            app:requiredText="服务名称" />
-
-        <cn.hym.superlib.widgets.view.ClearEditText
-            android:id="@+id/et_service_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center_vertical|right"
-            android:hint="宣传片拍摄、抖音短视频拍摄、电商视频拍摄"
-            android:textColor="@color/black"
-            android:textColorHint="#9c9c9c"
-            android:textSize="12sp" />
-    </LinearLayout>
-
+    <!--    时长 -->
     <LinearLayout
         android:id="@+id/ll_shop_time"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -103,15 +77,15 @@
 
     </LinearLayout>
 
-
+    <!--    地点暂时就不要了-->
     <LinearLayout
         android:id="@+id/ll_location"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:id="@+id/rtv_location"
@@ -134,14 +108,15 @@
             android:textSize="12sp" />
     </LinearLayout>
 
+    <!--    人员配置-->
     <LinearLayout
         android:id="@+id/ll_staffing"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -166,14 +141,15 @@
             />
     </LinearLayout>
 
+    <!--    拍摄时间-->
     <LinearLayout
         android:id="@+id/ll_shooting_time"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -193,19 +169,19 @@
             android:hint="需要天数"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
+    <!--    拍摄器材-->
     <LinearLayout
         android:id="@+id/ll_equipment"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -230,14 +206,15 @@
             />
     </LinearLayout>
 
+    <!--    团队介绍，现在不要-->
     <LinearLayout
         android:id="@+id/ll_introduce"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -262,44 +239,57 @@
             />
     </LinearLayout>
 
+    <!--    项目详情  -->
     <LinearLayout
         android:id="@+id/ll_detail"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <cn.hym.superlib.widgets.view.RequiredTextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            app:required="false"
-            app:requiredText="详情" />
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:visibility="visible">
 
-        <cn.hym.superlib.widgets.view.ClearEditText
-            android:id="@+id/et_detailed"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center_vertical|right"
-            android:hint="产品详情"
-            android:textColor="@color/black"
-            android:textColorHint="#9c9c9c"
-            android:textSize="12sp" />
+            <cn.hym.superlib.widgets.view.RequiredTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                app:required="false"
+                app:requiredText="项目详情" />
+
+            <cn.hym.superlib.widgets.view.ClearEditText
+                android:id="@+id/et_detailed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="产品详情"
+                android:textColor="@color/black"
+                android:textColorHint="#9c9c9c"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/product_detail_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <!--    备注-->
     <LinearLayout
         android:id="@+id/ll_remarks"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -323,14 +313,15 @@
 
     </LinearLayout>
 
+    <!--    原价 -->
     <LinearLayout
         android:id="@+id/ll_before_price"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -353,23 +344,25 @@
             android:textSize="12sp" />
     </LinearLayout>
 
+    <!--    价格 -->
     <LinearLayout
         android:id="@+id/ll_price"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
-        <cn.hym.superlib.widgets.view.RequiredTextView
+        <TextView
             android:id="@+id/rtv_price"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textColor="#ff3333"
-            app:requiredText="价格" />
+            android:text="价格"
+            android:textColor="@color/red" />
+
 
         <cn.hym.superlib.widgets.view.ClearEditText
             android:id="@+id/et_present_price"
@@ -384,14 +377,15 @@
     </LinearLayout>
 
 
+    <!--    行业类型 -->
     <LinearLayout
         android:id="@+id/ll_wrok_type"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -406,8 +400,8 @@
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawablePadding="10dp"
             android:drawableRight="@drawable/ic_arrow_right"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical|right"
             android:hint="请选择行业类型"
             android:textColor="@color/black"
@@ -415,22 +409,16 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#e1e1e1" />
 
-
+    <!--    其他 -->
     <LinearLayout
         android:id="@+id/ll_other"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -450,21 +438,20 @@
             android:hint="请输入产品相关说明（10字以内）"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
 
-
+    <!--    时间 -->
     <LinearLayout
         android:id="@+id/ll_time"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -484,19 +471,19 @@
             android:hint="1-3天"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
+    <!--    化妆师 -->
     <LinearLayout
         android:id="@+id/ll_huazhuang"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -516,20 +503,20 @@
             android:hint="过往经验、成功案例"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
 
+    <!--    摄影师  -->
     <LinearLayout
         android:id="@+id/ll_sheyingshi"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -549,19 +536,18 @@
             android:hint="过往经验，成功案例"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-
-            />
+            android:textSize="12sp" />
     </LinearLayout>
 
+    <!--    设计师  -->
     <LinearLayout
         android:id="@+id/ll_shejishi"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -586,14 +572,15 @@
             />
     </LinearLayout>
 
+    <!--    策划师  -->
     <LinearLayout
         android:id="@+id/ll_cehuashi"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -619,14 +606,15 @@
     </LinearLayout>
 
 
+    <!--    拍摄张数  -->
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/ll_paishe_count"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -646,18 +634,18 @@
             android:hint="精修x张，底版几张"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
     </LinearLayout>
 
+    <!--    化妆品 -->
     <LinearLayout
         android:id="@+id/ll_huazhuangping"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -677,27 +665,19 @@
             android:hint="使用品牌"
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
-            android:textSize="12sp"
-
-            />
+            android:textSize="12sp" />
     </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#e1e1e1" />
-
+    <!--    图片类型  -->
     <LinearLayout
         android:id="@+id/ll_type_title"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:id="@+id/tv_type_title"
@@ -713,8 +693,8 @@
             android:id="@+id/tv_immage_type"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawablePadding="10dp"
             android:drawableRight="@drawable/ic_arrow_right"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical|right"
             android:hint="请选择图片类型"
             android:textColor="@color/black"
@@ -722,21 +702,16 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#e1e1e1" />
 
+    <!--    所在地区 -->
     <LinearLayout
         android:id="@+id/ll_region"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -751,8 +726,8 @@
             android:id="@+id/tv_region"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawablePadding="10dp"
             android:drawableRight="@drawable/ic_arrow_right"
+            android:drawablePadding="10dp"
             android:gravity="center_vertical|right"
             android:hint="请选择所在地区"
             android:textColor="@color/black"
@@ -760,18 +735,44 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#e1e1e1" />
 
-
-    <View
+    <!--    产品分类 -->
+    <com.hym.eshoplib.mz.UploadItemView
+        android:id="@+id/mz_productSort"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#e1e1e1" />
+        android:layout_height="40dp"
+        android:hint="@string/mz_product_sort_hint"
+        app:isShowArrow="true"
+        app:title="@string/mz_product_sort_title"
+        app:titleTextColor="@color/red" />
+
+    <!--    产品二级分类 -->
+    <com.hym.eshoplib.mz.UploadItemView
+        android:id="@+id/mz_subProductSort"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="@string/mz_sub_product_sort_hint"
+        app:isShowArrow="true"
+        app:title="@string/mz_sub_product_title"
+        app:titleTextColor="@color/red" />
+
+    <!--    所属标签 -->
+    <com.hym.eshoplib.mz.UploadItemView
+        android:id="@+id/mz_productTag"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="@string/mz_product_tag_hint"
+        app:isShowArrow="true"
+        app:title="@string/mz_product_tag" />
+
+    <!--    摄影棚地址-->
+    <com.hym.eshoplib.mz.UploadItemView
+        android:id="@+id/mz_location"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColorHint="@color/black"
+        app:isShowArrow="true"
+        app:title="@string/mz_location"
+        app:titleTextColor="@color/red" />
+
 </LinearLayout>

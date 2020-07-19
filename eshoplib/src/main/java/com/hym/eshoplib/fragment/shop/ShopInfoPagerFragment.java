@@ -1,6 +1,7 @@
 package com.hym.eshoplib.fragment.shop;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +22,7 @@ import cn.hym.superlib.fragment.base.BaseTabViewPagerFragment;
  * otherTips
  */
 
-public class ShopInfoPagerFragment extends BaseTabViewPagerFragment{
+public class ShopInfoPagerFragment extends BaseTabViewPagerFragment {
     private String token;
 
     public String getToken() {
@@ -45,14 +46,16 @@ public class ShopInfoPagerFragment extends BaseTabViewPagerFragment{
         fragment.setArguments(args);
         return fragment;
     }
+
     Fragment[] fragments = new Fragment[2];
+
     @Override
     public Fragment[] getSupportFragments() {
-        fragments[0]= ShopInfoFragment.newInstance(getArguments());
+        fragments[0] = ShopInfoFragment.newInstance(getArguments());
         String cateId = getArguments().getString("type");
         Bundle bundle = new Bundle();
-        bundle.putString("cateId",cateId);
-        fragments[1]= ShopProductListFragment.newInstance(bundle);
+        bundle.putString("cateId", cateId);
+        fragments[1] = ShopProductListFragment.newInstance(bundle);
         return fragments;
     }
 

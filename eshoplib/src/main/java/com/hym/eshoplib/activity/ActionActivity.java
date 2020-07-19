@@ -232,13 +232,13 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                 case Action_SelectRegion:
                     fragment = SelectProductRegionFragment.newInstance(getIntent().getExtras());
                     break;
-                case Action_Shop_info:
+                case Action_Shop_info:          // 工作室信息，跳转到设置工作室信息
                     fragment = ShopInfoPagerFragment.newInstance(getIntent().getExtras());
                     break;
-                case Action_Shop_uploadImage:
+                case Action_Shop_uploadImage:               // 工作室 - 产品 - 上传图片
                     fragment = UpLoadImageFragment.newInstance(getIntent().getExtras());
                     break;
-                case Action_Shop_uploadVideo:
+                case Action_Shop_uploadVideo:               // 工作室 - 产品 - 上传视频
                     fragment = UpLoadVadieoFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Shop_chage_price:

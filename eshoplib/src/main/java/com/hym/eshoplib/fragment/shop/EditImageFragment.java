@@ -81,7 +81,7 @@ public class EditImageFragment extends BaseKitFragment {
     EditText et_other;//其他描述
     String id;
     ProductDetailBean data;
-    RequiredTextView tv_upload_title;
+    TextView tv_upload_title;
     private TextView tv_upload_subtitle;
     private EditText etServiceName;
     private EditText etPresentPrice;
@@ -251,7 +251,6 @@ public class EditImageFragment extends BaseKitFragment {
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
         LinearLayout llImageType = footer.findViewById(R.id.ll_type_title);
         LinearLayout llWorkType = footer.findViewById(R.id.ll_wrok_type);
-        LinearLayout fuwuName = footer.findViewById(R.id.ll_fuwu_name);
         LinearLayout llShopTime = footer.findViewById(R.id.ll_shop_time);
         LinearLayout llLocation = footer.findViewById(R.id.ll_location);
         LinearLayout llStaffing = footer.findViewById(R.id.ll_staffing);
@@ -272,8 +271,6 @@ public class EditImageFragment extends BaseKitFragment {
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
 
-        RequiredTextView rs = footer.findViewById(R.id.rtv_service);
-        rs.setTextColor(Color.parseColor("#ff3333"));
         RequiredTextView rl = footer.findViewById(R.id.rtv_location);
         rl.setTextColor(Color.parseColor("#ff3333"));
         RequiredTextView rp = footer.findViewById(R.id.rtv_price);
@@ -282,7 +279,6 @@ public class EditImageFragment extends BaseKitFragment {
         tvTitle.setTextColor(Color.parseColor("#ff3333"));
         et_title = footer.findViewById(R.id.et_title);
         et_other = footer.findViewById(R.id.et_other);
-        etServiceName = footer.findViewById(R.id.et_service_name);//差
 
         etPresentPrice = footer.findViewById(R.id.et_present_price);
         etRemarks = footer.findViewById(R.id.et_remarks);

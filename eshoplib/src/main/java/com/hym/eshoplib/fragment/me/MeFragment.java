@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.me;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -46,6 +50,7 @@ import butterknife.Unbinder;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.event.lgoin.LoginEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.FileHelper;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.user.UserUtil;
 import constant.StringConstants;
@@ -65,6 +70,7 @@ import static cn.hym.superlib.activity.base.BaseActionActivity.getActionBundle;
  */
 
 public class MeFragment extends BaseKitFragment {
+    private String TAG = "MeFragment";
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
     @BindView(R.id.tv_name)
@@ -163,6 +169,8 @@ public class MeFragment extends BaseKitFragment {
                 medetailBean = data;
                 String isStore = data.getData().getIs_store();
                 llPreview.setVisibility(View.GONE);
+
+
                 //tvPreview.setVisibility(View.GONE);
                 //-------------是否为工作室，1：是，0：待审核，-1：审核未通过，-2：否
                 switch (isStore) {
@@ -172,10 +180,13 @@ public class MeFragment extends BaseKitFragment {
                         tvFunction.setText("如何提升星级");
                         //  tvPreview.setVisibility(View.VISIBLE);
                         llPreview.setVisibility(View.VISIBLE);
+
+                        // 进入我的工作室
                         tvPreview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //预览工作室
+                                //  工作室有 service_id  这个字段
                                 String content_id = medetailBean.getData().getService_id();
                                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopDetail);
                                 //bundle.putInt("type",getArguments().getInt("type",1));//工作室类型，对应首页
@@ -210,30 +221,6 @@ public class MeFragment extends BaseKitFragment {
                 tvMyMonye.setRightString(data.getData().getBts_bean().equals("0") ? "0.00" : data.getData().getBts_bean());
                 ratingbar.setRating(Float.parseFloat(data.getData().getRank_average()));
 
-//                if(!SharePreferenceUtil.getBooleangData(_mActivity,"isauth")&&!medetailBean.getData().getAuth_personal().equals("2")&&!medetailBean.getData().getAuth_business().equals("2")){
-//                    Dialog dilog=MipaiDialogUtil.getAuthDialog(_mActivity, "认证信息", "", new MipaiDialogUtil.OnBtnSlectListener() {
-//                        @Override
-//                        public void on1(Dialog dialog) {
-//                            dialog.dismiss();
-//                            //个人认证
-//                            Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_me,ActionActivity.Action_Auth_Personal);
-//                            bundle.putString("type",medetailBean.getData().getAuth_personal());
-//                            ActionActivity.start(_mActivity,bundle);
-//
-//
-//                        }
-//
-//                        @Override
-//                        public void on2(Dialog dialog) {
-//                            dialog.dismiss();
-//                            Bundle bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_me,ActionActivity.Action_Auth_Business);
-//                            bundle.putString("type",medetailBean.getData().getAuth_business());
-//                            ActionActivity.start(_mActivity,bundle);
-//                        }
-//                    });
-//                    dilog.show();
-//                    SharePreferenceUtil.setBooleanData(_mActivity,"isauth",true);
-//                }
 
                 ivVip.setVisibility(View.GONE);
                 if (medetailBean.getData().getAuth_personal().equals("2")) {
@@ -245,6 +232,7 @@ public class MeFragment extends BaseKitFragment {
                     ivVip.setImageResource(R.drawable.ic_business_circle);
                 }
             }
+
         }, MedetailBean.class);
     }
 
@@ -266,8 +254,7 @@ public class MeFragment extends BaseKitFragment {
 
             }
         });
-//        iv_setting.getLayoutParams().width= ScreenUtil.dip2px(_mActivity,16);
-//        iv_setting.getLayoutParams().height= ScreenUtil.dip2px(_mActivity,16);
+
         setRight_iv2(R.drawable.ic_share, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,8 +289,6 @@ public class MeFragment extends BaseKitFragment {
 
             }
         });
-        //tvFunction.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        //tvPreview.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -346,9 +331,7 @@ public class MeFragment extends BaseKitFragment {
         switch (view.getId()) {
             case R.id.iv_avatar:
                 //头像
-//                goUserCenter();
-
-
+                goUserCenter();
                 break;
             case R.id.iv_go_Userdetail:
                 //右箭头
@@ -472,6 +455,7 @@ public class MeFragment extends BaseKitFragment {
         }
     }
 
+    // 进入个人中心 ，区分 用户 和 工作室
     private void goUserCenter() {
         //进入个人中心
         if (medetailBean == null || medetailBean.getData().getIs_store() == null) {

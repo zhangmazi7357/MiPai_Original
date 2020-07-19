@@ -21,11 +21,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <cn.hym.superlib.widgets.view.RequiredTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                app:requiredText="上传封面" />
+                android:text="上传封面"
+                android:textColor="@color/red" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,12 +82,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <cn.hym.superlib.widgets.view.RequiredTextView
+
+            <TextView
                 android:id="@+id/tv_upload_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                app:requiredText="上传图片" />
+                android:text="上传图片"
+                android:textColor="@color/red" />
+
 
             <TextView
                 android:id="@+id/tv_upload_subtitle"

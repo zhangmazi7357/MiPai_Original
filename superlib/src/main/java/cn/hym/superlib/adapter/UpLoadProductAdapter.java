@@ -1,6 +1,7 @@
 package cn.hym.superlib.adapter;
 
 import androidx.fragment.app.Fragment;
+
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -85,8 +86,6 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 .connectTimeout(10)           // 链接超时。默认10秒
                 .useHttps(true)               // 是否使用https上传域名
                 .responseTimeout(60)          // 服务器响应超时。默认60秒
-                //.recorder(recorder)           // recorder分片上传时，已上传片记录器。默认null
-                //.recorder(recorder, keyGen)   // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
                 .zone(FixedZone.zone1)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
                 .build();
         uploadManager = new UploadManager(config);
@@ -101,8 +100,9 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper,final UpLoadImageBean item) {
+    protected void convert(final BaseViewHolder helper, final UpLoadImageBean item) {
         int width = ScreenUtil.getScreenWidth(fragment.getContext()) - ScreenUtil.dip2px(fragment.getContext(), 40);
+
         switch (item.getItemType()) {
             case UpLoadImageBean.type_normal:
                 //适配
@@ -110,10 +110,10 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 FrameLayout fl = helper.getView(R.id.fl);
                 fl.getLayoutParams().width = width / 3;
                 fl.getLayoutParams().height = width / 3;
+
                 final ImageView iv_icon = helper.getView(R.id.iv_icon);
                 ImageView iv_delete = helper.getView(R.id.iv_delete);
                 TextView tv_main = helper.getView(R.id.tv_main_image);
-                // Logger.d("layoutPosition="+helper.getLayoutPosition()+"===adapterPosition="+helper.getAdapterPosition());
                 if (helper.getLayoutPosition() == 0 && showMain) {
                     tv_main.setVisibility(View.VISIBLE);
                 } else {
@@ -147,12 +147,13 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 final LinearLayout ll_uploading = helper.getView(R.id.ll_uploading);
                 final TextView tv_percent = helper.getView(R.id.tv_percent);
                 final ProgressBar progressBar = helper.getView(R.id.progressbar);
-                tv_percent.setText("上传中..."+"0%");
+                tv_percent.setText("上传中..." + "0%");
                 progressBar.setProgress(0);
                 final String path = item.getImage().getCompressPath();
-                String qiniufile_name =   System.currentTimeMillis() / 1000 + "_"+path.substring(path.lastIndexOf("/")+1);
+                String qiniufile_name = System.currentTimeMillis() / 1000 + "_" + path.substring(path.lastIndexOf("/") + 1);
                 Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
                 boolean hasUpload = item.isHasUpload();
+
                 if (!hasUpload) {
                     //未上传
                     ll_uploading.setVisibility(View.VISIBLE);
@@ -161,34 +162,34 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
                             //res包含hash、key等信息，具体字段取决于上传策略的设置
-                           try{
-                               if(info.isOK()) {
-                                   ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
-                                   iv_icon.setVisibility(View.VISIBLE);
-                                   ll_uploading.setVisibility(View.GONE);
-                                   item.setHasUpload(true);
-                                   item.setQiniuFileName(key);
-                                   Logger.d("qiniu="+ "Upload Success");
-                               } else {
-                                   Logger.d("qiniu="+ "Upload Fail");
-                                   //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                               }
-                               Logger.d("key="+key + ",\r\n " + info + ",\r\n " + response);
-                           }catch (Exception e){
-                               Logger.d(e.toString());
-                           }
+                            try {
+                                if (info.isOK()) {
+                                    ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
+                                    iv_icon.setVisibility(View.VISIBLE);
+                                    ll_uploading.setVisibility(View.GONE);
+                                    item.setHasUpload(true);
+                                    item.setQiniuFileName(key);
+                                    Logger.d("qiniu=" + "Upload Success");
+                                } else {
+                                    Logger.d("qiniu=" + "Upload Fail");
+                                    //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                                }
+                                Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);
+                            } catch (Exception e) {
+                                Logger.d(e.toString());
+                            }
                         }
                     }, new UploadOptions(null, null, false,
                             new UpProgressHandler() {
                                 public void progress(String key, double percent) {
-                                   try {
-                                       int percent_int=(int) (percent*100);
-                                       //Logger.d("key="+key + ",percent " + percent);
-                                       tv_percent.setText("上传中..."+percent_int+"%");
-                                       progressBar.setProgress(percent_int);
-                                   }catch (Exception e){
-                                       e.toString();
-                                   }
+                                    try {
+                                        int percent_int = (int) (percent * 100);
+                                        //Logger.d("key="+key + ",percent " + percent);
+                                        tv_percent.setText("上传中..." + percent_int + "%");
+                                        progressBar.setProgress(percent_int);
+                                    } catch (Exception e) {
+                                        e.toString();
+                                    }
                                 }
                             }, null));
 
@@ -202,14 +203,14 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 break;
             case UpLoadImageBean.type_add:
                 TextView tv_add = helper.getView(R.id.tv_add);
-                tv_add.getLayoutParams().width = width / 3-ScreenUtil.dip2px(fragment.getContext(),15);
-                tv_add.getLayoutParams().height = width / 3-ScreenUtil.dip2px(fragment.getContext(),15);
+                tv_add.getLayoutParams().width = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
+                tv_add.getLayoutParams().height = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
                 break;
         }
     }
 
     public interface onDeleteListener {
-        public void onDelete(int position);
+        void onDelete(int position);
     }
 
 }

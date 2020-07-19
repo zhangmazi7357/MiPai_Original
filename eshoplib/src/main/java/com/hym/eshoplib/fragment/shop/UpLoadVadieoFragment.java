@@ -85,7 +85,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
     String region_id;//区域id
     EditText et_title;//标题
     EditText et_other;//其他描述
-    RequiredTextView tv_upload_title;
+    TextView tv_upload_title;
     TextView tv_upload_subtitle;
     TextView tv_vadieo_title_type;
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -271,7 +271,6 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
         LinearLayout llImageType = footer.findViewById(R.id.ll_type_title);
         LinearLayout llWorkType = footer.findViewById(R.id.ll_wrok_type);
-        LinearLayout fuwuName = footer.findViewById(R.id.ll_fuwu_name);
         LinearLayout llShopTime = footer.findViewById(R.id.ll_shop_time);
         LinearLayout llLocation = footer.findViewById(R.id.ll_location);
         LinearLayout llStaffing = footer.findViewById(R.id.ll_staffing);
@@ -291,18 +290,9 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
         LinearLayout llHuazhuangping = footer.findViewById(R.id.ll_huazhuangping);
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
-
-        RequiredTextView rs = footer.findViewById(R.id.rtv_service);
-        rs.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rl = footer.findViewById(R.id.rtv_location);
-        rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp = footer.findViewById(R.id.rtv_price);
-        rp.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
-        tvTitle.setTextColor(Color.parseColor("#ff3333"));
+        TextView tvTitle = footer.findViewById(R.id.rtv_title);
         et_title = footer.findViewById(R.id.et_title);
         et_other = footer.findViewById(R.id.et_other);
-        etServiceName = footer.findViewById(R.id.et_service_name);
         etPresentPrice = footer.findViewById(R.id.et_present_price);
         etRemarks = footer.findViewById(R.id.et_remarks);
         etOriginalPrice = footer.findViewById(R.id.et_original_price);
@@ -474,14 +464,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             otherOrLocation = other;
             length = adapter.getData().get(0).getDuration();
         }
-//        if(TextUtils.isEmpty(image_type_id)){
-//            ToastUtil.toast("请选择视频类型");
-//            return;
-//        }
-//        if(TextUtils.isEmpty(region_id)){
-//            ToastUtil.toast("请选择所在地区");
-//            return;
-//        }
+//
         String other = et_other.getText().toString();
         String remarks = etRemarks.getText().toString();
         String originalPrice = etOriginalPrice.getText().toString();

@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 /**
  * TakePhoto 操作成功返回的处理结果
- *
+ * <p>
  * Author: JPH
  * Date: 2016/8/11 17:01
  */
-public class TImage implements Serializable{
+public class TImage implements Serializable {
     private String originalPath;
     private String compressPath;
     private FromType fromType;
@@ -26,16 +26,19 @@ public class TImage implements Serializable{
         this.id = id;
     }
 
-    public static TImage of(String path, FromType fromType){
+    public static TImage of(String path, FromType fromType) {
         return new TImage(path, fromType);
     }
-    public static TImage of(Uri uri, FromType fromType){
+
+    public static TImage of(Uri uri, FromType fromType) {
         return new TImage(uri, fromType);
     }
+
     public TImage(String path, FromType fromType) {
         this.originalPath = path;
         this.fromType = fromType;
     }
+
     private TImage(Uri uri, FromType fromType) {
         this.originalPath = uri.getPath();
         this.fromType = fromType;

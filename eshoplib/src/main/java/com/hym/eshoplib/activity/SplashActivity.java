@@ -38,12 +38,16 @@ public class SplashActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
+
             //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE}, 0x01);//自定义的code
         }
+
+
         setContentView(R.layout.splash_activtiy);
         String token = UserUtil.getToken(this);
 

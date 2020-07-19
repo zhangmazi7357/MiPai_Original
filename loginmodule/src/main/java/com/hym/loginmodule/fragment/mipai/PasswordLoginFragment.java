@@ -1,7 +1,9 @@
 package com.hym.loginmodule.fragment.mipai;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -9,6 +11,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.loginmodule.R;
 import com.hym.loginmodule.bean.LoginBean;
 import com.hym.loginmodule.fragment.base.BaseLoginFragment;
@@ -54,34 +57,34 @@ public class PasswordLoginFragment extends BaseLoginFragment {
         et1.setHint("请输入注册手机号");
         et3.setHint("请输入密码");
         et3.setSingleLine();
-        et3.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        et3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String phone=et1.getText().toString();
-                String pwd=et3.getText().toString();
-                if(phone.length()!=11){
+                final String phone = et1.getText().toString();
+                String pwd = et3.getText().toString();
+                if (phone.length() != 11) {
                     ToastUtil.toast("请输入正确的手机号");
                     return;
                 }
-                if(TextUtils.isEmpty(pwd)){
+                if (TextUtils.isEmpty(pwd)) {
                     ToastUtil.toast("请输入密码");
                     return;
                 }
                 LoginApi.login(_mActivity, phone, "", pwd, "", new ResponseImpl<LoginBean>() {
                     @Override
                     public void onSuccess(LoginBean data) {
-                        SharePreferenceUtil.setStringData(_mActivity,"lastphone",phone);
-                        UserUtil.setIsLogin(_mActivity,true);
-                        UserUtil.saveToken(_mActivity,data.getData().getToken());//token
-                        UserUtil.saveRongYunToken(_mActivity,data.getData().getRongcloud_token());//融云
+                        SharePreferenceUtil.setStringData(_mActivity, "lastphone", phone);
+                        UserUtil.setIsLogin(_mActivity, true);
+                        UserUtil.saveToken(_mActivity, data.getData().getToken());//token
+                        UserUtil.saveRongYunToken(_mActivity, data.getData().getRongcloud_token());//融云
                         String token = data.getData().getToken();
-                        Log.e("loginToken",token);
+                        Log.e("PasswordLoginFragment", "密码登录 = " + JSONObject.toJSONString(data));
 //                       SharePreferenceUtil.setStringData(_mActivity, "region",(TextUtils.isEmpty(data.getData().getRegion_name())?"":data.getData().getRegion_name()));//区域
-                        Bundle bundle=new Bundle();
-                        bundle.putString("id",data.getData().getUserid());
-                        bundle.putString("name",data.getData().getNickname());
-                        bundle.putString("url",data.getData().getAvatar());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", data.getData().getUserid());
+                        bundle.putString("name", data.getData().getNickname());
+                        bundle.putString("url", data.getData().getAvatar());
                         EventBus.getDefault().post(new LoginEvent(bundle));
                         ToastUtil.toast("登录成功");
                         _mActivity.finish();
@@ -92,7 +95,7 @@ public class PasswordLoginFragment extends BaseLoginFragment {
                         super.onDataError(status, errormessage);
                         et3.getText().clear();
                     }
-                },LoginBean.class);
+                }, LoginBean.class);
             }
 
 //             LoginApi.login(_mActivity, phone, email, pwd, language, new ResponseImpl<LoginBean>() {
@@ -135,21 +138,21 @@ public class PasswordLoginFragment extends BaseLoginFragment {
 //            }, LoginBean.class);
 
         });
-        if(!TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity,"lastphone"))){
-            et1.setText(SharePreferenceUtil.getStringData(_mActivity,"lastphone"));
+        if (!TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "lastphone"))) {
+            et1.setText(SharePreferenceUtil.getStringData(_mActivity, "lastphone"));
         }
         ivSeePwd.setVisibility(View.VISIBLE);
         ivSeePwd.setSelected(false);
         ivSeePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ivSeePwd.isSelected()){
+                if (ivSeePwd.isSelected()) {
                     ivSeePwd.setSelected(false);
                     ivSeePwd.setImageResource(R.drawable.ic_eye_closed);
                     //et3.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     et3.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     et3.setSelection(et3.getText().length());
-                }else {
+                } else {
                     ivSeePwd.setSelected(true);
                     ivSeePwd.setImageResource(R.drawable.ic_eyeopen);
                     et3.setTransformationMethod(HideReturnsTransformationMethod.getInstance());

@@ -271,7 +271,11 @@ public class ShopApi {
     //上传图片产品
     public static <T> void upLoadImageProduct(String image_default, String attachment, String title,
                                               String industry, String video, String region_id, String other,
-                                              String etPrice, String remarks, String originalPrice, String staffing, String shootingTime, String equipment, String introduce, String detail, String tyid, String shopTime, String paisheCount, String huazhuang, String sheyingshi, String shejishi, String time, String huazhuangping, String cehua, IHttpResultListener<T> listener, Class<T> clazz) {
+                                              String etPrice, String remarks, String originalPrice, String staffing,
+                                              String shootingTime, String equipment, String introduce, String detail,
+                                              String tyid, String shopTime, String paisheCount, String huazhuang,
+                                              String sheyingshi, String shejishi, String time, String huazhuangping,
+                                              String cehua, IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("NewAddProduction");

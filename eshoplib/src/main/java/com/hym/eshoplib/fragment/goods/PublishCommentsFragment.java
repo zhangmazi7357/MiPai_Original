@@ -2,9 +2,11 @@ package com.hym.eshoplib.fragment.goods;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -78,10 +80,11 @@ public class PublishCommentsFragment extends BaseKitFragment {
     Unbinder unbinder;
     UpLoadImageAdapter adapter;
     String order_id;
-    String rank_type="1";
+    String rank_type = "1";
     String sp_id;
     String url;
     String attchment_id;
+
     public static PublishCommentsFragment newInstance(Bundle args) {
         PublishCommentsFragment fragment = new PublishCommentsFragment();
         fragment.setArguments(args);
@@ -96,44 +99,45 @@ public class PublishCommentsFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
         setShowProgressDialog(true);
-        order_id=getArguments().getString("order_id","");
-        sp_id=getArguments().getString("id","");
-        url=getArguments().getString("url","");
-        tv_goods_name.setText(getArguments().getString("name")+"");
+        order_id = getArguments().getString("order_id", "");
+        sp_id = getArguments().getString("id", "");
+        url = getArguments().getString("url", "");
+        tv_goods_name.setText(getArguments().getString("name") + "");
         showBackButton();
         setTitle(R.string.Releasereview);
         setRight_tv(R.string.Release, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //发布
-                if(TextUtils.isEmpty(etExpect.getText().toString())){
+                if (TextUtils.isEmpty(etExpect.getText().toString())) {
                     ToastUtil.toast("请输入评价内容");
                     return;
                 }
                 String imageIds;
                 ArrayList<File> arr = new ArrayList<>();
-                for(int i=0;i<adapter.getData().size();i++){
-                    UpLoadImageBean bean=adapter.getData().get(i);
-                    if(bean.getItemType()==UpLoadImageBean.type_normal){
-                        File file=new File(bean.getImage().getCompressPath());
-                        if(file.exists()){
+
+                for (int i = 0; i < adapter.getData().size(); i++) {
+                    UpLoadImageBean bean = adapter.getData().get(i);
+                    if (bean.getItemType() == UpLoadImageBean.type_normal) {
+                        File file = new File(bean.getImage().getCompressPath());
+                        if (file.exists()) {
                             arr.add(file);
                         }
 
                     }
                 }
-                if(arr.size()>0){
+                if (arr.size() > 0) {
                     //先上传图片
-                    CommonApi.uploadFile(_mActivity,arr.toArray(new File[arr.size()]), new ResponseImpl<UploadFilesBean>() {
+                    CommonApi.uploadFile(_mActivity, arr.toArray(new File[arr.size()]), new ResponseImpl<UploadFilesBean>() {
                         @Override
                         public void onSuccess(UploadFilesBean data) {
-                            attchment_id="";
-                            for(String id:data.getData().getAttachment_id()){
-                                attchment_id+=id+",";
+                            attchment_id = "";
+                            for (String id : data.getData().getAttachment_id()) {
+                                attchment_id += id + ",";
                             }
                             //ToastUtil.toast("先上传图片图片id="+attchment_id);
-                            String params=getParams();
-                            GoodsApi.addGoodsComments(_mActivity,params, new ResponseImpl<Object>() {
+                            String params = getParams();
+                            GoodsApi.addGoodsComments(_mActivity, params, new ResponseImpl<Object>() {
                                 @Override
                                 public void onSuccess(Object data) {
                                     ToastUtil.toast("评价成功");
@@ -141,16 +145,16 @@ public class PublishCommentsFragment extends BaseKitFragment {
                                     _mActivity.finish();
 
                                 }
-                            },Object.class);
+                            }, Object.class);
 
 
                         }
-                    },UploadFilesBean.class);
-                }else {
+                    }, UploadFilesBean.class);
+                } else {
                     //没有图片直接发布
                     //ToastUtil.toast("没有图片直接发布");
-                    String params=getParams();
-                    GoodsApi.addGoodsComments(_mActivity,params, new ResponseImpl<Object>() {
+                    String params = getParams();
+                    GoodsApi.addGoodsComments(_mActivity, params, new ResponseImpl<Object>() {
                         @Override
                         public void onSuccess(Object data) {
                             ToastUtil.toast("评价成功");
@@ -158,21 +162,21 @@ public class PublishCommentsFragment extends BaseKitFragment {
                             _mActivity.finish();
 
                         }
-                    },Object.class);
+                    }, Object.class);
                 }
 
 
             }
         });
         //上传你图片
-        View uploadImage=LayoutInflater.from(_mActivity).inflate(R.layout.layout_upload_image,null,false);
-        RequiredTextView tv_title= (RequiredTextView) uploadImage.findViewById(R.id.tv_title);
+        View uploadImage = LayoutInflater.from(_mActivity).inflate(R.layout.layout_upload_image, null, false);
+        RequiredTextView tv_title = (RequiredTextView) uploadImage.findViewById(R.id.tv_title);
         tv_title.setRequird(false);
         tv_title.setText("");
-        TextView tv_max= (TextView) uploadImage.findViewById(R.id.tv_max);
-        RecyclerView rvList= (RecyclerView) uploadImage.findViewById(R.id.rv_list);
-        rvList.setLayoutManager(new GridLayoutManager(_mActivity,4));
-        adapter=new UpLoadImageAdapter(this,null);
+        TextView tv_max = (TextView) uploadImage.findViewById(R.id.tv_max);
+        RecyclerView rvList = (RecyclerView) uploadImage.findViewById(R.id.rv_list);
+        rvList.setLayoutManager(new GridLayoutManager(_mActivity, 4));
+        adapter = new UpLoadImageAdapter(this, null);
         adapter.addData(new UpLoadImageBean());
         rvList.setAdapter(adapter);
         adapter.setListener(new UpLoadImageAdapter.onDeleteListener() {
@@ -185,12 +189,12 @@ public class PublishCommentsFragment extends BaseKitFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter2, View view, int position) {
-                if(adapter.getData().get(position).getItemType()==1){
+                if (adapter.getData().get(position).getItemType() == 1) {
                     //ToastUtil.toast("普通图片");
                     //更换图片
-                }else {
+                } else {
                     //ToastUtil.toast("添加图片");
-                    PhotoUtil.ShowDialog(PublishCommentsFragment.this,10-adapter.getData().size(),true);
+                    PhotoUtil.ShowDialog(PublishCommentsFragment.this, 10 - adapter.getData().size(), true);
                 }
             }
         });
@@ -200,18 +204,17 @@ public class PublishCommentsFragment extends BaseKitFragment {
     }
 
     private String getParams() {
-        List<CommentsBean>list=new ArrayList<>();
-        CommentsBean bean=new CommentsBean();
+        List<CommentsBean> list = new ArrayList<>();
+        CommentsBean bean = new CommentsBean();
         bean.setTo_order_item_id(order_id);
         bean.setSpecification_id(sp_id);
         bean.setRank_type(rank_type);
         bean.setMemo(etExpect.getText().toString());
         bean.setAttachmentid(attchment_id);
         list.add(bean);
-        String result=JSON.toJSONString(list);
-        Logger.d("参数="+result);
+        String result = JSON.toJSONString(list);
+        Logger.d("参数=" + result);
         return result;
-
 
 
     }
@@ -230,7 +233,7 @@ public class PublishCommentsFragment extends BaseKitFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                tvCount.setText(s.toString().length()+"/300");
+                tvCount.setText(s.toString().length() + "/300");
 
             }
         });
@@ -253,25 +256,26 @@ public class PublishCommentsFragment extends BaseKitFragment {
             }
         });
     }
-    private void changeType(int position){
-        switch (position){
+
+    private void changeType(int position) {
+        switch (position) {
             case 1:
-                rank_type="1";
-                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked,0,0,0);
-                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
-                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
+                rank_type = "1";
+                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked, 0, 0, 0);
+                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
+                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
                 break;
             case 2:
-                rank_type="2";
-                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
-                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked,0,0,0);
-                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
+                rank_type = "2";
+                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
+                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked, 0, 0, 0);
+                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
                 break;
             case 3:
-                rank_type="3";
-                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
-                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked,0,0,0);
-                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked,0,0,0);
+                rank_type = "3";
+                tvNice.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
+                tvCommon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_unchecked, 0, 0, 0);
+                tvBad.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cb_checked, 0, 0, 0);
                 break;
         }
 
@@ -279,7 +283,7 @@ public class PublishCommentsFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ImageUtil.getInstance().loadImage(PublishCommentsFragment.this,url,ivIcon);
+        ImageUtil.getInstance().loadImage(PublishCommentsFragment.this, url, ivIcon);
 
     }
 
@@ -296,10 +300,11 @@ public class PublishCommentsFragment extends BaseKitFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
+        if (resultCode == RESULT_OK) {
             PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
                 @Override
                 public void onResultCamara(ArrayList<TImage> resultCamara) {
@@ -316,18 +321,19 @@ public class PublishCommentsFragment extends BaseKitFragment {
             });
         }
     }
-    public List<UpLoadImageBean > getImageData(ArrayList<TImage> source){
-        List<UpLoadImageBean >imageBeen=new ArrayList<UpLoadImageBean>();
-        for(TImage bean:source){
+
+    public List<UpLoadImageBean> getImageData(ArrayList<TImage> source) {
+        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
+        for (TImage bean : source) {
             imageBeen.add(new UpLoadImageBean(bean));
         }
-        int oldSize=adapter.getData().size();
-        if(oldSize==0){
+        int oldSize = adapter.getData().size();
+        if (oldSize == 0) {
             //第一次添加
-            if(imageBeen.size()==9){
+            if (imageBeen.size() == 9) {
                 //一次性添加了4次图片，则直接加入
                 adapter.setNewData(imageBeen);
-            }else {
+            } else {
                 //没有一次性添加完毕，则追加 addIcon
                 imageBeen.add(new UpLoadImageBean());
                 adapter.setNewData(imageBeen);
@@ -335,12 +341,11 @@ public class PublishCommentsFragment extends BaseKitFragment {
             }
 
 
-
         }//不是第一次添加，并且第二次就 加满
-        else if(imageBeen.size()+oldSize==10){
+        else if (imageBeen.size() + oldSize == 10) {
             //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
             Logger.d("不是第一次");
-            adapter.getData().remove(adapter.getData().size()-1);
+            adapter.getData().remove(adapter.getData().size() - 1);
             adapter.notifyDataSetChanged();
             adapter.getData().addAll(imageBeen);
             adapter.notifyDataSetChanged();
@@ -348,7 +353,7 @@ public class PublishCommentsFragment extends BaseKitFragment {
         } else {
             //不是第一次添加。并且第二次也没加满
             //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
-            adapter.getData().remove(adapter.getData().size()-1);
+            adapter.getData().remove(adapter.getData().size() - 1);
             adapter.notifyDataSetChanged();
             imageBeen.add(new UpLoadImageBean());
             adapter.getData().addAll(imageBeen);
@@ -357,8 +362,9 @@ public class PublishCommentsFragment extends BaseKitFragment {
         }
         return imageBeen;
     }
+
     //用于商品评论
-    private class CommentsBean{
+    private class CommentsBean {
         /**
          * to_order_item_id : 232
          * specification_id : 15

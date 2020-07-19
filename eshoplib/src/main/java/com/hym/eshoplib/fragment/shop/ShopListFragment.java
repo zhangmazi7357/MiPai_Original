@@ -112,13 +112,7 @@ public class ShopListFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
         showBackButton();
-        //String region_name= SharePreferenceUtil.getStringData(_mActivity,"region_name");
-        //region_id=SharePreferenceUtil.getStringData(_mActivity,"region_id");
-//        if(TextUtils.isEmpty(region_name)){
-//            headers.add("地区");
-//        }else {
-//            headers.add(region_name);
-//        }
+
         headers.add("全国");
         headers.add("智能排序");
         current_type = getArguments().getInt("type", 1);

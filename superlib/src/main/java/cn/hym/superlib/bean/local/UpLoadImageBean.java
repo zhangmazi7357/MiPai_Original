@@ -13,10 +13,10 @@ import com.jph.takephoto.model.TImage;
 
 public class UpLoadImageBean implements MultiItemEntity {
 
-    public int item_type=-1;
-    public static final int type_normal=1;//普通图片
-    public static final int type_add=2;//添加按钮
-    private boolean hasUpload=false;
+    public int item_type = -1;
+    public static final int type_normal = 1;//普通图片
+    public static final int type_add = 2;//添加按钮
+    private boolean hasUpload = false;
     TImage image;
     String qiniuFileName;
     String duration;//视频时长，转换好的格式
@@ -41,14 +41,16 @@ public class UpLoadImageBean implements MultiItemEntity {
     public int getItemType() {
         return item_type;
     }
+
     //上传的图片
     public UpLoadImageBean(TImage image) {
         this.image = image;
-        this.item_type=type_normal;
+        this.item_type = type_normal;
     }
+
     //添加按钮
     public UpLoadImageBean() {
-        this.item_type=type_add;
+        this.item_type = type_add;
     }
 
     public TImage getImage() {

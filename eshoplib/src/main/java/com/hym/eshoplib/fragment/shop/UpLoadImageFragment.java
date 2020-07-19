@@ -2,14 +2,16 @@ package com.hym.eshoplib.fragment.shop;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.MzLocationActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.MzProductSortActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.MzProductTagActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.MzSubProductActivity;
 import com.hym.eshoplib.http.CommonApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
+import com.hym.eshoplib.mz.UploadItemView;
 import com.hym.imagelib.ImageUtil;
 import com.hym.photolib.utils.PhotoUtil;
 import com.jph.takephoto.model.TImage;
@@ -43,14 +52,11 @@ import cn.hym.superlib.adapter.UpLoadProductAdapter;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
-import cn.hym.superlib.widgets.view.RequiredTextView;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by 胡彦明 on 2018/9/11.
@@ -61,6 +67,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class UpLoadImageFragment extends BaseKitFragment {
+    private String TAG = "UpLoadImageFragment";
     UpLoadProductAdapter adapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -90,8 +97,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
     private EditText etEquipment;
     private EditText etIntroduce;
     private EditText etDetail;
-    private EditText etRemarks1;
-    private EditText etServiceName;
     private EditText etShopTime;
     private String cateId;
     private EditText etPaisheCount;
@@ -99,12 +104,16 @@ public class UpLoadImageFragment extends BaseKitFragment {
     private EditText etSheyingshi;
     private EditText etShejishi;
     private EditText etHuazhuangping;
-    private String attachment;
     private EditText etLocatiom;
     private EditText etTime;
     private EditText etCeHua;
     private String tyid;
     private String otherOrLocation;
+
+    private UploadItemView mzProductSort;                     // 产品分类
+    private UploadItemView mzSubProductSort;                  // 二级产品分类
+    private UploadItemView mzProductTag;                      //  产品标签
+    private UploadItemView mzLocation;                        // 摄影棚地址；
 
 
     public static UpLoadImageFragment newInstance(Bundle args) {
@@ -127,6 +136,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
         SoftHideKeyBoardUtil.assistActivity(_mActivity);
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -160,12 +170,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
         adapter.setToken(qiniuToken);
         adapter.addData(new UpLoadImageBean());
         rvList.setAdapter(adapter);
-        adapter.setListener(new UpLoadProductAdapter.onDeleteListener() {
-            @Override
-            public void onDelete(int position) {
-                //editMap.remove(position);
-            }
-        });
+
+
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter2, View view, int position) {
@@ -184,6 +190,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
                 }
             }
         });
+
+
         View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_upload_image, null, false);
         tv_upload_subtitle = header.findViewById(R.id.tv_upload_subtitle);
         tv_upload_subtitle.setText("(请上传2M以内的产品，jpg／png格式)");
@@ -206,7 +214,10 @@ public class UpLoadImageFragment extends BaseKitFragment {
                 PhotoUtil.ShowDialog(UpLoadImageFragment.this, 1, true, 3);
             }
         });
+
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_upload_image, null, false);
+
+        // 行业类型
         tv_industry = footer.findViewById(R.id.tv_type);
         tv_industry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,13 +251,12 @@ public class UpLoadImageFragment extends BaseKitFragment {
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
         LinearLayout llImageType = footer.findViewById(R.id.ll_type_title);
         LinearLayout llWorkType = footer.findViewById(R.id.ll_wrok_type);
-        LinearLayout fuwuName = footer.findViewById(R.id.ll_fuwu_name);
         LinearLayout llShopTime = footer.findViewById(R.id.ll_shop_time);
         LinearLayout llLocation = footer.findViewById(R.id.ll_location);
         LinearLayout llStaffing = footer.findViewById(R.id.ll_staffing);
         LinearLayout llShootingTime = footer.findViewById(R.id.ll_shooting_time);
         LinearLayout llEquipment = footer.findViewById(R.id.ll_equipment);
-        LinearLayout llIntroduce = footer.findViewById(R.id.ll_introduce);
+        LinearLayout llIntroduce = footer.findViewById(R.id.ll_introduce);              // 现在全都不显示
         LinearLayout llDetail = footer.findViewById(R.id.ll_detail);
         LinearLayout llRemarks = footer.findViewById(R.id.ll_remarks);
         LinearLayout llBeforePrice = footer.findViewById(R.id.ll_before_price);
@@ -261,17 +271,10 @@ public class UpLoadImageFragment extends BaseKitFragment {
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
 
-        RequiredTextView rs =  footer.findViewById(R.id.rtv_service);
-        rs.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rl =  footer.findViewById(R.id.rtv_location);
-        rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp =  footer.findViewById(R.id.rtv_price);
-        rp.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
-        tvTitle.setTextColor(Color.parseColor("#ff3333"));
+
+        TextView tvTitle = footer.findViewById(R.id.rtv_title);
         et_title = footer.findViewById(R.id.et_title);
         et_other = footer.findViewById(R.id.et_other);
-        etServiceName = footer.findViewById(R.id.et_service_name);
         etPresentPrice = footer.findViewById(R.id.et_present_price);
         etRemarks = footer.findViewById(R.id.et_remarks);
         etOriginalPrice = footer.findViewById(R.id.et_original_price);
@@ -290,18 +293,64 @@ public class UpLoadImageFragment extends BaseKitFragment {
         etLocatiom = footer.findViewById(R.id.et_location);
         etCeHua = footer.findViewById(R.id.et_cehuashi);
 
+
+        ////////////////////////////////  新加的  ///////////////////////////////////
+        mzProductSort = footer.findViewById(R.id.mz_productSort);
+        mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
+        mzProductTag = footer.findViewById(R.id.mz_productTag);
+        mzLocation = footer.findViewById(R.id.mz_location);
+
+
         cateId = getArguments().getString("cateId");
         adapter.addHeaderView(header);
         adapter.addFooterView(footer);
 
+        ///////////////////  添加 新内容  /////////////////////////////
+
+        View.OnClickListener mzClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                int requestCode = 0;
+
+                switch (v.getId()) {
+                    case R.id.mz_productSort:           // 一级分类
+                        intent.setClass(_mActivity, MzProductSortActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_subProductSort:        // 二级分类
+                        intent.setClass(_mActivity, MzSubProductActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_productTag:        // 产品标签
+                        intent.setClass(_mActivity, MzProductTagActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_TAG;
+                        break;
+                    case R.id.mz_location:          // 摄影棚位置
+                        intent.setClass(_mActivity, MzLocationActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_LOCATION;
+                        break;
+
+                }
+
+                startActivityForResult(intent, requestCode);
+            }
+        };
+        mzProductSort.setOnClickListener(mzClickListener);
+        mzSubProductSort.setOnClickListener(mzClickListener);
+        mzProductTag.setOnClickListener(mzClickListener);
+        mzLocation.setOnClickListener(mzClickListener);
+
+
+        // 追溯到个人 信息里  category_id   == cateId
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
 
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);             // 不显示
             llStaffing.setVisibility(View.VISIBLE);
             llShootingTime.setVisibility(View.VISIBLE);
             llEquipment.setVisibility(View.VISIBLE);
-            llIntroduce.setVisibility(View.VISIBLE);
+            llIntroduce.setVisibility(View.GONE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
@@ -310,7 +359,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
         } else if (cateId.equals("8")) {
 
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);                // 不显示
             llEquipment.setVisibility(View.VISIBLE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
@@ -346,7 +395,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
             llTime.setVisibility(View.VISIBLE);
-            if (cateId.equals("1")){
+            if (cateId.equals("1")) {
                 llCehuashi.setVisibility(View.VISIBLE);
             }
             et_title.setHint("广告语创作、广告创意、视频创意");
@@ -356,7 +405,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
         } else if (cateId.equals("40")) {
 
             llTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);                    // 不显示
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
@@ -364,17 +413,17 @@ public class UpLoadImageFragment extends BaseKitFragment {
             llHuazhuang.setVisibility(View.VISIBLE);
             llHuazhuangping.setVisibility(View.VISIBLE);
             et_title.setHint("生活妆、上镜妆、新娘妆");
-           // etShootingTime.setHint("1小时");
+            // etShootingTime.setHint("1小时");
             etTime.setHint("1小时");
             tyid = "5";
            /* 化妆品：使用品牌
             化妆师：过往经验、成功案例*/
         } else {
             llTitle.setVisibility(View.VISIBLE);
-            llWorkType.setVisibility(View.VISIBLE);
-            llImageType.setVisibility(View.VISIBLE);
-            llOther.setVisibility(View.VISIBLE);
-            llRegin.setVisibility(View.VISIBLE);
+            llWorkType.setVisibility(View.VISIBLE);             // 行业类型
+            llImageType.setVisibility(View.GONE);               // 图片类型
+            llOther.setVisibility(View.GONE);                   // 其他
+            llRegin.setVisibility(View.GONE);                   // 原有的所在地区 现在先不要了;
             tvTitle.setText("设置标题");
         }
     }
@@ -424,11 +473,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                 return;
             }
         } else if (cateId.equals("1") || cateId.equals("40") || cateId.equals("4")) {
-            /*serviceName = etServiceName.getText().toString();
-            if (TextUtils.isEmpty(serviceName)) {
-                ToastUtil.toast("请输入服务名称");
-                return;
-            }*/
+
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
                 ToastUtil.toast("请输入价格");
@@ -443,26 +488,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
             otherOrLocation = other;
         }
 
-/*
-        String etPrice = etPresentPrice.getText().toString();
-        if (TextUtils.isEmpty(etPrice)) {
-            ToastUtil.toast("请选择价格");
-            return;
-        }*/
-      /*  String serviceName = etServiceName.getText().toString();
-        if (TextUtils.isEmpty(serviceName)) {
-            ToastUtil.toast("请选择服务名称");
-            return;
-        }*/
-
-//        if(TextUtils.isEmpty(image_type_id)){
-//            ToastUtil.toast("请选择图片类型");
-//            return;
-//        }
-//        if(TextUtils.isEmpty(region_id)){
-//            ToastUtil.toast("请选择所在地区");
-//            return;
-//        }
 
         String other = et_other.getText().toString();
         String remarks = etRemarks.getText().toString();
@@ -489,20 +514,15 @@ public class UpLoadImageFragment extends BaseKitFragment {
         String huazhuangping = etHuazhuangping.getText().toString();
 
         String cehua = etCeHua.getText().toString();
-     /*   etRemarks = footer.findViewById(R.id.et_remarks);
-        etOriginalPrice = footer.findViewById(R.id.et_original_price);
-        etStaffing = footer.findViewById(R.id.et_staffing);
-        etShootingTime = footer.findViewById(R.id.et_shooting_time);
-        etEquipment = footer.findViewById(R.id.et_equipment);
-        etIntroduce = footer.findViewById(R.id.et_introduce);
-        etDetail = footer.findViewById(R.id.et_detailed);*/
+
 //        if(TextUtils.isEmpty(other)){
 //            ToastUtil.toast("请输入产品相关说明（10字以内）");
 //            return;
 //        }
         ShopApi.upLoadImageProduct(image_default, attachment, title, industry_id, image_type_id, region_id,
                 otherOrLocation, etPrice, remarks, originalPrice, staffing, shootingTime, equipment, introduce,
-                detail,tyid,shopTime,paisheCount,huazhuang,sheyingshi,shejishi,time,huazhuangping,cehua,
+                detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua,
+
                 new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
@@ -527,7 +547,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
                     public void onFailed(Exception e) {
                         super.onFailed(e);
                     }
-                }, Object.class);
+                },
+                Object.class);
     }
 
     private String getAttachment() {
@@ -550,7 +571,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
@@ -565,9 +585,10 @@ public class UpLoadImageFragment extends BaseKitFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.d("requestcode=" + requestCode);
+
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+
                 case 0x11:
                     //选择行业
                     industry_id = data.getExtras().getString("id", "");
@@ -587,52 +608,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                     tv_region.setText(data.getExtras().getString("name", ""));
                     break;
                 default:
-//                   PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
-//                       @Override
-//                       public void onResultCamara(ArrayList<TImage> resultCamara) {
-//                          // ToastUtil.toast("相机url="+resultCamara.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultCamara.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }else {
-//                               getImageData(resultCamara);
-//                           }
-//
-//                       }
-//
-//                       @Override
-//                       public void onResultGalary(ArrayList<TImage> resultGalayr) {
-//                           //ToastUtil.toast("相册url="+resultGalayr.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultGalayr.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }else {
-//                               getImageData(resultGalayr);
-//                           }
-//
-//
-//                       }
-//                   });
+
                     PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                         @Override
                         public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
@@ -674,48 +650,29 @@ public class UpLoadImageFragment extends BaseKitFragment {
                     });
             }
         }
+
+
+        // 产品分类 、 二级分类 、 标签 、地图
+        if (resultCode == MzConstant.RESULT_CODE_UPLOAD_IMG) {
+
+            switch (requestCode) {
+                case MzConstant.REQUEST_CODE_PRODUCT_SORT:  // 一级分类返回
+                    String productSort = data.getExtras().getString(MzConstant.VALUE_PRODUCT_SORT, "");
+                    mzProductSort.setContent(productSort);
+                    break;
+                case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
+                    break;
+                case MzConstant.REQUEST_CODE_PRODUCT_TAG:       // 标签
+                    break;
+                case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
+                    break;
+            }
+        }
+
+
     }
 
-    //    public List<UpLoadImageBean> getImageData(ArrayList<TImage> source) {
-//        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
-//        for (TImage bean : source) {
-//            imageBeen.add(new UpLoadImageBean(bean));
-//        }
-//        int oldSize = adapter.getData().size();
-//        if (oldSize == 0) {
-//            //第一次添加
-//            if (imageBeen.size() == 9) {
-//                //一次性添加了9次图片，则直接加入
-//                adapter.setNewData(imageBeen);
-//            } else {
-//                //没有一次性添加完毕，则追加 addIcon
-//                imageBeen.add(new UpLoadImageBean());
-//                adapter.setNewData(imageBeen);
-//
-//            }
-//
-//
-//        }//不是第一次添加，并且第二次就 加满
-//        else if (imageBeen.size() + oldSize == 10) {
-//            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
-//            Logger.d("不是第一次");
-//            adapter.getData().remove(adapter.getData().size() - 1);
-//            adapter.notifyDataSetChanged();
-//            adapter.getData().addAll(imageBeen);
-//            adapter.notifyDataSetChanged();
-//
-//        } else {
-//            //不是第一次添加。并且第二次也没加满
-//            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
-//            adapter.getData().remove(adapter.getData().size() - 1);
-//            adapter.notifyDataSetChanged();
-//            imageBeen.add(new UpLoadImageBean());
-//            adapter.getData().addAll(imageBeen);
-//            adapter.notifyDataSetChanged();
-//
-//        }
-//        return imageBeen;
-//    }
+
     public List<UpLoadImageBean> getImageData(ArrayList<LocalMedia> source) {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
         for (LocalMedia bean : source) {

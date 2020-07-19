@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <!--工作室列表-->
     <!--app:dddividerColor="#e1e1e1"-->
     <!--app:ddunderlineColor="#e1e1e1"-->
@@ -13,16 +12,15 @@
         android:id="@+id/dropDownMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:layout_weight="1"
-        app:ddmenuTextSize="14sp"
+        android:background="@color/white"
         app:dddividerColor="@color/transparent"
-        app:ddunderlineColor="@color/transparent"
-        app:ddtextUnselectedColor="@color/black"
-        app:ddtextSelectedColor="@color/mipaiTextColorSelect"
         app:ddmenuBackgroundColor="@color/white"
-        app:ddmenuSelectedIcon="@drawable/ic_up"
-        app:ddmenuUnselectedIcon="@drawable/ic_down"
         app:ddmenuMenuHeightPercent="0.8"
-        />
+        app:ddmenuSelectedIcon="@drawable/ic_up"
+        app:ddmenuTextSize="14sp"
+        app:ddmenuUnselectedIcon="@drawable/ic_down"
+        app:ddtextSelectedColor="@color/mipaiTextColorSelect"
+        app:ddtextUnselectedColor="@color/black"
+        app:ddunderlineColor="@color/transparent" />
 </LinearLayout>

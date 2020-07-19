@@ -1,9 +1,12 @@
 package com.hym.loginmodule.fragment;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperButton;
 import com.hym.loginmodule.R;
 import com.hym.loginmodule.R2;
@@ -40,6 +44,7 @@ import cn.hym.superlib.utils.user.UserUtil;
 @Deprecated
 public class LoginByMobilePhoneFrament extends BaseKitFragment {
 
+    private String TAG = "LoginByMobilePhoneFrament";
     public static final String KEY_LOGIN_TYPE = "login_type_key";
 
     public static final int TYPE_LOGIN_EMAIL = 0;
@@ -114,11 +119,11 @@ public class LoginByMobilePhoneFrament extends BaseKitFragment {
         tvForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(loginType == TYPE_LOGIN_PHONE){
-                   start(RegistByMobilePhoneFragment.newInstance(RegistByMobilePhoneFragment.TYPE_UPDATE_PHONE_PASSWORD));
-               }else {
-                   start(RegistByMobilePhoneFragment.newInstance(RegistByMobilePhoneFragment.TYPE_UPDATE_EMAIL_PASSWORD));
-               }
+                if (loginType == TYPE_LOGIN_PHONE) {
+                    start(RegistByMobilePhoneFragment.newInstance(RegistByMobilePhoneFragment.TYPE_UPDATE_PHONE_PASSWORD));
+                } else {
+                    start(RegistByMobilePhoneFragment.newInstance(RegistByMobilePhoneFragment.TYPE_UPDATE_EMAIL_PASSWORD));
+                }
             }
         });
     }
@@ -174,6 +179,9 @@ public class LoginByMobilePhoneFrament extends BaseKitFragment {
                 int perfected = data.getData().getPerfected();
                 String regionName = data.getData().getRegion_name();
                 String token = data.getData().getToken();
+
+                Log.e(TAG, "手机号登录  = " + JSONObject.toJSONString(data));
+
                 UserUtil.saveToken(_mActivity, token);
                 Bundle bundle = new Bundle();
                 bundle.putString("region", regionName);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.shop.mzupload.MzLocationActivity">
+
+    <!-- header-->
+    <com.hym.eshoplib.mz.MzHeaderBar
+        android:id="@+id/mzHeaderBar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:header_title="选择摄影棚"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showRightTv="false" />
+
+
+    <TextView
+        android:id="@+id/location_city"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:text="北京市"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mzHeaderBar" />
+
+    <EditText
+        android:id="@+id/et_poi"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="@string/hint_location_peng"
+        android:paddingLeft="5dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_sure"
+        app:layout_constraintStart_toEndOf="@+id/location_city"
+        app:layout_constraintTop_toBottomOf="@+id/mzHeaderBar" />
+
+
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="确定"
+        android:textColor="#03A9F4"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/et_poi"
+        app:layout_constraintTop_toBottomOf="@+id/mzHeaderBar" />
+
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_poi"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/poiRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_poi"
+        android:layout_alignLeft="@+id/et_poi"
+        android:layout_alignRight="@+id/et_poi"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/et_poi"
+        app:layout_constraintStart_toStartOf="@+id/et_poi"
+        app:layout_constraintTop_toBottomOf="@+id/et_poi" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

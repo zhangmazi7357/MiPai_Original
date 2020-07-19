@@ -269,6 +269,7 @@ public class OpenShopStep1 extends BaseKitFragment {
             return false;
         }
         String category_id = typeBean.getCategory_id();
+
         if (cityBean == null || TextUtils.isEmpty(cityBean.getRegion_id())) {
             ToastUtil.toast("请选择所在城市");
             return false;
