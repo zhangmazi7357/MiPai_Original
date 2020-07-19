@@ -38,6 +38,8 @@ public class MzLocationActivity extends AppCompatActivity {
     private POISearchAdapter poiSearchAdapter;
     private EditText etPoi;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
