@@ -134,16 +134,17 @@ public class OpenShopStep1 extends BaseKitFragment {
                 switch (msg.what) {
                     case 1:
                         //头像
-                        CommonApi.uploadFile(_mActivity, files, new ResponseImpl<UploadFilesBean>() {
-                            @Override
-                            public void onSuccess(UploadFilesBean data) {
+                        CommonApi.uploadFile(_mActivity, files,
+                                new ResponseImpl<UploadFilesBean>() {
+                                    @Override
+                                    public void onSuccess(UploadFilesBean data) {
 
-                                ImageUtil.getInstance()
-                                        .loadRoundCornerImage(OpenShopStep1.this,
-                                                url, ivUploadImage, 5);
-                                avatar = data.getData().getAttachment_id().get(0);
-                            }
-                        }, UploadFilesBean.class);
+                                        ImageUtil.getInstance()
+                                                .loadRoundCornerImage(OpenShopStep1.this,
+                                                        url, ivUploadImage, 5);
+                                        avatar = data.getData().getAttachment_id().get(0);
+                                    }
+                                }, UploadFilesBean.class);
                         break;
 
                     case 2:

@@ -2,7 +2,6 @@ package com.hym.eshoplib.fragment.shop;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,13 +47,10 @@ import cn.hym.superlib.adapter.UpLoadVadieoProductAdapter;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
-import cn.hym.superlib.widgets.view.RequiredTextView;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.rong.common.FileUtils;
 
 
@@ -66,7 +62,7 @@ import io.rong.common.FileUtils;
  * otherTips
  */
 
-public class UpLoadVadieoFragment extends BaseKitFragment {
+public class UpLoadVideoFragment extends BaseKitFragment {
     UpLoadVadieoProductAdapter adapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -114,8 +110,8 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
     private String otherOrLocation;
 
 
-    public static UpLoadVadieoFragment newInstance(Bundle args) {
-        UpLoadVadieoFragment fragment = new UpLoadVadieoFragment();
+    public static UpLoadVideoFragment newInstance(Bundle args) {
+        UpLoadVideoFragment fragment = new UpLoadVideoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -143,7 +139,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
                 CommonApi.uploadFile(_mActivity, files, new ResponseImpl<UploadFilesBean>() {
                     @Override
                     public void onSuccess(UploadFilesBean data) {
-                        ImageUtil.getInstance().loadRoundCornerImage(UpLoadVadieoFragment.this, url, iv_image, 5);
+                        ImageUtil.getInstance().loadRoundCornerImage(UpLoadVideoFragment.this, url, iv_image, 5);
                         iv_image.setVisibility(View.VISIBLE);
                         tv_add.setVisibility(View.GONE);
                         image_default = data.getData().getAttachment_id().get(0);
@@ -180,11 +176,11 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             public void onItemClick(BaseQuickAdapter adapter2, View view, int position) {
                 if (adapter.getData().get(position).getItemType() == 1) {
                     // ToastUtil.toast("预览视频");
-                    PictureSelector.create(UpLoadVadieoFragment.this).externalPictureVideo(adapter.getData().get(position).getImage().getCompressPath());
+                    PictureSelector.create(UpLoadVideoFragment.this).externalPictureVideo(adapter.getData().get(position).getImage().getCompressPath());
                 } else {
                     //上传视频
                     // 进入相册 以下是例子：不需要的api可以不写
-                    PictureSelector.create(UpLoadVadieoFragment.this)
+                    PictureSelector.create(UpLoadVideoFragment.this)
                             .openGallery(PictureMimeType.ofVideo())
                             .theme(R.style.picture_default_style)
                             .maxSelectNum(1)
@@ -224,14 +220,14 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             @Override
             public void onClick(View v) {
                 imageType = 1;
-                PhotoUtil.ShowDialog(UpLoadVadieoFragment.this, 1, false, 2);
+                PhotoUtil.ShowDialog(UpLoadVideoFragment.this, 1, false, 2);
             }
         });
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageType = 1;
-                PhotoUtil.ShowDialog(UpLoadVadieoFragment.this, 1, false, 2);
+                PhotoUtil.ShowDialog(UpLoadVideoFragment.this, 1, false, 2);
             }
         });
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_upload_image, null, false);
@@ -244,7 +240,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
                 // bundle.putString("id",industry_id);
                 bundle.putString("type", "1");
-                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x11);
+                ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x11);
 
             }
         });
@@ -256,7 +252,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectIndustry);
                 // bundle.putString("id",industry_id);
                 bundle.putString("type", "2");
-                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x22);
+                ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x22);
             }
         });
         tv_region = footer.findViewById(R.id.tv_region);
@@ -265,7 +261,7 @@ public class UpLoadVadieoFragment extends BaseKitFragment {
             public void onClick(View v) {
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectRegion);
                 bundle.putString("id", region_id);
-                ActionActivity.startForResult(UpLoadVadieoFragment.this, bundle, 0x33);
+                ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x33);
             }
         });
         LinearLayout llOther = footer.findViewById(R.id.ll_other);

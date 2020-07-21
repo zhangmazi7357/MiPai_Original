@@ -90,6 +90,7 @@ public class PhotoUtil {
                 List<LocalMedia> selectList = new ArrayList<>();
                 PictureSelector.create(from)
                         .openGallery(PictureMimeType.ofAll())
+                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
                         .theme(R.style.picture_default_style)
                         .maxSelectNum(limt)
                         .minSelectNum(1)
@@ -221,32 +222,6 @@ public class PhotoUtil {
         dialog.show();
     }
 
-    //    public static void ShowDialog(final Activity from , final int limt, final boolean isCrop){
-//        final Dialog dialog=PhotoDialogUtil.getSelectDialog(from, new PhotoDialogUtil.onSelectPhotoType() {
-//            @Override
-//            public void onCamara(Dialog dialog) {
-//                dialog.dismiss();
-//                PicturesActivity.Start (
-//                        from,
-//                        PicturesActivity.TYPE_CAMERA,
-//                        REQUEST_CODE_CAMARA,
-//                        limt,
-//                        isCrop);
-//
-//            }
-//            @Override
-//            public void onGalary(Dialog dialog) {
-//                dialog.dismiss();
-//                PicturesActivity.Start(
-//                        from,
-//                        PicturesActivity.TYPE_GALARY,
-//                        REQUEST_CODE_GALARY,
-//                        limt,
-//                        isCrop);
-//            }
-//        });
-//        dialog.show();
-//    }
     //处理返回结果
     public static ArrayList<TImage> getImageList(int requestCode, Intent result, OnImageResult listener) {
         ArrayList<TImage> datas = null;

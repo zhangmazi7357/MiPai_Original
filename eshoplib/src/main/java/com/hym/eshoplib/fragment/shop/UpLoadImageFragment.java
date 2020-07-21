@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
+import com.hym.eshoplib.bean.mz.upload.ProductSortBean;
 import com.hym.eshoplib.fragment.shop.mzupload.MzLocationActivity;
 import com.hym.eshoplib.fragment.shop.mzupload.MzProductSortActivity;
 import com.hym.eshoplib.fragment.shop.mzupload.MzProductTagActivity;
@@ -657,8 +658,12 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
             switch (requestCode) {
                 case MzConstant.REQUEST_CODE_PRODUCT_SORT:  // 一级分类返回
-                    String productSort = data.getExtras().getString(MzConstant.VALUE_PRODUCT_SORT, "");
-                    mzProductSort.setContent(productSort);
+
+                    ProductSortBean.DataBean bean = data.getExtras().getParcelable(MzConstant.VALUE_PRODUCT_SORT);
+
+                    String title = bean.getTitle();
+                    String onetype_id = bean.getOnetype_id();
+                    mzProductSort.setContent(title);
                     break;
                 case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
                     break;

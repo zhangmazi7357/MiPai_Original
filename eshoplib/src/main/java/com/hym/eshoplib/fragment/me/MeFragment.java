@@ -1,6 +1,5 @@
 package com.hym.eshoplib.fragment.me;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,9 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -50,7 +46,6 @@ import butterknife.Unbinder;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.event.lgoin.LoginEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.mz.FileHelper;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.user.UserUtil;
 import constant.StringConstants;

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.eshoplib.R;
+import com.hym.eshoplib.bean.mz.upload.ProductSortBean;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
 
 
     private int selectPosition = -1;
-    private List<String> datas;
+    private List<ProductSortBean.DataBean> datas;
 
-    public void setDatas(List<String> datas) {
+    public void setDatas(List<ProductSortBean.DataBean> datas) {
         this.datas = datas;
         notifyDataSetChanged();
     }
@@ -51,8 +52,8 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
         } else {
             holder.checkIv.setVisibility(View.GONE);
         }
-
-        holder.sort.setText(datas.get(position));
+        ProductSortBean.DataBean dataBean = datas.get(position);
+        holder.sort.setText(dataBean.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +75,7 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
     }
 
 
-    public String getItemPosition(int position) {
+    public ProductSortBean.DataBean getItemPosition(int position) {
         return datas.get(position);
     }
 

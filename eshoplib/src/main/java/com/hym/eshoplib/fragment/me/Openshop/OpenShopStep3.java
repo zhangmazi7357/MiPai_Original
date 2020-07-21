@@ -20,7 +20,7 @@ import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.goods.CategoryListBean;
 import com.hym.eshoplib.bean.shop.ShopProductsBean;
 import com.hym.eshoplib.fragment.shop.UpLoadImageFragment;
-import com.hym.eshoplib.fragment.shop.UpLoadVadieoFragment;
+import com.hym.eshoplib.fragment.shop.UpLoadVideoFragment;
 import com.hym.eshoplib.http.goods.GoodsApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.imagelib.ImageUtil;
@@ -147,7 +147,7 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
                             @Override
                             public void onBtnOneClick(Dialog dialog) {
                                 dialog.dismiss();
-                                startForResult(UpLoadVadieoFragment.newInstance(bundle),0x01);
+                                startForResult(UpLoadVideoFragment.newInstance(bundle),0x01);
 
                             }
 

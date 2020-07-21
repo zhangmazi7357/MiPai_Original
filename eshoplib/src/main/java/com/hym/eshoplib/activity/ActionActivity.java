@@ -53,7 +53,7 @@ import com.hym.eshoplib.fragment.shop.ShopListFragment;
 import com.hym.eshoplib.fragment.shop.ShopStudyFragment;
 import com.hym.eshoplib.fragment.shop.ShopWorkInfoFragment;
 import com.hym.eshoplib.fragment.shop.UpLoadImageFragment;
-import com.hym.eshoplib.fragment.shop.UpLoadVadieoFragment;
+import com.hym.eshoplib.fragment.shop.UpLoadVideoFragment;
 
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.fragment.WebFragment;
@@ -239,7 +239,7 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                     fragment = UpLoadImageFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Shop_uploadVideo:               // 工作室 - 产品 - 上传视频
-                    fragment = UpLoadVadieoFragment.newInstance(getIntent().getExtras());
+                    fragment = UpLoadVideoFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Shop_chage_price:
                     fragment = EdityServicePriceFragment.newInstance(getIntent().getExtras());
