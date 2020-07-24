@@ -1,6 +1,7 @@
 package cn.hym.superlib.adapter;
 
 import androidx.fragment.app.Fragment;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,12 +24,12 @@ import cn.hym.superlib.bean.local.UpLoadImageBean;
  * otherTips
  */
 
-public class UpLoadImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBean,BaseViewHolder>{
+public class UpLoadImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBean, BaseViewHolder> {
 
     Fragment fragment;
     onDeleteListener listener;
-    boolean showMain=true;//显示主图
-    boolean showDelete=true;//显示删除按钮
+    boolean showMain = true;//显示主图
+    boolean showDelete = true;//显示删除按钮
 
     public boolean isShowMain() {
         return showMain;
@@ -52,63 +53,65 @@ public class UpLoadImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBea
 
     public UpLoadImageAdapter(Fragment fragment, List<UpLoadImageBean> data) {
         super(data);
-        this.fragment=fragment;
+        this.fragment = fragment;
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
         addItemType(UpLoadImageBean.type_add, R.layout.item_add_image);
 
     }
-    int max=8;
+
+    int max = 8;
 
     public void setMax(int max) {
-        this.max = max-1;
+        this.max = max - 1;
     }
 
     @Override
     protected void convert(final BaseViewHolder helper, UpLoadImageBean item) {
-        switch (item.getItemType()){
+        switch (item.getItemType()) {
             case UpLoadImageBean.type_normal:
-                ImageView iv_icon=helper.getView(R.id.iv_icon);
-                ImageView iv_delete=helper.getView(R.id.iv_delete);
-                TextView tv_main=helper.getView(R.id.tv_main_image);
-                Logger.d("layoutPosition="+helper.getLayoutPosition()+"===adapterPosition="+helper.getAdapterPosition());
-                if(helper.getLayoutPosition()==0&&showMain){
+                ImageView iv_icon = helper.getView(R.id.iv_icon);
+                ImageView iv_delete = helper.getView(R.id.iv_delete);
+                TextView tv_main = helper.getView(R.id.tv_main_image);
+                Logger.d("layoutPosition=" + helper.getLayoutPosition() + "===adapterPosition=" + helper.getAdapterPosition());
+                if (helper.getLayoutPosition() == 0 && showMain) {
                     tv_main.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tv_main.setVisibility(View.GONE);
                 }
-                iv_delete.setVisibility(showDelete?View.VISIBLE:View.GONE);
+                iv_delete.setVisibility(showDelete ? View.VISIBLE : View.GONE);
                 iv_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       // ToastUtil.toast("删除position="+helper.getAdapterPosition());
-                        if(listener!=null){
+                        // ToastUtil.toast("删除position="+helper.getAdapterPosition());
+                        if (listener != null) {
                             listener.onDelete(helper.getLayoutPosition());
                         }
                         mData.remove(helper.getLayoutPosition());
-                        if(mData.size()==max){
-                           boolean hasAdd=false;
-                           for (UpLoadImageBean bean:mData){
-                               if (bean.getItemType()==UpLoadImageBean.type_add){
-                                   hasAdd=true;
-                                   break;
-                               }
-                           }
-                           if(!hasAdd){
-                               mData.add(new UpLoadImageBean());
-                           }
+                        if (mData.size() == max) {
+                            boolean hasAdd = false;
+                            for (UpLoadImageBean bean : mData) {
+                                if (bean.getItemType() == UpLoadImageBean.type_add) {
+                                    hasAdd = true;
+                                    break;
+                                }
+                            }
+                            if (!hasAdd) {
+                                mData.add(new UpLoadImageBean());
+                            }
                         }
                         notifyDataSetChanged();
 
                     }
                 });
-                ImageUtil.getInstance().loadRoundCornerImage(fragment,item.getImage().getCompressPath(),iv_icon,5);
+                ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
                 break;
             case UpLoadImageBean.type_add:
-                ImageView iv_add=helper.getView(R.id.iv_icon);
+                ImageView iv_add = helper.getView(R.id.iv_icon);
                 break;
         }
     }
-    public interface onDeleteListener{
+
+    public interface onDeleteListener {
         public void onDelete(int position);
     }
 

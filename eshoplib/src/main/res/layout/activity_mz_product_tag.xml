@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.shop.mzupload.MzProductTagActivity">
+    android:orientation="vertical"
+    tools:context=".fragment.shop.mzupload.ui.MzProductTagActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <cn.hym.superlib.mz.widgets.MzHeaderBar
+        android:id="@+id/headerBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:header_title="所属标签"
+        app:rightTv="确定" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tagRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp" />
+</LinearLayout>

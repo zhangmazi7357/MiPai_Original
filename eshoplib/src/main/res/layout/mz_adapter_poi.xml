@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:scrollbars="none">
 
+
     <TextView
-        android:id="@+id/tvPoi"
+        android:id="@+id/poiName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:singleLine="true"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="17sp"
+        tools:text="地图" />
+
+    <TextView
+        android:id="@+id/poiAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:singleLine="true"
+        android:textColor="@color/picture_color_70"
+        android:textSize="14sp"
         tools:text="高德" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
-</HorizontalScrollView>
+</LinearLayout>

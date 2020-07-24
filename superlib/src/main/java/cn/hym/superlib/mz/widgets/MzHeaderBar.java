@@ -1,4 +1,4 @@
-package com.hym.eshoplib.mz;
+package cn.hym.superlib.mz.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hym.eshoplib.R;
+import cn.hym.superlib.R;
+
 
 /**
  * 自定义一个简单顶部栏
@@ -28,7 +29,7 @@ public class MzHeaderBar extends FrameLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MzHeaderBar);
 
 
-        View root = LayoutInflater.from(context).inflate(R.layout.layout_mz_header_bar, this, true);
+        View root = LayoutInflater.from(context).inflate(R.layout.mz_layout_header_bar, this, true);
 
         boolean showBack = ta.getBoolean(R.styleable.MzHeaderBar_showBack, true);
         String title = ta.getString(R.styleable.MzHeaderBar_header_title);

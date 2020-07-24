@@ -1,7 +1,9 @@
 package com.hym.eshoplib.fragment.shop;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +46,10 @@ public class ShopCardInfoFragment extends BaseKitFragment {
     ClearEditText tvAddress;
     @BindView(R.id.tv_phone)
     ClearEditText tvPhone;
-    @BindView(R.id.tv_other_phone)
-    ClearEditText tvOtherPhone;
     @BindView(R.id.tv_email)
     ClearEditText tvEmail;
     @BindView(R.id.tv_photo)
     TextView tvPhoto;
-    @BindView(R.id.tv_other_name)
-    ClearEditText tvOtherName;
 
     public static ShopCardInfoFragment newInstance(Bundle args) {
         ShopCardInfoFragment fragment = new ShopCardInfoFragment();
@@ -76,8 +74,8 @@ public class ShopCardInfoFragment extends BaseKitFragment {
         tvCardno.setText(data.getData().getCard_info().getCard_no() + "");
         tvAddress.setText(data.getData().getCard_info().getAddress() + "");
         tvPhone.setText(data.getData().getCard_info().getTel() + "");
-        tvOtherName.setText(data.getData().getCard_info().getLinkname()+"");
-        tvOtherPhone.setText(data.getData().getCard_info().getLinkphone() + "");
+//        tvOtherName.setText(data.getData().getCard_info().getLinkname() + "");
+//        tvOtherPhone.setText(data.getData().getCard_info().getLinkphone() + "");
         tvEmail.setText(data.getData().getCard_info().getEmail() + "");
         tvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,30 +94,30 @@ public class ShopCardInfoFragment extends BaseKitFragment {
             @Override
             public void onClick(View v) {
                 hideSoftInput();
-                String address = tvAddress.getText().toString();
-                if (TextUtils.isEmpty(address)) {
-                    ToastUtil.toast("请输入通讯地址");
-                    return;
-                }
+//                String address = tvAddress.getText().toString();
+//                if (TextUtils.isEmpty(address)) {
+//                    ToastUtil.toast("请输入通讯地址");
+//                    return;
+//                }
                 String phone = tvPhone.getText().toString();
                 if (TextUtils.isEmpty(phone) || phone.length() != 11) {
                     ToastUtil.toast("请输入正确的手机号");
                     return;
                 }
-                String otherNmae=tvOtherName.getText().toString();
-                if(TextUtils.isEmpty(otherNmae)){
-                    ToastUtil.toast("请输入紧急联系人姓名");
-                    return;
-                }
-                String otherPhone = tvOtherPhone.getText().toString();
-                if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
-                    ToastUtil.toast("请输入正确的紧急联系人号码");
-                    return;
-                }
-                if(phone.equals(otherPhone)){
-                    ToastUtil.toast("紧急联系人号码不能与手机号重复");
-                    return;
-                }
+//                String otherNmae = tvOtherName.getText().toString();
+//                if (TextUtils.isEmpty(otherNmae)) {
+//                    ToastUtil.toast("请输入紧急联系人姓名");
+//                    return;
+//                }
+//                String otherPhone = tvOtherPhone.getText().toString();
+//                if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
+//                    ToastUtil.toast("请输入正确的紧急联系人号码");
+//                    return;
+//                }
+//                if (phone.equals(otherPhone)) {
+//                    ToastUtil.toast("紧急联系人号码不能与手机号重复");
+//                    return;
+//                }
                 String email = tvEmail.getText().toString();
                 if (TextUtils.isEmpty(email) || !email.contains("@") || !email.contains(".")) {
                     ToastUtil.toast("请输入正确的邮箱号");
@@ -130,8 +128,12 @@ public class ShopCardInfoFragment extends BaseKitFragment {
                 //校验全部通过调用接口
                 ShopApi.EditShop("", "", "",
                         "", "", "",
-                        address, phone, "", otherPhone,
-                        email, "", new ResponseImpl<Object>() {
+                        "",
+                        phone,
+                        "", "",
+                        email,
+                        "",
+                        new ResponseImpl<Object>() {
                             @Override
                             public void onStart(int mark) {
                                 setShowProgressDialog(true);

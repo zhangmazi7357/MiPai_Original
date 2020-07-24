@@ -10,6 +10,7 @@ package com.hym.httplib;
 
 public class HttpConstans {
 
-    public static final String server_ip="http://mpai.liandao.mobi";
+    public static final String server_ip = "http://mpai.liandao.mobi";
+//    public static final String server_ip = "http://121.40.80.45/api";
     //public static final String server_ip="http://mptest.liandao.mobi";
 }

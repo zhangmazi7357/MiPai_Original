@@ -140,7 +140,7 @@
                             android:layout_width="27dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_5" />
+                            android:src="@drawable/ic_home_rxps" />
 
                         <TextView
                             android:id="@+id/tv_function_5"
@@ -149,7 +149,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
                             android:layout_marginBottom="10dp"
-                            android:text="视频团队"
+                            android:text="人像写真"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -166,7 +166,7 @@
                             android:layout_width="27dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_4" />
+                            android:src="@drawable/ic_home_hdps" />
 
                         <TextView
                             android:id="@+id/tv_function_4"
@@ -175,7 +175,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
                             android:layout_marginBottom="10dp"
-                            android:text="剪辑师"
+                            android:text="活动拍摄"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -192,7 +192,7 @@
                             android:layout_width="27dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_9" />
+                            android:src="@drawable/ic_home_hyps" />
 
                         <TextView
                             android:id="@+id/tv_function_9"
@@ -201,7 +201,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
                             android:layout_marginBottom="10dp"
-                            android:text="演员/模特"
+                            android:text="会议拍摄"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -235,7 +235,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
-                            android:text="视频导演"
+                            android:text="宣传片拍摄"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -251,7 +251,7 @@
                             android:layout_width="27dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_6" />
+                            android:src="@drawable/ic_home_qzz" />
 
                         <TextView
                             android:id="@+id/tv_function_6"
@@ -259,7 +259,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
-                            android:text="动画师"
+                            android:text="亲子照"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -301,7 +301,7 @@
                             android:layout_width="27dp"
                             android:layout_height="26dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_1" />
+                            android:src="@drawable/ic_function_tab_9" />
 
                         <TextView
                             android:id="@+id/tv_function_1"
@@ -309,7 +309,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
-                            android:text="文案策划"
+                            android:text="婚纱摄影"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -334,7 +334,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="7dp"
-                            android:text="化妆师"
+                            android:text="化妆造型"
                             android:textColor="#262626"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -418,7 +418,6 @@
                     app:mvSingleLine="true"
                     app:mvTextColor="@color/mipaiTextColorNormal"
                     app:mvTextSize="12sp" />
-
 
 
                 <TextView
@@ -545,5 +544,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
+
+
 </FrameLayout>
 

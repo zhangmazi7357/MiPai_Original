@@ -50,10 +50,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".fragment.shop.mzupload.MzLocationActivity"></activity>
-        <activity android:name=".fragment.shop.mzupload.MzProductTagActivity" />
-        <activity android:name=".fragment.shop.mzupload.MzSubProductActivity" />
-        <activity android:name=".fragment.shop.mzupload.MzProductSortActivity" />
+        <activity android:name=".fragment.shop.mzupload.ui.MzLocationActivity"></activity>
+        <activity android:name=".fragment.shop.mzupload.ui.MzProductTagActivity" />
+        <activity android:name=".fragment.shop.mzupload.ui.MzSubProductActivity" />
+        <activity android:name=".fragment.shop.mzupload.ui.MzProductSortActivity" />
         <activity
             android:name=".activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

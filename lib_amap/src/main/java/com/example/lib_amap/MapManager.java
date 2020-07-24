@@ -240,33 +240,13 @@ public class MapManager {
 
 
     /**
-     * POI检索
-     * url  : https://lbs.amap.com/api/android-sdk/guide/map-data/poi#inputtips
+     * 智能提示
      *
-     * @param keyWord  keyWord表示搜索字符串，
-     * @param cityCode 表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+     * @param context
+     * @param keyWord
+     * @param inputtipsListener
      */
-    public void poiSearch(Context context, String keyWord, String cityCode,
-                          PoiSearch.OnPoiSearchListener poiSearchListener,
-                          Inputtips.InputtipsListener inputtipsListener) {
-        //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字
-        PoiSearch.Query query = new PoiSearch.Query(keyWord, "", cityCode);
-
-        // 设置每页最多返回多少条poiitem
-        query.setPageSize(10);
-        //设置查询页码
-        query.setPageNum(1);
-
-        PoiSearch poiSearch = new PoiSearch(context, query);
-        // 设置 poi 搜索监听;
-        poiSearch.setOnPoiSearchListener(poiSearchListener);
-
-        // 发送poi 请求
-        poiSearch.searchPOIAsyn();
-
-        // 通过 PoiSearch.OnPoiSearchListener的回调 onPoiSearched() 将搜索点绘制在地图上
-
-
+    public void tipSearch(Context context, String keyWord, Inputtips.InputtipsListener inputtipsListener) {
         // 实现输入提示
         InputtipsQuery inputquery = new InputtipsQuery(keyWord, "北京");
         inputquery.setCityLimit(true);//限制在当前城市
@@ -278,6 +258,38 @@ public class MapManager {
 
         // 实时请求
         inputTips.requestInputtipsAsyn();
+    }
+
+
+    /**
+     * POI检索
+     * url  : https://lbs.amap.com/api/android-sdk/guide/map-data/poi#inputtips
+     *
+     * @param keyWord  keyWord表示搜索字符串，
+     * @param cityCode 表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+     */
+    public void poiSearch(Context context,
+                          String keyWord,
+                          String cityCode,
+                          PoiSearch.OnPoiSearchListener poiSearchListener
+    ) {
+        //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字
+        PoiSearch.Query query = new PoiSearch.Query(keyWord, "", cityCode);
+
+        // 设置每页最多返回多少条poiitem
+        query.setPageSize(100);
+        //设置查询页码
+//        query.setPageNum(1);
+
+        PoiSearch poiSearch = new PoiSearch(context, query);
+        // 设置 poi 搜索监听;
+        poiSearch.setOnPoiSearchListener(poiSearchListener);
+
+        // 发送poi 请求
+        poiSearch.searchPOIAsyn();
+
+        // 通过 PoiSearch.OnPoiSearchListener的回调 onPoiSearched() 将搜索点绘制在地图上
+
 
     }
 

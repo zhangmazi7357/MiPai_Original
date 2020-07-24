@@ -176,8 +176,7 @@ public class EditshopBaseInfo extends BaseKitFragment {
                         }
                         ShopApi.EditShop(avantar, name, category_id,
                                 region_id, "", "",
-                                "", "", "",
-                                "", "", "", new ResponseImpl<Object>() {
+                                "", "", "", "", "", "", new ResponseImpl<Object>() {
                                     @Override
                                     public void onStart(int mark) {
                                         setShowProgressDialog(true);

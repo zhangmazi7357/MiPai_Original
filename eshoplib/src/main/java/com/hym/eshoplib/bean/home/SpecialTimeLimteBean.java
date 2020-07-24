@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import java.io.Serializable;
 import java.util.List;
 
-public class SpecialTimeLimteBean implements Serializable{
+public class SpecialTimeLimteBean implements Serializable {
 
 
     /**
@@ -22,7 +22,7 @@ public class SpecialTimeLimteBean implements Serializable{
         this.data = data;
     }
 
-    public static class DataBean implements MultiItemEntity ,Serializable{
+    public static class DataBean implements MultiItemEntity, Serializable {
         /**
          * currentpage : 1
          * totalnum : 13
@@ -43,7 +43,7 @@ public class SpecialTimeLimteBean implements Serializable{
 
         private int selected = 1;
 
-        public void setItemType(int itemType){
+        public void setItemType(int itemType) {
             this.itemType = itemType;
         }
 
@@ -88,7 +88,7 @@ public class SpecialTimeLimteBean implements Serializable{
             this.selected = selected;
         }
 
-        public static class VideoBean implements Serializable{
+        public static class VideoBean implements Serializable {
             /**
              * agree : 0
              * auth : 1

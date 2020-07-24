@@ -63,14 +63,14 @@ public class PhotoUtil {
                         .maxSelectNum(limt)
                         .minSelectNum(1)
                         .selectionMode(limt > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
-                        .previewImage(true)
-                        .previewVideo(true)
+                        .isPreviewImage(true)
+                        .isPreviewVideo(true)
                         .enablePreviewAudio(true) // 是否可播放音频
                         .isCamera(true)
-                        .enableCrop(isCrop)
-                        .compress(true)
+                        .isEnableCrop(isCrop)
+                        .isCompress(true)
                         .glideOverride(160, 160)
-                        .previewEggs(true)
+                        .isPreviewEggs(true)
                         .withAspectRatio(1, 1)
                         .hideBottomControls(false)
                         .isGif(false)
@@ -78,7 +78,7 @@ public class PhotoUtil {
                         .circleDimmedLayer(false)
                         .showCropFrame(true)
                         .showCropGrid(true)
-                        .openClickSound(true)
+                        .isOpenClickSound(false)
                         .selectionMedia(selectList)
                         .forResult(REQUEST_CODE_CAMARA);
 
@@ -153,7 +153,8 @@ public class PhotoUtil {
     }
 
     //pictureSelector实现
-    public static void ShowDialogPictureSelector(final Fragment from, final int limt, final boolean isCrop) {
+    public static void ShowDialogPictureSelector(final Fragment from,
+                                                 final int limt, final boolean isCrop) {
 
         final Dialog dialog = PhotoDialogUtil.getSelectDialog(from.getContext(), new PhotoDialogUtil.onSelectPhotoType() {
             @Override
@@ -192,11 +193,11 @@ public class PhotoUtil {
                 dialog.dismiss();
                 List<LocalMedia> selectList = new ArrayList<>();
 
-                Log.e(TAG, "onGalary: ");
 
 
                 PictureSelector.create(from)
                         .openGallery(PictureMimeType.ofImage())
+                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
                         .theme(R.style.picture_default_style)
                         .maxSelectNum(limt)
                         .minSelectNum(1)

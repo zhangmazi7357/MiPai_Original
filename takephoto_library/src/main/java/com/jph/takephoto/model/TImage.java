@@ -16,7 +16,7 @@ public class TImage implements Serializable {
     private FromType fromType;
     private boolean cropped;
     private boolean compressed;
-    private String id;//自定义字段用于上传图片
+    private String id;          //自定义字段用于上传图片
 
     public String getId() {
         return id;

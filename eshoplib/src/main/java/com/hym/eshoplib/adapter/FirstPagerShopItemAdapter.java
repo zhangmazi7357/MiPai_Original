@@ -38,7 +38,7 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
     protected void convert(BaseViewHolder helper, SpecialTimeLimteBean.DataBean item) {
 
 
-        if (item.getItemType() == 1) {
+        if (item.getItemType() == FirstPagerShopBean.TEHUI) {
             if (item == null || item.getVideo() == null || item.getVideo().size() < 5) {
                 return;
             }
@@ -84,7 +84,7 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
                     .addOnClickListener(R.id.rl_top_click5)
                     .addOnClickListener(R.id.tv_tehui_odd_more)
             ;
-        } else if (item.getItemType() == 2) {
+        } else if (item.getItemType() == FirstPagerShopBean.YANXUAN) {
             if (item == null || item.getVideo() == null || item.getVideo().size() <= 0) {
                 return;
             }
@@ -118,7 +118,7 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
                     .addOnClickListener(R.id.rl_bottom_click2)
                     .addOnClickListener(R.id.tv_strict_select_more)
             ;
-        } else if (item.getItemType() == 3) {
+        } else if (item.getItemType() == FirstPagerShopBean.TABLE) {
             TextView tvComment = helper.getView(R.id.tv_comment);
             TextView tvPhoto = helper.getView(R.id.tv_photo);
             TextView tvVideo = helper.getView(R.id.tv_video);

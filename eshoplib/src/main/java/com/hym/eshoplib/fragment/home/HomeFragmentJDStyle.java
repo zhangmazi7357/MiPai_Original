@@ -563,6 +563,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         rvFooter.setLayoutManager(new GridLayoutManager(_mActivity, 2, LinearLayoutManager.VERTICAL, false));
         SpecialTimeLimteBean.DataBean.VideoBean videoBean = new SpecialTimeLimteBean.DataBean.VideoBean();
         rvFooterComment.add(videoBean);
+        //  列表 adapter
         shopListAdapter = new ShopListAdapter(R.layout.item_shop, rvFooterComment);
 
         shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -1525,7 +1526,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
                     //Logger.d("不引导");
                     break;
-                case 1:
+                case 1:    // 要显示高亮
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效

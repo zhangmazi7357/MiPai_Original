@@ -1,274 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#f1f1f1"/>
+        android:background="#f1f1f1" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="真实姓名"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="真实姓名" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
                     android:id="@+id/tv_realname"
-                    android:textColor="#aeaeae"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    />
+                    android:gravity="center_vertical|right"
+                    android:textColor="#aeaeae"
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="身份证号"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="身份证号" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
                     android:id="@+id/tv_cardno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|right"
                     android:textColor="#aeaeae"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    />
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="通讯地址"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="手机号码" />
+
                 <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:background="@null"
-                    android:id="@+id/tv_address"
-                    android:textColor="@color/black"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    android:hint="请输入通讯地址"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#e1e1e1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
-                <cn.hym.superlib.widgets.view.RequiredTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:requiredText="手机号码"
-                    android:gravity="center_vertical"
-                    />
-                <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
                     android:id="@+id/tv_phone"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@null"
                     android:drawablePadding="10dp"
-                    android:textSize="12sp"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入手机号"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#e1e1e1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
-                <cn.hym.superlib.widgets.view.RequiredTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:requiredText="紧急联系人"
-                    android:gravity="center_vertical"
-                    />
-                <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/tv_other_name"
                     android:textColor="@color/black"
-                    android:background="@null"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    android:hint="紧急联系人姓名"
-                    />
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="紧急联系人号码"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="邮箱地址" />
+
                 <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/tv_other_phone"
-                    android:textColor="@color/black"
-                    android:background="@null"
-                    android:drawablePadding="10dp"
-                    android:textSize="12sp"
-                    android:hint="请输入紧急联系人号码"
-                    android:maxLength="11"
-                    />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#e1e1e1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
-                <cn.hym.superlib.widgets.view.RequiredTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:requiredText="邮箱地址"
-                    android:gravity="center_vertical"
-                    />
-                <cn.hym.superlib.widgets.view.ClearEditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
                     android:id="@+id/tv_email"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@null"
                     android:drawablePadding="10dp"
-                    android:textSize="12sp"
+                    android:gravity="center_vertical|right"
                     android:hint="请输入邮箱地址"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                >
+                android:paddingRight="10dp">
+
                 <cn.hym.superlib.widgets.view.RequiredTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:requiredText="身份证照片"
                     android:gravity="center_vertical"
-                    />
+                    app:requiredText="身份证照片" />
+
                 <TextView
+                    android:id="@+id/tv_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:id="@+id/tv_photo"
-                    android:textColor="#aeaeae"
                     android:drawableRight="@drawable/ic_arrow_right"
                     android:drawablePadding="10dp"
-                    android:textSize="12sp"
+                    android:gravity="center_vertical|right"
                     android:text="已上传"
-                    />
+                    android:textColor="#aeaeae"
+                    android:textSize="12sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#e1e1e1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="#e1e1e1" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

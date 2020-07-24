@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -130,6 +131,25 @@
                 android:textColor="#969696"
                 android:textSize="9sp" />
 
+            <TextView
+                android:id="@+id/tv_one_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv_one_buy"
+                android:layout_below="@+id/iv_one_pic"
+                android:layout_alignTop="@+id/tv_one_count"
+                android:layout_alignRight="@+id/iv_one_pic"
+                android:background="@drawable/mz_bg_tag"
+                android:ellipsize="end"
+                android:maxEms="5"
+                android:paddingLeft="3dp"
+                android:paddingTop="2dp"
+                android:paddingRight="3dp"
+                android:paddingBottom="2dp"
+                android:singleLine="true"
+                android:textColor="@color/red"
+                android:textSize="13sp"
+                tools:text="标签" />
 
             <TextView
                 android:id="@+id/tv_one_buy"

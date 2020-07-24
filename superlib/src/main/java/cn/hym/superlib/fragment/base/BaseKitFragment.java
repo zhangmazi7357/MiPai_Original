@@ -369,9 +369,10 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         @Override
         public void onDataError(String status, String errormessage) {
+            Log.e(TAG, "onDataError: " + status);
             //请求成功但是数据异常
             HttpStatusUtil.handleErrorStatus(status, errormessage);
-            Logger.d(errormessage);
+            Log.e(TAG, "onDataError: " + status + ",message = " + errormessage);
             if (!status.equals("6666")) {
                 ToastUtil.toast(errormessage);
             }
@@ -381,7 +382,7 @@ public abstract class BaseKitFragment extends BaseFragment {
         @Override
         public void onFailed(Exception e) {
             //由于网络问题导致的失败
-            Logger.d(e.toString());
+            Log.e(TAG, "onFailed: " + e.toString());
             ToastUtil.toast("Internet Error,please check your Internet connecttion and try it again");
             dissMissDialog();
 
@@ -389,14 +390,16 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         @Override
         public void onEmptyData() {
-            Logger.d("空数据");
+            Log.e(TAG, "onEmptyData: ");
 
         }
 
         @Override
         public void dataRes(int code, String data) {
+
+            Log.e(TAG, "dataRes: " + data);
             //请求回来的原始数据未处理过的
-            Logger.d("sourceData=" + data);
+//            Logger.d("sourceData=" + data);
 
         }
     }

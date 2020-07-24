@@ -23,8 +23,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
+import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
+import com.hym.eshoplib.bean.mz.upload.ProductTwoTypeBean;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzLocationActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzProductSortActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzProductTagActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzSubProductActivity;
 import com.hym.eshoplib.http.CommonApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.hym.imagelib.ImageUtil;
 import com.hym.photolib.utils.PhotoUtil;
 import com.jph.takephoto.model.TImage;
@@ -47,6 +54,10 @@ import cn.hym.superlib.adapter.UpLoadVadieoProductAdapter;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.MzProImageDetailAdapter;
+import cn.hym.superlib.mz.MzProVideoDetailAdapter;
+import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.mz.widgets.UploadItemView;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
@@ -64,6 +75,8 @@ import io.rong.common.FileUtils;
 
 public class UpLoadVideoFragment extends BaseKitFragment {
     UpLoadVadieoProductAdapter adapter;
+
+    private MzProVideoDetailAdapter mzAdapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     Unbinder unbinder;
@@ -109,6 +122,20 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     private String length;
     private String otherOrLocation;
 
+
+    private RecyclerView mzProDetailRv;                        // 项目详情添加图片;
+    private UploadItemView mzProductSort;                     // 产品分类
+    private UploadItemView mzSubProductSort;                  // 二级产品分类
+    private UploadItemView mzProductTag;                      //  产品标签
+    private UploadItemView mzLocation;                        // 摄影棚地址；
+
+
+    private String oneType = "";    // 产品一级分类选中的 id  ;
+    private String twoType = "";
+    private String tagContent = "";   // 产品标签 ;
+    private String address = "";      // 地址 ;
+    private String lon = "";            // 经度；
+    private String lat = "";            // 纬度；
 
     public static UpLoadVideoFragment newInstance(Bundle args) {
         UpLoadVideoFragment fragment = new UpLoadVideoFragment();
@@ -176,7 +203,9 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             public void onItemClick(BaseQuickAdapter adapter2, View view, int position) {
                 if (adapter.getData().get(position).getItemType() == 1) {
                     // ToastUtil.toast("预览视频");
-                    PictureSelector.create(UpLoadVideoFragment.this).externalPictureVideo(adapter.getData().get(position).getImage().getCompressPath());
+                    PictureSelector.create(UpLoadVideoFragment.this)
+                            .externalPictureVideo(adapter.getData()
+                                    .get(position).getImage().getCompressPath());
                 } else {
                     //上传视频
                     // 进入相册 以下是例子：不需要的api可以不写
@@ -307,13 +336,64 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         etLocatiom = footer.findViewById(R.id.et_location);
         etCeHua = footer.findViewById(R.id.et_cehuashi);
 
+
+        cateId = getArguments().getString("cateId");
+        adapter.addHeaderView(header);
+        adapter.addFooterView(footer);
+
+        ///////////////////  添加 新内容  /////////////////////////////
+//        initProDetailRv();
+
+        mzProductSort = footer.findViewById(R.id.mz_productSort);
+        mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
+        mzProductTag = footer.findViewById(R.id.mz_productTag);
+        mzLocation = footer.findViewById(R.id.mz_location);
+
+        View.OnClickListener mzClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                int requestCode = 0;
+
+                switch (v.getId()) {
+                    case R.id.mz_productSort:           // 一级分类
+                        intent.setClass(_mActivity, MzProductSortActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_subProductSort:        // 二级分类
+                        intent.setClass(_mActivity, MzSubProductActivity.class);
+
+                        // 需要传入 一级 id , 使二级 分类 判别 ;
+                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, oneType);
+                        requestCode = MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_productTag:        // 产品标签
+                        intent.setClass(_mActivity, MzProductTagActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_TAG;
+                        break;
+                    case R.id.mz_location:          // 摄影棚位置
+                        intent.setClass(_mActivity, MzLocationActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_LOCATION;
+                        break;
+
+                }
+
+                startActivityForResult(intent, requestCode);
+            }
+        };
+        mzProductSort.setOnClickListener(mzClickListener);
+        mzSubProductSort.setOnClickListener(mzClickListener);
+        mzProductTag.setOnClickListener(mzClickListener);
+        mzLocation.setOnClickListener(mzClickListener);
+
+
         cateId = getArguments().getString("cateId");
         adapter.addHeaderView(header);
         adapter.addFooterView(footer);
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
 
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llStaffing.setVisibility(View.VISIBLE);
             llShootingTime.setVisibility(View.VISIBLE);
             llEquipment.setVisibility(View.VISIBLE);
@@ -326,7 +406,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         } else if (cateId.equals("8")) {
 
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llEquipment.setVisibility(View.VISIBLE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
@@ -371,7 +451,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         } else if (cateId.equals("40")) {
 
             llTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
@@ -491,9 +571,18 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 //            ToastUtil.toast("请输入产品相关说明（10字以内）");
 //            return;
 //        }
-        ShopApi.upLoadVideoProduct(image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation,
-                length, etPrice, remarks, originalPrice, staffing, shootingTime, equipment,
-                introduce, detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua,
+
+        ShopApi.upLoadVideoProduct(image_default, attachment, title,
+                industry_id, image_type_id, region_id,
+                otherOrLocation,
+                length, etPrice, remarks,
+                originalPrice,
+                staffing, shootingTime, equipment,
+                introduce, detail, tyid,
+                shopTime, paisheCount, huazhuang,
+                sheyingshi, shejishi, time, huazhuangping,
+                cehua,
+
                 new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
@@ -599,48 +688,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
                     break;
                 default:
-//                   PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
-//                       @Override
-//                       public void onResultCamara(ArrayList<TImage> resultCamara) {
-//                           //ToastUtil.toast("相机url="+resultCamara.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultCamara.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }
-//
-//                       }
-//
-//                       @Override
-//                       public void onResultGalary(ArrayList<TImage> resultGalayr) {
-//                           // ToastUtil.toast("相册url="+resultCamara.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultGalayr.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }
-//
-//
-//                       }
-//                   });
+
                     PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                         @Override
                         public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
@@ -672,6 +720,51 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                             message.sendToTarget();
                         }
                     });
+            }
+        }
+
+        // 产品分类 、 二级分类 、 标签 、地图
+        if (resultCode == MzConstant.RESULT_CODE_UPLOAD) {
+
+            switch (requestCode) {
+                case MzConstant.REQUEST_CODE_PRODUCT_SORT:  // 一级分类返回
+
+                    ProductOneTypeBean.DataBean bean = data.getExtras().getParcelable(MzConstant.VALUE_PRODUCT_ONE);
+
+                    String title = bean.getTitle();
+
+                    // 产品一级 分类的  id  ;
+                    oneType = bean.getOnetype_id();
+                    mzProductSort.setContent(title);
+                    break;
+                case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
+
+                    List<ProductTwoTypeBean.DataBean> twoList = data.getExtras().getParcelableArrayList(MzConstant.VALUE_PRODUCT_TWO);
+                    List<String> vList = new ArrayList<>();
+                    List<String> titleList = new ArrayList<>();
+                    for (int i = 0; i < twoList.size(); i++) {
+                        ProductTwoTypeBean.DataBean dataBean = twoList.get(i);
+                        vList.add(dataBean.getTwotype_id());
+                        titleList.add(dataBean.getTitle());
+                    }
+                    twoType = MzStringUtil.v(vList);
+                    String twoTypeContent = MzStringUtil.v(titleList);
+                    mzSubProductSort.setContent(twoTypeContent);
+
+
+                    break;
+                case MzConstant.REQUEST_CODE_PRODUCT_TAG:       // 标签
+
+                    ArrayList<String> tagList = data.getExtras().getStringArrayList(MzConstant.VALUE_PRODUCT_TAG);
+
+                    tagContent = MzStringUtil.v(tagList);
+                    mzProductTag.setContent(tagContent);
+
+                    break;
+                case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
+
+
+                    break;
             }
         }
     }
@@ -732,4 +825,28 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         }
     }
 
+
+    // 封面
+    private void preFm() {
+
+    }
+
+
+    // 项目详情的 列表;
+    private void initProDetailRv() {
+        mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
+        mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+        mzAdapter = new MzProVideoDetailAdapter(this, null);
+        mzAdapter.setToken(qiniuToken);
+        mzAdapter.addData(new UpLoadImageBean());
+        mzProDetailRv.setAdapter(mzAdapter);
+
+        mzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
+
+    }
 }

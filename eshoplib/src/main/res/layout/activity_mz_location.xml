@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.shop.mzupload.MzLocationActivity">
+    tools:context=".fragment.shop.mzupload.ui.MzLocationActivity">
 
     <!-- header-->
-    <com.hym.eshoplib.mz.MzHeaderBar
+    <cn.hym.superlib.mz.widgets.MzHeaderBar
         android:id="@+id/mzHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -36,14 +36,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mzHeaderBar" />
 
-    <EditText
+
+    <cn.hym.superlib.widgets.view.ClearEditText
         android:id="@+id/et_poi"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"
         android:background="@null"
         android:hint="@string/hint_location_peng"
+        android:maxLines="1"
         android:paddingLeft="5dp"
+        android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_sure"
         app:layout_constraintStart_toEndOf="@+id/location_city"
@@ -85,8 +88,8 @@
         android:layout_alignLeft="@+id/et_poi"
         android:layout_alignRight="@+id/et_poi"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/et_poi"
-        app:layout_constraintStart_toStartOf="@+id/et_poi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_poi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.shop.mzupload;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.services.help.Tip;
 import com.hym.eshoplib.R;
 
 import java.util.List;
 
+import io.rong.common.fwlog.LogEntity;
+
 
 /**
  * poi
  */
-class POISearchAdapter extends RecyclerView.Adapter<POISearchAdapter.ViewHolder> {
+public class POISearchAdapter extends RecyclerView.Adapter<POISearchAdapter.ViewHolder> {
 
 
     private List<Tip> datas;
@@ -49,8 +53,12 @@ class POISearchAdapter extends RecyclerView.Adapter<POISearchAdapter.ViewHolder>
 
         Tip tip = datas.get(position);
 
-        if (tip != null)
-            holder.poi.setText(tip.getDistrict() + tip.getAddress());
+        Log.e("===", "tip : " + JSONObject.toJSONString(tip));
+
+        if (tip != null) {
+            holder.poiName.setText(tip.getName());
+            holder.poiAddress.setText(tip.getAddress());
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +78,14 @@ class POISearchAdapter extends RecyclerView.Adapter<POISearchAdapter.ViewHolder>
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView poi;
+        TextView poiName;
+        TextView poiAddress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            poi = itemView.findViewById(R.id.tvPoi);
+            poiName = itemView.findViewById(R.id.poiName);
+            poiAddress = itemView.findViewById(R.id.poiAddress);
 
         }
     }

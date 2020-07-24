@@ -47,22 +47,24 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * otherTips
  */
 
-public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.InfoBean>{
+public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.InfoBean> {
     String id;
     RequiredTextView tv_type;
     TextView tv_required;
     String name;
     LinearLayout ll_type_container;
-    ArrayList<PriceBean>priceBeen=new ArrayList<>();
-    HashMap<String,String>maps=new HashMap<>();
-   // int type=-1;//1 视频类型 2图片类型
+    ArrayList<PriceBean> priceBeen = new ArrayList<>();
+    HashMap<String, String> maps = new HashMap<>();
+    // int type=-1;//1 视频类型 2图片类型
     TextView tv_upload;
     TextView tv_tips;
+
     public static OpenShopStep3 newInstance(Bundle args) {
         OpenShopStep3 fragment = new OpenShopStep3();
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public int getItemRestId() {
         return R.layout.item_shop_products;
@@ -71,8 +73,8 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
     @Override
     public void excuteLogic() {
 
-        id=getArguments().getString("id","");
-        name=getArguments().getString("name","");
+        id = getArguments().getString("id", "");
+        name = getArguments().getString("name", "");
         setShowProgressDialog(true);
         showBackButton();
         setTitle("申请开设工作室");
@@ -80,16 +82,13 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
             @Override
             public void onClick(View v) {
                 hideSoftInput();
-                if(maps.isEmpty()){
+                if (maps.isEmpty()) {
                     ToastUtil.toast("请至少设置一种服务的价格");
                     return;
                 }
-//                if(getAdapter().getData().size()==0){
-//                    ToastUtil.toast("请上传产品");
-//                    return;
-//                }
-                String json=getJson();
-                Logger.d("json="+json);
+
+                String json = getJson();
+                Logger.d("json=" + json);
                 ShopApi.addPrice(json, new ResponseImpl<Object>() {
                     @Override
                     public void onStart(int mark) {
@@ -110,17 +109,16 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
                         super.onFinish(mark);
                         setShowProgressDialog(false);
                     }
-                },Object.class);
-
+                }, Object.class);
 
 
             }
         });
-        View header= LayoutInflater.from(_mActivity).inflate(R.layout.header_openshop_step3,null,false);
-        tv_tips=header.findViewById(R.id.tv_tips);
-        ll_type_container=header.findViewById(R.id.ll_type_container);
-        tv_type=header.findViewById(R.id.tv_type);
-        tv_required=header.findViewById(R.id.tv_required);
+        View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_openshop_step3, null, false);
+        tv_tips = header.findViewById(R.id.tv_tips);
+        ll_type_container = header.findViewById(R.id.ll_type_container);
+        tv_type = header.findViewById(R.id.tv_type);
+        tv_required = header.findViewById(R.id.tv_required);
         //type=getProducionsType(id);
         tv_type.setText(name);
 //        if(type==1){
@@ -131,8 +129,8 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 //           // tv_required.setText("(上传PNG/JPG文件且不超过3M)");
 //        }
         getAdapter().addHeaderView(header);
-        View footer=LayoutInflater.from(_mActivity).inflate(R.layout.footer_upload_product,null,false);
-        tv_upload=footer.findViewById(R.id.tv_upload);
+        View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_upload_product, null, false);
+        tv_upload = footer.findViewById(R.id.tv_upload);
         tv_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,20 +139,20 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                       final Bundle bundle=new Bundle();
-                        bundle.putString("token",getArguments().getString("token",""));
+                        final Bundle bundle = new Bundle();
+                        bundle.putString("token", getArguments().getString("token", ""));
                         DialogUtil.getSelectDialog(_mActivity, "视频", "图片", new DialogUtil.OnSelectDialogListener() {
                             @Override
                             public void onBtnOneClick(Dialog dialog) {
                                 dialog.dismiss();
-                                startForResult(UpLoadVideoFragment.newInstance(bundle),0x01);
+                                startForResult(UpLoadVideoFragment.newInstance(bundle), 0x01);
 
                             }
 
                             @Override
                             public void onBtnTwoClick(Dialog dialog) {
                                 dialog.dismiss();
-                                startForResult(UpLoadImageFragment.newInstance(bundle),0x01);
+                                startForResult(UpLoadImageFragment.newInstance(bundle), 0x01);
 
                             }
                         });
@@ -167,30 +165,30 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 //                            startForResult(UpLoadImageFragment.newInstance(bundle),0x01);
 //                        }
                     }
-                },500);
+                }, 500);
 
             }
         });
         getAdapter().addFooterView(footer);
 
         //获取分类
-        GoodsApi.getCategory(id , new ResponseImpl<CategoryListBean>() {
+        GoodsApi.getCategory(id, new ResponseImpl<CategoryListBean>() {
             @Override
             public void onSuccess(final CategoryListBean data) {
                 ll_type_container.removeAllViews();
-                for(int i=0;i<data.getData().size();i++){
-                    View item=LayoutInflater.from(_mActivity).inflate(R.layout.item_input_price,null,false);
-                    TextView tv_title=item.findViewById(R.id.tv_title);
-                    ClearEditText et_input=item.findViewById(R.id.et_intput);
-                    TextView tv_sub_title=item.findViewById(R.id.tv_sub_title);
+                for (int i = 0; i < data.getData().size(); i++) {
+                    View item = LayoutInflater.from(_mActivity).inflate(R.layout.item_input_price, null, false);
+                    TextView tv_title = item.findViewById(R.id.tv_title);
+                    ClearEditText et_input = item.findViewById(R.id.et_intput);
+                    TextView tv_sub_title = item.findViewById(R.id.tv_sub_title);
                     tv_title.setText(data.getData().get(i).getCategory_name());
-                    if(!TextUtils.isEmpty(data.getData().get(i).getMemo())){
+                    if (!TextUtils.isEmpty(data.getData().get(i).getMemo())) {
                         tv_sub_title.setText(data.getData().get(i).getMemo());
                         tv_sub_title.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         tv_sub_title.setVisibility(View.GONE);
                     }
-                    final String id=data.getData().get(i).getCategory_id();
+                    final String id = data.getData().get(i).getCategory_id();
                     et_input.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -204,7 +202,7 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            maps.put(id,s.toString());
+                            maps.put(id, s.toString());
 
                         }
                     });
@@ -217,28 +215,28 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //进入产品详情
-                String type=getAdapter().getData().get(position).getType();
-                String id=getAdapter().getData().get(position).getCase_id();
+                String type = getAdapter().getData().get(position).getType();
+                String id = getAdapter().getData().get(position).getCase_id();
                 Bundle bundle;
-                if(type.equals("1")){
+                if (type.equals("1")) {
                     //视频
-                    bundle= BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,ActionActivity.Action_vadieo_detail);
-                    bundle.putInt("type",1);//从店铺产品中进入详情，不显示进入店铺按钮
-                    bundle.putString("id",id);
-                    ActionActivity.start(_mActivity,bundle );
+                    bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_vadieo_detail);
+                    bundle.putInt("type", 1);//从店铺产品中进入详情，不显示进入店铺按钮
+                    bundle.putString("id", id);
+                    ActionActivity.start(_mActivity, bundle);
 
-                }else if(type.equals("2")){
+                } else if (type.equals("2")) {
                     //图片
                     //去图片详情
-                    bundle=BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,ActionActivity.Action_image_detail);
-                    bundle.putInt("type",1);//从店铺产品中进入详情，不显示进入店铺按钮
-                    bundle.putString("id",id);
+                    bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_image_detail);
+                    bundle.putInt("type", 1);//从店铺产品中进入详情，不显示进入店铺按钮
+                    bundle.putString("id", id);
                     ActionActivity.start(_mActivity, bundle);
                 }
             }
         });
         //设置提示
-        switch (id){
+        switch (id) {
             case "1":
                 //文案策划
                 // tv_life_circle.setText("立即预约 —> 接受预约 —> 付款 —> 确认收货");
@@ -286,22 +284,21 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 
     private String getJson() {
         priceBeen.clear();
-        String json="";
-        Iterator<String>it=maps.keySet().iterator();
-        while (it.hasNext()){
-            String id=it.next();
-            String price=maps.get(id);
-            PriceBean bean=new PriceBean(id,price);
+        String json = "";
+        Iterator<String> it = maps.keySet().iterator();
+        while (it.hasNext()) {
+            String id = it.next();
+            String price = maps.get(id);
+            PriceBean bean = new PriceBean(id, price);
             priceBeen.add(bean);
         }
-        return json=JSON.toJSONString(priceBeen);
+        return json = JSON.toJSONString(priceBeen);
     }
-
 
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
-        if(TextUtils.isEmpty(id)){
+        if (TextUtils.isEmpty(id)) {
             dissMissDialog();
             getRefreshLayout().setRefreshing(false);
             return;
@@ -309,10 +306,10 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
         ShopApi.getProductsList(pageNum + "", new ResponseImpl<ShopProductsBean>() {
             @Override
             public void onSuccess(ShopProductsBean data) {
-                if(refresh){
-                    setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()),pageNum,data.getData().getInfo(),getAdapter()));
-                }else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()),pageNum,data.getData().getInfo(),getAdapter()));
+                if (refresh) {
+                    setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
+                } else {
+                    setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
                 }
             }
 
@@ -322,18 +319,18 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
                 getAdapter().setNewData(null);
                 getAdapter().notifyDataSetChanged();
             }
-        },ShopProductsBean.class);
+        }, ShopProductsBean.class);
 
     }
 
     @Override
     public void bindData(BaseViewHolder helper, final ShopProductsBean.DataBean.InfoBean item, final int position) {
-        ImageView iv_image=helper.getView(R.id.iv_image);
-        final ImageView iv_delete=helper.getView(R.id.iv_delete);
-        ImageView iv_play=helper.getView(R.id.iv_play);
-        TextView tv_name=helper.getView(R.id.tv_name);
-        TextView tv_see_time=helper.getView(R.id.tv_see_time);//观看次数
-        TextView tv_time=helper.getView(R.id.tv_time);
+        ImageView iv_image = helper.getView(R.id.iv_image);
+        final ImageView iv_delete = helper.getView(R.id.iv_delete);
+        ImageView iv_play = helper.getView(R.id.iv_play);
+        TextView tv_name = helper.getView(R.id.tv_name);
+        TextView tv_see_time = helper.getView(R.id.tv_see_time);//观看次数
+        TextView tv_time = helper.getView(R.id.tv_time);
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -345,28 +342,28 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 
                     @Override
                     public void onConfirmeClick(SweetAlertDialog sDialog) {
-                       //删除产品
+                        //删除产品
                         ShopApi.deleteProduct(item.getCase_id(), new ResponseImpl<Object>() {
                             @Override
                             public void onSuccess(Object data) {
-                               onRefresh();
+                                onRefresh();
                             }
-                        },Object.class);
+                        }, Object.class);
 
                     }
                 }).show();
             }
         });
-        ImageUtil.getInstance().loadImage(OpenShopStep3.this,item.getImage_default(),iv_image);
-        tv_name.setText(item.getTitle()+"");
-        String type=item.getType();
-        if(type.equals("1")){
-             //视频
+        ImageUtil.getInstance().loadImage(OpenShopStep3.this, item.getImage_default(), iv_image);
+        tv_name.setText(item.getTitle() + "");
+        String type = item.getType();
+        if (type.equals("1")) {
+            //视频
             //iv_play.setVisibility(View.VISIBLE);
             //tv_see_time.setVisibility(View.VISIBLE);
             tv_time.setVisibility(View.VISIBLE);
-            tv_time.setText(item.getLength()+"");
-        }else {
+            tv_time.setText(item.getLength() + "");
+        } else {
             //图片
             //iv_play.setVisibility(View.GONE);
             tv_see_time.setVisibility(View.GONE);
@@ -374,10 +371,9 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
         }
 
 
-
     }
 
-//    public int getProducionsType(String s){
+    //    public int getProducionsType(String s){
 //        //1视频 2图片
 //        int type=-1;
 //        try{
@@ -392,7 +388,7 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
 //        }
 //        return type;
 //    }
-    private class PriceBean{
+    private class PriceBean {
         public PriceBean(String category_id, String price) {
             this.category_id = category_id;
             this.price = price;
@@ -417,12 +413,13 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
             this.price = price;
         }
     }
+
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK&&requestCode==0x01){
+        if (resultCode == RESULT_OK && requestCode == 0x01) {
             //上传产品成功刷新产品列表
-           // ToastUtil.toast("刷新产品列表");
+            // ToastUtil.toast("刷新产品列表");
             onRefresh();
         }
     }

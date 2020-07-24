@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 产品分类 ;
  */
-public class ProductSortBean {
+public class ProductOneTypeBean {
 
 
     private List<DataBean> data;

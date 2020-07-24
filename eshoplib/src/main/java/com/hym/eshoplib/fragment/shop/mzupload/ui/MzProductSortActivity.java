@@ -1,33 +1,23 @@
-package com.hym.eshoplib.fragment.shop.mzupload;
+package com.hym.eshoplib.fragment.shop.mzupload.ui;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
-import com.hym.eshoplib.bean.mz.upload.ProductSortBean;
+import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
+import com.hym.eshoplib.fragment.shop.mzupload.adapter.MzProductOneTypeAdapter;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.mz.MzConstant;
-import com.hym.eshoplib.mz.MzHeaderBar;
-import com.hym.httplib.interfaces.IHttpResultListener;
 
-import java.util.Arrays;
+import cn.hym.superlib.mz.widgets.MzHeaderBar;
+
 import java.util.List;
 
-import app.App;
 import cn.hym.superlib.mz.MzBaseActivity;
-import cn.hym.superlib.utils.common.SharePreferenceUtil;
-import cn.hym.superlib.utils.http.HttpUtil;
-import cn.hym.superlib.utils.user.UserUtil;
-
-import static cn.hym.superlib.utils.http.ApiExcuter.post;
 
 /**
  * 产品分类
@@ -39,8 +29,8 @@ public class MzProductSortActivity extends MzBaseActivity {
     private MzHeaderBar headerBar;
     private RecyclerView sortRecyclerView;
 
-    private MzProductSortAdapter adapter;
-    private ProductSortBean.DataBean selectItem;
+    private MzProductOneTypeAdapter adapter;
+    private ProductOneTypeBean.DataBean selectItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +55,13 @@ public class MzProductSortActivity extends MzBaseActivity {
         });
 
 
-        MzNewApi.getOneType(new ResponseImpl<ProductSortBean>() {
+        MzNewApi.getOneType(new ResponseImpl<ProductOneTypeBean>() {
             @Override
-            public void onSuccess(ProductSortBean data) {
-                Log.e(TAG, "请求分类 = " + JSONObject.toJSONString(data));
-                List<ProductSortBean.DataBean> list = data.getData();
+            public void onSuccess(ProductOneTypeBean data) {
+                List<ProductOneTypeBean.DataBean> list = data.getData();
                 adapter.setDatas(list);
             }
-        }, ProductSortBean.class);
+        }, ProductOneTypeBean.class);
 
 
         initRecyclerView();
@@ -83,12 +72,12 @@ public class MzProductSortActivity extends MzBaseActivity {
     private void initRecyclerView() {
         sortRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MzProductSortAdapter();
+        adapter = new MzProductOneTypeAdapter();
 
         sortRecyclerView.setAdapter(adapter);
 
 
-        adapter.setClickListener(new MzProductSortAdapter.MzClickListener() {
+        adapter.setClickListener(new MzProductOneTypeAdapter.MzClickListener() {
             @Override
             public void onClick(int position) {
                 selectItem = adapter.getItemPosition(position);
@@ -106,8 +95,8 @@ public class MzProductSortActivity extends MzBaseActivity {
         }
         Intent intent = new Intent();
         // 传递序列化参数 ;
-        intent.putExtra(MzConstant.VALUE_PRODUCT_SORT, selectItem);
-        setResult(MzConstant.RESULT_CODE_UPLOAD_IMG, intent);
+        intent.putExtra(MzConstant.VALUE_PRODUCT_ONE, selectItem);
+        setResult(MzConstant.RESULT_CODE_UPLOAD, intent);
 
         // 返回到  UploadImageFragment ;
         finish();

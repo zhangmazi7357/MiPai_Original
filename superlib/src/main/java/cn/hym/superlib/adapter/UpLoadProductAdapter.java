@@ -2,6 +2,7 @@ package cn.hym.superlib.adapter;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -41,8 +42,8 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
 
     Fragment fragment;
     onDeleteListener listener;
-    boolean showMain = true;//显示主图
-    boolean showDelete = true;//显示删除按钮
+    boolean showMain = true;        //显示主图
+    boolean showDelete = true;      //显示删除按钮
     String token;
     Configuration config;
     UploadManager uploadManager;
@@ -80,6 +81,7 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
         this.fragment = fragment;
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
         addItemType(UpLoadImageBean.type_add, R.layout.item_add_image);
+
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
                 .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
@@ -88,6 +90,7 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 .responseTimeout(60)          // 服务器响应超时。默认60秒
                 .zone(FixedZone.zone1)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
                 .build();
+//        Log.e(TAG, "UpLoadProductAdapter: " + com.alibaba.fastjson.JSONObject.toJSONString(config));
         uploadManager = new UploadManager(config);
 
 
@@ -101,7 +104,8 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
 
     @Override
     protected void convert(final BaseViewHolder helper, final UpLoadImageBean item) {
-        int width = ScreenUtil.getScreenWidth(fragment.getContext()) - ScreenUtil.dip2px(fragment.getContext(), 40);
+        int width = ScreenUtil.getScreenWidth(fragment.getContext())
+                - ScreenUtil.dip2px(fragment.getContext(), 40);
 
         switch (item.getItemType()) {
             case UpLoadImageBean.type_normal:
@@ -148,50 +152,62 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 final TextView tv_percent = helper.getView(R.id.tv_percent);
                 final ProgressBar progressBar = helper.getView(R.id.progressbar);
                 tv_percent.setText("上传中..." + "0%");
+
                 progressBar.setProgress(0);
                 final String path = item.getImage().getCompressPath();
-                String qiniufile_name = System.currentTimeMillis() / 1000 + "_" + path.substring(path.lastIndexOf("/") + 1);
-                Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
+                String qiniufile_name = System.currentTimeMillis() / 1000 + "_"
+                        + path.substring(path.lastIndexOf("/") + 1);
+
+//                Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
+
+                Log.e(TAG, "七牛云 =" + qiniufile_name);
                 boolean hasUpload = item.isHasUpload();
 
                 if (!hasUpload) {
                     //未上传
                     ll_uploading.setVisibility(View.VISIBLE);
                     iv_icon.setVisibility(View.GONE);
-                    uploadManager.put(path, qiniufile_name, token, new UpCompletionHandler() {
-                        @Override
-                        public void complete(String key, ResponseInfo info, JSONObject response) {
-                            //res包含hash、key等信息，具体字段取决于上传策略的设置
-                            try {
-                                if (info.isOK()) {
-                                    ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
-                                    iv_icon.setVisibility(View.VISIBLE);
-                                    ll_uploading.setVisibility(View.GONE);
-                                    item.setHasUpload(true);
-                                    item.setQiniuFileName(key);
-                                    Logger.d("qiniu=" + "Upload Success");
-                                } else {
-                                    Logger.d("qiniu=" + "Upload Fail");
-                                    //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                                }
-                                Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);
-                            } catch (Exception e) {
-                                Logger.d(e.toString());
-                            }
-                        }
-                    }, new UploadOptions(null, null, false,
-                            new UpProgressHandler() {
-                                public void progress(String key, double percent) {
+
+                    uploadManager.put(path,
+                            qiniufile_name,
+                            token,
+                            new UpCompletionHandler() {
+                                @Override
+                                public void complete(String key, ResponseInfo info, JSONObject response) {
+                                    //res包含hash、key等信息，具体字段取决于上传策略的设置
                                     try {
-                                        int percent_int = (int) (percent * 100);
-                                        //Logger.d("key="+key + ",percent " + percent);
-                                        tv_percent.setText("上传中..." + percent_int + "%");
-                                        progressBar.setProgress(percent_int);
+                                        if (info.isOK()) {
+                                            ImageUtil.getInstance()
+                                                    .loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
+                                            iv_icon.setVisibility(View.VISIBLE);
+                                            ll_uploading.setVisibility(View.GONE);
+                                            item.setHasUpload(true);
+                                            item.setQiniuFileName(key);
+                                            Log.e(TAG, "complete: ");
+
+                                        } else {
+                                            Log.e(TAG, "失败: " + com.alibaba.fastjson.JSONObject.toJSONString(info));
+                                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                                        }
+                                        Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);
+
                                     } catch (Exception e) {
-                                        e.toString();
+                                        Logger.d(e.toString());
                                     }
                                 }
-                            }, null));
+                            }, new UploadOptions(null, null, false,
+                                    new UpProgressHandler() {
+                                        public void progress(String key, double percent) {
+                                            try {
+                                                int percent_int = (int) (percent * 100);
+                                                //Logger.d("key="+key + ",percent " + percent);
+                                                tv_percent.setText("上传中..." + percent_int + "%");
+                                                progressBar.setProgress(percent_int);
+                                            } catch (Exception e) {
+                                                e.toString();
+                                            }
+                                        }
+                                    }, null));
 
                 } else {
                     //已上传

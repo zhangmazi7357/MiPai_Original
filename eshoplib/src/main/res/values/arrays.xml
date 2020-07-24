@@ -36,84 +36,13 @@
     </string-array>
 
 
-    <!-- 产品一级分类  -->
-    <string-array name="productSort">
-        <item>照片类</item>
-        <item>视频类</item>
-        <item>平面设计</item>
-        <item>化妆师</item>
-        <item>动画师</item>
-        <item>文案策划</item>
-        <item>演员模特</item>
-    </string-array>
-
-
-    <!--  照片类-->
-    <string-array name="categoryPhoto">
-        <item>职业照</item>
-        <item>证件照</item>
-        <item>形象照</item>
-        <item>艺术照</item>
-        <item>人像写真</item>
-        <item>活动摄影</item>
-        <item>婚纱摄影</item>
-        <item>聚会拍摄</item>
-        <item>旅拍</item>
-        <item>跟拍街拍</item>
-        <item>照片直播</item>
-        <item>亲子照</item>
-        <item>全家福</item>
-        <item>孕妇照</item>
-    </string-array>
-
-    <!-- 视频类 -->
-    <string-array name="categoryVideo">
-        <item>抖音短视频</item>
-        <item>宣传片拍摄</item>
-        <item>广告拍摄</item>
-        <item>会议摄像</item>
-        <item>电商视频</item>
-        <item>产品宣传片</item>
-        <item>Vlog视频制</item>
-    </string-array>
-
-    <!--    平面设计-->
-    <string-array name="categoryPmsj">
-        <item>照片修图</item>
-        <item>海报设计</item>
-        <item>PPT 美化</item>
-        <item>LOGO 设计</item>
-        <item>VI 设计</item>
-        <item>UI 设计</item>
-        <item>主视觉设计</item>
-    </string-array>
-
-
-    <!--    化妆师-->
-    <string-array name="categoryMakeup">
-        <item> 生活妆</item>
-        <item> 上镜妆</item>
-        <item> 晚妆</item>
-        <item> 新娘妆</item>
-        <item> 特效妆</item>
-    </string-array>
-
-    <!--动画师-->
-    <string-array name="categoryAnim">
-        <item>MG 动画</item>
-        <item>三维动画</item>
-    </string-array>
-
-
-    <!--    文案策划-->
-    <string-array name="categoryWa">
-        <item>PPT 撰写</item>
-        <item>广告文案</item>
-    </string-array>
-
-    <!--    演员模特-->
-    <string-array name="categoryModel">
-        <item>拍平面</item>
-        <item>拍视频</item>
+    <!--    产品标签 -->
+    <string-array name="productTag">
+        <item>有摄影棚</item>
+        <item>可上门</item>
+        <item>不满意免费重拍</item>
+        <item>特价</item>
+        <item>带化妆师</item>
+        <item>分享送底片</item>
     </string-array>
 </resources>

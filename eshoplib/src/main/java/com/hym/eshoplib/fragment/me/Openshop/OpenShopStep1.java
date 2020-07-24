@@ -288,34 +288,30 @@ public class OpenShopStep1 extends BaseKitFragment {
             return false;
         }
 
-        String address = etAddress.getText().toString();
-        if (TextUtils.isEmpty(address)) {
-            ToastUtil.toast("请输入通讯地址");
-            return false;
-        }
+
         String phone = etPhone.getText().toString();
         if (TextUtils.isEmpty(phone) || phone.length() != 11) {
             ToastUtil.toast("请输入正确的手机号");
             return false;
         }
-        String ohterName = etOtherName.getText().toString();
-        if (TextUtils.isEmpty(ohterName)) {
-            ToastUtil.toast("请输入紧急联系人姓名");
-            return false;
-        }
-        String otherPhone = etOtherPhone.getText().toString();
-        if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
-            ToastUtil.toast("请输入正确的紧急联系人号码");
-            return false;
-        }
-        if (realName.equals(ohterName)) {
-            ToastUtil.toast("紧急联系人不能与您本人重复");
-            return false;
-        }
-        if (phone.equals(otherPhone)) {
-            ToastUtil.toast("紧急联系人号码不能与本人手机号码重复");
-            return false;
-        }
+//        String ohterName = etOtherName.getText().toString();
+//        if (TextUtils.isEmpty(ohterName)) {
+//            ToastUtil.toast("请输入紧急联系人姓名");
+//            return false;
+//        }
+//        String otherPhone = etOtherPhone.getText().toString();
+//        if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
+//            ToastUtil.toast("请输入正确的紧急联系人号码");
+//            return false;
+//        }
+//        if (realName.equals(ohterName)) {
+//            ToastUtil.toast("紧急联系人不能与您本人重复");
+//            return false;
+//        }
+//        if (phone.equals(otherPhone)) {
+//            ToastUtil.toast("紧急联系人号码不能与本人手机号码重复");
+//            return false;
+//        }
         String email = etEmail.getText().toString();
         if (TextUtils.isEmpty(email) || !email.contains("@") || !email.contains(".")) {
             ToastUtil.toast("请输入正确的邮箱号");
@@ -341,10 +337,9 @@ public class OpenShopStep1 extends BaseKitFragment {
                 region_id,
                 realName,
                 card_id,
-                address,
+                "",
                 phone,
-                ohterName,
-                otherPhone,
+                "", "",
                 email,
                 attachment_id,
                 new ResponseImpl<Object>() {
@@ -394,11 +389,6 @@ public class OpenShopStep1 extends BaseKitFragment {
             return false;
         }
 
-        String address = etAddress.getText().toString();
-        if (TextUtils.isEmpty(address)) {
-            ToastUtil.toast("请输入通讯地址");
-            return false;
-        }
 
         String phone = etPhone.getText().toString();
         if (TextUtils.isEmpty(phone) || phone.length() != 11) {
@@ -406,25 +396,25 @@ public class OpenShopStep1 extends BaseKitFragment {
             return false;
         }
 
-        String ohterName = etOtherName.getText().toString();
-        if (TextUtils.isEmpty(ohterName)) {
-            ToastUtil.toast("请输入紧急联系人姓名");
-            return false;
-        }
-
-        String otherPhone = etOtherPhone.getText().toString();
-        if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
-            ToastUtil.toast("请输入正确的紧急联系人号码");
-            return false;
-        }
-        if (realName.equals(ohterName)) {
-            ToastUtil.toast("紧急联系人不能与您本人重复");
-            return false;
-        }
-        if (phone.equals(otherPhone)) {
-            ToastUtil.toast("紧急联系人号码不能与本人手机号码重复");
-            return false;
-        }
+//        String ohterName = etOtherName.getText().toString();
+//        if (TextUtils.isEmpty(ohterName)) {
+//            ToastUtil.toast("请输入紧急联系人姓名");
+//            return false;
+//        }
+//
+//        String otherPhone = etOtherPhone.getText().toString();
+//        if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
+//            ToastUtil.toast("请输入正确的紧急联系人号码");
+//            return false;
+//        }
+//        if (realName.equals(ohterName)) {
+//            ToastUtil.toast("紧急联系人不能与您本人重复");
+//            return false;
+//        }
+//        if (phone.equals(otherPhone)) {
+//            ToastUtil.toast("紧急联系人号码不能与本人手机号码重复");
+//            return false;
+//        }
 
         String email = etEmail.getText().toString();
         if (TextUtils.isEmpty(email) || !email.contains("@") || !email.contains(".")) {
@@ -452,10 +442,10 @@ public class OpenShopStep1 extends BaseKitFragment {
                 region_id,
                 realName,
                 card_id,
-                address,
+                "",
                 phone,
-                ohterName,
-                otherPhone,
+                "",
+                "",
                 email,
                 attachment_id,
                 new ResponseImpl<Object>() {
@@ -498,7 +488,6 @@ public class OpenShopStep1 extends BaseKitFragment {
                     tvCity.setText(bean.getData().getBase().getRegion_name() + "");
                     etRealname.setText(bean.getData().getCard_info().getReal_name() + "");
                     etIdCard.setText(bean.getData().getCard_info().getCard_no() + "");
-                    etAddress.setText(bean.getData().getCard_info().getAddress() + "");
                     etPhone.setText(bean.getData().getCard_info().getTel() + "");
                     etOtherName.setText(bean.getData().getCard_info().getLinkname() + "");
                     etOtherPhone.setText(bean.getData().getCard_info().getLinkphone() + "");

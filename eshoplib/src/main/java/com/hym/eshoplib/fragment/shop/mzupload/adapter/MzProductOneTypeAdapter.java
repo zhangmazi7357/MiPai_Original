@@ -1,4 +1,4 @@
-package com.hym.eshoplib.fragment.shop.mzupload;
+package com.hym.eshoplib.fragment.shop.mzupload.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,20 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hym.eshoplib.R;
-import com.hym.eshoplib.bean.mz.upload.ProductSortBean;
+import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
 
 import java.util.List;
 
 /**
  * 产品分类 Adapter  ；
  */
-public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdapter.ViewHolder> {
+public class MzProductOneTypeAdapter extends RecyclerView.Adapter<MzProductOneTypeAdapter.ViewHolder> {
 
 
     private int selectPosition = -1;
-    private List<ProductSortBean.DataBean> datas;
+    private List<ProductOneTypeBean.DataBean> datas;
 
-    public void setDatas(List<ProductSortBean.DataBean> datas) {
+    public void setDatas(List<ProductOneTypeBean.DataBean> datas) {
         this.datas = datas;
         notifyDataSetChanged();
     }
@@ -37,7 +37,7 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View root = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mz_adapter_product_sort, parent, false);
+                .inflate(R.layout.mz_adapter_product_one_type, parent, false);
 
 
         return new ViewHolder(root);
@@ -47,12 +47,14 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.itemView.setSelected(selectPosition == position);
+
         if (selectPosition == position) {
             holder.checkIv.setVisibility(View.VISIBLE);
         } else {
             holder.checkIv.setVisibility(View.GONE);
         }
-        ProductSortBean.DataBean dataBean = datas.get(position);
+
+        ProductOneTypeBean.DataBean dataBean = datas.get(position);
         holder.sort.setText(dataBean.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +77,7 @@ public class MzProductSortAdapter extends RecyclerView.Adapter<MzProductSortAdap
     }
 
 
-    public ProductSortBean.DataBean getItemPosition(int position) {
+    public ProductOneTypeBean.DataBean getItemPosition(int position) {
         return datas.get(position);
     }
 

@@ -24,7 +24,7 @@ public class MzBaseActivity extends Activity {
         @Override
         public void onFinish(int mark) {
             //请求结束
-            Log.e(TAG, "onFinish: ");
+//            Log.e(TAG, "onFinish: ");
         }
 
         @Override

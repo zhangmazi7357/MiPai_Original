@@ -83,21 +83,6 @@
     </declare-styleable>
 
 
-    <!--    上传产品信息输入item -->
-    <declare-styleable name="UploadItemView">
-        <attr name="title" format="string" />
-        <attr name="titleTextColor" format="color" />
-        <attr name="android:hint" format="string" />
-        <attr name="android:textColorHint" format="color" />
-        <attr name="isShowArrow" format="boolean" />
-    </declare-styleable>
 
 
-    <!--    自定义一个简单顶部栏-->
-    <declare-styleable name="MzHeaderBar">
-        <attr name="showBack" format="boolean" />
-        <attr name="header_title" format="string" />
-        <attr name="rightTv" format="string" />
-        <attr name="showRightTv" format="string" />
-    </declare-styleable>
 </resources>

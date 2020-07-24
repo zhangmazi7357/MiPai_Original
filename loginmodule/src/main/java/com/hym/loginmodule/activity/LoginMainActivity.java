@@ -67,7 +67,7 @@ public class LoginMainActivity extends BaseActionActivity implements IFragmentAc
                     fragment = BindPhoneFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_web:
-                    fragment= WebFragment.newInstance(getIntent().getExtras());
+                    fragment = WebFragment.newInstance(getIntent().getExtras());
                     break;
             }
         }

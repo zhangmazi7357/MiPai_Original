@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,9 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_need_shape">
 
         <com.hym.eshoplib.util.XCRoundRectImageView
@@ -25,8 +25,8 @@
             android:layout_height="34dp"
             android:layout_below="@id/iv_view"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:maxLines="2"
             android:text="人像写真人像写真人像写真人像写真人像写真人像写真"
@@ -39,13 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_describe"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="6dp"
+            android:layout_marginRight="10dp"
             android:text="1人付款"
             android:textColor="#969696"
             android:textSize="10sp" />
 
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_pay_count">
@@ -54,10 +55,10 @@
                 android:id="@+id/ll_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="11dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="11dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -88,5 +89,24 @@
 
             </LinearLayout>
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/rl"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/mz_bg_tag"
+            android:ellipsize="end"
+            android:maxEms="5"
+            android:paddingLeft="3dp"
+            android:paddingTop="2dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="2dp"
+            android:singleLine="true"
+            android:textColor="@color/red"
+            android:textSize="13sp"
+            tools:text="标签" />
     </RelativeLayout>
 </RelativeLayout>

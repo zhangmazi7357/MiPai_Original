@@ -279,6 +279,7 @@
             android:id="@+id/product_detail_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <!--    备注-->
@@ -737,7 +738,7 @@
 
 
     <!--    产品分类 -->
-    <com.hym.eshoplib.mz.UploadItemView
+    <cn.hym.superlib.mz.widgets.UploadItemView
         android:id="@+id/mz_productSort"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -747,7 +748,7 @@
         app:titleTextColor="@color/red" />
 
     <!--    产品二级分类 -->
-    <com.hym.eshoplib.mz.UploadItemView
+    <cn.hym.superlib.mz.widgets.UploadItemView
         android:id="@+id/mz_subProductSort"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -757,7 +758,7 @@
         app:titleTextColor="@color/red" />
 
     <!--    所属标签 -->
-    <com.hym.eshoplib.mz.UploadItemView
+    <cn.hym.superlib.mz.widgets.UploadItemView
         android:id="@+id/mz_productTag"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -766,7 +767,7 @@
         app:title="@string/mz_product_tag" />
 
     <!--    摄影棚地址-->
-    <com.hym.eshoplib.mz.UploadItemView
+    <cn.hym.superlib.mz.widgets.UploadItemView
         android:id="@+id/mz_location"
         android:layout_width="match_parent"
         android:layout_height="40dp"

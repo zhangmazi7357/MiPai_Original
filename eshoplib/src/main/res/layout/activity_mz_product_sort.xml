@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.shop.mzupload.MzProductSortActivity">
+    tools:context=".fragment.shop.mzupload.ui.MzProductSortActivity">
 
-    <com.hym.eshoplib.mz.MzHeaderBar
+    <cn.hym.superlib.mz.widgets.MzHeaderBar
         android:id="@+id/headerBar"
         android:layout_width="match_parent"
         android:layout_height="45dp"

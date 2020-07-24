@@ -14,11 +14,19 @@ public class MzConstant {
     public static final int REQUEST_CODE_PRODUCT_TAG = 1013;            // 产品标签
     public static final int REQUEST_CODE_LOCATION = 1014;               // 摄影棚位置 ;
 
+
     //    产品上传  图片 返回码
-    public static final int RESULT_CODE_UPLOAD_IMG = 111021;
+    public static final int RESULT_CODE_UPLOAD = 111021;
 
     // 产品上传 图片 value
-    public static final String VALUE_PRODUCT_SORT = "VALUE_PRODUCT_SORT";
+    public static final String VALUE_PRODUCT_ONE = "VALUE_PRODUCT_ONE";
+    public static final String VALUE_PRODUCT_TWO = "VALUE_PRODUCT_TWO";
+
+
+    public static final String PRODUCT_SORT_ID = "PRODUCT_SORT_ID";
     public static final String VALUE_SUB_PRODUCT_SORT = "VALUE_SUB_PRODUCT_SORT";
     public static final String VALUE_PRODUCT_TAG = "VALUE_PRODUCT_TAG";
+    public static final String VALUE_PRODUCT_LOCATION_ADDRESS = "VALUE_PRODUCT_LOCATION_ADDRESS";
+    public static final String VALUE_PRODUCT_LOCATION_LAT = "VALUE_PRODUCT_LOCATION_LAT";
+    public static final String VALUE_PRODUCT_LOCATION_LON = "VALUE_PRODUCT_LOCATION_LON";
 }

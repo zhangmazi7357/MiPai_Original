@@ -20,6 +20,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint_location_peng">请输入摄影棚位置</string>
+    <string name="home_function_1">职业形象照</string>
 
 
 </resources>

@@ -1,10 +1,13 @@
 package com.hym.eshoplib.fragment.goods;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +52,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  */
 
 public class ImageDetailFragment extends BaseKitFragment {
+    private String TAG = "ImageDetailFragment";
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.tv_collect)
@@ -61,7 +65,7 @@ public class ImageDetailFragment extends BaseKitFragment {
     View diver;
     String id;
     TextView tv_title, tv_see_time;
-    ImageView iv_logo,iv_vip;
+    ImageView iv_logo, iv_vip;
     TextView tv_shop_name;
     MaterialRatingBar ratingBar;
     TextView tv_type, tv_image_type, tv_region, tv_ohter;
@@ -69,6 +73,7 @@ public class ImageDetailFragment extends BaseKitFragment {
     LinearLayout llBtns;
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
+
     public static ImageDetailFragment newInstance(Bundle args) {
         ImageDetailFragment fragment = new ImageDetailFragment();
         fragment.setArguments(args);
@@ -113,7 +118,7 @@ public class ImageDetailFragment extends BaseKitFragment {
             }
         };
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_image_detail, null, false);
-        iv_vip=footer.findViewById(R.id.iv_vip);
+        iv_vip = footer.findViewById(R.id.iv_vip);
         iv_logo = footer.findViewById(R.id.iv_logo);
         tv_shop_name = footer.findViewById(R.id.tv_shop_name);
         ratingBar = footer.findViewById(R.id.ratingbar);
@@ -166,9 +171,12 @@ public class ImageDetailFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
+        Log.e(TAG, "产品详情 id : " + id);
         ShopApi.getProductDetail(id, new ResponseImpl<ProductDetailBean>() {
             @Override
             public void onSuccess(final ProductDetailBean result) {
+
                 data = result;
                 String isverify = data.getData().getIs_verify();
                 switch (isverify) {
@@ -181,7 +189,9 @@ public class ImageDetailFragment extends BaseKitFragment {
                         tv_see_time.setText(data.getData().getViews() + "次观看");
                         mShareListener = new CustomShareListener(_mActivity);
                         mShareAction = new ShareAction(_mActivity).setDisplayList(
-                                SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA)
+                                SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN,
+                                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
+                                SHARE_MEDIA.SINA)
                                 .setCallback(mShareListener);
                         setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
                             @Override
@@ -189,7 +199,7 @@ public class ImageDetailFragment extends BaseKitFragment {
                                 ShareBoardConfig config = new ShareBoardConfig();
                                 config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
                                 UMWeb web = new UMWeb(data.getData().getShare_url());
-                               // web.setTitle(data.getData().getTitle()+" | "+ StringConstants.Slogan);
+                                // web.setTitle(data.getData().getTitle()+" | "+ StringConstants.Slogan);
                                 web.setTitle(data.getData().getTitle());
                                 web.setThumb(new UMImage(_mActivity, data.getData().getImage_default()));
                                 web.setDescription(StringConstants.Slogan);
@@ -209,14 +219,14 @@ public class ImageDetailFragment extends BaseKitFragment {
 
                 // 工作室信息
                 tv_shop_name.setText(data.getData().getStore_name() + "");
-                if(data.getData().getAuth().equals("1")){
-                   // tv_shop_name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_vip_1,0);
+                if (data.getData().getAuth().equals("1")) {
+                    // tv_shop_name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_vip_1,0);
                     iv_vip.setVisibility(View.VISIBLE);
                     iv_vip.setImageResource(R.drawable.ic_person_rt);
-                }else if(data.getData().getAuth().equals("2")){
+                } else if (data.getData().getAuth().equals("2")) {
                     iv_vip.setVisibility(View.VISIBLE);
                     iv_vip.setImageResource(R.drawable.ic_business_rt);
-                   // tv_shop_name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_vip_2,0);
+                    // tv_shop_name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_vip_2,0);
                 }
                 ImageUtil.getInstance().loadImage(ImageDetailFragment.this, data.getData().getStore_logo(), iv_logo);
                 ratingBar.setRating(Float.parseFloat(data.getData().getStore_rank()));
@@ -225,6 +235,7 @@ public class ImageDetailFragment extends BaseKitFragment {
                 tv_image_type.setText(data.getData().getVideo() + "");
                 tv_region.setText(data.getData().getRegion_name() + "");
                 tv_ohter.setText(data.getData().getOther() + "");
+
                 //收藏
                 if (data.getData().getIs_favorite() == 1) {
                     //已经收藏
@@ -255,7 +266,7 @@ public class ImageDetailFragment extends BaseKitFragment {
                                     if (bean.getData().getStatus() == 1) {
                                         result.getData().setIs_agree(1);
                                         tvLike.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_like_select, 0, 0);
-                                        tvLike.setText((Integer.parseInt(data.getData().getAgree_count())+1)+"");
+                                        tvLike.setText((Integer.parseInt(data.getData().getAgree_count()) + 1) + "");
                                     }
                                 }
                             }, AddFavouriteBean.class);

@@ -8,6 +8,7 @@ import android.os.Handler;
 import androidx.core.content.ContextCompat;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.DataBean.InfoBean> {
+    private String TAG = "ShopListProductList";
     String id;
     String token;
     int type;
@@ -135,32 +137,13 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
 
             }
         });
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(TextUtils.isEmpty(token)){
-//                    token=((ShopInfoPagerFragment)getParentFragment()).getToken();
-//                }
-//                if (type == 1) {
-//                    //上传视频
-//                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
-//                    bundle.putString("token", token);
-//                    ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x01);
-//                    //startForResult(UpLoadVadieoFragment.newInstance(bundle),0x01);
-//                } else if (type == 2) {
-//                    //上传图片
-//                    //startForResult(UpLoadImageFragment.newInstance(bundle),0x01);
-//                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadImage);
-//                    bundle.putString("token", token);
-//                    ActionActivity.startForresult(ShopProductListFragment.this, bundle, 0x01);
-//                }
-//            }
-//        });
+
 
     }
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
+
         ShopApi.getProductsList(pageNum + "", new ResponseImpl<ShopProductsBean>() {
             @Override
             public void onSuccess(ShopProductsBean data) {
@@ -185,7 +168,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
             @Override
             public void dataRes(int code, String data) {
                 // super.dataRes(code, data);
-                Logger.d("sourceData=" + data);
+                Log.e(TAG, "dataRes: ");
                 ShopProductsBean bean = JSON.parseObject(data, ShopProductsBean.class);
                 id = bean.getData().getStore_id();
                 token = bean.getData().getQiniu_token();
@@ -301,6 +284,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK && requestCode == 0x01) {
             //上传产品成功刷新产品列表
             // ToastUtil.toast("刷新产品列表");

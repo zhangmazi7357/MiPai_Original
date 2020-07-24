@@ -1,4 +1,4 @@
-package com.hym.eshoplib.mz;
+package cn.hym.superlib.mz.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.hym.eshoplib.R;
+
+import cn.hym.superlib.R;
 
 /**
  * 自定义一个用于上传图片和视频 item 的组合控件
@@ -28,7 +29,7 @@ public class UploadItemView extends LinearLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.UploadItemView);
 
 
-        View root = LayoutInflater.from(context).inflate(R.layout.layout_mz_upload_item_view, this, true);
+        View root = LayoutInflater.from(context).inflate(R.layout.mz_layout_upload_item_view, this, true);
         tvTitle = root.findViewById(R.id.tv_title);
         etContent = root.findViewById(R.id.et_content);
         arrow = root.findViewById(R.id.arrow);
