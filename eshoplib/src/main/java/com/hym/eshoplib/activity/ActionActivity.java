@@ -41,7 +41,7 @@ import com.hym.eshoplib.fragment.search.SearchFragment;
 import com.hym.eshoplib.fragment.search.SearchResultFragment;
 import com.hym.eshoplib.fragment.shop.BusinessAuthFragment;
 import com.hym.eshoplib.fragment.shop.EditImageFragment;
-import com.hym.eshoplib.fragment.shop.EditVadieoFragment;
+import com.hym.eshoplib.fragment.shop.EditVideoFragment;
 import com.hym.eshoplib.fragment.shop.EdityServicePriceFragment;
 import com.hym.eshoplib.fragment.shop.MoreShopListFragment;
 import com.hym.eshoplib.fragment.shop.PersonalAuthFragment;
@@ -302,7 +302,7 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                     fragment = LogDetailFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Edit_vadieo:
-                    fragment = EditVadieoFragment.newInstance(getIntent().getExtras());
+                    fragment = EditVideoFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_Edit_image:
                     fragment = EditImageFragment.newInstance(getIntent().getExtras());

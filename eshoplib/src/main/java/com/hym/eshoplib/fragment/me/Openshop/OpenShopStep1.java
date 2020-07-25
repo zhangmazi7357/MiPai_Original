@@ -195,6 +195,7 @@ public class OpenShopStep1 extends BaseKitFragment {
 
 
         isEdit = getArguments().getBoolean("isedit", false);
+
         SoftHideKeyBoardUtil.assistActivity(_mActivity);
         showBackButton();
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
@@ -203,24 +204,28 @@ public class OpenShopStep1 extends BaseKitFragment {
                 onBackPressedSupport();
             }
         });
+
         setTitle("申请开设工作室");
         setRight_tv("下一步", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideSoftInput();
-                if (isEdit && bean != null && bean.getData().getBase().getIs_verify().equals("1")) {
-                    DialogUtil.getTowButtonDialog(_mActivity, "提示",
-                            "信息修改后需要平台审核您确定要修改么", "取消", "确定",
-                            new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
 
+                if (isEdit && bean != null && bean.getData().getBase().getIs_verify().equals("1")) {
+
+
+                    DialogManager.getInstance().initSimpleDialog(_mActivity, "提示",
+                            "信息修改后需要平台审核您确定要修改么", "取消",
+                            "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+                                @Override
+                                public void negativeClick(Dialog dialog) {
+                                    dialog.dismiss();
                                 }
 
                                 @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
+                                public void positiveClick(Dialog dialog) {
+                                    dialog.dismiss();
                                     checkData();
-
                                 }
                             }).show();
                 } else {
@@ -330,6 +335,10 @@ public class OpenShopStep1 extends BaseKitFragment {
             return false;
         }
         String attachment_id = card_1 + "," + card_2 + "," + card_3;
+
+        String address = "测试地址";
+        String linkname = "测试名字";
+        String linkPhone = "17612341234";
         //校验全部通过调用接口
         ShopApi.OpenShopStep1(avatar,
                 shopName,
@@ -337,9 +346,9 @@ public class OpenShopStep1 extends BaseKitFragment {
                 region_id,
                 realName,
                 card_id,
-                "",
+                address,
                 phone,
-                "", "",
+                linkname, linkPhone,
                 email,
                 attachment_id,
                 new ResponseImpl<Object>() {
@@ -434,6 +443,7 @@ public class OpenShopStep1 extends BaseKitFragment {
             ToastUtil.toast("请上传证件照片");
             return false;
         }
+
         String attachment_id = card_1 + "," + card_2 + "," + card_3;
         //校验全部通过调用接口
         ShopApi.EditShop(avatar,
@@ -706,6 +716,7 @@ public class OpenShopStep1 extends BaseKitFragment {
 
                             @Override
                             public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
                                 _mActivity.finish();
                             }
                         }).show();

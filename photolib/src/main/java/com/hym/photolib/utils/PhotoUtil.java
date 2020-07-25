@@ -163,6 +163,7 @@ public class PhotoUtil {
                 List<LocalMedia> selectList = new ArrayList<>();
                 PictureSelector.create(from)
                         .openCamera(PictureMimeType.ofAll())
+                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
                         .theme(R.style.picture_default_style)
                         .maxSelectNum(limt)
                         .minSelectNum(1)
@@ -192,7 +193,6 @@ public class PhotoUtil {
             public void onGalary(Dialog dialog) {
                 dialog.dismiss();
                 List<LocalMedia> selectList = new ArrayList<>();
-
 
 
                 PictureSelector.create(from)

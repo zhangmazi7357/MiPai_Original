@@ -35,12 +35,13 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="工作室头像" />
+                    android:text="工作室头像"
+                    android:textColor="@color/red" />
 
                 <ImageView
                     android:id="@+id/iv_upload_image"
@@ -64,12 +65,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="工作室名称" />
+                    android:text="工作室名称"
+                    android:textColor="@color/red" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_name"
@@ -98,12 +100,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="工作室类别" />
+                    android:text="工作室类别"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:id="@+id/tv_type"
@@ -132,12 +135,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="所在城市" />
+                    android:text="所在城市"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:id="@+id/tv_city"
@@ -186,12 +190,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="真实姓名" />
+                    android:text="真实姓名"
+                    android:textColor="@color/red" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_realname"
@@ -220,12 +225,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="身份证号" />
+                    android:text="身份证号"
+                    android:textColor="@color/red" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_id_card"
@@ -292,12 +298,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="手机号码" />
+                    android:text="手机号码"
+                    android:textColor="@color/red" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_phone"
@@ -395,12 +402,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="邮箱地址" />
+                    android:text="邮箱地址"
+                    android:textColor="@color/red" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_email"
@@ -428,13 +436,13 @@
                 android:layout_height="10dp"
                 android:background="#f1f1f1" />
 
-            <cn.hym.superlib.widgets.view.RequiredTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:textColor="#aeaeae"
-                app:requiredText="请上传身份证照片" />
+                android:text="请上传身份证照片"
+                android:textColor="@color/red" />
 
             <View
                 android:layout_width="match_parent"

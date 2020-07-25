@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        >
+        android:layout_height="200dp">
+
         <ImageView
+            android:id="@+id/iv_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:id="@+id/iv_image"/>
+            android:scaleType="fitXY" />
+
         <ImageView
+            android:id="@+id/iv_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_play"
-            android:id="@+id/iv_play"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
         <ImageView
+            android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_more"
             android:layout_gravity="right"
             android:padding="10dp"
-            android:id="@+id/iv_delete"/>
+            android:src="@drawable/ic_more" />
+
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            tools:text="公益宣传片《约会村田》"
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:id="@+id/tv_name"/>
+            android:textColor="@color/white"
+            tools:text="公益宣传片《约会村田》" />
+
         <TextView
+            android:id="@+id/tv_see_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="1.2万次观看"
             android:layout_gravity="bottom|right"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:text="1.2万次观看"
+            android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="gone"
-            android:id="@+id/tv_see_time"/>
+            android:visibility="gone" />
+
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="1'15''"
             android:layout_gravity="bottom|right"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="35dp"
+            android:text="1'15''"
+            android:textColor="@color/white"
             android:textSize="10sp"
-            android:visibility="gone"
-            android:id="@+id/tv_time"/>
+            android:visibility="gone" />
     </FrameLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#f1f1f1"/>
+        android:background="#f1f1f1" />
 </LinearLayout>

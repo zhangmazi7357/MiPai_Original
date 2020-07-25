@@ -377,6 +377,9 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
 
         // 追溯到个人 信息里  category_id   == cateId
+        /**
+         *  视频导演，摄像师，视频团队
+         */
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
 
             llShopTime.setVisibility(View.VISIBLE);
@@ -551,7 +554,10 @@ public class UpLoadImageFragment extends BaseKitFragment {
         // 上传图片产品
         ShopApi.upLoadImageProduct(image_default,
                 attachment,
-                title, industry_id, image_type_id, region_id,
+                title,
+                industry_id,
+                image_type_id,
+                region_id,
                 otherOrLocation, etPrice, remarks, originalPrice,
                 staffing, shootingTime, equipment, introduce,
                 detail, tyid, shopTime, paisheCount, huazhuang,
@@ -686,12 +692,13 @@ public class UpLoadImageFragment extends BaseKitFragment {
                         }
 
                         @Override
-                        public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
+                        public void onResultGalary(ArrayList<LocalMedia> resultGalary) {
+
 
                             if (imageType == 1) {
                                 File[] files;
                                 ArrayList<File> arr = new ArrayList<>();
-                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                String url = PhotoUtil.getFilePash(resultGalary.get(0));
                                 arr.add(new File(url));
                                 files = arr.toArray(new File[arr.size()]);
                                 Message message = handler.obtainMessage();
@@ -701,12 +708,14 @@ public class UpLoadImageFragment extends BaseKitFragment {
                                 message.setData(bundle);
                                 message.sendToTarget();
                             } else if (imageType == 2) {
-                                getImageData(adapter, resultCamara);
+                                getImageData(adapter, resultGalary);
                             } else {
 
-                                getImageData(mzProDetailAdapter, resultCamara);
+                                getImageData(mzProDetailAdapter, resultGalary);
                             }
                         }
+
+
                     });
 
 
@@ -770,7 +779,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
     }
 
 
-    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter, ArrayList<LocalMedia> source) {
+    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter,
+                                              ArrayList<LocalMedia> source) {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 
         for (LocalMedia bean : source) {
@@ -778,7 +788,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
             tImage.setCompressPath(PhotoUtil.getFilePash(bean));
             imageBeen.add(new UpLoadImageBean(tImage));
         }
-
 
 
         int oldSize = adapter.getData().size();

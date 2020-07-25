@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.activity.base.BaseActionActivity;
-import cn.hym.superlib.adapter.UpLoadVadieoProductAdapter;
+import cn.hym.superlib.adapter.UpLoadVideoProductAdapter;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
@@ -62,6 +64,7 @@ import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
+import cn.hym.superlib.utils.view.ScreenUtil;
 import io.rong.common.FileUtils;
 
 
@@ -74,26 +77,26 @@ import io.rong.common.FileUtils;
  */
 
 public class UpLoadVideoFragment extends BaseKitFragment {
-    UpLoadVadieoProductAdapter adapter;
+    UpLoadVideoProductAdapter adapter;
 
-    private MzProVideoDetailAdapter mzAdapter;
+    private MzProImageDetailAdapter mzAdapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     Unbinder unbinder;
     String qiniuToken;
-    int imageType = -1;// 1 上传封面，2上传产品
-    ImageView iv_image;//封面
-    TextView tv_add;//上传封面
+    int imageType = -1;         // 1 上传封面，2上传产品
+    ImageView iv_image;         //封面
+    TextView tv_add;            //上传封面
     Handler handler;
-    String image_default;//封面图片id
-    TextView tv_industry;//行业类型
-    TextView tv_image_type;//图片类型
-    TextView tv_region;//产品区域
-    String industry_id;//行业id
-    String image_type_id;//图片类型id
-    String region_id;//区域id
-    EditText et_title;//标题
-    EditText et_other;//其他描述
+    String image_default;       //封面图片id
+    TextView tv_industry;       //行业类型
+    TextView tv_image_type;     //图片类型
+    TextView tv_region;         //产品区域
+    String industry_id;         //行业id
+    String image_type_id;       //图片类型id
+    String region_id;           //区域id
+    EditText et_title;          //标题
+    EditText et_other;          //其他描述
     TextView tv_upload_title;
     TextView tv_upload_subtitle;
     TextView tv_vadieo_title_type;
@@ -105,9 +108,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     private EditText etShootingTime;
     private EditText etEquipment;
     private EditText etIntroduce;
-    private View footer;
     private EditText etDetail;
-    private EditText etServiceName;
     private EditText etShopTime;
     private EditText etPaisheCount;
     private EditText etHuazhuang;
@@ -133,9 +134,9 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     private String oneType = "";    // 产品一级分类选中的 id  ;
     private String twoType = "";
     private String tagContent = "";   // 产品标签 ;
-    private String address = "";      // 地址 ;
-    private String lon = "";            // 经度；
-    private String lat = "";            // 纬度；
+    private String mzAddress = "";      // 地址 ;
+    private double mzLon = 0;            // 经度；
+    private double mzLat = 0;            // 纬度；
 
     public static UpLoadVideoFragment newInstance(Bundle args) {
         UpLoadVideoFragment fragment = new UpLoadVideoFragment();
@@ -177,7 +178,9 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             }
         };
         qiniuToken = getArguments().getString("token", "");
-        Logger.d("传递的token=" + qiniuToken);
+        Log.e("UpLoad", "七牛 token = : " + qiniuToken);
+
+
         setShowProgressDialog(false);
         showBackButton();
         setTitle("上传视频");
@@ -188,16 +191,17 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             }
         });
         rvList.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        adapter = new UpLoadVadieoProductAdapter(this, null);
+        adapter = new UpLoadVideoProductAdapter(this, null);
         adapter.setToken(qiniuToken);
         adapter.addData(new UpLoadImageBean());
         rvList.setAdapter(adapter);
-        adapter.setListener(new UpLoadVadieoProductAdapter.onDeleteListener() {
+        adapter.setListener(new UpLoadVideoProductAdapter.onDeleteListener() {
             @Override
             public void onDelete(int position) {
                 //editMap.remove(position);
             }
         });
+
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter2, View view, int position) {
@@ -206,6 +210,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     PictureSelector.create(UpLoadVideoFragment.this)
                             .externalPictureVideo(adapter.getData()
                                     .get(position).getImage().getCompressPath());
+
                 } else {
                     //上传视频
                     // 进入相册 以下是例子：不需要的api可以不写
@@ -342,7 +347,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         adapter.addFooterView(footer);
 
         ///////////////////  添加 新内容  /////////////////////////////
-//        initProDetailRv();
+        initProDetailRv(footer);
 
         mzProductSort = footer.findViewById(R.id.mz_productSort);
         mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
@@ -387,9 +392,6 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         mzLocation.setOnClickListener(mzClickListener);
 
 
-        cateId = getArguments().getString("cateId");
-        adapter.addHeaderView(header);
-        adapter.addFooterView(footer);
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
 
             llShopTime.setVisibility(View.VISIBLE);
@@ -487,7 +489,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             return;
         }
         String attachment = adapter.getData().get(0).getQiniuFileName();
-        Logger.d("attachment=" + attachment);
+
         if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");
             return;
@@ -497,12 +499,9 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             ToastUtil.toast("请输入标题");
             return;
         }
-        if (cateId.equals("5") || cateId.equals("8") || cateId.equals("3") || cateId.equals("2")) {
-          /*  serviceName = etServiceName.getText().toString();
-            if (TextUtils.isEmpty(serviceName)) {
-                ToastUtil.toast("请输入服务名称");
-                return;
-            }*/
+        if (cateId.equals("5") || cateId.equals("8") ||
+                cateId.equals("3") || cateId.equals("2")) {
+
             location = etLocatiom.getText().toString();
             if (TextUtils.isEmpty(location)) {
                 ToastUtil.toast("请输入地点");
@@ -521,16 +520,13 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                 return;
             }
         } else if (cateId.equals("1") || cateId.equals("40") || cateId.equals("4")) {
-          /*  serviceName = etServiceName.getText().toString();
-            if (TextUtils.isEmpty(serviceName)) {
-                ToastUtil.toast("请输入服务名称");
-                return;
-            }*/
+
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
                 ToastUtil.toast("请输入价格");
                 return;
             }
+
         } else {
             if (TextUtils.isEmpty(industry_id)) {
                 ToastUtil.toast("请选择行业类型");
@@ -567,13 +563,13 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
         String cehua = etCeHua.getText().toString();
 
-//        if(TextUtils.isEmpty(other)){
-//            ToastUtil.toast("请输入产品相关说明（10字以内）");
-//            return;
-//        }
 
-        ShopApi.upLoadVideoProduct(image_default, attachment, title,
-                industry_id, image_type_id, region_id,
+        ShopApi.upLoadVideoProduct(image_default,
+                attachment,
+                title,
+                industry_id,
+                image_type_id,
+                region_id,
                 otherOrLocation,
                 length, etPrice, remarks,
                 originalPrice,
@@ -611,7 +607,6 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
@@ -692,32 +687,45 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                         @Override
                         public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
-                            File[] files;
-                            ArrayList<File> arr = new ArrayList<>();
-                            String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                            arr.add(new File(url));
-                            files = arr.toArray(new File[arr.size()]);
-                            Message message = handler.obtainMessage();
-                            Bundle bundle = new Bundle();
-                            message.obj = files;
-                            bundle.putString("url", url);
-                            message.setData(bundle);
-                            message.sendToTarget();
+
+                            if (imageType == 1) {
+                                File[] files;
+                                ArrayList<File> arr = new ArrayList<>();
+                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                arr.add(new File(url));
+                                files = arr.toArray(new File[arr.size()]);
+                                Message message = handler.obtainMessage();
+                                Bundle bundle = new Bundle();
+                                message.obj = files;
+                                bundle.putString("url", url);
+                                message.setData(bundle);
+                                message.sendToTarget();
+                            } else if (imageType == 3) {
+                                getImageData(mzAdapter, resultCamara);
+                            }
+
+
                         }
 
                         @Override
                         public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
-                            File[] files;
-                            ArrayList<File> arr = new ArrayList<>();
-                            String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                            arr.add(new File(url));
-                            files = arr.toArray(new File[arr.size()]);
-                            Message message = handler.obtainMessage();
-                            Bundle bundle = new Bundle();
-                            message.obj = files;
-                            bundle.putString("url", url);
-                            message.setData(bundle);
-                            message.sendToTarget();
+
+                            if (imageType == 1) {
+                                File[] files;
+                                ArrayList<File> arr = new ArrayList<>();
+                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                arr.add(new File(url));
+                                files = arr.toArray(new File[arr.size()]);
+                                Message message = handler.obtainMessage();
+                                Bundle bundle = new Bundle();
+                                message.obj = files;
+                                bundle.putString("url", url);
+                                message.setData(bundle);
+                                message.sendToTarget();
+                            } else if (imageType == 3) {
+                                getImageData(mzAdapter, resultCamara);
+                            }
+
                         }
                     });
             }
@@ -763,6 +771,12 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     break;
                 case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
 
+                    Bundle bundle = data.getExtras();
+                    mzAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
+                    mzLat = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LAT);
+                    mzLon = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LON);
+
+                    mzLocation.setContent(mzAddress);
 
                     break;
             }
@@ -826,17 +840,65 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     }
 
 
-    // 封面
-    private void preFm() {
+    /**
+     * 七牛云 图片
+     *
+     * @param adapter
+     * @param source
+     * @return
+     */
+    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter,
+                                              ArrayList<LocalMedia> source) {
+        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 
+        for (LocalMedia bean : source) {
+            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            imageBeen.add(new UpLoadImageBean(tImage));
+        }
+
+
+        int oldSize = adapter.getData().size();
+        if (oldSize == 0) {
+            //第一次添加
+            if (imageBeen.size() == 9) {
+                //一次性添加了9次图片，则直接加入
+                adapter.setNewData(imageBeen);
+            } else {
+                //没有一次性添加完毕，则追加 addIcon
+                imageBeen.add(new UpLoadImageBean());
+                adapter.setNewData(imageBeen);
+
+            }
+        }
+        //不是第一次添加，并且第二次就 加满
+        else if (imageBeen.size() + oldSize == 10) {
+            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
+            Logger.d("不是第一次");
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
+
+        } else {
+            //不是第一次添加。并且第二次也没加满
+            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
+            imageBeen.add(new UpLoadImageBean());
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
+
+        }
+        return imageBeen;
     }
 
 
     // 项目详情的 列表;
-    private void initProDetailRv() {
+    private void initProDetailRv(View footer) {
         mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
         mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        mzAdapter = new MzProVideoDetailAdapter(this, null);
+        mzAdapter = new MzProImageDetailAdapter(this, null);
         mzAdapter.setToken(qiniuToken);
         mzAdapter.addData(new UpLoadImageBean());
         mzProDetailRv.setAdapter(mzAdapter);
@@ -844,9 +906,28 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         mzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mzAdapter.getData().get(position).getItemType() == 1) {
+
+                    // 可能是预览图片吧;
+                    ArrayList<String> images_str = new ArrayList<String>();
+                    images_str.add(mzAdapter.getData().get(position).getImage().getCompressPath());
+                    int width = ScreenUtil.getScreenWidth(_mActivity);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(_mActivity, images_str, position, imageSize);
+
+                } else {
+
+                    imageType = 3;
+                    PhotoUtil.ShowDialog(UpLoadVideoFragment.this,
+                            10 - adapter.getData().size(), false, 2);
+
+
+                }
+
 
             }
         });
+
 
     }
 }

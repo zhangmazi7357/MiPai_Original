@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <TextView
+        android:id="@+id/tv_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:textColor="#ff0000"
-        android:id="@+id/tv_tips"
         android:text="未通过"
+        android:textColor="#ff0000"
         android:textSize="12sp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -77,15 +78,16 @@
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <cn.hym.superlib.widgets.view.RequiredTextView
+                    android:id="@+id/tv_circle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="制作周期"
-                    android:id="@+id/tv_circle"/>
+                    app:requiredText="制作周期" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_circle"
@@ -114,23 +116,24 @@
                 android:layout_height="1px"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#e1e1e1" />
+                android:background="#e1e1e1"
+                android:visibility="gone" />
 
-            <cn.hym.superlib.widgets.view.RequiredTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:textColor="@color/black"
-                app:requiredText="个人简介" />
+                android:text="个人简介"
+                android:textColor="@color/red" />
 
             <FrameLayout
                 android:id="@+id/fl_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_grayefefef_solid_conner5"
                 android:minHeight="150dp"
                 android:padding="10dp">
@@ -168,19 +171,20 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="退款情况" />
+                    android:text="退款情况"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:id="@+id/tv_return"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawablePadding="10dp"
                     android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="10dp"
                     android:gravity="center_vertical|right"
                     android:hint="请选择退款情况"
                     android:textColor="@color/black"
@@ -202,19 +206,20 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="是否提供发票" />
+                    android:text="是否提供发票"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:id="@+id/tv_invoice"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawablePadding="10dp"
                     android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="10dp"
                     android:gravity="center_vertical|right"
                     android:hint="请选择发票情况"
                     android:textColor="@color/black"
@@ -256,19 +261,20 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="学历" />
+                    android:text="学历"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:id="@+id/tv_study"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:drawablePadding="10dp"
                     android:drawableRight="@drawable/ic_arrow_right"
+                    android:drawablePadding="10dp"
                     android:gravity="center_vertical|right"
                     android:hint="请选择学历"
                     android:textColor="@color/black"
@@ -290,12 +296,13 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <cn.hym.superlib.widgets.view.RequiredTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:textColor="@color/red"
                     android:gravity="center_vertical"
-                    app:requiredText="毕业院校" />
+                    android:text="毕业院校" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_school"
@@ -330,8 +337,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    app:requiredText="专业"
-                    app:required="false"/>
+                    app:required="false"
+                    app:requiredText="专业" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_zhuanye"
@@ -401,10 +408,10 @@
                         android:id="@+id/tv_card_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -415,10 +422,10 @@
                         android:id="@+id/iv_card_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -441,10 +448,10 @@
                         android:id="@+id/tv_card_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -456,10 +463,10 @@
                         android:id="@+id/iv_card_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -482,10 +489,10 @@
                         android:id="@+id/tv_card_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -497,10 +504,10 @@
                         android:id="@+id/iv_card_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -509,8 +516,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
                         android:src="@drawable/ic_close_x_red"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -554,9 +561,9 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_grayefefef_solid_conner5"
                 android:minHeight="150dp"
                 android:padding="10dp">
@@ -671,10 +678,10 @@
                         android:id="@+id/tv_card_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -685,10 +692,10 @@
                         android:id="@+id/iv_card_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -711,10 +718,10 @@
                         android:id="@+id/tv_card_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -726,10 +733,10 @@
                         android:id="@+id/iv_card_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -752,10 +759,10 @@
                         android:id="@+id/tv_card_6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/selector_upload_card"
                         android:gravity="bottom|center_horizontal"
                         android:padding="10dp"
@@ -767,10 +774,10 @@
                         android:id="@+id/iv_card_6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -779,8 +786,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
                         android:src="@drawable/ic_close_x_red"
                         android:visibility="gone" />
                 </FrameLayout>

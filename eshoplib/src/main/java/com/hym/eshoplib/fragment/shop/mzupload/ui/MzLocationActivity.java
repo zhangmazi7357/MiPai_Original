@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,9 +55,8 @@ public class MzLocationActivity extends AppCompatActivity {
     private double longitudes;
     private String mzAddress;
 
-    private String tempAddress = "";
 
-    private boolean isClickMarkerShowRv = false;
+    private boolean showRv = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,33 +102,24 @@ public class MzLocationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String keyWord = s.toString();
 
-                /**
-                 *  如果点击了 marker 填充了地址栏，此处不显示 recyclerView ;
-                 */
-//                if (isClickMarkerShowRv) {
-//                    return;
-//                }
+                if (TextUtils.isEmpty(keyWord)) {
+                    showRv = true;
+
+                }
 
 
-                if (!TextUtils.isEmpty(keyWord)) {
+                if (!TextUtils.isEmpty(keyWord) && showRv) {
+                    poiSearchAdapter.setDatas(null);
+                    MapManager.getInstance()
+                            .tipSearch(MzLocationActivity.this, keyWord,
+                                    new Inputtips.InputtipsListener() {
+                                        @Override
+                                        public void onGetInputtips(List<Tip> list, int i) {
 
-                    Log.e(TAG, "keyword =  " + keyWord);
-                    Log.e(TAG, "tempaddress = : " + tempAddress);
+                                            poiSearchAdapter.setDatas(list);
 
-
-                    if (!tempAddress.equals(keyWord)) {
-
-                        MapManager.getInstance()
-                                .tipSearch(MzLocationActivity.this, keyWord,
-                                        new Inputtips.InputtipsListener() {
-                                            @Override
-                                            public void onGetInputtips(List<Tip> list, int i) {
-
-                                                poiSearchAdapter.setDatas(list);
-
-                                            }
-                                        });
-                    }
+                                        }
+                                    });
 
 
                 }
@@ -141,6 +130,7 @@ public class MzLocationActivity extends AppCompatActivity {
         tvSure.setOnClickListener(v -> {
             if (TextUtils.isEmpty(mzAddress)) {
                 Toast.makeText(MzLocationActivity.this, "需要选择摄影棚地址", Toast.LENGTH_SHORT).show();
+                return;
             }
             Intent intent = new Intent();
 
@@ -181,19 +171,21 @@ public class MzLocationActivity extends AppCompatActivity {
                 /**
                  *   智能提示中点击了 显示在搜索栏中 就不要再调用智能搜索了;
                  */
+                showRv = false;
+
+
                 Tip item = poiSearchAdapter.getItemPosition(position);
-                mzAddress = item.getAddress();
+                mzAddress = item.getAddress() + item.getName();
 
                 LatLonPoint point = item.getPoint();
                 latitudes = point.getLatitude();
                 longitudes = point.getLongitude();
-                etPoi.setText(mzAddress + item.getName());
 
                 poiSearchAdapter.setDatas(null);
 
-                tempAddress = mzAddress + item.getName();   // 一个临时地址填充在搜索框里;
                 if (!TextUtils.isEmpty(mzAddress)) {
-                    etPoi.setText(tempAddress);
+                    etPoi.setText(mzAddress);
+                    etPoi.setSelection(mzAddress.length());
                 }
 
 
@@ -244,7 +236,7 @@ public class MzLocationActivity extends AppCompatActivity {
                 longitudes = position.longitude;
                 mzAddress = marker.getTitle() + marker.getSnippet();
                 if (!TextUtils.isEmpty(mzAddress)) {
-                    etPoi.setText(mzAddress);
+                    etPoi.setHint(mzAddress);
                 }
 
                 return true;

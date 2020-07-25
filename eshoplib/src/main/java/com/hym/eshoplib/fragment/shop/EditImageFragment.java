@@ -273,9 +273,8 @@ public class EditImageFragment extends BaseKitFragment {
 
         RequiredTextView rl = footer.findViewById(R.id.rtv_location);
         rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp = footer.findViewById(R.id.rtv_price);
-        rp.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
+        TextView rp = footer.findViewById(R.id.rtv_price);
+        TextView tvTitle = footer.findViewById(R.id.rtv_title);
         tvTitle.setTextColor(Color.parseColor("#ff3333"));
         et_title = footer.findViewById(R.id.et_title);
         et_other = footer.findViewById(R.id.et_other);
@@ -396,11 +395,7 @@ public class EditImageFragment extends BaseKitFragment {
             return;
         }
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2") || cateId.equals("8")) {
-          /*  serviceName = etServiceName.getText().toString();
-            if (TextUtils.isEmpty(serviceName)) {
-                ToastUtil.toast("请输入服务名称");
-                return;
-            }*/
+
             location = etLocatiom.getText().toString();
             if (TextUtils.isEmpty(location)) {
                 ToastUtil.toast("请输入地点");
@@ -438,26 +433,6 @@ public class EditImageFragment extends BaseKitFragment {
             }
         }
 
-/*
-        String etPrice = etPresentPrice.getText().toString();
-        if (TextUtils.isEmpty(etPrice)) {
-            ToastUtil.toast("请选择价格");
-            return;
-        }*/
-      /*  String serviceName = etServiceName.getText().toString();
-        if (TextUtils.isEmpty(serviceName)) {
-            ToastUtil.toast("请选择服务名称");
-            return;
-        }*/
-
-//        if(TextUtils.isEmpty(image_type_id)){
-//            ToastUtil.toast("请选择图片类型");
-//            return;
-//        }
-//        if(TextUtils.isEmpty(region_id)){
-//            ToastUtil.toast("请选择所在地区");
-//            return;
-//        }
 
         String remarks = etRemarks.getText().toString();
         String originalPrice = etOriginalPrice.getText().toString();
@@ -487,9 +462,14 @@ public class EditImageFragment extends BaseKitFragment {
 //            ToastUtil.toast("请输入产品相关说明（10字以内）");
 //            return;
 //        }
-        ShopApi.editImageProduct(id, image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation, adapter.getData().get(0).getDuration(),
-                etPrice, remarks, originalPrice, staffing, shootingTime, equipment, introduce,
-                detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua, new ResponseImpl<Object>() {
+        ShopApi.editImageProduct(id, image_default,
+                attachment, title, industry_id,
+                image_type_id, region_id, otherOrLocation,
+                adapter.getData().get(0).getDuration(), etPrice,
+                remarks, originalPrice, staffing,
+                shootingTime, equipment, introduce, detail,
+                tyid, shopTime, paisheCount, huazhuang, sheyingshi,
+                shejishi, time, huazhuangping, cehua, new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
                         ToastUtil.toast("修改成功");
@@ -618,52 +598,6 @@ public class EditImageFragment extends BaseKitFragment {
                     tv_region.setText(data.getExtras().getString("name", ""));
                     break;
                 default:
-//                   PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
-//                       @Override
-//                       public void onResultCamara(ArrayList<TImage> resultCamara) {
-//                           //ToastUtil.toast("相机url="+resultCamara.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultCamara.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }else {
-//                               getImageData(resultCamara);
-//                           }
-//
-//                       }
-//
-//                       @Override
-//                       public void onResultGalary(ArrayList<TImage> resultGalayr) {
-//                           // ToastUtil.toast("相册url="+resultCamara.get(0).getCompressPath());
-//                           if(imageType==1){
-//                               //上传封面
-//                               File[] files;
-//                               ArrayList<File> arr = new ArrayList<>();
-//                               String url = resultGalayr.get(0).getCompressPath();
-//                               arr.add(new File(url));
-//                               files = arr.toArray(new File[arr.size()]);
-//                               Message message = handler.obtainMessage();
-//                               Bundle bundle = new Bundle();
-//                               message.obj = files;
-//                               bundle.putString("url", url);
-//                               message.setData(bundle);
-//                               message.sendToTarget();
-//                           }else {
-//                               getImageData(resultGalayr);
-//                           }
-//
-//
-//                       }
-//                   });
                     PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                         @Override
                         public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
@@ -707,46 +641,7 @@ public class EditImageFragment extends BaseKitFragment {
         }
     }
 
-    //    public List<UpLoadImageBean> getImageData(ArrayList<TImage> source) {
-//        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
-//        for (TImage bean : source) {
-//            imageBeen.add(new UpLoadImageBean(bean));
-//        }
-//        int oldSize = adapter.getData().size();
-//        if (oldSize == 0) {
-//            //第一次添加
-//            if (imageBeen.size() == 9) {
-//                //一次性添加了9次图片，则直接加入
-//                adapter.setNewData(imageBeen);
-//            } else {
-//                //没有一次性添加完毕，则追加 addIcon
-//                imageBeen.add(new UpLoadImageBean());
-//                adapter.setNewData(imageBeen);
-//
-//            }
-//
-//
-//        }//不是第一次添加，并且第二次就 加满
-//        else if (imageBeen.size() + oldSize == 10) {
-//            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
-//            Logger.d("不是第一次");
-//            adapter.getData().remove(adapter.getData().size() - 1);
-//            adapter.notifyDataSetChanged();
-//            adapter.getData().addAll(imageBeen);
-//            adapter.notifyDataSetChanged();
-//
-//        } else {
-//            //不是第一次添加。并且第二次也没加满
-//            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
-//            adapter.getData().remove(adapter.getData().size() - 1);
-//            adapter.notifyDataSetChanged();
-//            imageBeen.add(new UpLoadImageBean());
-//            adapter.getData().addAll(imageBeen);
-//            adapter.notifyDataSetChanged();
-//
-//        }
-//        return imageBeen;
-//    }
+
     public List<UpLoadImageBean> getImageData(ArrayList<LocalMedia> source) {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
         for (LocalMedia bean : source) {

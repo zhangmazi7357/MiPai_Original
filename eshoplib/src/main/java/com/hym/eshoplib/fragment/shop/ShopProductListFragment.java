@@ -107,13 +107,15 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                         final Bundle bundle = new Bundle();
                         bundle.putString("token", getArguments().getString("token", ""));
 
-                        //设置工作室信息页 - 产品 - 上传产品 ;
-                        DialogUtil.getSelectDialog(_mActivity, "视频",
+                        // 弹窗 -- 设置工作室信息页 - 产品 - 上传产品 ;
+                        DialogUtil.getSelectDialog(_mActivity,
+                                "视频",
                                 "图片",
                                 new DialogUtil.OnSelectDialogListener() {
                                     @Override
                                     public void onBtnOneClick(Dialog dialog) {
                                         dialog.dismiss();
+
                                         Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_uploadVideo);
                                         bundle.putString("token", token);
                                         bundle.putString("cateId", getArguments().getString("cateId"));
@@ -144,38 +146,43 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
 
-        ShopApi.getProductsList(pageNum + "", new ResponseImpl<ShopProductsBean>() {
-            @Override
-            public void onSuccess(ShopProductsBean data) {
-                id = data.getData().getStore_id();
-                token = data.getData().getQiniu_token();
-                type = getProducionsType(id);
-                if (refresh) {
-                    setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
-                } else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
-                }
-            }
+        /**
+         *  产品列表  七牛 token
+         */
+        ShopApi.getProductsList(pageNum + "",
+                new ResponseImpl<ShopProductsBean>() {
+                    @Override
+                    public void onSuccess(ShopProductsBean data) {
+
+                        id = data.getData().getStore_id();
+                        token = data.getData().getQiniu_token();
+                        type = getProducionsType(id);
+                        if (refresh) {
+                            setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
+                        } else {
+                            setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
+                        }
+                    }
 
 
-            @Override
-            public void onEmptyData() {
-                super.onEmptyData();
-                getAdapter().setNewData(null);
-                getAdapter().notifyDataSetChanged();
-            }
+                    @Override
+                    public void onEmptyData() {
+                        super.onEmptyData();
+                        getAdapter().setNewData(null);
+                        getAdapter().notifyDataSetChanged();
+                    }
 
-            @Override
-            public void dataRes(int code, String data) {
-                // super.dataRes(code, data);
-                Log.e(TAG, "dataRes: ");
-                ShopProductsBean bean = JSON.parseObject(data, ShopProductsBean.class);
-                id = bean.getData().getStore_id();
-                token = bean.getData().getQiniu_token();
-                type = getProducionsType(id);
-                Logger.d("id=" + id + ",token=" + token);
-            }
-        }, ShopProductsBean.class);
+                    @Override
+                    public void dataRes(int code, String data) {
+                        // super.dataRes(code, data);
+                        Log.e(TAG, "dataRes: ");
+                        ShopProductsBean bean = JSON.parseObject(data, ShopProductsBean.class);
+                        id = bean.getData().getStore_id();
+                        token = bean.getData().getQiniu_token();
+                        type = getProducionsType(id);
+                        Logger.d("id=" + id + ",token=" + token);
+                    }
+                }, ShopProductsBean.class);
 
     }
 
@@ -194,6 +201,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 DialogUtil.getSelectDialog(_mActivity, "编辑", "删除", new DialogUtil.OnSelectDialogListener() {
                     @Override
                     public void onBtnOneClick(Dialog dialog) {
@@ -204,6 +212,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                             return;
                         }
                         Bundle bundle;
+
                         if (type.equals("1")) {
                             //视频
                             bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Edit_vadieo);

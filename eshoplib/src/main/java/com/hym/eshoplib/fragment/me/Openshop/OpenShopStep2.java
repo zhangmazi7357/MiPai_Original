@@ -1,10 +1,13 @@
 package com.hym.eshoplib.fragment.me.Openshop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -36,6 +39,8 @@ import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.hym.superlib.widgets.view.RequiredTextView;
@@ -290,6 +295,9 @@ public class OpenShopStep2 extends BaseKitFragment {
 
     private void checkData() {
         String circle = etCircle.getText().toString();
+
+        circle = circle + "_test";    // 制作周期被删掉了;
+
         if (TextUtils.isEmpty(circle)) {
             ToastUtil.toast("请输入制作周期");
             return;
@@ -373,21 +381,22 @@ public class OpenShopStep2 extends BaseKitFragment {
             @Override
             public void onSuccess(ShopDetailBean data) {
                 OpenShopStep2.this.data = data;
-                bindeData();
+                bindData();
 
 
             }
         }, ShopDetailBean.class);
     }
 
-    private void bindeData() {
+    private void bindData() {
 
         if (data != null) {
-            if(data.getData().getBase().getCategory_id().equals("46")){
+            if (data.getData().getBase().getCategory_id().equals("46")) {
                 tvCircle.setText("拍摄周期", TextView.BufferType.SPANNABLE);
-            }else if(data.getData().getBase().getCategory_id().equals("40")){
+            } else if (data.getData().getBase().getCategory_id().equals("40")) {
                 tvCircle.setText("工作周期", TextView.BufferType.SPANNABLE);
             }
+
             String verify = data.getData().getBase().getIs_verify();
             if (verify.equals("-1")) {
                 tvTips.setVisibility(View.VISIBLE);
@@ -600,21 +609,26 @@ public class OpenShopStep2 extends BaseKitFragment {
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您的信息尚未提交，确定退出吗？（点击“下一步”可保存当前页）", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
 
-            }
+        DialogManager.getInstance()
+                .initSimpleDialog(_mActivity, "提示",
+                        "您的信息尚未提交，确定退出吗？(点击“下一步”可保存当前页)",
+                        "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
 
-            @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("isedit", true);
-                setFragmentResult(RESULT_OK, bundle);
-                pop();
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
+                                Bundle bundle = new Bundle();
+                                bundle.putBoolean("isedit", true);
+                                setFragmentResult(RESULT_OK, bundle);
+                                pop();
+                            }
+                        }).show();
 
-            }
-        }).show();
         return true;
 
     }

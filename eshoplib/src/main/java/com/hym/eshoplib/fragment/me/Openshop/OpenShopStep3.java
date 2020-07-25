@@ -141,21 +141,26 @@ public class OpenShopStep3 extends BaseListFragment<ShopProductsBean.DataBean.In
                     public void run() {
                         final Bundle bundle = new Bundle();
                         bundle.putString("token", getArguments().getString("token", ""));
-                        DialogUtil.getSelectDialog(_mActivity, "视频", "图片", new DialogUtil.OnSelectDialogListener() {
-                            @Override
-                            public void onBtnOneClick(Dialog dialog) {
-                                dialog.dismiss();
-                                startForResult(UpLoadVideoFragment.newInstance(bundle), 0x01);
 
-                            }
 
-                            @Override
-                            public void onBtnTwoClick(Dialog dialog) {
-                                dialog.dismiss();
-                                startForResult(UpLoadImageFragment.newInstance(bundle), 0x01);
+                        DialogUtil.getSelectDialog(_mActivity,
+                                "视频",
+                                "图片",
+                                new DialogUtil.OnSelectDialogListener() {
+                                    @Override
+                                    public void onBtnOneClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        startForResult(UpLoadVideoFragment.newInstance(bundle), 0x01);
 
-                            }
-                        });
+                                    }
+
+                                    @Override
+                                    public void onBtnTwoClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        startForResult(UpLoadImageFragment.newInstance(bundle), 0x01);
+
+                                    }
+                                });
 
 //                        if(type==1){
 //                            //上传视频
