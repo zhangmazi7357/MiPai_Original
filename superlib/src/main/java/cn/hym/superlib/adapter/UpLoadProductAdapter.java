@@ -178,11 +178,13 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                                     try {
                                         if (info.isOK()) {
                                             ImageUtil.getInstance()
-                                                    .loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
+                                                    .loadRoundCornerImage(fragment,
+                                                            item.getImage().getCompressPath(), iv_icon, 5);
                                             iv_icon.setVisibility(View.VISIBLE);
                                             ll_uploading.setVisibility(View.GONE);
                                             item.setHasUpload(true);
                                             item.setQiniuFileName(key);
+
                                             Log.e(TAG, "complete: ");
 
                                         } else {

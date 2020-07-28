@@ -38,6 +38,7 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
     protected void convert(BaseViewHolder helper, SpecialTimeLimteBean.DataBean item) {
 
 
+        // 限时特惠 ;
         if (item.getItemType() == FirstPagerShopBean.TEHUI) {
             if (item == null || item.getVideo() == null || item.getVideo().size() < 5) {
                 return;
@@ -64,8 +65,7 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
                     .setText(R.id.tv_two3_money, item.getVideo().get(3).getPresent_price())
                     .setText(R.id.tv_two4_money, item.getVideo().get(4).getPresent_price())
                     .setText(R.id.tv_two_xianshi_title2, item.getVideo().get(2).getTitle())
-                    .setText(R.id.tv_two_xianshi_title4, item.getVideo().get(4).getTitle())
-            ;
+                    .setText(R.id.tv_two_xianshi_title4, item.getVideo().get(4).getTitle());
 
             ImageView one = helper.getView(R.id.iv_one_pic);
             ImageView two = helper.getView(R.id.iv_two_1);
@@ -77,13 +77,25 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
             Glide.with(mContext).load(item.getVideo().get(2).getImage_default()).into(three);
             Glide.with(mContext).load(item.getVideo().get(3).getImage_default()).into(four);
             Glide.with(mContext).load(item.getVideo().get(4).getImage_default()).into(five);
+
+            TextView tehuiTv = helper.getView(R.id.tv_one_tag);
+            String tehuiTag = "";
+            if (!TextUtils.isEmpty(tehuiTag)) {
+                tehuiTv.setText(tehuiTag);
+                tehuiTv.setVisibility(View.VISIBLE);
+            } else {
+                tehuiTv.setVisibility(View.GONE);
+            }
+
+
             helper.addOnClickListener(R.id.rl_top_click1)
                     .addOnClickListener(R.id.rl_top_click2)
                     .addOnClickListener(R.id.rl_top_click3)
                     .addOnClickListener(R.id.rl_top_click4)
                     .addOnClickListener(R.id.rl_top_click5)
-                    .addOnClickListener(R.id.tv_tehui_odd_more)
-            ;
+                    .addOnClickListener(R.id.tv_tehui_odd_more);
+
+            // 严选 ;
         } else if (item.getItemType() == FirstPagerShopBean.YANXUAN) {
             if (item == null || item.getVideo() == null || item.getVideo().size() <= 0) {
                 return;
@@ -107,17 +119,42 @@ public class FirstPagerShopItemAdapter extends BaseMultiItemQuickAdapter<Special
                     .setText(R.id.tv_one_money, item.getVideo().get(0).getPresent_price())
                     .setText(R.id.tv_one_before_price, item.getVideo().get(0).getOriginal_price());
             Glide.with(mContext).load(item.getVideo().get(0).getImage_default()).into(onePic);
+
+            // 标签
+            TextView tvOneTag = helper.getView(R.id.tv_one_tag);
+            String yanxuanOneTag = "";
+            if (!TextUtils.isEmpty(yanxuanOneTag)) {
+                tvOneTag.setText(yanxuanOneTag);
+                tvOneTag.setVisibility(View.VISIBLE);
+            } else {
+                tvOneTag.setVisibility(View.GONE);
+            }
+
             if (item.getVideo().size() >= 2) {
                 helper.setText(R.id.tv_yanxuan_2title, item.getVideo().get(1).getTitle())
                         .setText(R.id.tv_two_count, item.getVideo().get(1).getWeight() + "人付款")
                         .setText(R.id.tv_two_money, item.getVideo().get(1).getPresent_price())
                         .setText(R.id.tv_before_price, item.getVideo().get(1).getOriginal_price());
                 Glide.with(mContext).load(item.getVideo().get(1).getImage_default()).into(twoPic);
+
+                // 标签
+                TextView tvTwoTag = helper.getView(R.id.tv_two_tag);
+                String yanxuanTwoTag = "";
+                if (!TextUtils.isEmpty(yanxuanTwoTag)) {
+                    tvTwoTag.setText(yanxuanTwoTag);
+                    tvTwoTag.setVisibility(View.VISIBLE);
+                } else {
+                    tvTwoTag.setVisibility(View.GONE);
+                }
+
             }
+
+
             helper.addOnClickListener(R.id.rl_bottom_click1)
                     .addOnClickListener(R.id.rl_bottom_click2)
-                    .addOnClickListener(R.id.tv_strict_select_more)
-            ;
+                    .addOnClickListener(R.id.tv_strict_select_more);
+
+            //  三个 tab ;
         } else if (item.getItemType() == FirstPagerShopBean.TABLE) {
             TextView tvComment = helper.getView(R.id.tv_comment);
             TextView tvPhoto = helper.getView(R.id.tv_photo);

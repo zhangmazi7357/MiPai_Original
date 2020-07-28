@@ -2,7 +2,9 @@ package com.hym.eshoplib.http.mz;
 
 import com.hym.httplib.interfaces.IHttpResultListener;
 
+import app.App;
 import cn.hym.superlib.utils.http.HttpUtil;
+import cn.hym.superlib.utils.user.UserUtil;
 
 import static cn.hym.superlib.utils.http.ApiExcuter.post;
 
@@ -20,8 +22,7 @@ public class MzNewApi {
      * @param <T>
      */
     public static <T> void getOneType(/*String channelId,*/ IHttpResultListener<T> listener, Class<T> clazz) {
-        HttpUtil.BaseHttpRequest request = new HttpUtil.BaseHttpRequest();
-        request.setUrl(host_ip);
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("GetoneType");
 //        request.AddParems("token", UserUtil.getToken(App.instance));
@@ -38,13 +39,32 @@ public class MzNewApi {
      * @param <T>
      */
     public static <T> void getTwoType(IHttpResultListener<T> listener, Class<T> clazz) {
-        HttpUtil.BaseHttpRequest request = new HttpUtil.BaseHttpRequest();
-        request.setUrl(host_ip);
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("GettwoType");
 //        request.AddParems("token", UserUtil.getToken(App.instance));
 //        request.addParamsNotEmpty("channelid", channelId);
         post(request, listener, clazz);
     }
+
+
+    /**
+     * icon 关联列表
+     *
+     * @param iconId
+     * @param listener
+     * @param clazz
+     * @param <T>
+     */
+    public static <T> void getProductList(String iconId, IHttpResultListener<T> listener, Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Store");
+        request.setClassName("GetProductionList");
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("icon_id", iconId);
+
+        post(request, listener, clazz);
+    }
+
 
 }

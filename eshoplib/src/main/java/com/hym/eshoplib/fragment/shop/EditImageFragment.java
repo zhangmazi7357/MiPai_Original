@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.shop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,9 +24,16 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
+import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
+import com.hym.eshoplib.bean.mz.upload.ProductTwoTypeBean;
 import com.hym.eshoplib.bean.shop.ProductDetailBean;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzLocationActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzProductSortActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzProductTagActivity;
+import com.hym.eshoplib.fragment.shop.mzupload.ui.MzSubProductActivity;
 import com.hym.eshoplib.http.CommonApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.hym.imagelib.ImageUtil;
 import com.hym.photolib.utils.PhotoUtil;
 import com.jph.takephoto.model.TImage;
@@ -45,9 +53,14 @@ import cn.hym.superlib.adapter.UpLoadProductAdapter;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.MzProImageDetailAdapter;
+import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.mz.widgets.UploadItemView;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -106,6 +119,31 @@ public class EditImageFragment extends BaseKitFragment {
     private String location;
     private String etPrice;
     private String otherOrLocation;
+
+
+    private RecyclerView mzProDetailRv;                        // 项目详情添加图片;
+    // 上传项目详情的 adapter ;
+    private MzProImageDetailAdapter mzProDetailAdapter;
+
+    private UploadItemView mzProductSort;                     // 产品分类
+    private UploadItemView mzSubProductSort;                  // 二级产品分类
+    private UploadItemView mzProductTag;                      //  产品标签
+    private UploadItemView mzLocation;                        // 摄影棚地址；
+
+
+    private String mzOneType = "";    // 产品一级分类选中的 id  ;
+    private String mzTwoType = "";
+    private String mzTagContent = "";   // 产品标签 ;
+    private String mzAddress = "";      // 地址 ;
+    private double mzLon = 0;            // 经度；
+    private double mzLat = 0;            // 纬度；
+
+
+
+
+    /*
+         新增 ;
+     */
 
     public static EditImageFragment newInstance(Bundle args) {
         EditImageFragment fragment = new EditImageFragment();
@@ -299,9 +337,56 @@ public class EditImageFragment extends BaseKitFragment {
 
         cateId = getArguments().getString("cateId");
 
+
+        initProDetail(footer);
+
+        mzProductSort = footer.findViewById(R.id.mz_productSort);
+        mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
+        mzProductTag = footer.findViewById(R.id.mz_productTag);
+        mzLocation = footer.findViewById(R.id.mz_location);
+
+
+        View.OnClickListener mzClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                int requestCode = 0;
+
+                switch (v.getId()) {
+                    case R.id.mz_productSort:           // 一级分类
+                        intent.setClass(_mActivity, MzProductSortActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_subProductSort:        // 二级分类
+                        intent.setClass(_mActivity, MzSubProductActivity.class);
+
+                        // 需要传入 一级 id , 使二级 分类 判别 ;
+                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, mzOneType);
+                        requestCode = MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT;
+                        break;
+                    case R.id.mz_productTag:        // 产品标签
+                        intent.setClass(_mActivity, MzProductTagActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_PRODUCT_TAG;
+                        break;
+                    case R.id.mz_location:          // 摄影棚位置
+                        intent.setClass(_mActivity, MzLocationActivity.class);
+                        requestCode = MzConstant.REQUEST_CODE_LOCATION;
+                        break;
+
+                }
+
+                startActivityForResult(intent, requestCode);
+            }
+        };
+        mzProductSort.setOnClickListener(mzClickListener);
+        mzSubProductSort.setOnClickListener(mzClickListener);
+        mzProductTag.setOnClickListener(mzClickListener);
+        mzLocation.setOnClickListener(mzClickListener);
+
+
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llStaffing.setVisibility(View.VISIBLE);
             llShootingTime.setVisibility(View.VISIBLE);
             llEquipment.setVisibility(View.VISIBLE);
@@ -313,7 +398,7 @@ public class EditImageFragment extends BaseKitFragment {
             tyid = "1";
         } else if (cateId.equals("8")) {
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llEquipment.setVisibility(View.VISIBLE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
@@ -356,7 +441,7 @@ public class EditImageFragment extends BaseKitFragment {
             /*策划师：过往经验、成功案例*/
         } else if (cateId.equals("40")) {
             llTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
@@ -384,11 +469,16 @@ public class EditImageFragment extends BaseKitFragment {
     //上传产品
     private void upLoad() {
         String attachment = getAttachment();
-        Logger.d("attachment=" + attachment);
+//        Logger.d("attachment=" + attachment);
+
         if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");
             return;
         }
+
+        String mzProjectImg = getProDetailPic();
+
+
         String title = et_title.getText().toString();
         if (TextUtils.isEmpty(title)) {
             ToastUtil.toast("请输入标题");
@@ -397,10 +487,10 @@ public class EditImageFragment extends BaseKitFragment {
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2") || cateId.equals("8")) {
 
             location = etLocatiom.getText().toString();
-            if (TextUtils.isEmpty(location)) {
-                ToastUtil.toast("请输入地点");
-                return;
-            }
+//            if (TextUtils.isEmpty(location)) {
+//                ToastUtil.toast("请输入地点");
+//                return;
+//            }
             otherOrLocation = location;
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
@@ -414,11 +504,7 @@ public class EditImageFragment extends BaseKitFragment {
                 return;
             }
         } else if (cateId.equals("1") || cateId.equals("40") || cateId.equals("4")) {
-            /*serviceName = etServiceName.getText().toString();
-            if (TextUtils.isEmpty(serviceName)) {
-                ToastUtil.toast("请输入服务名称");
-                return;
-            }*/
+
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
                 ToastUtil.toast("请输入价格");
@@ -458,10 +544,22 @@ public class EditImageFragment extends BaseKitFragment {
         String huazhuangping = etHuazhuangping.getText().toString();
 
         String cehua = etCeHua.getText().toString();
-//        if(TextUtils.isEmpty(other)){
-//            ToastUtil.toast("请输入产品相关说明（10字以内）");
-//            return;
-//        }
+
+        if (TextUtils.isEmpty(mzOneType)) {
+            ToastUtil.toast("请选择一个产品分类");
+            return;
+        }
+        if (TextUtils.isEmpty(mzTwoType)) {
+            ToastUtil.toast("请至少选择一个二级分类");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mzAddress)) {
+            ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
+            return;
+        }
+
+
         ShopApi.editImageProduct(id, image_default,
                 attachment, title, industry_id,
                 image_type_id, region_id, otherOrLocation,
@@ -469,7 +567,15 @@ public class EditImageFragment extends BaseKitFragment {
                 remarks, originalPrice, staffing,
                 shootingTime, equipment, introduce, detail,
                 tyid, shopTime, paisheCount, huazhuang, sheyingshi,
-                shejishi, time, huazhuangping, cehua, new ResponseImpl<Object>() {
+                shejishi, time, huazhuangping, cehua,
+                mzOneType,
+                mzTwoType,
+                mzProjectImg,
+                mzAddress,
+                String.valueOf(mzLon),
+                String.valueOf(mzLat),
+                mzTagContent,
+                new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
                         ToastUtil.toast("修改成功");
@@ -487,6 +593,8 @@ public class EditImageFragment extends BaseKitFragment {
 
     }
 
+
+    // 图片 path；
     private String getAttachment() {
         String result = "";
         for (int i = 0; i < adapter.getData().size(); i++) {
@@ -495,6 +603,19 @@ public class EditImageFragment extends BaseKitFragment {
                 result += file_name + ",";
             }
 
+        }
+        return result;
+    }
+
+    // 项目详情 图片 path ;
+    private String getProDetailPic() {
+        String result = "";
+        for (int i = 0; i < mzProDetailAdapter.getData().size(); i++) {
+            String file_name = mzProDetailAdapter.getData().get(i).getQiniuFileName();
+
+            if (!TextUtils.isEmpty(file_name)) {
+                result += file_name + ",";
+            }
         }
         return result;
     }
@@ -563,17 +684,12 @@ public class EditImageFragment extends BaseKitFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
@@ -601,48 +717,117 @@ public class EditImageFragment extends BaseKitFragment {
                     PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                         @Override
                         public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
-                            if (imageType == 1) {
-                                File[] files;
-                                ArrayList<File> arr = new ArrayList<>();
-                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                                arr.add(new File(url));
-                                files = arr.toArray(new File[arr.size()]);
-                                Message message = handler.obtainMessage();
-                                Bundle bundle = new Bundle();
-                                message.obj = files;
-                                bundle.putString("url", url);
-                                message.setData(bundle);
-                                message.sendToTarget();
-                            } else {
-                                getImageData(resultCamara);
+
+                            switch (imageType) {
+                                case 1:
+                                    File[] files;
+                                    ArrayList<File> arr = new ArrayList<>();
+                                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                    arr.add(new File(url));
+                                    files = arr.toArray(new File[arr.size()]);
+                                    Message message = handler.obtainMessage();
+                                    Bundle bundle = new Bundle();
+                                    message.obj = files;
+                                    bundle.putString("url", url);
+                                    message.setData(bundle);
+                                    message.sendToTarget();
+                                    break;
+                                case 2:
+                                    getImageData(adapter, resultCamara);
+                                    break;
+                                case 3:
+                                    getImageData(mzProDetailAdapter, resultCamara);
+                                    break;
                             }
+
+
                         }
 
                         @Override
                         public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
-                            if (imageType == 1) {
-                                File[] files;
-                                ArrayList<File> arr = new ArrayList<>();
-                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
-                                arr.add(new File(url));
-                                files = arr.toArray(new File[arr.size()]);
-                                Message message = handler.obtainMessage();
-                                Bundle bundle = new Bundle();
-                                message.obj = files;
-                                bundle.putString("url", url);
-                                message.setData(bundle);
-                                message.sendToTarget();
-                            } else {
-                                getImageData(resultCamara);
+
+                            switch (imageType) {
+                                case 1:
+                                    File[] files;
+                                    ArrayList<File> arr = new ArrayList<>();
+                                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                    arr.add(new File(url));
+                                    files = arr.toArray(new File[arr.size()]);
+                                    Message message = handler.obtainMessage();
+                                    Bundle bundle = new Bundle();
+                                    message.obj = files;
+                                    bundle.putString("url", url);
+                                    message.setData(bundle);
+                                    message.sendToTarget();
+                                    break;
+                                case 2:
+                                    getImageData(adapter, resultCamara);
+                                    break;
+                                case 3:
+                                    getImageData(mzProDetailAdapter, resultCamara);
+                                    break;
                             }
+
+
                         }
                     });
+            }
+        }
+
+        // 产品分类 、 二级分类 、 标签 、地图
+        if (resultCode == MzConstant.RESULT_CODE_UPLOAD) {
+            switch (requestCode) {
+                case MzConstant.REQUEST_CODE_PRODUCT_SORT:  // 一级分类返回
+
+                    ProductOneTypeBean.DataBean bean = data.getExtras().getParcelable(MzConstant.VALUE_PRODUCT_ONE);
+
+                    String title = bean.getTitle();
+
+                    // 产品一级 分类的  id  ;
+                    mzOneType = bean.getOnetype_id();
+                    mzProductSort.setContent(title);
+                    break;
+                case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
+
+                    List<ProductTwoTypeBean.DataBean> twoList = data.getExtras().getParcelableArrayList(MzConstant.VALUE_PRODUCT_TWO);
+                    List<String> vList = new ArrayList<>();
+                    List<String> titleList = new ArrayList<>();
+                    for (int i = 0; i < twoList.size(); i++) {
+                        ProductTwoTypeBean.DataBean dataBean = twoList.get(i);
+                        vList.add(dataBean.getTwotype_id());
+                        titleList.add(dataBean.getTitle());
+                    }
+                    mzTwoType = MzStringUtil.v(vList);
+                    String twoTypeContent = MzStringUtil.v(titleList);
+                    mzSubProductSort.setContent(twoTypeContent);
+
+
+                    break;
+                case MzConstant.REQUEST_CODE_PRODUCT_TAG:       // 标签
+
+                    ArrayList<String> tagList = data.getExtras().getStringArrayList(MzConstant.VALUE_PRODUCT_TAG);
+
+                    mzTagContent = MzStringUtil.v(tagList);
+                    mzProductTag.setContent(mzTagContent);
+
+                    break;
+                case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
+
+                    Bundle bundle = data.getExtras();
+                    mzAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
+                    mzLat = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LAT);
+                    mzLon = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LON);
+
+                    mzLocation.setContent(mzAddress);
+//                    Log.e(TAG, "address =" + address + ",lat = " + lat + ",lon=" + lon);
+
+                    break;
             }
         }
     }
 
 
-    public List<UpLoadImageBean> getImageData(ArrayList<LocalMedia> source) {
+    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter, ArrayList<LocalMedia> source) {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
         for (LocalMedia bean : source) {
             TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
@@ -683,24 +868,68 @@ public class EditImageFragment extends BaseKitFragment {
         return imageBeen;
     }
 
+    // 初始化 项目详情的列表 ;
+    private void initProDetail(View footer) {
+        mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
+        mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+        mzProDetailAdapter = new MzProImageDetailAdapter(this, null);
+        mzProDetailAdapter.setToken(qiniuToken);
+        mzProDetailAdapter.addData(new UpLoadImageBean());
+        mzProDetailRv.setAdapter(mzProDetailAdapter);
+
+        mzProDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+
+                if (mzProDetailAdapter.getData().get(position).getItemType() == 1) {
+
+                    // 可能是预览图片吧;
+                    ArrayList<String> images_str = new ArrayList<String>();
+                    images_str.add(mzProDetailAdapter.getData().get(position).getImage().getCompressPath());
+                    int width = ScreenUtil.getScreenWidth(_mActivity);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(_mActivity, images_str, position, imageSize);
+
+                } else {
+
+                    imageType = 3;
+                    PhotoUtil.ShowDialog(EditImageFragment.this,
+                            10 - adapter.getData().size(), false, 2);
+
+
+                }
+            }
+        });
+
+    }
+
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您的产品还没有保存,您确定要退出么?", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
+        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示",
+                "您的产品还没有保存，确定退出么？"
+                , "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+                    @Override
+                    public void negativeClick(Dialog dialog) {
+                        dialog.dismiss();
+                    }
 
-            }
+                    @Override
+                    public void positiveClick(Dialog dialog) {
+                        dialog.dismiss();
+                        pop();
+                    }
+                }).show();
 
-            @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                pop();
-
-            }
-        }).show();
         return true;
 
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

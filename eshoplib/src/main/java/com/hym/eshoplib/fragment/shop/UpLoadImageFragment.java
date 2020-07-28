@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hjq.toast.ToastUtils;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
@@ -73,9 +74,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
     UpLoadProductAdapter adapter;
 
 
-    // 上传项目详情的 adapter ;
-    private MzProImageDetailAdapter mzProDetailAdapter;
-
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     Unbinder unbinder;
@@ -118,14 +116,17 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
 
     private RecyclerView mzProDetailRv;                        // 项目详情添加图片;
+    // 上传项目详情的 adapter ;
+    private MzProImageDetailAdapter mzProDetailAdapter;
+
     private UploadItemView mzProductSort;                     // 产品分类
     private UploadItemView mzSubProductSort;                  // 二级产品分类
     private UploadItemView mzProductTag;                      //  产品标签
     private UploadItemView mzLocation;                        // 摄影棚地址；
 
 
-    private String oneType = "";    // 产品一级分类选中的 id  ;
-    private String twoType = "";
+    private String mzOneType = "";    // 产品一级分类选中的 id  ;
+    private String mzTwoType = "";
     private String tagContent = "";   // 产品标签 ;
     private String mzAddress = "";      // 地址 ;
     private double mzLon = 0;            // 经度；
@@ -320,6 +321,9 @@ public class UpLoadImageFragment extends BaseKitFragment {
         etHuazhuangping = footer.findViewById(R.id.et_huazhuangping);
         etCeHua = footer.findViewById(R.id.et_cehuashi);
 
+        cateId = getArguments().getString("cateId");
+        adapter.addHeaderView(header);
+        adapter.addFooterView(footer);
 
         ////////////////////////////////  新加的  ///////////////////////////////////
 
@@ -331,12 +335,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
         mzProductTag = footer.findViewById(R.id.mz_productTag);
         mzLocation = footer.findViewById(R.id.mz_location);
 
-
-        cateId = getArguments().getString("cateId");
-        adapter.addHeaderView(header);
-        adapter.addFooterView(footer);
-
-        ///////////////////  添加 新内容  /////////////////////////////
 
         View.OnClickListener mzClickListener = new View.OnClickListener() {
             @Override
@@ -353,7 +351,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                         intent.setClass(_mActivity, MzSubProductActivity.class);
 
                         // 需要传入 一级 id , 使二级 分类 判别 ;
-                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, oneType);
+                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, mzOneType);
                         requestCode = MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT;
                         break;
                     case R.id.mz_productTag:        // 产品标签
@@ -481,7 +479,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
 //        String project_img = getProDetailPic();
 
         String project_img = getProDetailPic();
-        Log.e(TAG, "项目详情 图片: " + project_img);
+//        Log.e(TAG, "项目详情 图片: " + project_img);
 
         if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");
@@ -551,6 +549,21 @@ public class UpLoadImageFragment extends BaseKitFragment {
         String cehua = etCeHua.getText().toString();
 
 
+        if (TextUtils.isEmpty(mzOneType)) {
+            ToastUtil.toast("请选择一个产品分类");
+            return;
+        }
+        if (TextUtils.isEmpty(mzTwoType)) {
+            ToastUtil.toast("请至少选择一个二级分类");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mzAddress)) {
+            ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
+            return;
+        }
+
+
         // 上传图片产品
         ShopApi.upLoadImageProduct(image_default,
                 attachment,
@@ -562,7 +575,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                 staffing, shootingTime, equipment, introduce,
                 detail, tyid, shopTime, paisheCount, huazhuang,
                 sheyingshi, shejishi, time, huazhuangpin, cehua,
-                oneType, twoType,
+                mzOneType, mzTwoType,
                 project_img,
                 mzAddress,
                 String.valueOf(mzLon),
@@ -583,15 +596,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
                         super.onStart(mark);
                     }
 
-                    @Override
-                    public void onDataError(String status, String errormessage) {
-                        super.onDataError(status, errormessage);
-                    }
-
-                    @Override
-                    public void onFailed(Exception e) {
-                        super.onFailed(e);
-                    }
                 },
                 Object.class);
 
@@ -734,7 +738,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                     String title = bean.getTitle();
 
                     // 产品一级 分类的  id  ;
-                    oneType = bean.getOnetype_id();
+                    mzOneType = bean.getOnetype_id();
                     mzProductSort.setContent(title);
                     break;
                 case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
@@ -747,7 +751,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                         vList.add(dataBean.getTwotype_id());
                         titleList.add(dataBean.getTitle());
                     }
-                    twoType = MzStringUtil.v(vList);
+                    mzTwoType = MzStringUtil.v(vList);
                     String twoTypeContent = MzStringUtil.v(titleList);
                     mzSubProductSort.setContent(twoTypeContent);
 
@@ -865,8 +869,10 @@ public class UpLoadImageFragment extends BaseKitFragment {
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您的产品还没有上传,确定退出吗？",
-                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示",
+                "您的产品还没有上传,确定退出吗？",
+                "取消", "确定",
+                new SimpleDialog.SimpleDialogOnClickListener() {
                     @Override
                     public void negativeClick(Dialog dialog) {
                         dialog.dismiss();
@@ -874,6 +880,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
                     @Override
                     public void positiveClick(Dialog dialog) {
+                        dialog.dismiss();
                         pop();
                     }
                 }).show();

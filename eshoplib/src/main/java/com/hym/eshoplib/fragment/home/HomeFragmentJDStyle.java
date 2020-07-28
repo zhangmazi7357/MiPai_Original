@@ -49,6 +49,8 @@ import com.hym.eshoplib.bean.home.TipsMessageBean;
 import com.hym.eshoplib.event.ShowGuideEvent;
 import com.hym.eshoplib.http.goods.GoodsApi;
 import com.hym.eshoplib.http.home.HomeApi;
+import com.hym.eshoplib.mz.MzConstant;
+import com.hym.eshoplib.mz.iconproduct.MzProductListActivity;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.OnBottomPosCallback2;
 import com.hym.eshoplib.util.OnTopPosCallbac3;
@@ -82,6 +84,7 @@ import cn.hym.superlib.event.lgoin.LoginEvent;
 import cn.hym.superlib.event.lgoin.UnLoginEvent;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.widgets.DrawableTextView;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.http.HttpResultUtil;
 import cn.hym.superlib.utils.user.UserUtil;
@@ -169,16 +172,30 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     @BindView(R.id.tv_video_line)
     TextView tvVideoLine;
     private int mDistanceY;
-    LinearLayout tvFunction1;
-    LinearLayout tvFunction2;
-    LinearLayout tvFunction3;
-    LinearLayout tvFunction4;
-    LinearLayout tvFunction5;
-    LinearLayout tvFunction6;
-    LinearLayout tvFunction7;
-    LinearLayout tvFunction8;
-    LinearLayout tvFunction9;
-    LinearLayout tvFunction10;
+//    LinearLayout tvFunction1;
+//    LinearLayout tvFunction2;
+//    LinearLayout tvFunction3;
+//    LinearLayout tvFunction4;
+//    LinearLayout tvFunction5;
+//    LinearLayout tvFunction6;
+//    LinearLayout tvFunction7;
+//    LinearLayout tvFunction8;
+//    LinearLayout tvFunction9;
+//    LinearLayout tvFunction10;
+
+
+    DrawableTextView homeTab1;
+    DrawableTextView homeTab2;
+    DrawableTextView homeTab3;
+    DrawableTextView homeTab4;
+    DrawableTextView homeTab5;
+    DrawableTextView homeTab6;
+    DrawableTextView homeTab7;
+    DrawableTextView homeTab8;
+    DrawableTextView homeTab9;
+    DrawableTextView homeTab10;
+
+
     TextView tv_more_news, tv_more_vadieos;
     Banner banner;
     //MarqueeView newMarquee;
@@ -753,68 +770,125 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     }
 
     private void initMap() {
-        mLocationClient = new AMapLocationClient(App.instance);
-        mLocationListener = new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation amapLocation) {
-                if (amapLocation != null) {
-                    if (amapLocation.getErrorCode() == 0) {
-                        //可在其中解析amapLocation获取相应内容。
-                        Logger.d("城市=" + amapLocation.getCity());
-                        //tvLeft.setText(amapLocation.getCity());
-                        final String city = amapLocation.getCity();
-
-                        HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
-                            @Override
-                            public void onSuccess(RegionBean data) {
-                                SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
-                                SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
-                                tvLeft.setText(city);
-
-                            }
-                        }, RegionBean.class);
-
-                    } else {
-                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        Logger.d("location Error, ErrCode:"
-                                + amapLocation.getErrorCode() + ", errInfo:"
-                                + amapLocation.getErrorInfo());
-                        tvLeft.setText("定位失败...");
-                    }
-                }
-                ;
-
-            }
-        };
-        mLocationClient.setLocationListener(mLocationListener);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //获取一次定位结果：
-        //该方法默认为false。
-        mLocationOption.setOnceLocation(true);
-        //获取最近3s内精度最高的一次定位结果：
-        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
-        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-        mLocationOption.setInterval(1000);
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-        //设置是否允许模拟位置,默认为true，允许模拟位置
-        mLocationOption.setMockEnable(true);
-        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-        mLocationOption.setHttpTimeOut(20000);
-        //关闭缓存机制
-        mLocationOption.setLocationCacheEnable(false);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
 
 
-        //启动定位
         if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
-            mLocationClient.startLocation();
+//            mLocationClient.startLocation();
         }
+
+        MapManager.getInstance()
+                .location(App.instance, true, new AMapLocationListener() {
+                    @Override
+                    public void onLocationChanged(AMapLocation amapLocation) {
+                        if (amapLocation != null) {
+                            if (amapLocation.getErrorCode() == 0) {
+                                //可在其中解析amapLocation获取相应内容。
+                                Logger.d("城市=" + amapLocation.getCity());
+                                //tvLeft.setText(amapLocation.getCity());
+
+                                double longitude = amapLocation.getLongitude();
+                                double latitude = amapLocation.getLatitude();
+
+                                Log.e("===", "longitude = " + longitude
+                                        + ",latitude = " + latitude);
+
+                                final String city = amapLocation.getCity();
+
+                                HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
+                                    @Override
+                                    public void onSuccess(RegionBean data) {
+
+                                        SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
+                                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
+
+                                        tvLeft.setText(city);
+
+                                    }
+                                }, RegionBean.class);
+
+                            } else {
+                                //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                                Logger.d("location Error, ErrCode:"
+                                        + amapLocation.getErrorCode() + ", errInfo:"
+                                        + amapLocation.getErrorInfo());
+                                tvLeft.setText("定位失败...");
+                            }
+                        }
+                    }
+                });
+
+//        mLocationClient = new AMapLocationClient(App.instance);
+//        mLocationListener = new AMapLocationListener() {
+//            @Override
+//            public void onLocationChanged(AMapLocation amapLocation) {
+//                if (amapLocation != null) {
+//                    if (amapLocation.getErrorCode() == 0) {
+//                        //可在其中解析amapLocation获取相应内容。
+//                        Logger.d("城市=" + amapLocation.getCity());
+//                        //tvLeft.setText(amapLocation.getCity());
+//
+//                        double longitude = amapLocation.getLongitude();
+//                        double latitude = amapLocation.getLatitude();
+//
+//                        Log.e("===", "longitude = " + longitude
+//                                + ",latitude = " + latitude);
+//
+//                        final String city = amapLocation.getCity();
+//
+//                        HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
+//                            @Override
+//                            public void onSuccess(RegionBean data) {
+//                                Log.e("=== ", "切换城市 = " + city + ",纬度 = " + amapLocation.getLatitude());
+//
+//                                SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
+//                                SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
+//
+//                                tvLeft.setText(city);
+//
+//                            }
+//                        }, RegionBean.class);
+//
+//                    } else {
+//                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+//                        Logger.d("location Error, ErrCode:"
+//                                + amapLocation.getErrorCode() + ", errInfo:"
+//                                + amapLocation.getErrorInfo());
+//                        tvLeft.setText("定位失败...");
+//                    }
+//                }
+//                ;
+//
+//            }
+//        };
+//        mLocationClient.setLocationListener(mLocationListener);
+//        //初始化AMapLocationClientOption对象
+//        mLocationOption = new AMapLocationClientOption();
+//        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//        //获取一次定位结果：
+//        //该方法默认为false。
+//        mLocationOption.setOnceLocation(true);
+//        //获取最近3s内精度最高的一次定位结果：
+//        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+//        mLocationOption.setOnceLocationLatest(true);
+//        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+//        mLocationOption.setInterval(1000);
+//        //设置是否返回地址信息（默认返回地址信息）
+//        mLocationOption.setNeedAddress(true);
+//        //设置是否允许模拟位置,默认为true，允许模拟位置
+//        mLocationOption.setMockEnable(true);
+//        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+//        mLocationOption.setHttpTimeOut(20000);
+//        //关闭缓存机制
+//        mLocationOption.setLocationCacheEnable(false);
+//        //给定位客户端对象设置定位参数
+//        mLocationClient.setLocationOption(mLocationOption);
+//
+//
+//        //启动定位
+//        if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
+//            mLocationClient.startLocation();
+//        }
 
 
     }
@@ -984,10 +1058,10 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         flSearch.setBackgroundResource(R.drawable.shape_white_oval);
                         ivSearch.setImageResource(R.drawable.ic_search);
                         tvSearch.setHintTextColor(Color.parseColor("#a0a0a0"));
-                        Log.e("大于0", "大于0");
+//                        Log.e("大于0", "大于0");
                         //refreshLayout.setEnabled(true);
                     } else {
-                        Log.e("大于0", "小于0");
+//                        Log.e("大于0", "小于0");
                         //滑动
                         toolbar.setBackgroundResource(R.color.white);
                         viewHead.setBackgroundResource(R.drawable.shape_toolbar_bg);
@@ -1022,16 +1096,28 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 LoginMainActivity.start(_mActivity, bundle);
             }
         });
-        tvFunction1.setOnClickListener(this);
-        tvFunction2.setOnClickListener(this);
-        tvFunction3.setOnClickListener(this);
-        tvFunction4.setOnClickListener(this);
-        tvFunction5.setOnClickListener(this);
-        tvFunction6.setOnClickListener(this);
-        tvFunction7.setOnClickListener(this);
-        tvFunction8.setOnClickListener(this);
-        tvFunction9.setOnClickListener(this);
-        tvFunction10.setOnClickListener(this);
+//        tvFunction1.setOnClickListener(this);
+//        tvFunction2.setOnClickListener(this);
+//        tvFunction3.setOnClickListener(this);
+//        tvFunction4.setOnClickListener(this);
+//        tvFunction5.setOnClickListener(this);
+//        tvFunction6.setOnClickListener(this);
+//        tvFunction7.setOnClickListener(this);
+//        tvFunction8.setOnClickListener(this);
+//        tvFunction9.setOnClickListener(this);
+//        tvFunction10.setOnClickListener(this);
+
+        homeTab1.setOnClickListener(this);
+        homeTab2.setOnClickListener(this);
+        homeTab3.setOnClickListener(this);
+        homeTab4.setOnClickListener(this);
+        homeTab5.setOnClickListener(this);
+        homeTab6.setOnClickListener(this);
+        homeTab7.setOnClickListener(this);
+        homeTab8.setOnClickListener(this);
+        homeTab9.setOnClickListener(this);
+        homeTab10.setOnClickListener(this);
+
 
         tv_more_news.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1074,16 +1160,27 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
 
     private void findViews(View header) {
-        tvFunction1 = header.findViewById(R.id.ll_function_tab_1);
-        tvFunction2 = header.findViewById(R.id.ll_function_tab_2);
-        tvFunction3 = header.findViewById(R.id.ll_function_tab_3);
-        tvFunction4 = header.findViewById(R.id.ll_function_tab_4);
-        tvFunction5 = header.findViewById(R.id.ll_function_tab_5);
-        tvFunction6 = header.findViewById(R.id.ll_function_tab_6);
-        tvFunction7 = header.findViewById(R.id.ll_function_tab_7);
-        tvFunction8 = header.findViewById(R.id.ll_function_tab_8);
-        tvFunction9 = header.findViewById(R.id.ll_function_tab_9);
-        tvFunction10 = header.findViewById(R.id.ll_function_tab_10);
+        homeTab1 = header.findViewById(R.id.home_tab_1);
+        homeTab2 = header.findViewById(R.id.home_tab_2);
+        homeTab3 = header.findViewById(R.id.home_tab_3);
+        homeTab4 = header.findViewById(R.id.home_tab_4);
+        homeTab5 = header.findViewById(R.id.home_tab_5);
+        homeTab6 = header.findViewById(R.id.home_tab_6);
+        homeTab7 = header.findViewById(R.id.home_tab_7);
+        homeTab8 = header.findViewById(R.id.home_tab_8);
+        homeTab9 = header.findViewById(R.id.home_tab_9);
+        homeTab10 = header.findViewById(R.id.home_tab_10);
+
+//        tvFunction1 = header.findViewById(R.id.ll_function_tab_1);
+//        tvFunction2 = header.findViewById(R.id.ll_function_tab_2);
+//        tvFunction3 = header.findViewById(R.id.ll_function_tab_3);
+//        tvFunction4 = header.findViewById(R.id.ll_function_tab_4);
+//        tvFunction5 = header.findViewById(R.id.ll_function_tab_5);
+//        tvFunction6 = header.findViewById(R.id.ll_function_tab_6);
+//        tvFunction7 = header.findViewById(R.id.ll_function_tab_7);
+//        tvFunction8 = header.findViewById(R.id.ll_function_tab_8);
+//        tvFunction9 = header.findViewById(R.id.ll_function_tab_9);
+//        tvFunction10 = header.findViewById(R.id.ll_function_tab_10);
 
 
         // setFunctionName();
@@ -1530,12 +1627,12 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_1, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_2, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_3, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_9, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
+                            .addHighLight(R.id.home_tab_9, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_1, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_5, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
                     mHightLight.show();
                     Logger.d("广告片+diy");
                     break;
@@ -1543,11 +1640,11 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_2, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_3, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_9, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
+                            .addHighLight(R.id.home_tab_1, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_5, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
                     mHightLight.show();
 
                     Logger.d("宣传片+diy");
@@ -1556,10 +1653,10 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_3, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_9, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
+                            .addHighLight(R.id.home_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_4, R.layout.layout_empty_guide, new OnTopPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_5, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_10, R.layout.layout_diy_guide, new OnLeftPosCallback(75), new RectLightShape(0, 0, 0, 0, 0));
                     mHightLight.show();
 
                     Logger.d("电商视频+diy");
@@ -1568,9 +1665,9 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_3, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_4, R.layout.layout_diy_guide, new OnBottomPosCallback2(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_1, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_4, R.layout.layout_diy_guide, new OnBottomPosCallback2(0), new RectLightShape(0, 0, 0, 0, 0))
                             //.addHighLight(R.id.tv_function_10,R.layout.layout_diy_guide,new OnLeftPosCallback(75),new RectLightShape(0,0,0,0,0))
                             .setClickCallback(new HighLightInterface.OnClickCallback() {
                                 @Override
@@ -1581,7 +1678,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                                     mHightLight2 = new HighLight(_mActivity)//
                                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                                            .addHighLight(R.id.ll_function_tab_5, R.layout.layout_group_guide, new OnRightPosCallback(10), new RectLightShape(0, 0, 0, 0, 0)).setClickCallback(new HighLightInterface.OnClickCallback() {
+                                            .addHighLight(R.id.home_tab_3, R.layout.layout_group_guide, new OnRightPosCallback(10), new RectLightShape(0, 0, 0, 0, 0)).setClickCallback(new HighLightInterface.OnClickCallback() {
                                                 @Override
                                                 public void onClick() {
                                                     if (mHightLight2 != null) {
@@ -1611,7 +1708,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_5, R.layout.layout_group_guide, new OnRightPosCallback(10), new RectLightShape(0, 0, 0, 0, 0));
+                            .addHighLight(R.id.home_tab_3, R.layout.layout_group_guide, new OnRightPosCallback(10), new RectLightShape(0, 0, 0, 0, 0));
                     mHightLight.show();
                     Logger.d("选择团队直接 对应视频团队");
                     break;
@@ -1620,9 +1717,9 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     mHightLight = new HighLight(_mActivity)//
                             .autoRemove(false)//设置背景点击高亮布局自动移除为false 默认为true
                             .intercept(true)//设置拦截属性为false 高亮布局不影响后面布局的滑动效果 而且使下方点击回调失效
-                            .addHighLight(R.id.ll_function_tab_2, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_3, R.layout.layout_empty_guide, new OnBottomPosCallback(), new RectLightShape(0, 0, 0, 0, 0))
-                            .addHighLight(R.id.ll_function_tab_4, R.layout.layout_diy_guide, new OnBottomPosCallback(), new RectLightShape(0, 0, 0, 0, 0));
+                            .addHighLight(R.id.home_tab_1, R.layout.layout_empty_guide, new OnLeftPosCallback(0), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_2, R.layout.layout_empty_guide, new OnBottomPosCallback(), new RectLightShape(0, 0, 0, 0, 0))
+                            .addHighLight(R.id.home_tab_4, R.layout.layout_diy_guide, new OnBottomPosCallback(), new RectLightShape(0, 0, 0, 0, 0));
                     mHightLight.show();
                     break;
             }
@@ -1651,46 +1748,86 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     @Override
     public void onClick(View v) {
 
-        // 布局靠上网格布局中的 职位;
-        int type = 1;
+        int iconId = 0;
+
         switch (v.getId()) {
-            case R.id.ll_function_tab_1:
-                type = 1;
+            case R.id.home_tab_1:
+                iconId = 1;
                 break;
-            case R.id.ll_function_tab_2:
-                type = 8;
+            case R.id.home_tab_2:
+                iconId = 2;
                 break;
-            case R.id.ll_function_tab_3:
-                type = 3;
+            case R.id.home_tab_3:
+                iconId = 3;
                 break;
-            case R.id.ll_function_tab_4:
-                type = 4;
+            case R.id.home_tab_4:
+                iconId = 4;
                 break;
-            case R.id.ll_function_tab_5:
-                type = 5;
+            case R.id.home_tab_5:
+                iconId = 5;
                 break;
-            case R.id.ll_function_tab_6:
-                type = 6;
+            case R.id.home_tab_6:
+                iconId = 6;
                 break;
-            case R.id.ll_function_tab_7:
-                type = 7;
+            case R.id.home_tab_7:
+                iconId = 7;
                 break;
-            case R.id.ll_function_tab_8:
-                type = 2;
+            case R.id.home_tab_8:
+                iconId = 8;
                 break;
-            case R.id.ll_function_tab_9:
-                //演员
-                type = 46;
+            case R.id.home_tab_9:
+                iconId = 9;
                 break;
-            case R.id.ll_function_tab_10:
-                //化妆师
-                type = 40;
+            case R.id.home_tab_10:
+                iconId = 10;
                 break;
         }
 
-        Bundle bundle = getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopList);
-        bundle.putInt("type", type);
-        ActionActivity.start(_mActivity, bundle);
+
+        Intent intent = new Intent(_mActivity, MzProductListActivity.class);
+        intent.putExtra(MzConstant.KEY_HOME_ICON_ID, iconId);
+        startActivity(intent);
+
+        // 布局靠上网格布局中的 职位;
+//        int type = 1;
+//        switch (v.getId()) {
+//            case R.id.ll_function_tab_1:
+//                type = 1;
+//                break;
+//            case R.id.ll_function_tab_2:
+//                type = 8;
+//                break;
+//            case R.id.ll_function_tab_3:
+//                type = 3;
+//                break;
+//            case R.id.ll_function_tab_4:
+//                type = 4;
+//                break;
+//            case R.id.ll_function_tab_5:
+//                type = 5;
+//                break;
+//            case R.id.ll_function_tab_6:
+//                type = 6;
+//                break;
+//            case R.id.ll_function_tab_7:
+//                type = 7;
+//                break;
+//            case R.id.ll_function_tab_8:
+//                type = 2;
+//                break;
+//            case R.id.ll_function_tab_9:
+//                //演员
+//                type = 46;
+//                break;
+//            case R.id.ll_function_tab_10:
+//                //化妆师
+//                type = 40;
+//                break;
+//        }
+//
+//        Bundle bundle = getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopList);
+//        bundle.putInt("type", type);
+//        ActionActivity.start(_mActivity, bundle);
 
     }
 

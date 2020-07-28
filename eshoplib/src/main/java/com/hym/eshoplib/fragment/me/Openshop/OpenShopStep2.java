@@ -296,12 +296,13 @@ public class OpenShopStep2 extends BaseKitFragment {
     private void checkData() {
         String circle = etCircle.getText().toString();
 
-        circle = circle + "_test";    // 制作周期被删掉了;
+        circle = "0";    // 制作周期被删掉了;
 
-        if (TextUtils.isEmpty(circle)) {
-            ToastUtil.toast("请输入制作周期");
-            return;
-        }
+//        if (TextUtils.isEmpty(circle)) {
+//            ToastUtil.toast("请输入制作周期");
+//            return;
+//        }
+
         //个人简介
         String expect = etExpect.getText().toString();
         if (TextUtils.isEmpty(expect)) {
@@ -355,7 +356,8 @@ public class OpenShopStep2 extends BaseKitFragment {
         ShopApi.EditShop2(etYears.getText().toString(), circle, expect,
                 refund_type, invoice, study,
                 school, etExperience.getText().toString(), etPrize.getText().toString(),
-                urls_1, urls_2, major, new ResponseImpl<Object>() {
+                urls_1, urls_2, major,
+                new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
                         Bundle bundle = new Bundle();
@@ -769,42 +771,7 @@ public class OpenShopStep2 extends BaseKitFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-//            PhotoUtil.getImageList(requestCode, data, new PhotoUtil.OnImageResult() {
-//                @Override
-//                public void onResultCamara(ArrayList<TImage> resultCamara) {
-//                    File[] files;
-//                    ArrayList<File> arr = new ArrayList<>();
-//                    String url = resultCamara.get(0).getCompressPath();
-//                    arr.add(new File(url));
-//                    files = arr.toArray(new File[arr.size()]);
-//                    Message message = handler.obtainMessage();
-//                    Bundle bundle = new Bundle();
-//                    message.what = MsgWhat;
-//                    message.obj = files;
-//                    bundle.putString("url", url);
-//                    message.setData(bundle);
-//                    message.sendToTarget();
-//
-//                }
-//
-//                @Override
-//                public void onResultGalary(ArrayList<TImage> resultGalayr) {
-//                    File[] files;
-//                    ArrayList<File> arr = new ArrayList<>();
-//                    String url = resultGalayr.get(0).getCompressPath();
-//                    arr.add(new File(url));
-//                    files = arr.toArray(new File[arr.size()]);
-//                    Message message = handler.obtainMessage();
-//                    Bundle bundle = new Bundle();
-//                    message.what = MsgWhat;
-//                    Logger.d("message.what=" + message.what + ",,msgwhat=" + MsgWhat);
-//                    message.obj = files;
-//                    bundle.putString("url", url);
-//                    message.setData(bundle);
-//                    message.sendToTarget();
-//
-//                }
-//            });
+
             PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                 @Override
                 public void onResultCamera(ArrayList<LocalMedia> resultCamara) {

@@ -23,4 +23,16 @@
     <string name="home_function_1">职业形象照</string>
 
 
+    <string name="mz_home_tab_1">职业形象照</string>
+    <string name="mz_home_tab_2">短视频拍摄</string>
+    <string name="mz_home_tab_3">人像写真</string>
+    <string name="mz_home_tab_4">活动拍摄</string>
+    <string name="mz_home_tab_5">会议拍摄</string>
+    <string name="mz_home_tab_6">宣传片拍摄</string>
+    <string name="mz_home_tab_7">亲子照</string>
+    <string name="mz_home_tab_8">平面设计师</string>
+    <string name="mz_home_tab_9">婚纱摄影</string>
+    <string name="mz_home_tab_10">化妆造型</string>
+
+
 </resources>

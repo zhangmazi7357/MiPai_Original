@@ -369,7 +369,7 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         @Override
         public void onDataError(String status, String errormessage) {
-            Log.e(TAG, "onDataError: " + status);
+//            Log.e(TAG, "onDataError: " + status);
             //请求成功但是数据异常
             HttpStatusUtil.handleErrorStatus(status, errormessage);
             Log.e(TAG, "onDataError: " + status + ",message = " + errormessage);
@@ -484,12 +484,12 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         @Override
         public void onStart(SHARE_MEDIA platform) {
-            Log.e(TAG, "onStart: ");
+//            Log.e(TAG, "onStart: ");
         }
 
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.e(TAG, "onResult: " + platform.toString());
+//            Log.e(TAG, "onResult: " + platform.toString());
 
             if (platform != SHARE_MEDIA.MORE
                     && platform != SHARE_MEDIA.SMS
@@ -511,7 +511,7 @@ public abstract class BaseKitFragment extends BaseFragment {
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
 
-            Log.e(TAG, "onError: " + t.getMessage());
+//            Log.e(TAG, "onError: " + t.getMessage());
             if (platform != SHARE_MEDIA.MORE
                     && platform != SHARE_MEDIA.SMS
                     && platform != SHARE_MEDIA.EMAIL
@@ -535,7 +535,7 @@ public abstract class BaseKitFragment extends BaseFragment {
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             // ToastUtil.toast("取消分享");
-            Log.e(TAG, "onCancel: ");
+//            Log.e(TAG, "onCancel: ");
         }
     }
 }

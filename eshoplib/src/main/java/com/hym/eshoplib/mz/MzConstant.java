@@ -29,4 +29,7 @@ public class MzConstant {
     public static final String VALUE_PRODUCT_LOCATION_ADDRESS = "VALUE_PRODUCT_LOCATION_ADDRESS";
     public static final String VALUE_PRODUCT_LOCATION_LAT = "VALUE_PRODUCT_LOCATION_LAT";
     public static final String VALUE_PRODUCT_LOCATION_LON = "VALUE_PRODUCT_LOCATION_LON";
+
+
+    public static final String KEY_HOME_ICON_ID = "KEY_HOME_ICON_ID";
 }

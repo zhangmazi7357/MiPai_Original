@@ -1,9 +1,11 @@
 package com.hym.eshoplib.fragment.city;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -97,7 +99,8 @@ public class SelectCityFragment extends BaseKitFragment {
     public AMapLocationListener mLocationListener = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-    String city_name="";
+    String city_name = "";
+
     @Override
     public int getContentViewResId() {
         return R.layout.fragment_select_city;
@@ -127,7 +130,7 @@ public class SelectCityFragment extends BaseKitFragment {
         //etSearch.setHint("城市名/拼音");
         tvSearch.setVisibility(View.VISIBLE);
         tvSearch.setHint("搜索/城市名");
-        tvSearch.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
+        tvSearch.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +150,8 @@ public class SelectCityFragment extends BaseKitFragment {
                     HomeApi.ChangeRegion(etSearch.getText().toString(), new ResponseImpl<RegionBean>() {
                         @Override
                         public void onSuccess(RegionBean data) {
-                            SharePreferenceUtil.setStringData(_mActivity,"region_name",etSearch.getText().toString());
-                            SharePreferenceUtil.setStringData(_mActivity,"region_id",data.getData().getRegion_id());
+                            SharePreferenceUtil.setStringData(_mActivity, "region_name", etSearch.getText().toString());
+                            SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
                             CityHeaderBean header1 = mHeaderDatas.get(0);
                             header1.getCityList().clear();
                             header1.getCityList().add(etSearch.getText().toString());
@@ -156,7 +159,7 @@ public class SelectCityFragment extends BaseKitFragment {
                             ToastUtil.toast("定位成功");
 
                         }
-                    },RegionBean.class);
+                    }, RegionBean.class);
 
                 }
                 return false;
@@ -164,6 +167,7 @@ public class SelectCityFragment extends BaseKitFragment {
         });
 
     }
+
     private void initMap() {
         mLocationClient = new AMapLocationClient(App.instance);
         mLocationListener = new AMapLocationListener() {
@@ -175,17 +179,17 @@ public class SelectCityFragment extends BaseKitFragment {
                         //可在其中解析amapLocation获取相应内容。
                         Logger.d("城市=" + amapLocation.getCity());
                         //tvLeft.setText(amapLocation.getCity());
-                        city_name=amapLocation.getCity();
+                        city_name = amapLocation.getCity();
                         HomeApi.ChangeRegion(city_name, new ResponseImpl<RegionBean>() {
                             @Override
                             public void onSuccess(RegionBean data) {
-                                SharePreferenceUtil.setStringData(_mActivity,"region_name",city_name);
-                                SharePreferenceUtil.setStringData(_mActivity,"region_id",data.getData().getRegion_id());
+                                SharePreferenceUtil.setStringData(_mActivity, "region_name", city_name);
+                                SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
                                 ToastUtil.toast("定位成功");
                                 _mActivity.finish();
 
                             }
-                        },RegionBean.class);
+                        }, RegionBean.class);
 //                        CityHeaderBean header1 = mHeaderDatas.get(0);
 //                        header1.getCityList().clear();
 //                        header1.getCityList().add(city_name);
@@ -271,27 +275,27 @@ public class SelectCityFragment extends BaseKitFragment {
             @Override
             public void onCityClick(String name) {
                 //ToastUtil.toast("城市="+name);
-                if(TextUtils.isEmpty(city_name)){
+                if (TextUtils.isEmpty(city_name)) {
                     ToastUtil.toast("请先定位");
                     return;
                 }
                 HomeApi.ChangeRegion(city_name, new ResponseImpl<RegionBean>() {
                     @Override
                     public void onSuccess(RegionBean data) {
-                        SharePreferenceUtil.setStringData(_mActivity,"region_name",city_name);
-                        SharePreferenceUtil.setStringData(_mActivity,"region_id",data.getData().getRegion_id());
+                        SharePreferenceUtil.setStringData(_mActivity, "region_name", city_name);
+                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
                         _mActivity.finish();
 
                     }
-                },RegionBean.class);
+                }, RegionBean.class);
 
             }
 
             @Override
             public void onRelocationClick() {
-               // ToastUtil.toast("重新定位");
+                // ToastUtil.toast("重新定位");
                 //ToastUtil.toast("定位成功");
-                if(mLocationClient!=null){
+                if (mLocationClient != null) {
                     showProgressDialog();
                     mLocationClient.startLocation();
                 }
@@ -317,10 +321,10 @@ public class SelectCityFragment extends BaseKitFragment {
                 .setmLayoutManager(layoutManager);// 设置RecyclerView的LayoutManager
         meiTuanAdapter.setListener(new MeiTuanAdapter.OnCityClickListener() {
             @Override
-            public void onClicke(int position,String id, String name) {
-                Logger.d("id="+id+",name="+name);
-                SharePreferenceUtil.setStringData(_mActivity,"region_name",name);
-                SharePreferenceUtil.setStringData(_mActivity,"region_id",id);
+            public void onClicke(int position, String id, String name) {
+                Logger.d("id=" + id + ",name=" + name);
+                SharePreferenceUtil.setStringData(_mActivity, "region_name", name);
+                SharePreferenceUtil.setStringData(_mActivity, "region_id", id);
                 _mActivity.finish();
             }
         });
@@ -329,12 +333,12 @@ public class SelectCityFragment extends BaseKitFragment {
     private void initData() {
         CityHeaderBean header1 = mHeaderDatas.get(0);
         header1.getCityList().clear();
-        String region_name=SharePreferenceUtil.getStringData(_mActivity,"region_name");
-        if(TextUtils.isEmpty(region_name)){
+        String region_name = SharePreferenceUtil.getStringData(_mActivity, "region_name");
+        if (TextUtils.isEmpty(region_name)) {
             header1.getCityList().add("暂无位置信息");
             headerAdapter.notifyDataSetChanged();
-        }else {
-            city_name=region_name;
+        } else {
+            city_name = region_name;
             header1.getCityList().add(region_name);
             headerAdapter.notifyDataSetChanged();
         }
@@ -360,6 +364,7 @@ public class SelectCityFragment extends BaseKitFragment {
         }, ServerCityBean.class);
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

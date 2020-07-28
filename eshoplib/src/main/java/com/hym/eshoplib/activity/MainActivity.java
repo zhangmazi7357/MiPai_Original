@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.home.UnReadMessageBean;
@@ -360,7 +361,7 @@ public class MainActivity extends BaseMainActivity {
         String channelid = SharePreferenceUtil.getStringData(this, "channelid");
         if (TextUtils.isEmpty(channelid)) {
             SharePreferenceUtil.setStringData(this, "channelid", JPushInterface.getRegistrationID(this));
-            Logger.d("id为空重新获取=" + SharePreferenceUtil.getStringData(this, "channelid"));
+//            Log.e("====", "channelId = " + channelid);
         } else {
 //            Logger.d("id不为空=" + channelid);
         }

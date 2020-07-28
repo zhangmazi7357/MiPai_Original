@@ -90,8 +90,10 @@ public class ShopApi {
         request.AddParems("real_name", real_name);
         request.AddParems("card_no", card_no);
 
-        request.AddParems("address", address);
+
         request.AddParems("tel", tel);
+
+        request.AddParems("address", address);
         request.AddParems("linkname", linkname);
         request.AddParems("linkphone", linkphone);
 
@@ -373,6 +375,13 @@ public class ShopApi {
                                               String sheyingshi, String shejishi,
                                               String time, String huazhuangping,
                                               String cehua,
+                                              String oneType,
+                                              String twoType,
+                                              String project_img,
+                                              String address,
+                                              String lon,
+                                              String lat,
+                                              String tags,
                                               IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
@@ -406,7 +415,15 @@ public class ShopApi {
         request.addParamsNotEmpty("planner", cehua);
         request.addParamsNotEmpty("cosmetics", huazhuangping);
 
-        Log.e("UpLoad", "video = " + JSONObject.toJSONString(request));
+        request.addParamsNotEmpty("onetype", oneType);
+        request.addParamsNotEmpty("twotype", twoType);
+        request.addParamsNotEmpty("project_img", project_img);
+        request.addParamsNotEmpty("address", address);
+        request.addParamsNotEmpty("lon", lon);
+        request.addParamsNotEmpty("lat", lat);
+        request.addParamsNotEmpty("tags", tags);
+
+//        Log.e("UpLoad", "video = " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
 
     }
@@ -414,7 +431,20 @@ public class ShopApi {
     //编辑视频
     public static <T> void editVideoProduct(String case_id, String image_default, String filepath, String title,
                                             String industry, String video, String region_id, String other, String length,
-                                            String etPrice, String remarks, String originalPrice, String staffing, String shootingTime, String equipment, String introduce, String detail, String tyid, String shopTime, String paisheCount, String huazhuang, String sheyingshi, String shejishi, String time, String huazhuangping, String cehua, IHttpResultListener<T> listener, Class<T> clazz) {
+                                            String etPrice, String remarks, String originalPrice,
+                                            String staffing, String shootingTime, String equipment,
+                                            String introduce, String detail, String tyid, String shopTime,
+                                            String paisheCount, String huazhuang, String sheyingshi,
+                                            String shejishi, String time, String huazhuangping, String cehua,
+
+                                            String oneType,
+                                            String twoType,
+                                            String project_img,
+                                            String address,
+                                            String lon,
+                                            String lat,
+                                            String tags,
+                                            IHttpResultListener<T> listener, Class<T> clazz) {
 
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
@@ -449,6 +479,15 @@ public class ShopApi {
         request.addParamsNotEmpty("planner", cehua);
         request.addParamsNotEmpty("cosmetics", huazhuangping);
 
+
+        request.addParamsNotEmpty("onetype", oneType);
+        request.addParamsNotEmpty("twotype", twoType);
+        request.addParamsNotEmpty("project_img", project_img);
+        request.addParamsNotEmpty("address", address);
+        request.addParamsNotEmpty("lon", lon);
+        request.addParamsNotEmpty("lat", lat);
+        request.addParamsNotEmpty("tags", tags);
+
         post(request, listener, clazz);
 
     }
@@ -459,7 +498,16 @@ public class ShopApi {
                                             String etPrice, String remarks, String originalPrice, String staffing, String shootingTime,
                                             String equipment, String introduce, String detail, String tyid, String shopTime,
                                             String paisheCount, String huazhuang, String sheyingshi, String shejishi, String time,
-                                            String huazhuangping, String cehua, IHttpResultListener<T> listener, Class<T> clazz) {
+                                            String huazhuangping, String cehua,
+
+                                            String oneType,
+                                            String twoType,
+                                            String project_img,
+                                            String address,
+                                            String lon,
+                                            String lat,
+                                            String tags,
+                                            IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("EditProduction");
@@ -492,6 +540,15 @@ public class ShopApi {
         request.addParamsNotEmpty("designer", shejishi);
         request.addParamsNotEmpty("planner", cehua);
         request.addParamsNotEmpty("cosmetics", huazhuangping);
+
+
+        request.addParamsNotEmpty("onetype", oneType);
+        request.addParamsNotEmpty("twotype", twoType);
+        request.addParamsNotEmpty("project_img", project_img);
+        request.addParamsNotEmpty("address", address);
+        request.addParamsNotEmpty("lon", lon);
+        request.addParamsNotEmpty("lat", lat);
+        request.addParamsNotEmpty("tags", tags);
 
         //  request.addParamsNotEmpty("tyid", "4");
         // request.addParamsNotEmpty("present_price ", "1元");

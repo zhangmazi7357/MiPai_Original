@@ -34,9 +34,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMAND" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
 
@@ -50,7 +48,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".fragment.shop.mzupload.ui.MzLocationActivity"></activity>
+        <activity android:name=".mz.iconproduct.MzProductListActivity"></activity>
+        <activity android:name=".fragment.shop.mzupload.ui.MzLocationActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzProductTagActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzSubProductActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzProductSortActivity" />
@@ -117,8 +116,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- 微信回调 -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 微信回调 -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="${APP_KEY}" />
@@ -149,18 +147,12 @@
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
-        </activity>
-
-
-        <!-- 高德 -->
+        </activity> <!-- 高德 -->
         <service android:name="com.amap.api.location.APSService" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="4f0c923440638a6e6eff2d43f54a0f40" />
-
-        <!-- 高德 -->
-
-
+            android:value="4f0c923440638a6e6eff2d43f54a0f40" /> <!-- 高德 -->
         <!-- 极光接收器 -->
         <receiver
             android:name=".receiver.MyReceiver"
@@ -186,9 +178,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
-        </provider>
-
-        <!--  mzFileProvider -->
+        </provider> <!-- mzFileProvider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.hym.eshoplib.fileprovider"

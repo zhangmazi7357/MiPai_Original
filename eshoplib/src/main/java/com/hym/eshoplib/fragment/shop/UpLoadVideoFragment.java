@@ -34,6 +34,7 @@ import com.hym.eshoplib.http.CommonApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.imagelib.ImageUtil;
+import com.hym.photolib.utils.GlideEngine;
 import com.hym.photolib.utils.PhotoUtil;
 import com.jph.takephoto.model.TImage;
 import com.luck.picture.lib.PictureSelector;
@@ -57,7 +58,6 @@ import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.MzProImageDetailAdapter;
-import cn.hym.superlib.mz.MzProVideoDetailAdapter;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.widgets.UploadItemView;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
@@ -79,7 +79,6 @@ import io.rong.common.FileUtils;
 public class UpLoadVideoFragment extends BaseKitFragment {
     UpLoadVideoProductAdapter adapter;
 
-    private MzProImageDetailAdapter mzAdapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     Unbinder unbinder;
@@ -125,15 +124,17 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
 
     private RecyclerView mzProDetailRv;                        // 项目详情添加图片;
+
+    private MzProImageDetailAdapter mzProDetailAdapter;
     private UploadItemView mzProductSort;                     // 产品分类
     private UploadItemView mzSubProductSort;                  // 二级产品分类
     private UploadItemView mzProductTag;                      //  产品标签
     private UploadItemView mzLocation;                        // 摄影棚地址；
 
 
-    private String oneType = "";    // 产品一级分类选中的 id  ;
-    private String twoType = "";
-    private String tagContent = "";   // 产品标签 ;
+    private String mzOneType = "";    // 产品一级分类选中的 id  ;
+    private String mzTwoType = "";
+    private String mzTagContent = "";   // 产品标签 ;
     private String mzAddress = "";      // 地址 ;
     private double mzLon = 0;            // 经度；
     private double mzLat = 0;            // 纬度；
@@ -178,7 +179,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             }
         };
         qiniuToken = getArguments().getString("token", "");
-        Log.e("UpLoad", "七牛 token = : " + qiniuToken);
+//        Log.e("UpLoad", "七牛 token = : " + qiniuToken);
 
 
         setShowProgressDialog(false);
@@ -195,6 +196,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         adapter.setToken(qiniuToken);
         adapter.addData(new UpLoadImageBean());
         rvList.setAdapter(adapter);
+
         adapter.setListener(new UpLoadVideoProductAdapter.onDeleteListener() {
             @Override
             public void onDelete(int position) {
@@ -216,6 +218,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     // 进入相册 以下是例子：不需要的api可以不写
                     PictureSelector.create(UpLoadVideoFragment.this)
                             .openGallery(PictureMimeType.ofVideo())
+                            .loadImageEngine(GlideEngine.createGlideEngine())           // 预览；
                             .theme(R.style.picture_default_style)
                             .maxSelectNum(1)
                             .minSelectNum(1)
@@ -298,6 +301,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                 ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x33);
             }
         });
+
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
         LinearLayout llImageType = footer.findViewById(R.id.ll_type_title);
         LinearLayout llWorkType = footer.findViewById(R.id.ll_wrok_type);
@@ -369,7 +373,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                         intent.setClass(_mActivity, MzSubProductActivity.class);
 
                         // 需要传入 一级 id , 使二级 分类 判别 ;
-                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, oneType);
+                        intent.putExtra(MzConstant.PRODUCT_SORT_ID, mzOneType);
                         requestCode = MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT;
                         break;
                     case R.id.mz_productTag:        // 产品标签
@@ -480,7 +484,6 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     private void upLoad() {
 
         String title = "";
-        String serviceName = "";
         String location = "";
         String etPrice = "";
 
@@ -489,6 +492,10 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             return;
         }
         String attachment = adapter.getData().get(0).getQiniuFileName();
+
+        // 项目详情图片
+        String project_img = getProDetailPic();
+
 
         if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");
@@ -503,10 +510,10 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                 cateId.equals("3") || cateId.equals("2")) {
 
             location = etLocatiom.getText().toString();
-            if (TextUtils.isEmpty(location)) {
-                ToastUtil.toast("请输入地点");
-                return;
-            }
+//            if (TextUtils.isEmpty(location)) {
+//                ToastUtil.toast("请输入地点");
+//                return;
+//            }
             otherOrLocation = location;
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
@@ -536,7 +543,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             otherOrLocation = other;
             length = adapter.getData().get(0).getDuration();
         }
-//
+
         String other = et_other.getText().toString();
         String remarks = etRemarks.getText().toString();
         String originalPrice = etOriginalPrice.getText().toString();
@@ -564,6 +571,21 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         String cehua = etCeHua.getText().toString();
 
 
+        if (TextUtils.isEmpty(mzOneType)) {
+            ToastUtil.toast("请选择一个产品分类");
+            return;
+        }
+        if (TextUtils.isEmpty(mzTwoType)) {
+            ToastUtil.toast("请至少选择一个二级分类");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mzAddress)) {
+            ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
+            return;
+        }
+
+
         ShopApi.upLoadVideoProduct(image_default,
                 attachment,
                 title,
@@ -578,6 +600,13 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                 shopTime, paisheCount, huazhuang,
                 sheyingshi, shejishi, time, huazhuangping,
                 cehua,
+                mzOneType,
+                mzTwoType,
+                project_img,
+                mzAddress,
+                String.valueOf(mzLon),
+                String.valueOf(mzLat),
+                mzTagContent,
 
                 new ResponseImpl<Object>() {
                     @Override
@@ -701,7 +730,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                                 message.setData(bundle);
                                 message.sendToTarget();
                             } else if (imageType == 3) {
-                                getImageData(mzAdapter, resultCamara);
+                                getImageData(mzProDetailAdapter, resultCamara);
                             }
 
 
@@ -723,7 +752,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                                 message.setData(bundle);
                                 message.sendToTarget();
                             } else if (imageType == 3) {
-                                getImageData(mzAdapter, resultCamara);
+                                getImageData(mzProDetailAdapter, resultCamara);
                             }
 
                         }
@@ -742,7 +771,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     String title = bean.getTitle();
 
                     // 产品一级 分类的  id  ;
-                    oneType = bean.getOnetype_id();
+                    mzOneType = bean.getOnetype_id();
                     mzProductSort.setContent(title);
                     break;
                 case MzConstant.REQUEST_CODE_SUB_PRODUCT_SORT:  // 二级分类返回
@@ -755,7 +784,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                         vList.add(dataBean.getTwotype_id());
                         titleList.add(dataBean.getTitle());
                     }
-                    twoType = MzStringUtil.v(vList);
+                    mzTwoType = MzStringUtil.v(vList);
                     String twoTypeContent = MzStringUtil.v(titleList);
                     mzSubProductSort.setContent(twoTypeContent);
 
@@ -765,8 +794,8 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
                     ArrayList<String> tagList = data.getExtras().getStringArrayList(MzConstant.VALUE_PRODUCT_TAG);
 
-                    tagContent = MzStringUtil.v(tagList);
-                    mzProductTag.setContent(tagContent);
+                    mzTagContent = MzStringUtil.v(tagList);
+                    mzProductTag.setContent(mzTagContent);
 
                     break;
                 case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
@@ -781,6 +810,109 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     break;
             }
         }
+    }
+
+    /**
+     * 七牛云 图片
+     *
+     * @param adapter
+     * @param source
+     * @return
+     */
+    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter,
+                                              ArrayList<LocalMedia> source) {
+        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
+
+        for (LocalMedia bean : source) {
+            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            imageBeen.add(new UpLoadImageBean(tImage));
+        }
+
+
+        int oldSize = adapter.getData().size();
+        if (oldSize == 0) {
+            //第一次添加
+            if (imageBeen.size() == 9) {
+                //一次性添加了9次图片，则直接加入
+                adapter.setNewData(imageBeen);
+            } else {
+                //没有一次性添加完毕，则追加 addIcon
+                imageBeen.add(new UpLoadImageBean());
+                adapter.setNewData(imageBeen);
+
+            }
+        }
+        //不是第一次添加，并且第二次就 加满
+        else if (imageBeen.size() + oldSize == 10) {
+            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
+            Logger.d("不是第一次");
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
+
+        } else {
+            //不是第一次添加。并且第二次也没加满
+            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
+            adapter.getData().remove(adapter.getData().size() - 1);
+            adapter.notifyDataSetChanged();
+            imageBeen.add(new UpLoadImageBean());
+            adapter.getData().addAll(imageBeen);
+            adapter.notifyDataSetChanged();
+
+        }
+        return imageBeen;
+    }
+
+    // 项目详情 图片 path ;
+    private String getProDetailPic() {
+        String result = "";
+        for (int i = 0; i < mzProDetailAdapter.getData().size(); i++) {
+            String file_name = mzProDetailAdapter.getData().get(i).getQiniuFileName();
+
+            if (!TextUtils.isEmpty(file_name)) {
+                result += file_name + ",";
+            }
+        }
+        return result;
+    }
+
+    // 项目详情的 列表;
+    private void initProDetailRv(View footer) {
+        mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
+        mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+        mzProDetailAdapter = new MzProImageDetailAdapter(this, null);
+        mzProDetailAdapter.setToken(qiniuToken);
+        mzProDetailAdapter.addData(new UpLoadImageBean());
+        mzProDetailRv.setAdapter(mzProDetailAdapter);
+
+        mzProDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mzProDetailAdapter.getData().get(position).getItemType() == 1) {
+
+                    // 可能是预览图片吧;
+                    ArrayList<String> images_str = new ArrayList<String>();
+                    images_str.add(mzProDetailAdapter.getData().get(position).getImage().getCompressPath());
+                    int width = ScreenUtil.getScreenWidth(_mActivity);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(_mActivity, images_str, position, imageSize);
+
+                } else {
+
+                    imageType = 3;
+                    PhotoUtil.ShowDialog(UpLoadVideoFragment.this,
+                            10 - adapter.getData().size(), false, 2);
+
+
+                }
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -840,94 +972,4 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     }
 
 
-    /**
-     * 七牛云 图片
-     *
-     * @param adapter
-     * @param source
-     * @return
-     */
-    public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter,
-                                              ArrayList<LocalMedia> source) {
-        List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
-
-        for (LocalMedia bean : source) {
-            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
-            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
-            imageBeen.add(new UpLoadImageBean(tImage));
-        }
-
-
-        int oldSize = adapter.getData().size();
-        if (oldSize == 0) {
-            //第一次添加
-            if (imageBeen.size() == 9) {
-                //一次性添加了9次图片，则直接加入
-                adapter.setNewData(imageBeen);
-            } else {
-                //没有一次性添加完毕，则追加 addIcon
-                imageBeen.add(new UpLoadImageBean());
-                adapter.setNewData(imageBeen);
-
-            }
-        }
-        //不是第一次添加，并且第二次就 加满
-        else if (imageBeen.size() + oldSize == 10) {
-            //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
-            Logger.d("不是第一次");
-            adapter.getData().remove(adapter.getData().size() - 1);
-            adapter.notifyDataSetChanged();
-            adapter.getData().addAll(imageBeen);
-            adapter.notifyDataSetChanged();
-
-        } else {
-            //不是第一次添加。并且第二次也没加满
-            //oldsize>0 原来有数据，但是还未添加满。则此时一定有add icon，remove 原来的，addicon 同时加入新数据，最后再添加addicon
-            adapter.getData().remove(adapter.getData().size() - 1);
-            adapter.notifyDataSetChanged();
-            imageBeen.add(new UpLoadImageBean());
-            adapter.getData().addAll(imageBeen);
-            adapter.notifyDataSetChanged();
-
-        }
-        return imageBeen;
-    }
-
-
-    // 项目详情的 列表;
-    private void initProDetailRv(View footer) {
-        mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
-        mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
-        mzAdapter = new MzProImageDetailAdapter(this, null);
-        mzAdapter.setToken(qiniuToken);
-        mzAdapter.addData(new UpLoadImageBean());
-        mzProDetailRv.setAdapter(mzAdapter);
-
-        mzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mzAdapter.getData().get(position).getItemType() == 1) {
-
-                    // 可能是预览图片吧;
-                    ArrayList<String> images_str = new ArrayList<String>();
-                    images_str.add(mzAdapter.getData().get(position).getImage().getCompressPath());
-                    int width = ScreenUtil.getScreenWidth(_mActivity);
-                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
-                    ImagePagerActivity.startImagePagerActivity(_mActivity, images_str, position, imageSize);
-
-                } else {
-
-                    imageType = 3;
-                    PhotoUtil.ShowDialog(UpLoadVideoFragment.this,
-                            10 - adapter.getData().size(), false, 2);
-
-
-                }
-
-
-            }
-        });
-
-
-    }
 }

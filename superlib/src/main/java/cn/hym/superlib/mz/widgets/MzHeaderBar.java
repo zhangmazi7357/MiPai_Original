@@ -73,6 +73,12 @@ public class MzHeaderBar extends FrameLayout {
 
     }
 
+    public void setTitle(String title) {
+        if (!TextUtils.isEmpty(title)) {
+            tvTitle.setText(title);
+        }
+    }
+
 
     public interface HeaderBarListener {
         void back();

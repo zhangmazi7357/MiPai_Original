@@ -2,7 +2,9 @@ package com.hym.loginmodule.http;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.httplib.interfaces.IHttpResultListener;
 
 import java.io.File;
@@ -75,7 +77,8 @@ public class LoginApi {
     }
 
     //登录
-    public static <T> void login(Context context, String phone, String email, String password, String language, IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void login(Context context, String phone, String email, String password,
+                                 String language, IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Cas");
         request.setClassName("Login");
@@ -94,6 +97,8 @@ public class LoginApi {
 //        request.AddParems("language", language);
         request.addParamsNotEmpty("device_type", "1");
         request.addParamsNotEmpty("channelid", SharePreferenceUtil.getStringData(context, "channelid"));
+
+        Log.e("=== ", "login: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
 
     }

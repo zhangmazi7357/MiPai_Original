@@ -60,289 +60,110 @@
             </LinearLayout>
         </FrameLayout>
 
-        <FrameLayout
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp">
+            android:layout_marginRight="7dp"
+            android:background="@color/mz_home_tab_bg_color"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#f7f7f7"
-                    android:orientation="horizontal"
-                    android:paddingTop="15dp">
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_1"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_8"
+                    android:text="@string/mz_home_tab_1"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
 
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_2"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_3"
+                    android:text="@string/mz_home_tab_2"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
 
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_8" />
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_3"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_home_rxps"
+                    android:text="@string/mz_home_tab_3"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
 
-                        <TextView
-                            android:id="@+id/tv_function_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="@string/home_icon_1"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_4"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_home_hdps"
+                    android:text="@string/mz_home_tab_4"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
 
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_3" />
-
-                        <TextView
-                            android:id="@+id/tv_function_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="@string/home_icon_2"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_home_rxps" />
-
-                        <TextView
-                            android:id="@+id/tv_function_5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="人像写真"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_home_hdps" />
-
-                        <TextView
-                            android:id="@+id/tv_function_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="活动拍摄"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_9"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_home_hyps" />
-
-                        <TextView
-                            android:id="@+id/tv_function_9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="会议拍摄"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#f7f7f7"
-                    android:orientation="horizontal"
-                    android:paddingBottom="16dp">
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_8"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_2" />
-
-                        <TextView
-                            android:id="@+id/tv_function_8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:text="宣传片拍摄"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_home_qzz" />
-
-                        <TextView
-                            android:id="@+id/tv_function_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:text="亲子照"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_7"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_7" />
-
-                        <TextView
-                            android:id="@+id/tv_function_7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:text="平面设计师"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_9" />
-
-                        <TextView
-                            android:id="@+id/tv_function_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:text="婚纱摄影"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_function_tab_10"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="27dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_function_tab_10" />
-
-                        <TextView
-                            android:id="@+id/tv_function_10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="7dp"
-                            android:text="化妆造型"
-                            android:textColor="#262626"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_5"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_home_hyps"
+                    android:text="@string/mz_home_tab_5"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
             </LinearLayout>
-        </FrameLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_6"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_2"
+                    android:text="@string/mz_home_tab_6"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
+
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_7"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_home_tab_qzz"
+                    android:text="@string/mz_home_tab_7"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
+
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_8"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_7"
+                    android:text="@string/mz_home_tab_8"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
+
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_9"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_9"
+                    android:text="@string/mz_home_tab_9"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
+
+                <cn.hym.superlib.mz.widgets.DrawableTextView
+                    android:id="@+id/home_tab_10"
+                    style="@style/mz_home_tab"
+                    android:drawableTop="@drawable/ic_function_tab_10"
+                    android:text="@string/mz_home_tab_10"
+                    app:drawableTopHeight="26dp"
+                    app:drawableTopWidth="27dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_need"

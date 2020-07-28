@@ -9,12 +9,14 @@ import android.os.Message;
 import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.city.ServerCityBean;
 import com.hym.eshoplib.bean.shop.ShopDetailBean;
@@ -339,6 +341,7 @@ public class OpenShopStep1 extends BaseKitFragment {
         String address = "测试地址";
         String linkname = "测试名字";
         String linkPhone = "17612341234";
+
         //校验全部通过调用接口
         ShopApi.OpenShopStep1(avatar,
                 shopName,
@@ -483,6 +486,9 @@ public class OpenShopStep1 extends BaseKitFragment {
             ShopApi.getShopDetail(new ResponseImpl<ShopDetailBean>() {
                 @Override
                 public void onSuccess(ShopDetailBean data) {
+
+                    Log.e("OpenShopStep1", "onSuccess: " + JSONObject.toJSONString(data));
+
                     bean = data;
                     String verify = data.getData().getBase().getIs_verify();
                     if (verify.equals("-1")) {
