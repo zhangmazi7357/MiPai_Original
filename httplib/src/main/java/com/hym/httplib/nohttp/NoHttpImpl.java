@@ -183,7 +183,7 @@ public class NoHttpImpl implements IHttpManager<String, Object, BaseResult> {
             @Override
             public void onSucceed(int what, Response<String> response) {
                 String dataString = response.get();
-                Log.e("======", "onSucceed: " +response.toString() );
+//                Log.e("======", "onSucceed: " +response.toString() );
                 try {
                     NohttpResult result = JSON.parseObject(dataString, NohttpResult.class);
                     String res = result.getData();
