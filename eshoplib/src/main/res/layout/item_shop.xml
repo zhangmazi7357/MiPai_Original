@@ -95,8 +95,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/rl"
-            android:layout_marginRight="10dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/mz_bg_tag"
             android:ellipsize="end"
             android:maxEms="5"
@@ -107,6 +107,7 @@
             android:singleLine="true"
             android:textColor="@color/red"
             android:textSize="13sp"
+            android:visibility="gone"
             tools:text="标签" />
     </RelativeLayout>
 </RelativeLayout>

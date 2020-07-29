@@ -583,6 +583,8 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         //  列表 adapter
         shopListAdapter = new ShopListAdapter(R.layout.item_shop, rvFooterComment);
 
+
+
         shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -599,12 +601,14 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     @Override
                     public void onSuccess(GoodDetailModel data) {
                         if (data.getData().getType().equals("1")) {
-                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
+                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                    ActionActivity.ShopVideoDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(_mActivity, bundle);
                         } else if (data.getData().getType().equals("2")) {
-                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopDetail);
+                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                    ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(_mActivity, bundle);
@@ -772,123 +776,123 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     private void initMap() {
 
 
-        if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
-//            mLocationClient.startLocation();
-        }
-
-        MapManager.getInstance()
-                .location(App.instance, true, new AMapLocationListener() {
-                    @Override
-                    public void onLocationChanged(AMapLocation amapLocation) {
-                        if (amapLocation != null) {
-                            if (amapLocation.getErrorCode() == 0) {
-                                //可在其中解析amapLocation获取相应内容。
-                                Logger.d("城市=" + amapLocation.getCity());
-                                //tvLeft.setText(amapLocation.getCity());
-
-                                double longitude = amapLocation.getLongitude();
-                                double latitude = amapLocation.getLatitude();
-
-                                Log.e("===", "longitude = " + longitude
-                                        + ",latitude = " + latitude);
-
-                                final String city = amapLocation.getCity();
-
-                                HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
-                                    @Override
-                                    public void onSuccess(RegionBean data) {
-
-                                        SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
-                                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
-
-                                        tvLeft.setText(city);
-
-                                    }
-                                }, RegionBean.class);
-
-                            } else {
-                                //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                                Logger.d("location Error, ErrCode:"
-                                        + amapLocation.getErrorCode() + ", errInfo:"
-                                        + amapLocation.getErrorInfo());
-                                tvLeft.setText("定位失败...");
-                            }
-                        }
-                    }
-                });
-
-//        mLocationClient = new AMapLocationClient(App.instance);
-//        mLocationListener = new AMapLocationListener() {
-//            @Override
-//            public void onLocationChanged(AMapLocation amapLocation) {
-//                if (amapLocation != null) {
-//                    if (amapLocation.getErrorCode() == 0) {
-//                        //可在其中解析amapLocation获取相应内容。
-//                        Logger.d("城市=" + amapLocation.getCity());
-//                        //tvLeft.setText(amapLocation.getCity());
-//
-//                        double longitude = amapLocation.getLongitude();
-//                        double latitude = amapLocation.getLatitude();
-//
-//                        Log.e("===", "longitude = " + longitude
-//                                + ",latitude = " + latitude);
-//
-//                        final String city = amapLocation.getCity();
-//
-//                        HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
-//                            @Override
-//                            public void onSuccess(RegionBean data) {
-//                                Log.e("=== ", "切换城市 = " + city + ",纬度 = " + amapLocation.getLatitude());
-//
-//                                SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
-//                                SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
-//
-//                                tvLeft.setText(city);
-//
-//                            }
-//                        }, RegionBean.class);
-//
-//                    } else {
-//                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-//                        Logger.d("location Error, ErrCode:"
-//                                + amapLocation.getErrorCode() + ", errInfo:"
-//                                + amapLocation.getErrorInfo());
-//                        tvLeft.setText("定位失败...");
-//                    }
-//                }
-//                ;
-//
-//            }
-//        };
-//        mLocationClient.setLocationListener(mLocationListener);
-//        //初始化AMapLocationClientOption对象
-//        mLocationOption = new AMapLocationClientOption();
-//        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//        //获取一次定位结果：
-//        //该方法默认为false。
-//        mLocationOption.setOnceLocation(true);
-//        //获取最近3s内精度最高的一次定位结果：
-//        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-//        mLocationOption.setOnceLocationLatest(true);
-//        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-//        mLocationOption.setInterval(1000);
-//        //设置是否返回地址信息（默认返回地址信息）
-//        mLocationOption.setNeedAddress(true);
-//        //设置是否允许模拟位置,默认为true，允许模拟位置
-//        mLocationOption.setMockEnable(true);
-//        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-//        mLocationOption.setHttpTimeOut(20000);
-//        //关闭缓存机制
-//        mLocationOption.setLocationCacheEnable(false);
-//        //给定位客户端对象设置定位参数
-//        mLocationClient.setLocationOption(mLocationOption);
-//
-//
-//        //启动定位
 //        if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
-//            mLocationClient.startLocation();
+////            mLocationClient.startLocation();
 //        }
+//
+//        MapManager.getInstance()
+//                .location(App.instance, true, new AMapLocationListener() {
+//                    @Override
+//                    public void onLocationChanged(AMapLocation amapLocation) {
+//                        if (amapLocation != null) {
+//                            if (amapLocation.getErrorCode() == 0) {
+//                                //可在其中解析amapLocation获取相应内容。
+//                                Logger.d("城市=" + amapLocation.getCity());
+//                                //tvLeft.setText(amapLocation.getCity());
+//
+//                                double longitude = amapLocation.getLongitude();
+//                                double latitude = amapLocation.getLatitude();
+//
+//                                Log.e("===", "longitude = " + longitude
+//                                        + ",latitude = " + latitude);
+//
+//                                final String city = amapLocation.getCity();
+//
+//                                HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
+//                                    @Override
+//                                    public void onSuccess(RegionBean data) {
+//
+//                                        SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
+//                                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
+//
+//                                        tvLeft.setText(city);
+//
+//                                    }
+//                                }, RegionBean.class);
+//
+//                            } else {
+//                                //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+//                                Logger.d("location Error, ErrCode:"
+//                                        + amapLocation.getErrorCode() + ", errInfo:"
+//                                        + amapLocation.getErrorInfo());
+//                                tvLeft.setText("定位失败...");
+//                            }
+//                        }
+//                    }
+//                });
+
+        mLocationClient = new AMapLocationClient(App.instance);
+        mLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation amapLocation) {
+                if (amapLocation != null) {
+                    if (amapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        Logger.d("城市=" + amapLocation.getCity());
+                        //tvLeft.setText(amapLocation.getCity());
+
+                        double longitude = amapLocation.getLongitude();
+                        double latitude = amapLocation.getLatitude();
+
+                        Log.e("===", "longitude = " + longitude
+                                + ",latitude = " + latitude);
+
+                        final String city = amapLocation.getCity();
+
+                        HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
+                            @Override
+                            public void onSuccess(RegionBean data) {
+                                Log.e("=== ", "切换城市 = " + city + ",纬度 = " + amapLocation.getLatitude());
+
+                                SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
+                                SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
+
+                                tvLeft.setText(city);
+
+                            }
+                        }, RegionBean.class);
+
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Logger.d("location Error, ErrCode:"
+                                + amapLocation.getErrorCode() + ", errInfo:"
+                                + amapLocation.getErrorInfo());
+                        tvLeft.setText("定位失败...");
+                    }
+                }
+                ;
+
+            }
+        };
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        mLocationOption.setOnceLocationLatest(true);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setInterval(1000);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //设置是否允许模拟位置,默认为true，允许模拟位置
+        mLocationOption.setMockEnable(true);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(20000);
+        //关闭缓存机制
+        mLocationOption.setLocationCacheEnable(false);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+
+
+        //启动定位
+        if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
+            mLocationClient.startLocation();
+        }
 
 
     }

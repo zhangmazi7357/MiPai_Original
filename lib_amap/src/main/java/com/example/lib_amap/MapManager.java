@@ -2,6 +2,7 @@ package com.example.lib_amap;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -27,6 +28,8 @@ public class MapManager {
 
     private static MapManager INSTANCE = null;
     private AMap aMap;
+
+    private String TAG = "Map";
 
     private MapManager() {
     }
@@ -249,6 +252,8 @@ public class MapManager {
         distanceSearch.setDistanceSearchListener(listener);
         DistanceSearch.DistanceQuery distanceQuery = new DistanceSearch.DistanceQuery();
 
+        Log.e(TAG, "计算距离  起点 = " + dest.getLongitude() + "," + dest.getLatitude());
+        Log.e(TAG, "计算距离: 终点 =  " + lonPoints.get(0).getLongitude() + "," + lonPoints.get(0).getLatitude());
         // 设置查询起点，支持多个点
         distanceQuery.setOrigins(lonPoints);
         // 设置查询目的地

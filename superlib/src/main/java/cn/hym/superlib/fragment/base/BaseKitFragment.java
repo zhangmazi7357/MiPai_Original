@@ -369,10 +369,10 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         @Override
         public void onDataError(String status, String errormessage) {
-//            Log.e(TAG, "onDataError: " + status);
+            Log.e(TAG, "onDataError: " + status);
             //请求成功但是数据异常
             HttpStatusUtil.handleErrorStatus(status, errormessage);
-            Log.e(TAG, "onDataError: " + status + ",message = " + errormessage);
+//            Log.e(TAG, "onDataError: " + status + ",message = " + errormessage);
             if (!status.equals("6666")) {
                 ToastUtil.toast(errormessage);
             }

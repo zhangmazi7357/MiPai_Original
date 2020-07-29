@@ -84,6 +84,7 @@ public class UpLoadVideoProductAdapter extends
         this.fragment = fragment;
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_video);
         addItemType(UpLoadImageBean.type_add, R.layout.item_add_image);
+
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
                 .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
@@ -177,11 +178,12 @@ public class UpLoadVideoProductAdapter extends
                 tv_time_long.setVisibility(View.VISIBLE);
                 tv_time_long.setText(item.getDuration());
 
+                Log.e(TAG, " item =" + com.alibaba.fastjson.JSONObject.toJSONString(item));
                 boolean hasUpload = item.isHasUpload();
 
                 if (!hasUpload) {
                     //未上传
-                    Logger.d("adaptertoken=" + token);
+
                     if (TextUtils.isEmpty(token)) {
                         ToastUtil.toast("token异常请检查您的网络后刷新重试");
                         return;
@@ -189,6 +191,7 @@ public class UpLoadVideoProductAdapter extends
                     ll_uploading.setVisibility(View.VISIBLE);
                     iv_icon.setVisibility(View.GONE);
 
+                    Log.e(TAG, "path = " + path + ",qiniufile_name=" + qiniufile_name);
 
                     uploadManager.put(path,
                             qiniufile_name,
@@ -197,6 +200,9 @@ public class UpLoadVideoProductAdapter extends
                                 @Override
                                 public void complete(String key, ResponseInfo info, JSONObject response) {
                                     //res包含hash、key等信息，具体字段取决于上传策略的设置
+
+                                    Log.e(TAG, "complete: " + info
+                                    );
                                     try {
                                         if (info.isOK()) {
                                             ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
@@ -204,10 +210,10 @@ public class UpLoadVideoProductAdapter extends
                                             ll_uploading.setVisibility(View.GONE);
                                             item.setHasUpload(true);
                                             item.setQiniuFileName(key);
-                                            Log.e("===VideoAdapter = ", "upLoad success: ");
+                                            Log.e(TAG, "upLoad success: ");
                                         } else {
 
-                                            Log.e("===VideoAdapter = ", "upLoad fail: ");
+                                            Log.e(TAG, "upLoad fail: ");
 
                                             //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                                         }
@@ -222,6 +228,7 @@ public class UpLoadVideoProductAdapter extends
                                     false,
                                     new UpProgressHandler() {
                                         public void progress(String key, double percent) {
+                                            Log.e(TAG, "progress: " + percent);
                                             try {
                                                 int percent_int = (int) (percent * 100);
                                                 //Logger.d("key="+key + ",percent " + percent);
@@ -234,6 +241,7 @@ public class UpLoadVideoProductAdapter extends
                                     }, null));
 
                 } else {
+                    Log.e(TAG, " 已上传 =");
                     //已上传
                     ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
                     iv_icon.setVisibility(View.VISIBLE);

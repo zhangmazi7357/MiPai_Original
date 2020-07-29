@@ -1,143 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f1f1f1">
+    android:background="#f1f1f1"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:layout_marginTop="10dp">
+        android:padding="10dp">
+
         <FrameLayout
+            android:id="@+id/fl_avatar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fl_avatar">
+            android:layout_height="wrap_content">
+
             <ImageView
+                android:id="@+id/iv_avatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/iv_avatar"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_default_avantar"/>
+                android:src="@drawable/ic_default_avantar" />
+
             <ImageView
+                android:id="@+id/iv_vip"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:id="@+id/iv_vip"
-                android:src="@drawable/ic_business_circle"
                 android:layout_gravity="right|bottom"
                 android:layout_marginRight="5dp"
-               />
+                android:src="@drawable/ic_business_circle" />
         </FrameLayout>
+
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/fl_avatar"
-            android:id="@+id/tv_name"
-            tools:text="加藤栋"/>
+            android:textColor="@color/black"
+            tools:text="加藤栋" />
+
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/mipaiTextColorNormal"
-            tools:text="2018-04-08"
             android:layout_alignParentRight="true"
-            android:id="@+id/tv_time"/>
+            android:textColor="@color/mipaiTextColorNormal"
+            tools:text="2018-04-08" />
 
         <me.zhanghai.android.materialratingbar.MaterialRatingBar
             android:id="@+id/ratingbar"
-            android:minHeight="16dp"
-            android:maxHeight="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/fl_avatar"
+            android:layout_alignParentRight="true"
+            android:isIndicator="true"
+            android:maxHeight="16dp"
+            android:minHeight="16dp"
             android:rating="3"
             android:stepSize="0.5"
             app:mrb_progressBackgroundTint="#cfb06d"
             app:mrb_progressTint="#cfb06d"
-            android:isIndicator="true"
-            app:mrb_secondaryProgressTint="#cfb06d"
-            android:layout_alignBottom="@id/fl_avatar"
-            android:layout_alignParentRight="true"/>
+            app:mrb_secondaryProgressTint="#cfb06d" />
     </RelativeLayout>
-   <FrameLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/white"
-       android:layout_marginTop="10dp">
-       <com.zhy.view.flowlayout.TagFlowLayout
-           android:id="@+id/fl_commnents"
-           zhy:max_select="1"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginRight="10dp"
-           android:layout_marginTop="10dp"
-           android:layout_marginLeft="10dp"
-           android:layout_marginBottom="10dp"
-           >
-       </com.zhy.view.flowlayout.TagFlowLayout>
-   </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/fl_commnents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            zhy:max_select="1" />
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:orientation="horizontal"
-        android:layout_toRightOf="@id/iv_avatar"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
         android:visibility="gone">
+
         <com.allen.library.SuperButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textColor="@color/mipaiTextColorSelect"
-            android:textSize="12sp"
-            app:sCornersRadius="5dp"
-            android:layout_toRightOf="@id/tv_price"
-            app:sSolidColor="@color/f3ebd8"
-            android:layout_marginRight="10dp"
             android:id="@+id/laybel_1"
-            android:visibility="gone"
-            />
-        <com.allen.library.SuperButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textColor="@color/mipaiTextColorSelect"
-            android:textSize="12sp"
-            app:sCornersRadius="5dp"
-            android:layout_toRightOf="@id/tv_price"
-            app:sSolidColor="@color/f3ebd8"
             android:layout_marginRight="10dp"
-            android:id="@+id/laybel_2"
-            android:visibility="gone"
-            />
-        <com.allen.library.SuperButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/tv_price"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textColor="@color/mipaiTextColorSelect"
             android:textSize="12sp"
-            app:sCornersRadius="5dp"
-            android:layout_toRightOf="@id/tv_price"
-            app:sSolidColor="@color/f3ebd8"
-            android:id="@+id/laybel_3"
             android:visibility="gone"
-            />
+            app:sCornersRadius="5dp"
+            app:sSolidColor="@color/f3ebd8" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/laybel_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/tv_price"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/mipaiTextColorSelect"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:sCornersRadius="5dp"
+            app:sSolidColor="@color/f3ebd8" />
+
+        <com.allen.library.SuperButton
+            android:id="@+id/laybel_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/tv_price"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/mipaiTextColorSelect"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:sCornersRadius="5dp"
+            app:sSolidColor="@color/f3ebd8" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:padding="10dp">
 
         <ImageView
@@ -145,7 +152,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginRight="10dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_shop_name"
@@ -155,16 +162,16 @@
             android:layout_toRightOf="@id/iv_icon"
             android:text="华谊兄弟传媒工作室"
             android:textColor="@color/black" />
+
         <ImageView
+            android:id="@+id/iv_vip_shop"
             android:layout_width="26dp"
             android:layout_height="13dp"
-            android:src="@drawable/ic_business_rt"
-            android:layout_toRightOf="@id/tv_shop_name"
             android:layout_marginLeft="5dp"
-            android:id="@+id/iv_vip_shop"
             android:layout_marginTop="3dp"
-            android:visibility="gone"
-            />
+            android:layout_toRightOf="@id/tv_shop_name"
+            android:src="@drawable/ic_business_rt"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_type"
@@ -199,16 +206,16 @@
             android:textColor="@color/mipaiTextColorNormal"
             android:textSize="12sp" />
     </RelativeLayout>
+
     <com.allen.library.SuperTextView
+        android:id="@+id/tv_total_price"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/tv_total_price"
-        app:sLeftTextString="总价:"
-        app:sLeftTextColor="@color/black"
-        app:sRightTextColor="#ff0000"
-        app:sRightTextString="1600"
         android:visibility="gone"
-        />
+        app:sLeftTextColor="@color/black"
+        app:sLeftTextString="总价:"
+        app:sRightTextColor="#ff0000"
+        app:sRightTextString="1600" />
 
 </LinearLayout>

@@ -1,36 +1,55 @@
 package com.hym.eshoplib.mz.iconproduct;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.core.LatLonPoint;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.R;
+import com.hym.eshoplib.activity.ActionActivity;
+import com.hym.eshoplib.bean.goods.GoodDetailModel;
+import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.mz.MzConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.hym.superlib.activity.base.BaseActionActivity;
+import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.mz.MzBaseActivity;
 import cn.hym.superlib.mz.widgets.MzHeaderBar;
 
 /**
  * icon  显示产品列表
  */
-public class MzProductListActivity extends MzBaseActivity implements AMapLocationListener {
+public class MzProductListActivity extends MzBaseActivity implements AMapLocationListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private String TAG = "MzProductList";
     private int iconId = 0;
     private MzHeaderBar headerBar;
     private RecyclerView mRecyclerView;
     private MzProductAdapter adapter;
+    //    private List<HomeIconProductBean.DataBean> datas = new ArrayList<>();
     private TextView noView;
+    private SwipeRefreshLayout swipe;
+
+    private int page = 1;
+    private int totalPage = 0;
+    private int pageSize = 0;
+    //    private int pSize = 20;
+    private int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +59,9 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
 
         getProductList();
 
+        getProductLists(true);
 
-        //定位当前位置;
-        MapManager.getInstance().location(this, true, this);
+
     }
 
 
@@ -109,28 +128,103 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
 
         mRecyclerView = findViewById(R.id.mRecyclerView);
         noView = findViewById(R.id.noView);
-
+        swipe = findViewById(R.id.swipe);
+        swipe.setOnRefreshListener(this);
         adapter = new MzProductAdapter(this, null);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(adapter);
 
 
-        MzNewApi.getProductList(String.valueOf(iconId), new ResponseImpl<HomeIconProductBean>() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSuccess(HomeIconProductBean data) {
-                List<HomeIconProductBean.DataBean> list = data.getData();
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HomeIconProductBean.DataBean.VideoBean bean = (HomeIconProductBean.DataBean.VideoBean) adapter.getItem(position);
+                String case_id = bean.getCase_id();
+                HomeApi.getProductDetailData(new ResponseImpl<GoodDetailModel>() {
+                    @Override
+                    public void onSuccess(GoodDetailModel data) {
 
-                if (list != null && list.size() > 0) {
-                    adapter.setNewData(list);
-                    noView.setVisibility(View.GONE);
+                        if (data.getData().getType().equals("1")) {
+                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                    ActionActivity.ShopVideoDetail);
+                            bundle.putSerializable("data", data);
+
+                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
+                            bundle.putString("title", "产品详情");
+                            ActionActivity.start(MzProductListActivity.this, bundle);
+                        } else if (data.getData().getType().equals("2")) {
+                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                    ActionActivity.ShopDetail);
+                            bundle.putSerializable("data", data);
+
+                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
+                            bundle.putString("title", "产品详情");
+                            ActionActivity.start(MzProductListActivity.this, bundle);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+                        super.onFailed(e);
+                    }
+
+                    @Override
+                    public void onDataError(String status, String errormessage) {
+                        super.onDataError(status, errormessage);
+                    }
+                }, GoodDetailModel.class, case_id);
+
+            }
+        });
+
+
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                page++;
+                if (page > totalPage) {
+                    adapter.loadMoreEnd();
                 } else {
-                    noView.setVisibility(View.VISIBLE);
+                    getProductLists(false);
                 }
             }
-        }, HomeIconProductBean.class);
-
+        }, mRecyclerView);
     }
 
+
+    private void getProductLists(boolean isRefresh) {
+        MzNewApi.getProductList(String.valueOf(iconId), String.valueOf(page),
+                new ResponseImpl<HomeIconProductBean>() {
+                    @Override
+                    public void onSuccess(HomeIconProductBean data) {
+                        HomeIconProductBean.DataBean dataBean = data.getData();
+                        List<HomeIconProductBean.DataBean.VideoBean> list = dataBean.getVideo();
+
+                        currentPage = dataBean.getCurrentpage();
+                        totalPage = dataBean.getTotalpage();
+                        swipe.setRefreshing(false);
+
+                        if (list != null && list.size() > 0) {
+
+                            setData(isRefresh, list);
+                        } else {
+                            noView.setVisibility(View.VISIBLE);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+                        super.onFailed(e);
+                        Log.e(TAG, "onError: " + e.getMessage());
+                        swipe.setRefreshing(false);
+                        adapter.loadMoreFail();
+                        adapter.setEnableLoadMore(true);
+                    }
+                }, HomeIconProductBean.class);
+
+    }
 
     /**
      * 高德 定位地址 ;
@@ -143,6 +237,35 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
         double latitude = aMapLocation.getLatitude();
         LatLonPoint dest = new LatLonPoint(longitude, latitude);
 
-        adapter.setDest(dest);
+        if (longitude != 0 && latitude != 0) {
+            adapter.setDest(dest);
+        }
+    }
+
+    private void setData(boolean isRefresh, List<HomeIconProductBean.DataBean.VideoBean> list) {
+        int size = list == null ? 0 : list.size();
+
+        if (isRefresh) {
+            adapter.setNewData(list);
+        } else {
+            if (size > 0) {
+                adapter.addData(list);
+            }
+        }
+
+        if (size < pageSize) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            adapter.loadMoreEnd(isRefresh);
+        } else {
+            adapter.loadMoreComplete();
+        }
+    }
+
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        adapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+        getProductLists(true);
     }
 }

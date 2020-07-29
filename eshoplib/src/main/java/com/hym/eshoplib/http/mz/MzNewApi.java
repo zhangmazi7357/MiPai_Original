@@ -56,11 +56,16 @@ public class MzNewApi {
      * @param clazz
      * @param <T>
      */
-    public static <T> void getProductList(String iconId, IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void getProductList(String iconId,
+                                          String p,
+                                          IHttpResultListener<T> listener, Class<T> clazz) {
+
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("GetProductionList");
         request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("p", p);
+        request.addParamsNotEmpty("psize", "20");
         request.addParamsNotEmpty("icon_id", iconId);
 
         post(request, listener, clazz);

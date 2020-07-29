@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -506,6 +505,8 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             ToastUtil.toast("请输入标题");
             return;
         }
+
+
         if (cateId.equals("5") || cateId.equals("8") ||
                 cateId.equals("3") || cateId.equals("2")) {
 
@@ -554,7 +555,9 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         String detail = etDetail.getText().toString();
         //时长
         String shopTime = etShopTime.getText().toString();
-        length = shopTime;
+        // length ????????
+//        length = shopTime;
+        length = adapter.getData().get(0).getDuration();
         //拍摄张数
         String paisheCount = etPaisheCount.getText().toString();
         //化妆
@@ -584,6 +587,25 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
             return;
         }
+
+//        Call<ResponseBody> call = ApiRetrofit.getApiService()
+//                .upLoadVideo("Store", "NewAddProduction",
+//                        UserUtil.getToken(App.instance), "1", image_default, attachment,
+//                        title, length, etPrice, mzOneType, mzTwoType, mzAddress, String.valueOf(mzLon),
+//                        String.valueOf(mzLat), mzTagContent);
+//
+//
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                Log.e("Retro", "onResponse: " + response.toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.e("Retro", "onFailure: " + t.getMessage());
+//            }
+//        });
 
 
         ShopApi.upLoadVideoProduct(image_default,

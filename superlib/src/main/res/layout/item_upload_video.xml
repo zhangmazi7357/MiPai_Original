@@ -34,7 +34,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableLeft="@drawable/ic_video"
             android:drawablePadding="5dp"
             android:text="00:10"
             android:textColor="@color/white" />

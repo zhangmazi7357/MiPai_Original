@@ -38,6 +38,17 @@ public class ShopListAdapter extends BaseQuickAdapter<SpecialTimeLimteBean.DataB
         if (TextUtils.isEmpty(item.getOriginal_price()) || item.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);
         }
+
+        String strTag = "";   // 接口里没有 tag
+        TextView tvTag = helper.getView(R.id.tv_tag);
+        if (TextUtils.isEmpty(strTag)) {
+            tvTag.setVisibility(View.GONE);
+        } else {
+            tvTag.setVisibility(View.VISIBLE);
+            tvTag.setText(strTag);
+        }
+
+
         tvBeforePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         helper.setText(R.id.tv_describe, item.getTitle())
                 .setText(R.id.tv_pay_count, item.getWeight() + "人付款")

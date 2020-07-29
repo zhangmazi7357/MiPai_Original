@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +23,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DistanceItem;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.lib_amap.MapManager;
 import com.hjq.base.BaseDialog;
 import com.hjq.base.BaseDialogFragment;
 import com.hjq.toast.ToastUtils;
@@ -49,6 +59,8 @@ import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
+import com.hym.eshoplib.mz.MzConstant;
+import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
 import com.hym.imagelib.ImageUtil;
@@ -74,6 +86,7 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
@@ -202,6 +215,16 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private ServiceDetailBean mData;
 
 
+    // 地址
+    @BindView(R.id.proAddress)
+    TextView proAddress;
+
+    // 距离
+    @BindView(R.id.proDistance)
+    TextView proDistance;
+
+    private LatLonPoint dest;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -212,6 +235,26 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
     @Override
     public void doLogic() {
+
+
+        //定位当前位置;
+        MapManager.getInstance().location(_mActivity, true, new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                double longitude = aMapLocation.getLongitude();
+                double latitude = aMapLocation.getLatitude();
+                dest = new LatLonPoint(longitude, latitude);
+
+                if (longitude == 0 || latitude == 0) {
+                    ToastUtil.toast("定位失败");
+                } else {
+                    addAddressDistance();
+                }
+
+            }
+        });
+
+
         ScreenUtil.ViewAdapter(_mActivity, videoplayer, 16, 9, 20);
         showBackButton();
         setTitle(getArguments().getString("title"));
@@ -246,18 +289,18 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
-        if (!TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")){
+        if (!TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);
-        }else{
+        } else {
             String originalPrice = RemoveZeroUtil.subZeroAndDot(db.getOriginal_price());
             tvBeforePrice.setText("原价" + originalPrice);
         }
-        if (TextUtils.isEmpty(db.getLength()) || db.getLength().equals("0")){
+        if (TextUtils.isEmpty(db.getLength()) || db.getLength().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvShootTime.getParent();
             llShootTime.setVisibility(View.GONE);
         }
         tvShootTime.setText(db.getEquipment());
-        if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")){
+        if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvQicai.getParent();
             llShootTime.setVisibility(View.GONE);
         }
@@ -286,11 +329,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
        /* long shootTime = Long.parseLong(db.getShooting_time());
         long day = shootTime / 1000 / (60 * 60 * 24);
         shootingDayTime.setText(day + "天");*/
-        if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")){
+        if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvStaffing.getParent();
             llShootTime.setVisibility(View.GONE);
         }
-        if (TextUtils.isEmpty(db.getOther()) || db.getOther().equals("0")){
+        if (TextUtils.isEmpty(db.getOther()) || db.getOther().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvLoca.getParent();
             llShootTime.setVisibility(View.GONE);
         }
@@ -307,7 +350,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         } else {
             ivVip.setVisibility(View.GONE);
         }
-        HomeApi.getDetailComment("1",new ResponseImpl<SpecialTimeLimteBean>() {
+        HomeApi.getDetailComment("1", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(final SpecialTimeLimteBean data) {
                 final List<SpecialTimeLimteBean.DataBean.VideoBean> vbData = data.getData().getVideo();
@@ -365,7 +408,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 mData = data;
                 category_id = data.getData().getCategory_id();
                 cate_list = data.getData().getCate_list();
-                if (category_id.equals("46")){
+                if (category_id.equals("46")) {
                     rlCallPhone.setVisibility(View.GONE);
                 }
             }
@@ -1023,4 +1066,50 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
     /*//工作室
      */
+
+    // 计算距离
+    private void addAddressDistance() {
+        Bundle bundle = getArguments();
+        HomeIconProductBean.DataBean.VideoBean item = (HomeIconProductBean.DataBean.VideoBean) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+
+
+        String lon = item.getLon();
+        String lat = item.getLat();
+
+        String address = item.getAddress();
+        proAddress.setText(address);
+
+        if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {
+            return;
+        }
+
+        if (!TextUtils.isEmpty(lon) && !TextUtils.isEmpty(lat) && dest != null) {
+            double longitute = Double.parseDouble(lon);
+            double latitude = Double.parseDouble(lat);
+
+            if (longitute != 0 && latitude != 0) {
+
+                LatLonPoint point = new LatLonPoint(longitute, latitude);
+                ArrayList<LatLonPoint> list = new ArrayList();
+                list.add(point);
+//                Log.e(TAG, "计算");
+
+                MapManager.getInstance().calculateInstance(_mActivity, dest, list,
+                        DistanceSearch.TYPE_DISTANCE,
+                        new DistanceSearch.OnDistanceSearchListener() {
+                            @Override
+                            public void onDistanceSearched(DistanceResult distanceResult, int i) {
+                                List<DistanceItem> distanceResults = distanceResult.getDistanceResults();
+                                DistanceItem distanceItem = distanceResults.get(0);
+                                float distance = distanceItem.getDistance();
+                                String result = MzStringUtil.distance(distance);
+                                proDistance.setText("距您" + result);
+                            }
+                        });
+            }
+
+        }
+
+
+    }
 }

@@ -166,6 +166,7 @@
                 android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="13sp"
+                android:visibility="gone"
                 tools:text="标签" />
 
         </RelativeLayout>
@@ -281,6 +282,7 @@
                 android:singleLine="true"
                 android:textColor="@color/red"
                 android:textSize="13sp"
+                android:visibility="gone"
                 tools:text="标签" />
 
         </RelativeLayout>

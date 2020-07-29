@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DistanceItem;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.lib_amap.MapManager;
 import com.hjq.base.BaseDialog;
 import com.hjq.base.BaseDialogFragment;
 import com.hjq.dialog.MessageDialog;
@@ -53,6 +62,8 @@ import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
+import com.hym.eshoplib.mz.MzConstant;
+import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
 import com.hym.imagelib.ImageUtil;
@@ -68,6 +79,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +91,7 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.user.UserUtil;
@@ -181,6 +194,16 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     MaterialRatingBar ratingbar;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
+
+
+    // 地址
+    @BindView(R.id.proAddress)
+    TextView proAddress;
+
+    // 距离
+    @BindView(R.id.proDistance)
+    TextView proDistance;
+
     @BindView(R.id.tv_add_shoppingcart)
     TextView tvAddShoppingcart;
     @BindView(R.id.tv_go_pay)
@@ -205,6 +228,9 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private List<ServiceDetailBean.DataBean.CateListBean> cate_list;
     private BaseListAdapter<ServiceDetailBean.DataBean.CateListBean> adapter1;
 
+
+    private LatLonPoint dest;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -217,6 +243,24 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     public void doLogic() {
         showBackButton();
         setTitle(getArguments().getString("title"));
+
+        //定位当前位置;
+        MapManager.getInstance().location(_mActivity, true, new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                double longitude = aMapLocation.getLongitude();
+                double latitude = aMapLocation.getLatitude();
+                dest = new LatLonPoint(longitude, latitude);
+
+                if (longitude == 0 || latitude == 0) {
+                    ToastUtil.toast("定位失败");
+                } else {
+                    addAddressDistance();
+                }
+
+            }
+        });
+
         tvReport.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvReport.getPaint().setAntiAlias(true);//抗锯齿
         tvBeforePrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -246,7 +290,12 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        data = (GoodDetailModel) getArguments().getSerializable("data");
+        Bundle bundle = getArguments();
+        data = (GoodDetailModel) bundle.getSerializable("data");
+
+        // 添加地址 和距离 ;
+
+
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
@@ -1069,6 +1118,53 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     public void payFail() {
         //支付宝支付失败
         ToastUtil.toast("支付宝支付失败");
+
+    }
+
+
+    // 计算距离
+    private void addAddressDistance() {
+        Bundle bundle = getArguments();
+        HomeIconProductBean.DataBean.VideoBean item = (HomeIconProductBean.DataBean.VideoBean) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+
+
+        String lon = item.getLon();
+        String lat = item.getLat();
+
+        String address = item.getAddress();
+        proAddress.setText(address);
+
+        if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {
+            return;
+        }
+
+        if (!TextUtils.isEmpty(lon) && !TextUtils.isEmpty(lat) && dest != null) {
+            double longitute = Double.parseDouble(lon);
+            double latitude = Double.parseDouble(lat);
+
+            if (longitute != 0 && latitude != 0) {
+
+                LatLonPoint point = new LatLonPoint(longitute, latitude);
+                ArrayList<LatLonPoint> list = new ArrayList();
+                list.add(point);
+
+
+                MapManager.getInstance().calculateInstance(_mActivity, dest, list,
+                        DistanceSearch.TYPE_DISTANCE,
+                        new DistanceSearch.OnDistanceSearchListener() {
+                            @Override
+                            public void onDistanceSearched(DistanceResult distanceResult, int i) {
+                                List<DistanceItem> distanceResults = distanceResult.getDistanceResults();
+                                DistanceItem distanceItem = distanceResults.get(0);
+                                float distance = distanceItem.getDistance();
+                                String result = MzStringUtil.distance(distance);
+                                proDistance.setText("距您" + result);
+                            }
+                        });
+            }
+
+        }
+
 
     }
 

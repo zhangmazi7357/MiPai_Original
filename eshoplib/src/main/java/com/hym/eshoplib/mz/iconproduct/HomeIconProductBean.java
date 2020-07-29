@@ -1,136 +1,187 @@
 package com.hym.eshoplib.mz.iconproduct;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 首页 icon 跳转
  */
-class HomeIconProductBean {
+public class HomeIconProductBean {
 
 
-    private List<DataBean> data;
+    /**
+     * data : {"video":[{"case_id":"2798","title":"嗯嗯呐","image_default":"http://mpai.liandao.mobi/uploads/a7/fb/a3/44/9d/cc82b250252a4bfc9a8c2b.jpeg","address":"","lon":"","lat":"","present_price":"1","original_price":"0","tags":null,"store_id":"1258","weight":2},{"case_id":"2796","title":"测试三号","image_default":"http://mpai.liandao.mobi/uploads/03/1e/c5/e2/16/81516d9e69e266eb7d00c7.jpeg","address":"","lon":"","lat":"","present_price":"1","original_price":"0","tags":null,"store_id":"1258","weight":2}],"totalnum":"2","currentpage":1,"totalpage":1}
+     */
 
-    public List<DataBean> getData() {
+    private DataBean data;
+
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
     public static class DataBean {
         /**
-         * case_id : 2798
-         * title : 嗯嗯呐
-         * image_default : /a7/fb/a3/44/9d/cc82b250252a4bfc9a8c2b.jpeg
-         * address :
-         * lon :
-         * lat :
-         * present_price : 1
-         * original_price : 0
-         * tags : null
-         * store_id : 1258
-         * weight : 2
+         * video : [{"case_id":"2798","title":"嗯嗯呐","image_default":"http://mpai.liandao.mobi/uploads/a7/fb/a3/44/9d/cc82b250252a4bfc9a8c2b.jpeg","address":"","lon":"","lat":"","present_price":"1","original_price":"0","tags":null,"store_id":"1258","weight":2},{"case_id":"2796","title":"测试三号","image_default":"http://mpai.liandao.mobi/uploads/03/1e/c5/e2/16/81516d9e69e266eb7d00c7.jpeg","address":"","lon":"","lat":"","present_price":"1","original_price":"0","tags":null,"store_id":"1258","weight":2}]
+         * totalnum : 2
+         * currentpage : 1
+         * totalpage : 1
          */
 
-        private String case_id;
-        private String title;
-        private String image_default;
-        private String address;
-        private String lon;
-        private String lat;
-        private String present_price;
-        private String original_price;
-        private String tags;
-        private String store_id;
-        private int weight;
+        private String totalnum;
+        private int currentpage;
+        private int totalpage;
+        private List<VideoBean> video;
 
-        public String getCase_id() {
-            return case_id;
+        public String getTotalnum() {
+            return totalnum;
         }
 
-        public void setCase_id(String case_id) {
-            this.case_id = case_id;
+        public void setTotalnum(String totalnum) {
+            this.totalnum = totalnum;
         }
 
-        public String getTitle() {
-            return title;
+        public int getCurrentpage() {
+            return currentpage;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setCurrentpage(int currentpage) {
+            this.currentpage = currentpage;
         }
 
-        public String getImage_default() {
-            return image_default;
+        public int getTotalpage() {
+            return totalpage;
         }
 
-        public void setImage_default(String image_default) {
-            this.image_default = image_default;
+        public void setTotalpage(int totalpage) {
+            this.totalpage = totalpage;
         }
 
-        public String getAddress() {
-            return address;
+        public List<VideoBean> getVideo() {
+            return video;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setVideo(List<VideoBean> video) {
+            this.video = video;
         }
 
-        public String getLon() {
-            return lon;
-        }
+        public static class VideoBean implements Serializable {
+            /**
+             * case_id : 2798
+             * title : 嗯嗯呐
+             * image_default : http://mpai.liandao.mobi/uploads/a7/fb/a3/44/9d/cc82b250252a4bfc9a8c2b.jpeg
+             * address :
+             * lon :
+             * lat :
+             * present_price : 1
+             * original_price : 0
+             * tags : null
+             * store_id : 1258
+             * weight : 2
+             */
 
-        public void setLon(String lon) {
-            this.lon = lon;
-        }
+            private String case_id;
+            private String title;
+            private String image_default;
+            private String address;
+            private String lon;
+            private String lat;
+            private String present_price;
+            private String original_price;
+            private String tags;
+            private String store_id;
+            private int weight;
 
-        public String getLat() {
-            return lat;
-        }
+            public String getCase_id() {
+                return case_id;
+            }
 
-        public void setLat(String lat) {
-            this.lat = lat;
-        }
+            public void setCase_id(String case_id) {
+                this.case_id = case_id;
+            }
 
-        public String getPresent_price() {
-            return present_price;
-        }
+            public String getTitle() {
+                return title;
+            }
 
-        public void setPresent_price(String present_price) {
-            this.present_price = present_price;
-        }
+            public void setTitle(String title) {
+                this.title = title;
+            }
 
-        public String getOriginal_price() {
-            return original_price;
-        }
+            public String getImage_default() {
+                return image_default;
+            }
 
-        public void setOriginal_price(String original_price) {
-            this.original_price = original_price;
-        }
+            public void setImage_default(String image_default) {
+                this.image_default = image_default;
+            }
 
-        public Object getTags() {
-            return tags;
-        }
+            public String getAddress() {
+                return address;
+            }
 
-        public void setTags(String tags) {
-            this.tags = tags;
-        }
+            public void setAddress(String address) {
+                this.address = address;
+            }
 
-        public String getStore_id() {
-            return store_id;
-        }
+            public String getLon() {
+                return lon;
+            }
 
-        public void setStore_id(String store_id) {
-            this.store_id = store_id;
-        }
+            public void setLon(String lon) {
+                this.lon = lon;
+            }
 
-        public int getWeight() {
-            return weight;
-        }
+            public String getLat() {
+                return lat;
+            }
 
-        public void setWeight(int weight) {
-            this.weight = weight;
+            public void setLat(String lat) {
+                this.lat = lat;
+            }
+
+            public String getPresent_price() {
+                return present_price;
+            }
+
+            public void setPresent_price(String present_price) {
+                this.present_price = present_price;
+            }
+
+            public String getOriginal_price() {
+                return original_price;
+            }
+
+            public void setOriginal_price(String original_price) {
+                this.original_price = original_price;
+            }
+
+            public String getTags() {
+                return tags;
+            }
+
+            public void setTags(String tags) {
+                this.tags = tags;
+            }
+
+            public String getStore_id() {
+                return store_id;
+            }
+
+            public void setStore_id(String store_id) {
+                this.store_id = store_id;
+            }
+
+            public int getWeight() {
+                return weight;
+            }
+
+            public void setWeight(int weight) {
+                this.weight = weight;
+            }
         }
     }
 }

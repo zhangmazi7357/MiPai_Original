@@ -42,4 +42,22 @@ public class MzStringUtil {
         result = (double) Math.round(result * 100) / 100;
         return result + "公里";
     }
+
+
+    /**
+     * 分割 tag
+     *
+     * @param tags
+     * @return
+     */
+    public static String[] splitTag(String tags) {
+
+        boolean contains = tags.contains(",");
+        if (contains) {
+            String[] newTags = tags.split(",");
+            return newTags;
+        } else {
+            return new String[]{tags};
+        }
+    }
 }

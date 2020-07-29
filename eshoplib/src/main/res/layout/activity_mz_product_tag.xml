@@ -19,5 +19,6 @@
         android:id="@+id/tagRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="16dp" />
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" />
 </LinearLayout>

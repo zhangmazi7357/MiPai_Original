@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -39,9 +40,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_toRightOf="@id/iv_notify"
                     android:text="平台交易保障好  线下交易风险高"
                     android:textColor="#FF5203"
@@ -78,9 +79,9 @@
                     android:id="@+id/tv_total_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="2sp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_toRightOf="@id/tv_01"
                     android:text="1000"
                     android:textColor="#DF4650"
@@ -114,13 +115,40 @@
                 android:id="@+id/tv_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:background="@color/white"
-                android:paddingBottom="10dp"
                 android:paddingLeft="19dp"
+                android:paddingBottom="10dp"
                 android:text="宣传片拍摄/各种拍摄等"
                 android:textColor="#000000"
                 android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="19dp"
+                android:paddingRight="19dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/proAddress"
+                    tools:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/proDistance"
+                    tools:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_click_workhome"
@@ -132,9 +160,9 @@
                     android:id="@+id/iv_user_photo"
                     android:layout_width="35sp"
                     android:layout_height="35sp"
-                    android:layout_marginBottom="12sp"
                     android:layout_marginLeft="19sp"
                     android:layout_marginTop="12sp"
+                    android:layout_marginBottom="12sp"
                     android:scaleType="fitXY" />
 
                 <RelativeLayout
@@ -171,10 +199,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_toRightOf="@id/tv_who_work"
                         android:background="@drawable/bg_yellow_shape"
-                        android:paddingBottom="1dp"
                         android:paddingLeft="4dp"
-                        android:paddingRight="4dp"
                         android:paddingTop="1dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="1dp"
                         android:text="实名"
                         android:textColor="@color/white"
                         android:textSize="8sp"
@@ -264,8 +292,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_0"
@@ -315,9 +343,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/time"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -355,9 +383,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/local"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -395,9 +423,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="摄影器材"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -435,9 +463,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="拍摄天数"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -475,9 +503,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="人员配置"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -516,8 +544,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_1"
@@ -558,8 +586,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_2"
@@ -605,8 +633,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_3"
@@ -645,8 +673,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="76dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="76dp"
                 android:text="没东西了,我可是有底线的"
                 android:textColor="#A19FA0"
                 android:textSize="12sp" />
