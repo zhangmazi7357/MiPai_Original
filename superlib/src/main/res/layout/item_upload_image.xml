@@ -48,7 +48,7 @@
             android:text="@string/Mainimage"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:sCornersBottomLeftRadius="3dp"
             app:sCornersBottomRightRadius="3dp"
             app:sSolidColor="@color/jiuzhou_orange" />

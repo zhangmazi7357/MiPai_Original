@@ -111,11 +111,13 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                 final ImageView iv_icon = helper.getView(R.id.iv_icon);
                 ImageView iv_delete = helper.getView(R.id.iv_delete);
                 TextView tv_main = helper.getView(R.id.tv_main_image);
+
                 if (helper.getLayoutPosition() == 0 && showMain) {
-                    tv_main.setVisibility(View.VISIBLE);
+                    tv_main.setVisibility(View.GONE);    // Visiable  不明白意图 ;
                 } else {
                     tv_main.setVisibility(View.GONE);
                 }
+
                 iv_delete.setVisibility(showDelete ? View.VISIBLE : View.GONE);
                 iv_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -150,7 +152,7 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                 String qiniufile_name = System.currentTimeMillis() / 1000 +
                         "_" + path.substring(path.lastIndexOf("/") + 1);
 
-                Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
+//                Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
 
                 boolean hasUpload = item.isHasUpload();
 

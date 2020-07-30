@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -134,19 +134,21 @@
 
                 <TextView
                     android:id="@+id/proAddress"
-                    tools:text="TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textSize="17sp" />
+                    android:textSize="14sp"
+                    tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/proDistance"
-                    tools:text="TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:text="TextView" />
 
             </LinearLayout>
 

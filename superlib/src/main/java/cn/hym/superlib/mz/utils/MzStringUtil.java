@@ -1,5 +1,6 @@
 package cn.hym.superlib.mz.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
@@ -51,6 +52,10 @@ public class MzStringUtil {
      * @return
      */
     public static String[] splitTag(String tags) {
+
+        if (TextUtils.isEmpty(tags)) {
+            return null;
+        }
 
         boolean contains = tags.contains(",");
         if (contains) {

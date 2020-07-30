@@ -584,7 +584,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         shopListAdapter = new ShopListAdapter(R.layout.item_shop, rvFooterComment);
 
 
-
         shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -828,21 +827,17 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 if (amapLocation != null) {
                     if (amapLocation.getErrorCode() == 0) {
                         //可在其中解析amapLocation获取相应内容。
-                        Logger.d("城市=" + amapLocation.getCity());
                         //tvLeft.setText(amapLocation.getCity());
 
                         double longitude = amapLocation.getLongitude();
                         double latitude = amapLocation.getLatitude();
 
-                        Log.e("===", "longitude = " + longitude
-                                + ",latitude = " + latitude);
 
                         final String city = amapLocation.getCity();
 
                         HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
                             @Override
                             public void onSuccess(RegionBean data) {
-                                Log.e("=== ", "切换城市 = " + city + ",纬度 = " + amapLocation.getLatitude());
 
                                 SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
                                 SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
@@ -854,9 +849,9 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        Logger.d("location Error, ErrCode:"
-                                + amapLocation.getErrorCode() + ", errInfo:"
-                                + amapLocation.getErrorInfo());
+//                        Logger.d("location Error, ErrCode:"
+//                                + amapLocation.getErrorCode() + ", errInfo:"
+//                                + amapLocation.getErrorInfo());
                         tvLeft.setText("定位失败...");
                     }
                 }

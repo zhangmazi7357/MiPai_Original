@@ -140,18 +140,25 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeIconProductBean.DataBean.VideoBean bean = (HomeIconProductBean.DataBean.VideoBean) adapter.getItem(position);
                 String case_id = bean.getCase_id();
+
                 HomeApi.getProductDetailData(new ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {
 
+
                         if (data.getData().getType().equals("1")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                     ActionActivity.ShopVideoDetail);
+
+                            // 产品详情
                             bundle.putSerializable("data", data);
 
+                            // 产品 地址 经纬度。
                             bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
+
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
+
                         } else if (data.getData().getType().equals("2")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                     ActionActivity.ShopDetail);
@@ -189,6 +196,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                 }
             }
         }, mRecyclerView);
+
     }
 
 

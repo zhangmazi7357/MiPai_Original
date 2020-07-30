@@ -95,6 +95,23 @@ public class HomeIconProductBean {
             private String store_id;
             private int weight;
 
+            @Override
+            public String toString() {
+                return "VideoBean{" +
+                        "case_id='" + case_id + '\'' +
+                        ", title='" + title + '\'' +
+                        ", image_default='" + image_default + '\'' +
+                        ", address='" + address + '\'' +
+                        ", lon='" + lon + '\'' +
+                        ", lat='" + lat + '\'' +
+                        ", present_price='" + present_price + '\'' +
+                        ", original_price='" + original_price + '\'' +
+                        ", tags='" + tags + '\'' +
+                        ", store_id='" + store_id + '\'' +
+                        ", weight=" + weight +
+                        '}';
+            }
+
             public String getCase_id() {
                 return case_id;
             }

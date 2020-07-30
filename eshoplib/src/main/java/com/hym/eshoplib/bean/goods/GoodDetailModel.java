@@ -19,6 +19,58 @@ public class GoodDetailModel implements Serializable{
     }
 
     public static class DataBean implements Serializable{
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "agree_count='" + agree_count + '\'' +
+                    ", auth=" + auth +
+                    ", case_id='" + case_id + '\'' +
+                    ", content_id='" + content_id + '\'' +
+                    ", ctime='" + ctime + '\'' +
+                    ", details='" + details + '\'' +
+                    ", equipment='" + equipment + '\'' +
+                    ", expression='" + expression + '\'' +
+                    ", filepath='" + filepath + '\'' +
+                    ", image_default='" + image_default + '\'' +
+                    ", industry='" + industry + '\'' +
+                    ", introduce='" + introduce + '\'' +
+                    ", is_agree=" + is_agree +
+                    ", is_del='" + is_del + '\'' +
+                    ", is_favorite=" + is_favorite +
+                    ", is_index='" + is_index + '\'' +
+                    ", is_mine='" + is_mine + '\'' +
+                    ", is_verify='" + is_verify + '\'' +
+                    ", length='" + length + '\'' +
+                    ", original_price='" + original_price + '\'' +
+                    ", other='" + other + '\'' +
+                    ", present_price='" + present_price + '\'' +
+                    ", qaction_id='" + qaction_id + '\'' +
+                    ", qcode='" + qcode + '\'' +
+                    ", region_id='" + region_id + '\'' +
+                    ", region_name='" + region_name + '\'' +
+                    ", remarks='" + remarks + '\'' +
+                    ", share_url='" + share_url + '\'' +
+                    ", shooting_time='" + shooting_time + '\'' +
+                    ", staffing='" + staffing + '\'' +
+                    ", store_id='" + store_id + '\'' +
+                    ", store_logo='" + store_logo + '\'' +
+                    ", store_name='" + store_name + '\'' +
+                    ", store_rank='" + store_rank + '\'' +
+                    ", title='" + title + '\'' +
+                    ", toptime='" + toptime + '\'' +
+                    ", type='" + type + '\'' +
+                    ", userid='" + userid + '\'' +
+                    ", video='" + video + '\'' +
+                    ", videotype='" + videotype + '\'' +
+                    ", views='" + views + '\'' +
+                    ", tel='" + tel + '\'' +
+                    ", category_id='" + category_id + '\'' +
+                    ", weight='" + weight + '\'' +
+                    ", attachment=" + attachment +
+                    ", attachment_key=" + attachment_key +
+                    '}';
+        }
+
         /**
          * agree_count : 2
          * attachment : []
@@ -64,6 +116,8 @@ public class GoodDetailModel implements Serializable{
          * videotype : 2,3
          * views : 707
          */
+
+
 
         private String agree_count;
         private int auth;
@@ -479,5 +533,12 @@ public class GoodDetailModel implements Serializable{
         public void setAttachment_key(List<?> attachment_key) {
             this.attachment_key = attachment_key;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "GoodDetailModel{" +
+                "data=" + data +
+                '}';
     }
 }

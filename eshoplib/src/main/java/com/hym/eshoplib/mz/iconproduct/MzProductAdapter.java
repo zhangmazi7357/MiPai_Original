@@ -3,28 +3,20 @@ package com.hym.eshoplib.mz.iconproduct;
 import android.content.Context;
 import android.graphics.Paint;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.route.DistanceItem;
-import com.amap.api.services.route.DistanceResult;
-import com.amap.api.services.route.DistanceSearch;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.R;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,6 +41,7 @@ class MzProductAdapter extends BaseQuickAdapter<HomeIconProductBean.DataBean.Vid
     @Override
     protected void convert(ViewHolder helper, HomeIconProductBean.DataBean.VideoBean item) {
 
+
         Glide.with(mContext)
                 .load(item.getImage_default())
                 .into(helper.proImg);
@@ -63,57 +56,23 @@ class MzProductAdapter extends BaseQuickAdapter<HomeIconProductBean.DataBean.Vid
 
         helper.oldPrice.setText(item.getOriginal_price());
 
-
         String tags = item.getTags();
-        String[] subTags = MzStringUtil.splitTag(tags);
-        List<String> subTagList = Arrays.asList(subTags);
-        helper.flowLayout.setAdapter(new TagAdapter<String>(subTagList) {
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                TextView root = (TextView) LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.mz_tag_textview, parent, false);
-                root.setText(s);
-                return root;
-            }
-        });
+
+        if (!TextUtils.isEmpty(tags)) {
+            String[] subTags = MzStringUtil.splitTag(tags);
+            List<String> subTagList = Arrays.asList(subTags);
+            helper.flowLayout.setAdapter(new TagAdapter<String>(subTagList) {
+                @Override
+                public View getView(FlowLayout parent, int position, String s) {
+                    TextView root = (TextView) LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.mz_tag_textview, parent, false);
+                    root.setText(s);
+                    return root;
+                }
+            });
+        }
 
 
-//        String lon = item.getLon();
-//        String lat = item.getLat();
-
-//        Log.e(TAG, " 目标位置 ：" + lon + "," + lat);
-//        if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {
-//            return;
-//        }
-
-
-//        if (!TextUtils.isEmpty(lon) && !TextUtils.isEmpty(lat) && dest != null) {
-//            double longitute = Double.parseDouble(lon);
-//            double latitude = Double.parseDouble(lat);
-//
-////            Log.e(TAG, "我的位置 :" + dest.getLongitude() + "," + dest.getLatitude() + ",目标位置=" + longitute + "," + latitude);
-//            if (longitute != 0 && latitude != 0) {
-//
-//                LatLonPoint point = new LatLonPoint(longitute, latitude);
-//                ArrayList<LatLonPoint> list = new ArrayList();
-//                list.add(point);
-//
-//
-//                MapManager.getInstance().calculateInstance(mContext, dest, list,
-//                        DistanceSearch.TYPE_DISTANCE, new DistanceSearch.OnDistanceSearchListener() {
-//                            @Override
-//                            public void onDistanceSearched(DistanceResult distanceResult, int i) {
-//                                List<DistanceItem> distanceResults = distanceResult.getDistanceResults();
-//                                DistanceItem distanceItem = distanceResults.get(0);
-//                                float distance = distanceItem.getDistance();
-//                                Log.e(TAG, "onDistanceSearched: " + distance);
-//                                String result = MzStringUtil.distance(distance);
-////                                helper.proDistance.setText("距您" + result);
-//                            }
-//                        });
-//            }
-//
-//        }
     }
 
     class ViewHolder extends BaseViewHolder {
