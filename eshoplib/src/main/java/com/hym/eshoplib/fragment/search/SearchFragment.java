@@ -2,8 +2,10 @@ package com.hym.eshoplib.fragment.search;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;

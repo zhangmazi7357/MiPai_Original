@@ -377,6 +377,7 @@ public class ShopListFragment extends BaseKitFragment {
     private void initAdapter2() {
         rv_city_1.setLayoutManager(new LinearLayoutManager(_mActivity));
         rv_city_2.setLayoutManager(new LinearLayoutManager(_mActivity));
+
         adapter_1 = new BaseListAdapter<ServerCityBean.DataBean.InfoBean>(R.layout.item_check, null) {
             @Override
             public void handleView(BaseViewHolder helper, ServerCityBean.DataBean.InfoBean item, int position) {

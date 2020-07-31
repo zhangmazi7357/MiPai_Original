@@ -2,6 +2,7 @@ package cn.hym.superlib.utils.http;
 
 import android.text.TextUtils;
 
+import com.hym.httplib.HttpConstans;
 import com.hym.httplib.model.HttpRequest;
 
 /**
@@ -15,8 +16,8 @@ import com.hym.httplib.model.HttpRequest;
 public class HttpUtil {
 
 
-    //    public static final String SERVER_IP= HttpConstans.server_ip+"/api";
-    public static final String SERVER_IP = "http://121.40.80.45/api";
+        public static final String SERVER_IP= HttpConstans.server_ip+"/api";
+//    public static final String SERVER_IP = "http://121.40.80.45/api";
     //public static final String SERVER_IP= "http://wenjie.youwoapp.cn/api";
 
 

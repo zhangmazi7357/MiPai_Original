@@ -254,14 +254,13 @@
             android:paddingRight="10dp"
             android:visibility="visible">
 
-            <cn.hym.superlib.widgets.view.RequiredTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"
-                app:required="false"
-                app:requiredText="项目详情" />
+                android:text="项目详情"
+                android:textColor="@color/red" />
 
             <cn.hym.superlib.widgets.view.ClearEditText
                 android:id="@+id/et_detailed"

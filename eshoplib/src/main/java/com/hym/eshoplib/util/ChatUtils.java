@@ -14,16 +14,17 @@ import io.rong.imkit.RongIM;
 
 public class ChatUtils {
 
-    public static void ChatToCustomService(Context context,int position){
+    public static void ChatToCustomService(Context context, int position) {
         //1 觅拍官方 老的
         //2 觅拍小觅新的
 
-        switch (position){
+        switch (position) {
             case 1:
                 RongIM.getInstance().startPrivateChat(context, "2010", "觅拍客服");
                 break;
             case 2:
-                RongIM.getInstance().startPrivateChat(context, "3681", "觅拍\"小觅\"");
+                RongIM.getInstance()
+                        .startPrivateChat(context, "3681", "觅拍\"小觅\"");
                 break;
 
         }

@@ -1,20 +1,19 @@
 package com.hym.eshoplib.mz.iconproduct;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.core.LatLonPoint;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.goods.GoodDetailModel;
@@ -22,13 +21,12 @@ import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.mz.MzConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.hym.superlib.activity.base.BaseActionActivity;
-import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.mz.MzBaseActivity;
 import cn.hym.superlib.mz.widgets.MzHeaderBar;
+
 
 /**
  * icon  显示产品列表
@@ -141,10 +139,13 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                 HomeIconProductBean.DataBean.VideoBean bean = (HomeIconProductBean.DataBean.VideoBean) adapter.getItem(position);
                 String case_id = bean.getCase_id();
 
+//                Log.e(TAG, " == " + JSONObject.toJSONString(bean));
+
                 HomeApi.getProductDetailData(new ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {
 
+//                        Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
 
                         if (data.getData().getType().equals("1")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
@@ -160,6 +161,8 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                             ActionActivity.start(MzProductListActivity.this, bundle);
 
                         } else if (data.getData().getType().equals("2")) {
+
+
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                     ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
@@ -167,6 +170,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                             bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
+
                         }
                     }
 
@@ -201,10 +205,14 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
 
 
     private void getProductLists(boolean isRefresh) {
+
+
         MzNewApi.getProductList(String.valueOf(iconId), String.valueOf(page),
                 new ResponseImpl<HomeIconProductBean>() {
                     @Override
                     public void onSuccess(HomeIconProductBean data) {
+
+                        Log.e(TAG, "  产品列表 = onSuccess: " + JSONObject.toJSON(data));
                         HomeIconProductBean.DataBean dataBean = data.getData();
                         List<HomeIconProductBean.DataBean.VideoBean> list = dataBean.getVideo();
 
@@ -225,7 +233,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                     @Override
                     public void onFailed(Exception e) {
                         super.onFailed(e);
-                        Log.e(TAG, "onError: " + e.getMessage());
+//                        Log.e(TAG, "onError: " + e.getMessage());
                         swipe.setRefreshing(false);
                         adapter.loadMoreFail();
                         adapter.setEnableLoadMore(true);
@@ -276,4 +284,6 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
         adapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
         getProductLists(true);
     }
+
+
 }

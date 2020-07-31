@@ -172,16 +172,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     @BindView(R.id.tv_video_line)
     TextView tvVideoLine;
     private int mDistanceY;
-//    LinearLayout tvFunction1;
-//    LinearLayout tvFunction2;
-//    LinearLayout tvFunction3;
-//    LinearLayout tvFunction4;
-//    LinearLayout tvFunction5;
-//    LinearLayout tvFunction6;
-//    LinearLayout tvFunction7;
-//    LinearLayout tvFunction8;
-//    LinearLayout tvFunction9;
-//    LinearLayout tvFunction10;
 
 
     DrawableTextView homeTab1;

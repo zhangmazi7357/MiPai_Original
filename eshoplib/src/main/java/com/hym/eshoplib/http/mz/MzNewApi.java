@@ -1,5 +1,9 @@
 package com.hym.eshoplib.http.mz;
 
+import android.provider.ContactsContract;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSONObject;
 import com.hym.httplib.interfaces.IHttpResultListener;
 
 import app.App;
@@ -10,6 +14,7 @@ import static cn.hym.superlib.utils.http.ApiExcuter.post;
 
 public class MzNewApi {
 
+    private static String TAG = "MzNewApi";
     // 本地测试服;
     private static String host_ip = "http://121.40.80.45/api";
 
@@ -68,6 +73,7 @@ public class MzNewApi {
         request.addParamsNotEmpty("psize", "20");
         request.addParamsNotEmpty("icon_id", iconId);
 
+//        Log.e(TAG, "getProductList: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
     }
 

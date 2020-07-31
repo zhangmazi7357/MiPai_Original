@@ -548,6 +548,12 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
         String cehua = etCeHua.getText().toString();
 
+        if (TextUtils.isEmpty(detail)) {
+            ToastUtil.toast("请输入项目详情");
+            return;
+        }
+
+
 
         if (TextUtils.isEmpty(mzOneType)) {
             ToastUtil.toast("请选择一个产品分类");

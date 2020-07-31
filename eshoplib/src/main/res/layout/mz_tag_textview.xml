@@ -6,10 +6,11 @@
     android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp"
     android:background="@drawable/mz_bg_tag"
-    android:paddingLeft="3dp"
+    android:paddingLeft="2dp"
     android:paddingTop="1dp"
     android:paddingRight="3dp"
     android:paddingBottom="1dp"
-    android:textColor="@color/red"
+    android:textColor="@color/mz_color_oringe"
     android:textSize="10sp" />
+
 

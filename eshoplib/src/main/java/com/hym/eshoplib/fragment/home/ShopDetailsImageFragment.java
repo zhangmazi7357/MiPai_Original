@@ -106,6 +106,8 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 public class ShopDetailsImageFragment extends BaseKitFragment implements
         View.OnClickListener, AliPay.PayResultListener {
 
+
+    private String TAG = "ShopDetailsImageFragment";
     @BindView(R.id.rv_view)
     RecyclerView rvView;
     @BindView(R.id.tv_report)
@@ -229,6 +231,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private BaseListAdapter<ServiceDetailBean.DataBean.CateListBean> adapter1;
 
 
+    //  产品列表 传递过来的 摄影棚位置坐标点
     private LatLonPoint dest;
 
     @Nullable
@@ -293,8 +296,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         Bundle bundle = getArguments();
         data = (GoodDetailModel) bundle.getSerializable("data");
 
-        // 添加地址 和距离 ;
-
+        Log.e(TAG, " 传递过来的产品详情  =" + data);
 
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
@@ -387,6 +389,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         ShopApi.GetContentDetail(db.getContent_id(), new ResponseImpl<ServiceDetailBean>() {
             @Override
             public void onSuccess(ServiceDetailBean data) {
+//                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
                 mData = data;
                 category_id = data.getData().getCategory_id();
                 cate_list = data.getData().getCate_list();
@@ -791,12 +794,6 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_add_shoppingcart:        // 加入购物车，现在是隐藏状态
@@ -1088,6 +1085,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     }
 
     private void reconnect(String token) {
+
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
@@ -1166,6 +1164,13 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
 
 
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
 }

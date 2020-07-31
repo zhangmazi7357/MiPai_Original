@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
 import com.hym.eshoplib.fragment.shop.mzupload.adapter.MzProductOneTypeAdapter;
@@ -58,6 +60,7 @@ public class MzProductSortActivity extends MzBaseActivity {
         MzNewApi.getOneType(new ResponseImpl<ProductOneTypeBean>() {
             @Override
             public void onSuccess(ProductOneTypeBean data) {
+                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
                 List<ProductOneTypeBean.DataBean> list = data.getData();
                 adapter.setDatas(list);
             }
