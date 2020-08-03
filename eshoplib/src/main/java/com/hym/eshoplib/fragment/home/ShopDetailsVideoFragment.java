@@ -195,6 +195,62 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     TextView tvGoPay;
     @BindView(R.id.tv_add_shoppingcart)
     TextView tvAddShoppingcart;
+
+
+    //////////////////////// 工作室详情  ///////////////////
+    @BindView(R.id.tv_des)
+    TextView mzRemark;    //   个人简介;
+
+    @BindView(R.id.tv_award_name)
+    TextView mzAward;       // 获得奖项;
+
+    @BindView(R.id.tv_study_level)
+    TextView mzSchool;         // 毕业院校
+
+    @BindView(R.id.tv_zhuanye)
+    TextView mzMajor;   // 专业
+
+    @BindView(R.id.tv_xueli)
+    TextView mzEducation;          //学历
+
+    @BindView(R.id.tv_work)
+    TextView mzJob;            //  从业经历
+
+    @BindView(R.id.tv_renzheng_1)
+    TextView mzRenzheng1;      // 获得奖项 认证
+
+    @BindView(R.id.tv_renzheng_2)
+    TextView mzRenzheng2;        // 毕业院校认证;
+
+    @BindView(R.id.ll_gender)
+    LinearLayout ll_gender;
+
+    @BindView(R.id.ll_age)
+    LinearLayout ll_age;
+    @BindView(R.id.ll_height)
+    LinearLayout ll_height;
+    @BindView(R.id.ll_weight)
+    LinearLayout ll_weight;
+    @BindView(R.id.tv_gender)
+    TextView tv_gender;
+    @BindView(R.id.tv_age)
+    TextView tv_age;
+
+    @BindView(R.id.tv_height)
+    TextView tv_height;
+    @BindView(R.id.tv_weight)
+    TextView tv_weight;
+
+    @BindView(R.id.diver_1)
+    View diver_1;
+    @BindView(R.id.diver_2)
+    View diver_2;
+    @BindView(R.id.diver_3)
+    View diver_3;
+    @BindView(R.id.diver_4)
+    View diver_4;
+
+
     private CustomShareListener mShareListener;
     private ShareAction mShareAction;
     private Unbinder unbinder;
@@ -410,7 +466,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 cate_list = data.getData().getCate_list();
                 if (category_id.equals("46")) {
                     rlCallPhone.setVisibility(View.GONE);
+                    setCategoryId46(data);
                 }
+
+                setDetailData(data);
+
             }
         }, ServiceDetailBean.class);
 
@@ -1111,5 +1171,50 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         }
 
 
+    }
+
+
+    // 工作室详情
+    private void setDetailData(ServiceDetailBean data) {
+        mzRemark.setText(TextUtils.isEmpty(data.getData().getRemark()) ? "暂无" : data.getData().getRemark());//个人简介
+        mzJob.setText(TextUtils.isEmpty(data.getData().getJob()) ? "暂无" : data.getData().getJob());
+        mzAward.setText(TextUtils.isEmpty(data.getData().getAwards_memo()) ? "暂无" : data.getData().getAwards_memo());
+        mzSchool.setText(TextUtils.isEmpty(data.getData().getUniversity()) ? "暂无" : data.getData().getUniversity());
+        mzEducation.setText(TextUtils.isEmpty(data.getData().getEducation()) ? "暂无" : data.getData().getEducation());
+        mzMajor.setText(TextUtils.isEmpty(data.getData().getMajor()) ? "暂无" : data.getData().getMajor());
+        if (data.getData().getCertificate_auth().equals("1")) {
+            mzRenzheng1.setText("已认证");
+        } else {
+            mzRenzheng1.setText("未认证");
+        }
+        if (data.getData().getXuelizs_auth().equals("1")) {
+            mzRenzheng2.setText("已认证");
+        } else {
+            mzRenzheng2.setText("未认证");
+        }
+    }
+
+
+    //  category_id  == 46
+    private void setCategoryId46(ServiceDetailBean data) {
+        ll_gender.setVisibility(View.VISIBLE);
+        ll_age.setVisibility(View.VISIBLE);
+        ll_height.setVisibility(View.VISIBLE);
+        ll_weight.setVisibility(View.VISIBLE);
+        diver_1.setVisibility(View.VISIBLE);
+        diver_2.setVisibility(View.VISIBLE);
+        diver_3.setVisibility(View.VISIBLE);
+        diver_4.setVisibility(View.VISIBLE);
+        String gender = "";
+        if (data.getData().getGender().equals("1")) {
+            gender = "男";
+        }
+        if (data.getData().getGender().equals("2")) {
+            gender = "女";
+        }
+        tv_gender.setText(gender);
+        tv_age.setText(data.getData().getAge() + "岁");
+        tv_height.setText(data.getData().getHeight() + "cm");
+        tv_weight.setText(data.getData().getWeight() + "kg");
     }
 }

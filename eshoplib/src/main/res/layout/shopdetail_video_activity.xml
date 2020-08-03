@@ -567,13 +567,17 @@
                     android:textColor="#555555"
                     android:textSize="14sp" />
 
+
                 <TextView
                     android:layout_width="25dp"
                     android:layout_height="1dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/tv_team_introduction"
-                    android:background="#555555" />
+                    android:background="#555555"
+                    android:visibility="gone" />
             </RelativeLayout>
+
+            <include layout="@layout/header_shop_detail" />
 
             <TextView
                 android:id="@+id/tv_team_introduce"
@@ -582,7 +586,8 @@
                 android:background="@color/white"
                 android:padding="15dp"
                 android:textColor="#000000"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"

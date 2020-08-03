@@ -575,6 +575,9 @@
                     android:background="#555555" />
             </RelativeLayout>
 
+
+            <include layout="@layout/header_shop_detail" />
+
             <TextView
                 android:id="@+id/tv_team_introduce"
                 android:layout_width="match_parent"
@@ -582,7 +585,8 @@
                 android:background="@color/white"
                 android:padding="15dp"
                 android:textColor="#000000"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="match_parent"
