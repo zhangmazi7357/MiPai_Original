@@ -115,7 +115,6 @@
                 android:id="@+id/tv_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="@color/white"
                 android:paddingLeft="19dp"
                 android:paddingBottom="10dp"
@@ -535,7 +534,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"

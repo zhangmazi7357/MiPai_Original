@@ -14,6 +14,10 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -316,6 +320,33 @@ public class MapManager {
         // 通过 PoiSearch.OnPoiSearchListener的回调 onPoiSearched() 将搜索点绘制在地图上
 
 
+    }
+
+
+    public void click(Context context, GeocodeSearch.OnGeocodeSearchListener listener) {
+        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                aMap.clear(true);
+                addMarker(latLng, "", "");
+                Log.e(TAG, "onMapClick: " + latLng);
+
+                LatLonPoint point = new LatLonPoint(latLng.latitude, latLng.longitude);
+                geoCode(context, point, listener);
+
+            }
+        });
+    }
+
+
+    // 逆地理编码 ;
+    private void geoCode(Context context, LatLonPoint point, GeocodeSearch.OnGeocodeSearchListener listener) {
+        GeocodeSearch geocoderSearch = new GeocodeSearch(context);
+        geocoderSearch.setOnGeocodeSearchListener(listener);
+        // 第一个参数表示一个Latlng(经纬度)，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+        RegeocodeQuery query = new RegeocodeQuery(point, 200, GeocodeSearch.AMAP);
+        geocoderSearch.getFromLocationAsyn(query);
     }
 
 }

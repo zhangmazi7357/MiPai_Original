@@ -1,6 +1,7 @@
 package com.hym.eshoplib.fragment.search;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,8 +21,10 @@ import android.widget.TextView;
 import com.allen.library.SuperButton;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.goods.SearchHistoryBean;
+import com.hym.eshoplib.fragment.search.mz.MzSearchResultActivity;
 import com.hym.eshoplib.http.goods.GoodsApi;
 import com.hym.eshoplib.http.home.HomeApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -34,9 +37,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.utils.common.DialogUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.widgets.view.ClearEditText;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by 胡彦明 on 2017/5/31.
@@ -94,6 +97,7 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
         ivBack.setVisibility(View.GONE);
         tvRight.setVisibility(View.VISIBLE);
         etSearch.setVisibility(View.VISIBLE);
+
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -110,24 +114,41 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
             public void onClick(View v) {
                 String confirm = getResources().getString(R.string.Confirm);
                 String cancle = getResources().getString(R.string.Cancel);
-                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "清除记录", "您确定要清除历史搜索记录么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                    @Override
-                    public void onCancleClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
 
-                    }
 
-                    @Override
-                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
-                        deleteHistory();
+                DialogManager.getInstance().initSimpleDialog(_mActivity, "清除记录", "您确定要清除历史搜索记录么",
+                        "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
 
-                    }
-                });
-                pDialog.show();
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
+                                deleteHistory();
+                            }
+                        }).show();
+
+//                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "清除记录",
+//                        "您确定要清除历史搜索记录么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
+//                            @Override
+//                            public void onCancleClick(SweetAlertDialog sDialog) {
+//                                sDialog.dismiss();
+//
+//                            }
+//
+//                            @Override
+//                            public void onConfirmeClick(SweetAlertDialog sDialog) {
+//                                sDialog.dismiss();
+//                                deleteHistory();
+//
+//                            }
+//                        });
+//                pDialog.show();
+
             }
         });
-
 
     }
 
@@ -147,9 +168,11 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
                 }
                 break;
             case R.id.tv_search:
+
                 //搜索按钮
                 String keywords = etSearch.getText().toString();
                 goSearch(keywords);
+
                 break;
         }
     }
@@ -215,11 +238,15 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
 
     private void goSearch(String keywords) {
         hideSoftInput();
-        Bundle bundle = new Bundle();
-        bundle.putString("keywords", keywords);
-        start(SearchResultFragment.newInstance(bundle));
+
+        Intent intent = new Intent(_mActivity, MzSearchResultActivity.class);
+        intent.putExtra(MzConstant.KEY_SEARCH_KEYWORD, keywords);
+        startActivity(intent);
 
 
+//        Bundle bundle = new Bundle();
+//        bundle.putString("keywords", keywords);
+//        start(SearchResultFragment.newInstance(bundle));
     }
 
     private void deleteHistory() {

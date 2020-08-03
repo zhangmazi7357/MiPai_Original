@@ -30,17 +30,20 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * otherTips
  */
 
-public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.DataBean.InfoBean>{
-    String keywords="";
+public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.DataBean.InfoBean> {
+    String keywords = "";
+
     public static SearchImageListFragment newInstance(Bundle args) {
         SearchImageListFragment fragment = new SearchImageListFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public boolean showToolBar() {
         return false;
     }
+
     @Override
     public int getItemRestId() {
         return R.layout.item_search_result;
@@ -48,19 +51,20 @@ public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.D
 
     @Override
     public void excuteLogic() {
-        keywords=getArguments().getString("keywords","");
+        keywords = getArguments().getString("keywords", "");
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {
-                        if (data.getData().getType().equals("1")){
+                        if (data.getData().getType().equals("1")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(_mActivity, bundle);
-                        }else if (data.getData().getType().equals("2")){
+                        } else if (data.getData().getType().equals("2")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
@@ -96,16 +100,16 @@ public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.D
     }
 
 
-
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
-        ShopApi.getProductsList3(keywords,pageNum + "", "2",new ResponseImpl<ShopProductsBean>() {
+
+        ShopApi.getProductsList3(keywords, pageNum + "", "2", new ResponseImpl<ShopProductsBean>() {
             @Override
             public void onSuccess(ShopProductsBean data) {
-                if(refresh){
-                    setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()),pageNum,data.getData().getInfo(),getAdapter()));
-                }else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()),pageNum,data.getData().getInfo(),getAdapter()));
+                if (refresh) {
+                    setPageNum(HttpResultUtil.onRefreshSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
+                } else {
+                    setPageNum(HttpResultUtil.onLoardMoreSuccess(Integer.parseInt(data.getData().getTotalpage()), pageNum, data.getData().getInfo(), getAdapter()));
                 }
             }
 
@@ -113,55 +117,55 @@ public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.D
             public void onEmptyData() {
                 super.onEmptyData();
                 getAdapter().setNewData(null);
-               // getAdapter().notifyDataSetChanged();
+                // getAdapter().notifyDataSetChanged();
             }
-        },ShopProductsBean.class);
-
+        }, ShopProductsBean.class);
 
 
     }
 
     @Override
     public void bindData(BaseViewHolder helper, ShopProductsBean.DataBean.InfoBean item, int position) {
-        View diver=helper.getView(R.id.view_diver);
-        if(position==0){
+        View diver = helper.getView(R.id.view_diver);
+        if (position == 0) {
             diver.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             diver.setVisibility(View.GONE);
         }
         helper.getView(R.id.iv_play).setVisibility(View.GONE);
         helper.getView(R.id.tv_time_long).setVisibility(View.GONE);
-        ImageView iv_bg=helper.getView(R.id.iv_bg);
+        ImageView iv_bg = helper.getView(R.id.iv_bg);
         ScreenUtil.ViewAdapter(_mActivity, iv_bg, 16, 9, 20);
-        ImageUtil.getInstance().loadRoundCornerImage(SearchImageListFragment.this,item.getImage_default(),iv_bg,5);
-        helper.setText(R.id.tv_title,item.getTitle()+"");
-        ImageUtil.getInstance().loadCircleImage(SearchImageListFragment.this,item.getLogo(), (ImageView) helper.getView(R.id.iv_shop_logo));
-        helper.setText(R.id.tv_shop_name,item.getStore_name());
-        MaterialRatingBar ratingBar=helper.getView(R.id.ratingbar);
+        ImageUtil.getInstance().loadRoundCornerImage(SearchImageListFragment.this, item.getImage_default(), iv_bg, 5);
+        helper.setText(R.id.tv_title, item.getTitle() + "");
+        ImageUtil.getInstance().loadCircleImage(SearchImageListFragment.this, item.getLogo(), (ImageView) helper.getView(R.id.iv_shop_logo));
+        helper.setText(R.id.tv_shop_name, item.getStore_name());
+        MaterialRatingBar ratingBar = helper.getView(R.id.ratingbar);
         ratingBar.setRating(Float.parseFloat(item.getStore_rank()));
-        helper.setText(R.id.tv_see_time,item.getViews()+"次观看");
-        TextView tv_zan=helper.getView(R.id.tv_zan);
-        if(item.getIs_agree().equals("1")){
-            tv_zan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_zan_check,0,0,0);
-        }else {
-            tv_zan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_zan_uncheck,0,0,0);
+        helper.setText(R.id.tv_see_time, item.getViews() + "次观看");
+        TextView tv_zan = helper.getView(R.id.tv_zan);
+        if (item.getIs_agree().equals("1")) {
+            tv_zan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_zan_check, 0, 0, 0);
+        } else {
+            tv_zan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_zan_uncheck, 0, 0, 0);
         }
-        tv_zan.setText(item.getAgree()+"");
-        ImageView iv_vip=helper.getView(R.id.iv_vip);
-        if(item.getAuth().equals("1")){
+        tv_zan.setText(item.getAgree() + "");
+        ImageView iv_vip = helper.getView(R.id.iv_vip);
+        if (item.getAuth().equals("1")) {
             iv_vip.setVisibility(View.VISIBLE);
             iv_vip.setImageResource(R.drawable.ic_person_circle);
-        }else if(item.getAuth().equals("2")){
+        } else if (item.getAuth().equals("2")) {
             iv_vip.setVisibility(View.VISIBLE);
             iv_vip.setImageResource(R.drawable.ic_business_circle);
-        }else {
+        } else {
             iv_vip.setVisibility(View.GONE);
         }
 
 
     }
-    public  void search(String key){
-        keywords=key;
+
+    public void search(String key) {
+        keywords = key;
         onRefresh();
     }
 }

@@ -1,8 +1,10 @@
 package com.hym.eshoplib.fragment.search;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,7 @@ public class SearchResultFragment extends BaseTabViewPagerFragment {
     ImageView ivToolbarRight;
     @BindView(R.id.ll_toolbar_bg)
     LinearLayout llToolbarBg;
+
     Unbinder unbinder;
 
     public static SearchResultFragment newInstance(Bundle args) {
@@ -72,6 +75,14 @@ public class SearchResultFragment extends BaseTabViewPagerFragment {
     public int getToolBarResId() {
         return R.layout.layout_toolbar_search;
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
 
     @Override
     public List<Class<? extends Fragment>> getClasses() {
@@ -102,13 +113,13 @@ public class SearchResultFragment extends BaseTabViewPagerFragment {
         //getTabLayout().setIndicatorMargin(ScreenUtil.dip2px(_mActivity,20),0,ScreenUtil.dip2px(_mActivity,20),0);
         etSearch.setVisibility(View.VISIBLE);
         tvRight.setVisibility(View.GONE);
-        etSearch.setText(getArguments().getString("keywords",""));
+        etSearch.setText(getArguments().getString("keywords", ""));
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                ( (SearchShopListFragment)fragments[0]).search(etSearch.getText().toString());
-                ( (SearchVadieoListFragment)fragments[1]).search(etSearch.getText().toString());
-                ( (SearchImageListFragment)fragments[2]).search(etSearch.getText().toString());
+                ((SearchShopListFragment) fragments[0]).search(etSearch.getText().toString());
+                ((SearchVadieoListFragment) fragments[1]).search(etSearch.getText().toString());
+                ((SearchImageListFragment) fragments[2]).search(etSearch.getText().toString());
                 hideSoftInput();
                 return false;
             }
@@ -121,13 +132,6 @@ public class SearchResultFragment extends BaseTabViewPagerFragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
     @Override
     public void onDestroyView() {

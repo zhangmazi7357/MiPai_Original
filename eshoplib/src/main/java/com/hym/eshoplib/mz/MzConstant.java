@@ -33,4 +33,7 @@ public class MzConstant {
 
     public static final String KEY_HOME_ICON_ID = "KEY_HOME_ICON_ID";
     public static final String KEY_HOME_ICON_PRODUCT = "KEY_HOME_ICON_PRODUCT";
+
+
+    public static final String KEY_SEARCH_KEYWORD = "KEY_SEARCH_KEYWORD";
 }

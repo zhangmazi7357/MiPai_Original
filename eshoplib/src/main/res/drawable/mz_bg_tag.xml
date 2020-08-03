@@ -3,5 +3,8 @@
 
     <stroke
         android:width="1dp"
-        android:color="@color/mz_color_oringe" />
+        android:color="@color/mz_color_tag_bg" />
+
+    <solid android:color="@color/mz_color_tag_bg" />
+    <corners android:radius="3dp" />
 </shape>

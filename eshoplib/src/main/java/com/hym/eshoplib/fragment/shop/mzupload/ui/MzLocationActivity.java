@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -17,12 +18,18 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
@@ -134,6 +141,7 @@ public class MzLocationActivity extends AppCompatActivity {
             }
             Intent intent = new Intent();
 
+
             intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS, mzAddress);
             intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_LAT, latitudes);
             intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_LON, longitudes);
@@ -145,13 +153,19 @@ public class MzLocationActivity extends AppCompatActivity {
     }
 
 
-    private void initMap(Bundle savedInstanceState) {
+    private void initMap(Bundle bundle) {
 
 
         mapView = findViewById(R.id.mapView);
 
         // 创建地图
-        aMap = MapManager.getInstance().createMap(mapView, savedInstanceState);
+        if (mapView != null) {
+            mapView.onCreate(bundle);
+            if (aMap == null) {
+                aMap = mapView.getMap();
+            }
+        }
+        click();
 
 
     }
@@ -201,83 +215,57 @@ public class MzLocationActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        // 显示一个小蓝点;
-        MapManager.getInstance().locationEnable(2000,
-                MyLocationStyle.LOCATION_TYPE_FOLLOW_NO_CENTER,
-                new AMap.OnMyLocationChangeListener() {
+    private void click() {
+        if (aMap == null) {
+            Log.e(TAG, "click: Amap == null");
+            return;
+        }
+
+
+        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                aMap.clear(true);
+                showRv = false;
+
+                aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+                aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
+                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+
+//                Log.e(TAG, "onMapClick: " + latLng);
+
+                LatLonPoint point = new LatLonPoint(latLng.latitude, latLng.longitude);
+                geoCode(MzLocationActivity.this, point, new GeocodeSearch.OnGeocodeSearchListener() {
+
                     @Override
-                    public void onMyLocationChange(Location location) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                        Bundle extras = location.getExtras();
-//                        Log.e("TAG", "latitude: " + latitude + ",longitude = " + longitude);
+                    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                        mzAddress = regeocodeResult.getRegeocodeAddress().getAois().get(0).getAoiName();
+
+                        if (!TextUtils.isEmpty(mzAddress)) {
+                            etPoi.setText(mzAddress);
+                            etPoi.setSelection(mzAddress.length());
+                        }
+                    }
+
+                    @Override
+                    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
                     }
                 });
 
-
-    }
-
-
-    private void markerListener() {
-        aMap.addOnMarkerClickListener(new AMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-//                isClickMarkerShowRv = true;
-
-                marker.showInfoWindow();
-//                Log.e(TAG, "marker点击事件" + JSONObject.toJSONString(marker));
-                LatLng position = marker.getOptions().getPosition();
-                latitudes = position.latitude;
-                longitudes = position.longitude;
-                mzAddress = marker.getTitle() + marker.getSnippet();
-                if (!TextUtils.isEmpty(mzAddress)) {
-                    etPoi.setHint(mzAddress);
-                }
-
-                return true;
             }
         });
     }
 
 
-    private void keyWordSearch(String address) {
-        MapManager.getInstance()
-                .poiSearch(MzLocationActivity.this,
-                        address, "010", new PoiSearch.OnPoiSearchListener() {
-                            @Override
-                            public void onPoiSearched(PoiResult poiResult, int i) {
-//                                        Log.e(TAG, "onPoiSearched: " + JSONObject.toJSONString(poiResult));
-
-
-                                ArrayList<PoiItem> pois = poiResult.getPois();
-
-                                for (int j = 0; j < pois.size(); j++) {
-                                    PoiItem poiItem = pois.get(j);
-                                    LatLonPoint latLonPoint = poiItem.getLatLonPoint();
-                                    double latitude = latLonPoint.getLatitude();
-                                    double longitude = latLonPoint.getLongitude();
-
-                                    LatLng point = new LatLng(latitude, longitude);
-
-                                    /**
-                                     *   先不添加marker ;
-                                     */
-//                                            MapManager.getInstance()
-//                                                    .addMarker(point, poiItem.getTitle(), poiItem.getSnippet());
-
-                                }
-
-                            }
-
-                            @Override
-                            public void onPoiItemSearched(PoiItem poiItem, int i) {
-                                Log.e(TAG, "onPoiItemSearched: " + JSONObject.toJSONString(poiItem));
-                            }
-                        });
+    private void geoCode(Context context, LatLonPoint point, GeocodeSearch.OnGeocodeSearchListener listener) {
+        GeocodeSearch geocoderSearch = new GeocodeSearch(context);
+        geocoderSearch.setOnGeocodeSearchListener(listener);
+        // 第一个参数表示一个Latlng(经纬度)，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+        RegeocodeQuery query = new RegeocodeQuery(point, 200, GeocodeSearch.AMAP);
+        geocoderSearch.getFromLocationAsyn(query);
     }
+
 }

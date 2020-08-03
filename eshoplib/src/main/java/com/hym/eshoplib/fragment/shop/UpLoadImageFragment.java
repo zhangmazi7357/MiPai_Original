@@ -554,7 +554,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
         }
 
 
-
         if (TextUtils.isEmpty(mzOneType)) {
             ToastUtil.toast("请选择一个产品分类");
             return;
@@ -779,7 +778,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                     mzLon = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LON);
 
                     mzLocation.setContent(mzAddress);
-//                    Log.e(TAG, "address =" + address + ",lat = " + lat + ",lon=" + lon);
+                    Log.e(TAG, "address =" + mzAddress + ",lat = " + mzLat + ",lon=" + mzLon);
 
                     break;
             }

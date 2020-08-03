@@ -53,7 +53,6 @@ public class POISearchAdapter extends RecyclerView.Adapter<POISearchAdapter.View
 
         Tip tip = datas.get(position);
 
-        Log.e("===", "tip : " + JSONObject.toJSONString(tip));
 
         if (tip != null) {
             holder.poiName.setText(tip.getName());
