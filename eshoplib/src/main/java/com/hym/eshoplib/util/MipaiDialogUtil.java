@@ -116,7 +116,11 @@ public class MipaiDialogUtil {
     }
 
     //选择规格
-    public static void showSpetificDialog(Context mContext, String title, RecyclerView.Adapter<?> adapter, String leftstr, View.OnClickListener left, String rightstr, View.OnClickListener listener_ok, boolean showCancleIcon) {
+    public static void showSpetificDialog(Context mContext, String title,
+                                          RecyclerView.Adapter<?> adapter,
+                                          String leftstr, View.OnClickListener left, String rightstr,
+                                          View.OnClickListener listener_ok, boolean showCancleIcon) {
+
         dialog = new Dialog(mContext, R.style.DialogStyle);
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_pay_type_dialog, null);
         Button btn_left = view.findViewById(R.id.btn_left);
@@ -139,18 +143,24 @@ public class MipaiDialogUtil {
         if (!TextUtils.isEmpty(rightstr)) {
             btn_ok.setText(rightstr);
         }
-        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancel);
-        if (!showCancleIcon) {
-            tv_cancle.setCompoundDrawables(null, null, null, null);
-        }
-        tv_cancle.setText(title);
-        tv_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        RecyclerView rv_list = (RecyclerView) view.findViewById(R.id.rv_list);
+
+
+//        TextView tv_cancle = (TextView) view.findViewById(R.id.tv_cancel);
+//        if (!showCancleIcon) {
+//            tv_cancle.setCompoundDrawables(null, null, null, null);
+//        }
+//        if (!TextUtils.isEmpty(title)) {
+//            tv_cancle.setText(title);
+//        }
+//        tv_cancle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dismiss();
+//            }
+//        });
+
+
+        RecyclerView rv_list = view.findViewById(R.id.rv_list);
         rv_list.setLayoutManager(new LinearLayoutManager(mContext));
         if (adapter != null) {
             rv_list.setAdapter(adapter);

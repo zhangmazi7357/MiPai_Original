@@ -1,66 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white"
         android:layout_alignParentBottom="true"
-        >
+        android:background="@color/white"
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/tv_cancle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableRight="@drawable/ic_cancle"
             android:gravity="center"
             android:text="支付方式"
-            android:textColor="@color/black"
-            android:drawableRight="@drawable/ic_cancle"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_cancle"/>
+            android:textColor="@color/black" />
+
         <View style="@style/LineHorizontal" />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rv_list">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#f1f1f1"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:background="#f1f1f1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
+                android:id="@+id/btn_left"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="加入购物车"
                 android:background="@color/white"
-                android:textColor="@color/mipaiTextColorNormal"
                 android:gravity="center"
-                android:id="@+id/btn_left"
-               />
+                android:text="加入购物车"
+                android:textColor="@color/mipaiTextColorNormal" />
+
             <View
+                android:id="@+id/view_diver"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#f1f1f1"
-                android:id="@+id/view_diver"/>
+                android:background="#f1f1f1" />
+
             <Button
+                android:id="@+id/btn_ok"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="确定"
                 android:background="@drawable/shape_toolbar_bg"
-                android:textColor="@color/white"
-
                 android:gravity="center"
-                android:id="@+id/btn_ok"
-                />
+                android:text="确定"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

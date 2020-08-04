@@ -228,45 +228,50 @@ public class MzLocationActivity extends AppCompatActivity {
             @Override
             public void onMapClick(LatLng latLng) {
 
-                aMap.clear(true);
+
                 showRv = false;
 
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
-                aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
-                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
 //                Log.e(TAG, "onMapClick: " + latLng);
 
                 LatLonPoint point = new LatLonPoint(latLng.latitude, latLng.longitude);
-                geoCode(MzLocationActivity.this, point, new GeocodeSearch.OnGeocodeSearchListener() {
+                geoCode(MzLocationActivity.this, point,
+                        new GeocodeSearch.OnGeocodeSearchListener() {
 
-                    @Override
-                    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                        if (i == AMapException.CODE_AMAP_SUCCESS) {
-                            aMap.clear(true);
-                            aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
-                            aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
-                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+                            @Override
+                            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+                                if (i == AMapException.CODE_AMAP_SUCCESS) {
+
+                                    aMap.clear(true);
+                                    aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+                                    aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
+                                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
 
-                            mzAddress = regeocodeResult.getRegeocodeAddress().getFormatAddress();
-                            if (!TextUtils.isEmpty(mzAddress)) {
-                                etPoi.setText(mzAddress);
-                                etPoi.setSelection(mzAddress.length());
+
+                                    mzAddress = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+
+                                    if (!TextUtils.isEmpty(mzAddress)) {
+                                        etPoi.setText(mzAddress);
+                                        etPoi.setSelection(mzAddress.length());
+                                    }
+                                } else {
+                                    Toast.makeText(getApplication(), "获取当前位置信息失败", Toast.LENGTH_SHORT).show();
+                                }
+
+
                             }
-                        }else{
-                            Toast.makeText(MzLocationActivity.this, "获取当前位置信息失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
 
-                    @Override
-                    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                            @Override
+                            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
 
-                    }
-                });
+                            }
+                        });
 
             }
         });
+
     }
 
 

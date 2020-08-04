@@ -91,6 +91,8 @@ public class ShopInfoFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
+        // 工作室详情;
         ShopApi.getShopDetail(new ResponseImpl<ShopDetailBean>() {
             @Override
             public void onSuccess(ShopDetailBean data) {
@@ -171,9 +173,11 @@ public class ShopInfoFragment extends BaseKitFragment {
                 break;
             case R.id.tv_card_info:
                 //身份证信息
-                Bundle bundle_card = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_Shop_editCardInfo);
+                Bundle bundle_card = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
+                        ActionActivity.Action_Shop_editCardInfo);
                 bundle_card.putSerializable("data", data);
                 ActionActivity.start(_mActivity, bundle_card);
+
                 break;
             case R.id.tv_work_info:
                 //从业信息
