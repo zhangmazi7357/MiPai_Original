@@ -23,7 +23,8 @@ public class MzSearchResultActivity extends MzBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = MzActivitySearchResultBinding.inflate(LayoutInflater.from(this));
+        binding = MzActivitySearchResultBinding
+                .inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
 
@@ -35,6 +36,11 @@ public class MzSearchResultActivity extends MzBaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        binding.mzBar.et_search.setText();
+
+        binding.ivBack.setOnClickListener(v -> {
+            finish();
+        });
+
+
     }
 }

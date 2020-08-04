@@ -183,7 +183,8 @@ public class MeFragment extends BaseKitFragment {
                                 //预览工作室
                                 //  工作室有 service_id  这个字段
                                 String content_id = medetailBean.getData().getService_id();
-                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopDetail);
+                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
+                                        ActionActivity.Action_ShopDetail);
                                 //bundle.putInt("type",getArguments().getInt("type",1));//工作室类型，对应首页
                                 bundle.putString("id", content_id);
                                 ActionActivity.start(_mActivity, bundle);
@@ -226,6 +227,7 @@ public class MeFragment extends BaseKitFragment {
                     ivVip.setVisibility(View.VISIBLE);
                     ivVip.setImageResource(R.drawable.ic_business_circle);
                 }
+
             }
 
         }, MedetailBean.class);
