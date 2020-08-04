@@ -774,6 +774,35 @@
         app:isShowArrow="true"
         app:title="@string/mz_product_tag" />
 
+    <!-- 详细地址 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="地址"
+            android:textColor="@color/red" />
+
+        <cn.hym.superlib.widgets.view.ClearEditText
+            android:id="@+id/mz_et_address"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入详细地址"
+            android:textColor="@color/black"
+            android:textColorHint="#9c9c9c"
+            android:textSize="12sp" />
+    </LinearLayout>
+
     <!--    摄影棚地址-->
     <cn.hym.superlib.mz.widgets.UploadItemView
         android:id="@+id/mz_location"
@@ -783,5 +812,6 @@
         app:isShowArrow="true"
         app:title="@string/mz_location"
         app:titleTextColor="@color/red" />
+
 
 </LinearLayout>

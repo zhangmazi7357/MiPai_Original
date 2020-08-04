@@ -14,7 +14,7 @@
     <string name="mz_sub_product_title">二级产品分类</string>
     <string name="mz_product_tag_hint">请选择所属标签</string>
     <string name="mz_product_tag">选择所属标签</string>
-    <string name="mz_location">摄影棚地址</string>
+    <string name="mz_location">选择定位</string>
     <string name="home_icon_1">职业形象照</string>
     <string name="home_icon_2">短视频拍摄</string>
     <!-- TODO: Remove or change this placeholder text -->

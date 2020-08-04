@@ -198,6 +198,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
         TextView tvBeforePrice = helper.getView(R.id.tv_before_price);*/
         TextView tv_time = helper.getView(R.id.tv_time);
         final String type = item.getType();
+
         iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,6 +262,7 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
         });
         ImageUtil.getInstance().loadImage(ShopProductListFragment.this, item.getImage_default(), iv_image);
         tv_name.setText(item.getTitle() + "");
+
         switch (item.getIs_verify()) {
             case "0":
                 tv_see_time.setTextColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect));

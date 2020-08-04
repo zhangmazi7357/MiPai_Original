@@ -60,6 +60,7 @@ import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
+import cn.hym.superlib.widgets.view.ClearEditText;
 
 /**
  * Created by 胡彦明 on 2018/9/11.
@@ -124,6 +125,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
     private UploadItemView mzProductTag;                      //  产品标签
     private UploadItemView mzLocation;                        // 摄影棚地址；
 
+    private ClearEditText mzEtAddress;                       // 详细地址 ;
 
     private String mzOneType = "";    // 产品一级分类选中的 id  ;
     private String mzTwoType = "";
@@ -335,6 +337,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
         mzProductTag = footer.findViewById(R.id.mz_productTag);
         mzLocation = footer.findViewById(R.id.mz_location);
 
+        mzEtAddress = footer.findViewById(R.id.mz_et_address);
 
         View.OnClickListener mzClickListener = new View.OnClickListener() {
             @Override
@@ -548,6 +551,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
         String cehua = etCeHua.getText().toString();
 
+        mzAddress = mzEtAddress.getText().toString();
+
         if (TextUtils.isEmpty(detail)) {
             ToastUtil.toast("请输入项目详情");
             return;
@@ -564,7 +569,12 @@ public class UpLoadImageFragment extends BaseKitFragment {
         }
 
         if (TextUtils.isEmpty(mzAddress)) {
-            ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
+            ToastUtil.toast("请输入详细地址");
+            return;
+        }
+
+        if (mzLon == 0.0 || mzLat == 0.0) {
+            ToastUtil.toast("请选择定位");
             return;
         }
 
@@ -773,11 +783,12 @@ public class UpLoadImageFragment extends BaseKitFragment {
                 case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
 
                     Bundle bundle = data.getExtras();
-                    mzAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
+                    String mapAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
                     mzLat = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LAT);
                     mzLon = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LON);
 
-                    mzLocation.setContent(mzAddress);
+                    mzLocation.setContent(mapAddress);
+
                     Log.e(TAG, "address =" + mzAddress + ",lat = " + mzLat + ",lon=" + mzLon);
 
                     break;

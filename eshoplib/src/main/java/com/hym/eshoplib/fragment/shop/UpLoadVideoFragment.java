@@ -64,6 +64,7 @@ import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
+import cn.hym.superlib.widgets.view.ClearEditText;
 import io.rong.common.FileUtils;
 
 
@@ -130,6 +131,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
     private UploadItemView mzProductTag;                      //  产品标签
     private UploadItemView mzLocation;                        // 摄影棚地址；
 
+    private ClearEditText mzEtAddress;                      // 详细地址
 
     private String mzOneType = "";    // 产品一级分类选中的 id  ;
     private String mzTwoType = "";
@@ -357,6 +359,8 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         mzProductTag = footer.findViewById(R.id.mz_productTag);
         mzLocation = footer.findViewById(R.id.mz_location);
 
+        mzEtAddress = footer.findViewById(R.id.mz_et_address);
+
         View.OnClickListener mzClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -573,6 +577,8 @@ public class UpLoadVideoFragment extends BaseKitFragment {
 
         String cehua = etCeHua.getText().toString();
 
+        mzAddress = mzEtAddress.getText().toString();
+
         if (TextUtils.isEmpty(detail)) {
             ToastUtil.toast("请输入项目详情");
             return;
@@ -588,28 +594,14 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         }
 
         if (TextUtils.isEmpty(mzAddress)) {
-            ToastUtil.toast("请选择摄影棚地址，如果没有摄影棚请输入常用地址");
+            ToastUtil.toast("请输入详细地址");
             return;
         }
 
-//        Call<ResponseBody> call = ApiRetrofit.getApiService()
-//                .upLoadVideo("Store", "NewAddProduction",
-//                        UserUtil.getToken(App.instance), "1", image_default, attachment,
-//                        title, length, etPrice, mzOneType, mzTwoType, mzAddress, String.valueOf(mzLon),
-//                        String.valueOf(mzLat), mzTagContent);
-//
-//
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                Log.e("Retro", "onResponse: " + response.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Log.e("Retro", "onFailure: " + t.getMessage());
-//            }
-//        });
+        if (mzLon == 0 || mzLat == 0) {
+            ToastUtil.toast("请选择定位");
+            return;
+        }
 
 
         ShopApi.upLoadVideoProduct(image_default,
@@ -827,11 +819,11 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                 case MzConstant.REQUEST_CODE_LOCATION:          // 地图选中位置 ;
 
                     Bundle bundle = data.getExtras();
-                    mzAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
+                    String mapAddress = bundle.getString(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS);
                     mzLat = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LAT);
                     mzLon = bundle.getDouble(MzConstant.VALUE_PRODUCT_LOCATION_LON);
 
-                    mzLocation.setContent(mzAddress);
+                    mzLocation.setContent(mapAddress);
 
                     break;
             }

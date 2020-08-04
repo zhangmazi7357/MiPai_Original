@@ -42,8 +42,7 @@ public class ShopCardInfoFragment extends BaseKitFragment {
     TextView tvRealname;
     @BindView(R.id.tv_cardno)
     TextView tvCardno;
-    @BindView(R.id.tv_address)
-    ClearEditText tvAddress;
+
     @BindView(R.id.tv_phone)
     ClearEditText tvPhone;
     @BindView(R.id.tv_email)
@@ -72,10 +71,9 @@ public class ShopCardInfoFragment extends BaseKitFragment {
         }
         tvRealname.setText(data.getData().getCard_info().getReal_name() + "");
         tvCardno.setText(data.getData().getCard_info().getCard_no() + "");
-        tvAddress.setText(data.getData().getCard_info().getAddress() + "");
+
         tvPhone.setText(data.getData().getCard_info().getTel() + "");
-//        tvOtherName.setText(data.getData().getCard_info().getLinkname() + "");
-//        tvOtherPhone.setText(data.getData().getCard_info().getLinkphone() + "");
+
         tvEmail.setText(data.getData().getCard_info().getEmail() + "");
         tvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,30 +92,13 @@ public class ShopCardInfoFragment extends BaseKitFragment {
             @Override
             public void onClick(View v) {
                 hideSoftInput();
-//                String address = tvAddress.getText().toString();
-//                if (TextUtils.isEmpty(address)) {
-//                    ToastUtil.toast("请输入通讯地址");
-//                    return;
-//                }
+
                 String phone = tvPhone.getText().toString();
                 if (TextUtils.isEmpty(phone) || phone.length() != 11) {
                     ToastUtil.toast("请输入正确的手机号");
                     return;
                 }
-//                String otherNmae = tvOtherName.getText().toString();
-//                if (TextUtils.isEmpty(otherNmae)) {
-//                    ToastUtil.toast("请输入紧急联系人姓名");
-//                    return;
-//                }
-//                String otherPhone = tvOtherPhone.getText().toString();
-//                if (TextUtils.isEmpty(otherPhone) || otherPhone.length() != 11) {
-//                    ToastUtil.toast("请输入正确的紧急联系人号码");
-//                    return;
-//                }
-//                if (phone.equals(otherPhone)) {
-//                    ToastUtil.toast("紧急联系人号码不能与手机号重复");
-//                    return;
-//                }
+
                 String email = tvEmail.getText().toString();
                 if (TextUtils.isEmpty(email) || !email.contains("@") || !email.contains(".")) {
                     ToastUtil.toast("请输入正确的邮箱号");
@@ -160,7 +141,6 @@ public class ShopCardInfoFragment extends BaseKitFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;

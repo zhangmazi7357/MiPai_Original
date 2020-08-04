@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,30 +15,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.Tip;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
 import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.fragment.shop.mzupload.POISearchAdapter;
 import com.hym.eshoplib.mz.MzConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.hym.superlib.mz.widgets.MzHeaderBar;
@@ -60,7 +53,7 @@ public class MzLocationActivity extends AppCompatActivity {
 
     private double latitudes;
     private double longitudes;
-    private String mzAddress;
+    private String mzMapAddress;
 
 
     private boolean showRv = true;
@@ -135,14 +128,14 @@ public class MzLocationActivity extends AppCompatActivity {
 
 
         tvSure.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(mzAddress)) {
-                Toast.makeText(MzLocationActivity.this, "需要选择摄影棚地址", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(mzMapAddress) || latitudes == 0.0 || longitudes == 0.0) {
+                Toast.makeText(MzLocationActivity.this, "请选择定位", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent intent = new Intent();
 
 
-            intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS, mzAddress);
+            intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_ADDRESS, mzMapAddress);
             intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_LAT, latitudes);
             intent.putExtra(MzConstant.VALUE_PRODUCT_LOCATION_LON, longitudes);
 
@@ -189,7 +182,7 @@ public class MzLocationActivity extends AppCompatActivity {
 
 
                 Tip item = poiSearchAdapter.getItemPosition(position);
-                mzAddress = item.getAddress() + item.getName();
+                mzMapAddress = item.getAddress() + item.getName();
 
                 LatLonPoint point = item.getPoint();
                 latitudes = point.getLatitude();
@@ -197,9 +190,9 @@ public class MzLocationActivity extends AppCompatActivity {
 
                 poiSearchAdapter.setDatas(null);
 
-                if (!TextUtils.isEmpty(mzAddress)) {
-                    etPoi.setText(mzAddress);
-                    etPoi.setSelection(mzAddress.length());
+                if (!TextUtils.isEmpty(mzMapAddress)) {
+                    etPoi.setText(mzMapAddress);
+                    etPoi.setSelection(mzMapAddress.length());
                 }
 
 
@@ -227,36 +220,51 @@ public class MzLocationActivity extends AppCompatActivity {
             @Override
             public void onMapClick(LatLng latLng) {
 
-                aMap.clear(true);
+
                 showRv = false;
 
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
-                aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
-                aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
 //                Log.e(TAG, "onMapClick: " + latLng);
 
                 LatLonPoint point = new LatLonPoint(latLng.latitude, latLng.longitude);
-                geoCode(MzLocationActivity.this, point, new GeocodeSearch.OnGeocodeSearchListener() {
+                geoCode(MzLocationActivity.this, point,
+                        new GeocodeSearch.OnGeocodeSearchListener() {
 
-                    @Override
-                    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                        mzAddress = regeocodeResult.getRegeocodeAddress().getAois().get(0).getAoiName();
+                            @Override
+                            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
 
-                        if (!TextUtils.isEmpty(mzAddress)) {
-                            etPoi.setText(mzAddress);
-                            etPoi.setSelection(mzAddress.length());
-                        }
-                    }
+                                if (i == AMapException.CODE_AMAP_SUCCESS) {
 
-                    @Override
-                    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                                    aMap.clear(true);
+                                    aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+                                    aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
+                                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
-                    }
-                });
+
+                                    mzMapAddress = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+                                    latitudes = point.getLatitude();
+                                    longitudes = point.getLongitude();
+
+                                    if (!TextUtils.isEmpty(mzMapAddress)) {
+                                        etPoi.setText(mzMapAddress);
+                                        etPoi.setSelection(mzMapAddress.length());
+                                    }
+                                } else {
+                                    Toast.makeText(getApplication(), "获取当前位置信息失败", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+                            }
+                        });
 
             }
         });
+
     }
 
 

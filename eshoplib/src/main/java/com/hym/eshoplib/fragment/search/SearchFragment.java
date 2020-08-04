@@ -68,10 +68,10 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
     FrameLayout flSearch;
     @BindView(R.id.tv_right)
     TextView tvRight;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView ivToolbarRight;
-    @BindView(R.id.ll_toolbar_bg)
-    LinearLayout llToolbarBg;
+//    @BindView(R.id.iv_toolbar_right)
+//    ImageView ivToolbarRight;
+//    @BindView(R.id.ll_toolbar_bg)
+//    LinearLayout llToolbarBg;
     Unbinder unbinder;
     @BindView(R.id.btn_clear)
     Button btnClear;
@@ -112,8 +112,6 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String confirm = getResources().getString(R.string.Confirm);
-                String cancle = getResources().getString(R.string.Cancel);
 
 
                 DialogManager.getInstance().initSimpleDialog(_mActivity, "清除记录", "您确定要清除历史搜索记录么",
@@ -130,22 +128,6 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
                             }
                         }).show();
 
-//                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "清除记录",
-//                        "您确定要清除历史搜索记录么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-//                            @Override
-//                            public void onCancleClick(SweetAlertDialog sDialog) {
-//                                sDialog.dismiss();
-//
-//                            }
-//
-//                            @Override
-//                            public void onConfirmeClick(SweetAlertDialog sDialog) {
-//                                sDialog.dismiss();
-//                                deleteHistory();
-//
-//                            }
-//                        });
-//                pDialog.show();
 
             }
         });
