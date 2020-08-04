@@ -24,6 +24,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeResult;
@@ -241,11 +242,20 @@ public class MzLocationActivity extends AppCompatActivity {
 
                     @Override
                     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                        mzAddress = regeocodeResult.getRegeocodeAddress().getAois().get(0).getAoiName();
+                        if (i == AMapException.CODE_AMAP_SUCCESS) {
+                            aMap.clear(true);
+                            aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+                            aMap.addMarker(new MarkerOptions().position(latLng).title("").snippet(""));
+                            aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
-                        if (!TextUtils.isEmpty(mzAddress)) {
-                            etPoi.setText(mzAddress);
-                            etPoi.setSelection(mzAddress.length());
+
+                            mzAddress = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+                            if (!TextUtils.isEmpty(mzAddress)) {
+                                etPoi.setText(mzAddress);
+                                etPoi.setSelection(mzAddress.length());
+                            }
+                        }else{
+                            Toast.makeText(MzLocationActivity.this, "获取当前位置信息失败", Toast.LENGTH_SHORT).show();
                         }
                     }
 
