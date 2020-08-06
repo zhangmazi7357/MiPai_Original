@@ -102,6 +102,9 @@ import io.rong.imlib.RongIMClient;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
+/**
+ * 产品详情 - 图片 ;
+ */
 public class ShopDetailsImageFragment extends BaseKitFragment implements
         View.OnClickListener, AliPay.PayResultListener {
 
@@ -404,8 +407,10 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             llShootTime.setVisibility(View.GONE);
         }
         tvStaffing.setText(db.getStaffing());
+
         // 原来的团队介绍 ;
 //        tvTeamIntroduce.setText(db.getIntroduce());
+
         tvProjectDetail.setText(db.getDetails());
         tvLoca.setText(db.getOther());
         if (db.getAuth() == 1) {
@@ -839,15 +844,19 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private GoToPayDialogInterface listener = new GoToPayDialogInterface() {
         @Override
         public void getCoutn(int count) {
+
+
             ShopApi.CreateDetailOrder(_mActivity, db.getContent_id(), count + "", db.getCase_id(), new ResponseImpl<CreateOrderBean>() {
                 @Override
                 public void onSuccess(CreateOrderBean data) {
                     //付款
-                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_order_pay);
+                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                            EshopActionActivity.Action_order_order_pay);
                     bundle.putString("id", data.getData().getOrder_number());
                     bundle.putString("needPay", data.getData().getMoney() + "");
                     bundle.putString("id2", data.getData().getLog_id());
                     EshopActionActivity.start(_mActivity, bundle);
+
                 }
             }, CreateOrderBean.class);
         }
@@ -865,20 +874,24 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             case R.id.tv_add_shoppingcart:        // 加入购物车，现在是隐藏状态
                 showSelectTypeDialog(1);
                 break;
-            case R.id.tv_go_pay:            // 付款
+            case R.id.tv_go_pay:                         // 付款
                 if (db == null) {
                     ToastUtils.show("数据异常,请稍后再试");
                 }
+
+                // 提交订单
                 MipaiDialogUtil.showGoToPayDialog(_mActivity,
                         db.getPresent_price(),
                         db.getTitle(),
                         listener);
+
+
                 // showSelectTypeDialog(2);
                 break;
             case R.id.tv_report:    // 举报
 
                 break;
-            case R.id.rl_click_workhome:
+            case R.id.rl_click_workhome:            // 进入工作室页面 ；
 
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
                         ActionActivity.Action_ShopDetail);
@@ -886,7 +899,8 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 ActionActivity.start(_mActivity, bundle);
 
                 break;
-            case R.id.rl_contact_him:     // 联系客服
+
+            case R.id.rl_contact_him:                 // 联系客服
                 if (data == null) {
                     ToastUtil.toast("数据异常");
                     return;
@@ -932,13 +946,15 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
                 }
                 break;
-            case R.id.rl_call_phone:            // 打电话
+
+            case R.id.rl_call_phone:                  // 打电话
                 if (!TextUtils.isEmpty(data.getData().getTel())) {
                     Intent Intent = new Intent(android.content.Intent.ACTION_DIAL, Uri.parse("tel:" + data.getData().getTel()));
                     startActivity(Intent);
                 }
                 break;
-            case R.id.rl_collection:    //收藏按钮 ;
+
+            case R.id.rl_collection:              //收藏按钮 ;
 
                 ShopApi.AddFavorite(data.getData().getContent_id(), "case", new ResponseImpl<AddFavouriteBean>() {
                     @Override
@@ -958,35 +974,6 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
     }
 
-    // 开通 VIP
-    private void getVipStatus(final MedetailBean data) {
-        message_dialog = new MessageDialog.Builder(_mActivity).
-                setTitle("温馨提示").
-                setMessage("开通会员与工作室无限畅聊\n\n" +
-                        "方式一：19.9/月开通会员" + "\n\n" +
-                        "方式二：分享至朋友圈免费开通会员一个月").
-                setCancel("分享至朋友圈").setConfirm("立即付款").setListener(new MessageDialog.OnListener() {
-            @Override
-            public void confirm(Dialog dialog) {
-                //付款的方式获得 vip 资格
-                pay();
-            }
-
-            @Override
-            public void cancel(Dialog dialog) {
-                share(data);
-            }
-        }).setDetail("了解详情", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (message_dialog != null && message_dialog.isShowing()) {
-                    message_dialog.dismiss();
-
-                }
-                start(VipRuleFragment.newInstance(new Bundle()));
-            }
-        }).show();
-    }
 
     private void share(MedetailBean data) {
         //分享到朋友圈
@@ -1045,6 +1032,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 final ArrayList<PayTypeBean> payType = new ArrayList<PayTypeBean>();
                 payType.add(new PayTypeBean(2));
                 payType.add(new PayTypeBean(3));
+
                 if (pay_dialog == null) {
                     View dialogView = LayoutInflater.from(_mActivity).inflate(R.layout.dialog_menu, null, false);
                     RecyclerView rvlist = dialogView.findViewById(R.id.rv_dialog_menu_list);
@@ -1253,7 +1241,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     }
 
 
-    //  category_id  == 46
+    //  category_id  == 46   模特演员
     private void setCategoryId46(ServiceDetailBean data) {
         ll_gender.setVisibility(View.VISIBLE);
         ll_age.setVisibility(View.VISIBLE);

@@ -268,6 +268,7 @@ public class MzLocationActivity extends AppCompatActivity {
     }
 
 
+    //逆地理编码
     private void geoCode(Context context, LatLonPoint point, GeocodeSearch.OnGeocodeSearchListener listener) {
         GeocodeSearch geocoderSearch = new GeocodeSearch(context);
         geocoderSearch.setOnGeocodeSearchListener(listener);
@@ -275,5 +276,6 @@ public class MzLocationActivity extends AppCompatActivity {
         RegeocodeQuery query = new RegeocodeQuery(point, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
     }
+
 
 }

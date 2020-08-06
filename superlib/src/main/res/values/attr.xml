@@ -32,9 +32,11 @@
         <!--设置未读数组阈值 大于阈值的数字将显示为 n+ n为设置的阈值-->
         <attr name="unreadThreshold" format="integer" />
     </declare-styleable>
+
     <declare-styleable name="BottomBarLayout">
         <attr name="smoothScroll" format="boolean" />
     </declare-styleable>
+
     <!--默认尾部添加* RequiredTextView-->
     <declare-styleable name="RequiredTextView">
         <!--文字-->
@@ -42,6 +44,7 @@
         <!--是否显示-->
         <attr name="required" format="boolean" />
     </declare-styleable>
+
     <!--加减控件自定义属性-->
     <declare-styleable name="SnappingStepper">
         <attr name="min" format="integer" />
@@ -83,7 +86,7 @@
     </declare-styleable>
 
 
-<!--    -->
+    <!--    -->
     <declare-styleable name="DrawableTextView">
         <attr name="drawableStartWidth" format="dimension" />
         <attr name="drawableStartHeight" format="dimension" />
@@ -93,5 +96,20 @@
         <attr name="drawableEndHeight" format="dimension" />
         <attr name="drawableBottomWidth" format="dimension" />
         <attr name="drawableBottomHeight" format="dimension" />
+    </declare-styleable>
+
+
+    <!-- 筛选框  -->
+    <declare-styleable name="DropDownMenu">
+        <attr name="ddunderlineColor" format="color" />
+        <attr name="dddividerColor" format="color" />
+        <attr name="ddtextSelectedColor" format="color" />
+        <attr name="ddtextUnselectedColor" format="color" />
+        <attr name="ddmenuBackgroundColor" format="color" />
+        <attr name="ddmaskColor" format="color" />
+        <attr name="ddmenuTextSize" format="dimension" />
+        <attr name="ddmenuSelectedIcon" format="reference" />
+        <attr name="ddmenuUnselectedIcon" format="reference" />
+        <attr name="ddmenuMenuHeightPercent" format="float" />
     </declare-styleable>
 </resources>

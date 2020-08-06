@@ -58,10 +58,10 @@ public class NeedSearchFragment extends BaseKitFragment {
     FrameLayout flSearch;
     @BindView(R.id.tv_right)
     TextView tvRight;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView ivToolbarRight;
-    @BindView(R.id.ll_toolbar_bg)
-    LinearLayout llToolbarBg;
+//    @BindView(R.id.iv_toolbar_right)
+//    ImageView ivToolbarRight;
+//    @BindView(R.id.ll_toolbar_bg)
+//    LinearLayout llToolbarBg;
     @BindView(R.id.btn_comment)
     Button btnComment;
     @BindView(R.id.tfl_mid)

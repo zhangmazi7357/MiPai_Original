@@ -15,8 +15,6 @@ import static cn.hym.superlib.utils.http.ApiExcuter.post;
 public class MzNewApi {
 
     private static String TAG = "MzNewApi";
-    // 本地测试服;
-    private static String host_ip = "http://121.40.80.45/api";
 
 
     /**
@@ -26,7 +24,7 @@ public class MzNewApi {
      * @param clazz
      * @param <T>
      */
-    public static <T> void getOneType(/*String channelId,*/ IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void getOneType(IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
         request.setClassName("GetoneType");
@@ -63,7 +61,8 @@ public class MzNewApi {
      */
     public static <T> void getProductList(String iconId,
                                           String p,
-                                          IHttpResultListener<T> listener, Class<T> clazz) {
+                                          IHttpResultListener<T> listener,
+                                          Class<T> clazz) {
 
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
@@ -73,8 +72,43 @@ public class MzNewApi {
         request.addParamsNotEmpty("psize", "20");
         request.addParamsNotEmpty("icon_id", iconId);
 
-//        Log.e(TAG, "getProductList: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
+    }
+
+
+    /**
+     * 发表评价
+     *
+     * @param case_id
+     * @param title
+     * @param content
+     * @param store
+     * @param tag_id
+     * @param images
+     * @param pid
+     * @param listener
+     * @param clazz
+     * @param <T>
+     */
+    public static <T> void sendComment(String case_id, String title, String content,
+                                       String store, String tag_id, String images,
+                                       String pid,
+                                       IHttpResultListener<T> listener,
+                                       Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Comment");
+        request.setClassName("Publish");
+//        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("case_id", case_id);
+        request.addParamsNotEmpty("title", title);
+        request.addParamsNotEmpty("content", content);
+        request.addParamsNotEmpty("store", store);
+        request.addParamsNotEmpty("tag_id", tag_id);
+        request.addParamsNotEmpty("images", images);
+        request.addParamsNotEmpty("pid", pid);
+
+        post(request, listener, clazz);
+
     }
 
 

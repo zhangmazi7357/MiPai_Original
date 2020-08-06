@@ -77,7 +77,8 @@ import io.rong.common.FileUtils;
  */
 
 public class UpLoadVideoFragment extends BaseKitFragment {
-    UpLoadVideoProductAdapter adapter;
+
+    private UpLoadVideoProductAdapter adapter;
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -294,13 +295,10 @@ public class UpLoadVideoFragment extends BaseKitFragment {
             }
         });
         tv_region = footer.findViewById(R.id.tv_region);
-        tv_region.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectRegion);
-                bundle.putString("id", region_id);
-                ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x33);
-            }
+        tv_region.setOnClickListener(v -> {
+            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_SelectRegion);
+            bundle.putString("id", region_id);
+            ActionActivity.startForResult(UpLoadVideoFragment.this, bundle, 0x33);
         });
 
         LinearLayout llOther = footer.findViewById(R.id.ll_other);
@@ -358,6 +356,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
         mzProductTag = footer.findViewById(R.id.mz_productTag);
         mzLocation = footer.findViewById(R.id.mz_location);
+        mzEtAddress = footer.findViewById(R.id.mz_et_address);
 
         mzEtAddress = footer.findViewById(R.id.mz_et_address);
 

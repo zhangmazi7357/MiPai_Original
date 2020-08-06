@@ -45,6 +45,7 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
         fragment.setArguments(args);
         return fragment;
     }
+
     @BindView(R.id.head_status_bar)
     View headStatusBar;
     @BindView(R.id.iv_back)
@@ -57,13 +58,14 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
     FrameLayout flSearch;
     @BindView(R.id.tv_right)
     TextView tvRight;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView ivToolbarRight;
-    @BindView(R.id.ll_toolbar_bg)
-    LinearLayout llToolbarBg;
+    //    @BindView(R.id.iv_toolbar_right)
+//    ImageView ivToolbarRight;
+//    @BindView(R.id.ll_toolbar_bg)
+//    LinearLayout llToolbarBg;
     Unbinder unbinder;
-    String name="";
+    String name = "";
     TextView tv_mesg;
+
     @Override
     public int getItemRestId() {
         return R.layout.item_check;
@@ -82,11 +84,11 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    name=etSearch.getText().toString();
-                    if(TextUtils.isEmpty(name)){
+                    name = etSearch.getText().toString();
+                    if (TextUtils.isEmpty(name)) {
                         ToastUtil.toast("请输入城市名");
 
-                    }else {
+                    } else {
                         onRefresh();
                     }
                 }
@@ -106,8 +108,8 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
 
             @Override
             public void afterTextChanged(Editable s) {
-                name=etSearch.getText().toString();
-                if(!TextUtils.isEmpty(name)){
+                name = etSearch.getText().toString();
+                if (!TextUtils.isEmpty(name)) {
                     onRefresh();
                 }
             }
@@ -117,16 +119,16 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //ToastUtil.toast("选择城市");
                 hideSoftInput();
-                final String name=getAdapter().getData().get(position).getRegion_name();
+                final String name = getAdapter().getData().get(position).getRegion_name();
                 HomeApi.ChangeRegion(name, new ResponseImpl<RegionBean>() {
                     @Override
                     public void onSuccess(RegionBean data) {
-                        SharePreferenceUtil.setStringData(_mActivity,"region_name",name);
-                        SharePreferenceUtil.setStringData(_mActivity,"region_id",data.getData().getRegion_id());
+                        SharePreferenceUtil.setStringData(_mActivity, "region_name", name);
+                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
                         ToastUtil.toast("定位成功");
                         _mActivity.finish();
                     }
-                },RegionBean.class);
+                }, RegionBean.class);
             }
         });
         etSearch.requestFocus();
@@ -139,8 +141,8 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
         });
         View empty_view = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);
         ImageView iv = empty_view.findViewById(R.id.iv_icon);
-        iv.getLayoutParams().height= ScreenUtil.dip2px(_mActivity,180);
-        iv.getLayoutParams().width= ScreenUtil.dip2px(_mActivity,130);
+        iv.getLayoutParams().height = ScreenUtil.dip2px(_mActivity, 180);
+        iv.getLayoutParams().width = ScreenUtil.dip2px(_mActivity, 130);
         tv_mesg = empty_view.findViewById(R.id.tv_message);
         iv.setImageResource(R.drawable.ic_empty_city);
         tv_mesg.setText("搜索您的所在城市");
@@ -150,7 +152,7 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             getAdapter().setNewData(null);
             dissMissDialog();
             getRefreshLayout().setRefreshing(false);
@@ -159,11 +161,11 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
         HomeApi.GetArea(etSearch.getText().toString(), new ResponseImpl<SearchCityBean>() {
             @Override
             public void onSuccess(SearchCityBean data) {
-                int total=data.getData().getTotalpage();
-                if(refresh){
-                    setPageNum(HttpResultUtil.onRefreshSuccess(total,pageNum,data.getData().getInfo(),getAdapter()));
-                }else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total,pageNum,data.getData().getInfo(),getAdapter()));
+                int total = data.getData().getTotalpage();
+                if (refresh) {
+                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                } else {
+                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
                 }
 
             }
@@ -174,14 +176,14 @@ public class SearchCityResultFragment extends BaseListFragment<SearchCityBean.Da
                 getAdapter().setNewData(null);
                 tv_mesg.setText("暂无该城市");
             }
-        },SearchCityBean.class);
+        }, SearchCityBean.class);
 
 
     }
 
     @Override
     public void bindData(BaseViewHolder helper, SearchCityBean.DataBean.InfoBean item, int position) {
-        helper.setText(R.id.text,item.getRegion_name()+"");
+        helper.setText(R.id.text, item.getRegion_name() + "");
 
     }
 

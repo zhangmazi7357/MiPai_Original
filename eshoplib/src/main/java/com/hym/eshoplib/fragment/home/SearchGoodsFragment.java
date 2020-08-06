@@ -45,10 +45,10 @@ public class SearchGoodsFragment extends BaseListFragment<String> {
     EditText etSearch;
     @BindView(R2.id.tv_search)
     TextView tvSearch;
-    @BindView(R2.id.fl_search)
-    FrameLayout flSearch;
-    @BindView(R2.id.ll_toolbar_bg)
-    LinearLayout llToolbarBg;
+//    @BindView(R2.id.fl_search)
+//    FrameLayout flSearch;
+//    @BindView(R2.id.ll_toolbar_bg)
+//    LinearLayout llToolbarBg;
     Unbinder unbinder;
     String type="1";//1默认，正常进入，搜索后跳入搜索结果界面，2，从搜索界面进入，只返回
 

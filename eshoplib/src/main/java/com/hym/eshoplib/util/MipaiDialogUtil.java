@@ -351,7 +351,8 @@ public class MipaiDialogUtil {
         void on2(Dialog dialog);
     }
 
-    public static void showGoToPayDialog(Context mContext, String present_price, String title, final GoToPayDialogInterface goToPayListener) {
+    public static void showGoToPayDialog(Context mContext, String present_price, String title,
+                                         final GoToPayDialogInterface goToPayListener) {
         count = 1;
         dialog = new Dialog(mContext, R.style.DialogStyleCommon);
         dialog.setCanceledOnTouchOutside(false);

@@ -1,7 +1,8 @@
 package cn.hym.superlib.mz;
 
 import android.app.Activity;
-import android.util.Log;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.hym.httplib.interfaces.IHttpResultListener;
 import com.orhanobut.logger.Logger;
@@ -10,7 +11,7 @@ import cn.hym.superlib.utils.HttpStatusUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 
 
-public class MzBaseActivity extends Activity {
+public class MzBaseActivity extends FragmentActivity {
 
     private String TAG = "MZ==";
 

@@ -68,7 +68,7 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
     FrameLayout flSearch;
     @BindView(R.id.tv_right)
     TextView tvRight;
-//    @BindView(R.id.iv_toolbar_right)
+    //    @BindView(R.id.iv_toolbar_right)
 //    ImageView ivToolbarRight;
 //    @BindView(R.id.ll_toolbar_bg)
 //    LinearLayout llToolbarBg;
@@ -221,14 +221,14 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
     private void goSearch(String keywords) {
         hideSoftInput();
 
-        Intent intent = new Intent(_mActivity, MzSearchResultActivity.class);
-        intent.putExtra(MzConstant.KEY_SEARCH_KEYWORD, keywords);
-        startActivity(intent);
+//        Intent intent = new Intent(_mActivity, MzSearchResultActivity.class);
+//        intent.putExtra(MzConstant.KEY_SEARCH_KEYWORD, keywords);
+//        startActivity(intent);
 
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("keywords", keywords);
-//        start(SearchResultFragment.newInstance(bundle));
+        Bundle bundle = new Bundle();
+        bundle.putString("keywords", keywords);
+        start(SearchResultFragment.newInstance(bundle));
     }
 
     private void deleteHistory() {

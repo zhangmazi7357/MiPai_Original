@@ -56,10 +56,10 @@ public class MoreVadieoListFragment extends BaseListFragment<ShopProductsBean.Da
     FrameLayout flSearch;
     @BindView(R.id.tv_right)
     TextView tvRight;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView ivToolbarRight;
-    @BindView(R.id.ll_toolbar_bg)
-    LinearLayout llToolbarBg;
+//    @BindView(R.id.iv_toolbar_right)
+//    ImageView ivToolbarRight;
+//    @BindView(R.id.ll_toolbar_bg)
+//    LinearLayout llToolbarBg;
 
     public static MoreVadieoListFragment newInstance(Bundle args) {
         MoreVadieoListFragment fragment = new MoreVadieoListFragment();
