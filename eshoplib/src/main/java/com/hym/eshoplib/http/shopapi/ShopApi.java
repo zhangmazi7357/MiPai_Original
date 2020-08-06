@@ -423,7 +423,7 @@ public class ShopApi {
         request.addParamsNotEmpty("lat", lat);
         request.addParamsNotEmpty("tags", tags);
 
-//        Log.e("UpLoad", "video = " + JSONObject.toJSONString(request));
+
 
         post(request, listener, clazz);
 

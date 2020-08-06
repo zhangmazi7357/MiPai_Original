@@ -39,14 +39,12 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
     private MzHeaderBar headerBar;
     private RecyclerView mRecyclerView;
     private MzProductAdapter adapter;
-    //    private List<HomeIconProductBean.DataBean> datas = new ArrayList<>();
     private TextView noView;
     private SwipeRefreshLayout swipe;
 
     private int page = 1;
     private int totalPage = 0;
     private int pageSize = 0;
-    //    private int pSize = 20;
     private int currentPage = 1;
 
     @Override
@@ -61,7 +59,6 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
 
 
     }
-
 
     private void getBundle() {
         headerBar = findViewById(R.id.headerBar);
@@ -145,9 +142,10 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                     @Override
                     public void onSuccess(GoodDetailModel data) {
 
-//                        Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
+                        Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
 
                         if (data.getData().getType().equals("1")) {
+
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                     ActionActivity.ShopVideoDetail);
 
@@ -201,6 +199,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
             }
         }, mRecyclerView);
 
+
     }
 
 
@@ -212,7 +211,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                     @Override
                     public void onSuccess(HomeIconProductBean data) {
 
-                        Log.e(TAG, "  产品列表 = onSuccess: " + JSONObject.toJSON(data));
+//                        Log.e(TAG, "  产品列表 = onSuccess: " + JSONObject.toJSON(data));
                         HomeIconProductBean.DataBean dataBean = data.getData();
                         List<HomeIconProductBean.DataBean.VideoBean> list = dataBean.getVideo();
 
@@ -276,7 +275,6 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
             adapter.loadMoreComplete();
         }
     }
-
 
     @Override
     public void onRefresh() {
