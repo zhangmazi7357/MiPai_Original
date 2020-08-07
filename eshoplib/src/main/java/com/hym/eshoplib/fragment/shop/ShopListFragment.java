@@ -58,22 +58,24 @@ import constant.StringConstants;
 public class ShopListFragment extends BaseKitFragment {
     @BindView(R.id.dropDownMenu)
     DropDownMenuUpdate dropDownMenu;
+
+
     Unbinder unbinder;
     private ArrayList<String> headers = new ArrayList<>();
-    private List<String> order_by;//排序
-    private List<CategoryListBean.DataBean> filters_list;//筛选
+    private List<String> order_by;      //排序
+    private List<CategoryListBean.DataBean> filters_list;       //筛选
     private List<View> popupViews = new ArrayList<>();
     private ListDropDownAdapter priceAdapter, categoryAdapter;
     ShopSourceListFragment fragment;
-    String region_id = "";//城市id
-    String category_id = "";//工作室类型id，可能是一级id也可能是子服务_id
-    String order = "";//排序类别-非必须(1：时间，2：价格，3：好频率，4：星级，默认时间)
-    String sort = "";//排序-非必须（0：升序，1：降序，默认降序）
+    String region_id = "";              //城市id
+    String category_id = "";            //工作室类型id，可能是一级id也可能是子服务_id
+    String order = "";                  //排序类别-非必须(1：时间，2：价格，3：好频率，4：星级，默认时间)
+    String sort = "";                   //排序-非必须（0：升序，1：降序，默认降序）
     TextView tv_title;
-    int current_type = 1;//当前工作室类型 按首页功能按键排序
-    RecyclerView rv_city;//
-    RecyclerView rv_city_1;//城市列表省级
-    RecyclerView rv_city_2;//城市列表市级
+    int current_type = 1;               //当前工作室类型 按首页功能按键排序
+    RecyclerView rv_city;               //
+    RecyclerView rv_city_1;             //城市列表省级
+    RecyclerView rv_city_2;             //城市列表市级
     BaseListAdapter<ServerCityBean.DataBean.InfoBean> adapter_1;
     BaseListAdapter<ServerCityBean.DataBean.InfoBean> adapter_2;
     SuperSideBar superSideBar;
@@ -355,7 +357,8 @@ public class ShopListFragment extends BaseKitFragment {
                 }
             });
             //init context view
-            View contentView = LayoutInflater.from(_mActivity).inflate(R.layout.layout_flcontainer, null, false);
+            View contentView = LayoutInflater.from(_mActivity)
+                    .inflate(R.layout.layout_flcontainer, null, false);
             //init dropdownview
             dropDownMenu.setDropDownMenu(headers, popupViews, contentView);
             Bundle bundle = new Bundle();

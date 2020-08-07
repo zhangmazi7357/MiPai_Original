@@ -103,7 +103,8 @@ public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.D
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
 
-        ShopApi.getProductsList3(keywords, pageNum + "", "2", new ResponseImpl<ShopProductsBean>() {
+        ShopApi.getProductsList3(keywords, pageNum + "", "2",
+                new ResponseImpl<ShopProductsBean>() {
             @Override
             public void onSuccess(ShopProductsBean data) {
                 if (refresh) {

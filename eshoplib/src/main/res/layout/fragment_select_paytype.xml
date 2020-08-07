@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,21 +13,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:text="@string/Methodofpayment"
             android:background="#f1f1f1"
-            android:textColor="@color/mipaiTextColorNormal"
-            android:textSize="12sp"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:text="@string/Methodofpayment"
+            android:textColor="@color/mipaiTextColorNormal"
+            android:textSize="12sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#eeeeee"/>
+            android:background="#eeeeee" />
+
         <LinearLayout
+            android:id="@+id/ll_balance"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:id="@+id/ll_balance">
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -37,17 +41,18 @@
                 android:text="我的余额"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/tv_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"
                 android:paddingLeft="8dp"
                 android:text="(1,200)"
-                android:textSize="14sp"
-                 />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <ImageView
                 android:id="@+id/iv_balance"
                 android:layout_width="wrap_content"
@@ -56,28 +61,31 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_pay_uncheck" />
         </LinearLayout>
+
         <View
+            android:id="@+id/view_diver_balance"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#e1e1e1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/view_diver_balance"/>
+            android:background="#e1e1e1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/WeChatpayment"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_wechat_pay"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:drawablePadding="5dp"/>
+                android:text="@string/WeChatpayment"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/iv_wechatpay"
@@ -87,77 +95,87 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_pay_uncheck" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#e1e1e1"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#e1e1e1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/Alipaypayment"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_alipay"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:drawablePadding="5dp"/>
+                android:text="@string/Alipaypayment"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
             <ImageView
+                android:id="@+id/iv_alipay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_pay_uncheck"
-                android:id="@+id/iv_alipay"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_pay_uncheck" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#eeeeee"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:visibility="gone"/>
+            android:background="#eeeeee"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
             android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/PayPal"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_paypal"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:drawablePadding="5dp"/>
+                android:text="@string/PayPal"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
             <ImageView
+                android:id="@+id/iv_paypal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_cb_unchecked"
-                android:id="@+id/iv_paypal"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_cb_unchecked" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#eeeeee"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
             android:visibility="gone">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -168,32 +186,36 @@
                 android:text="@string/Payableamount"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
+
             <TextView
+                android:id="@+id/tv_needpay"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
-                android:textSize="12sp"
+                android:gravity="center_vertical"
                 android:textColor="@color/jiuzhou_orange"
-                android:id="@+id/tv_needpay"
-                android:gravity="center_vertical"/>
+                android:textSize="12sp" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#eeeeee"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:visibility="gone"/>
+            android:background="#eeeeee"
+            android:visibility="gone" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="#f1f1f1"/>
+            android:background="#f1f1f1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -215,34 +237,36 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_realpay"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
-                android:textColor="@color/mipaiTextColorSelect"
-                android:id="@+id/tv_realpay"
                 android:gravity="center_vertical"
-               />
+                android:textColor="@color/mipaiTextColorSelect" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#eeeeee"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#F1F1F1"/>
+        android:background="#F1F1F1" />
+
     <TextView
+        android:id="@+id/tv_confirm"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/selector_btn"
         android:layout_marginLeft="-15dp"
         android:layout_marginRight="-15dp"
-        android:textColor="@color/white"
-        android:text="@string/ConfirmPayment"
+        android:background="@drawable/selector_btn"
         android:gravity="center"
-        android:id="@+id/tv_confirm"/>
+        android:text="@string/ConfirmPayment"
+        android:textColor="@color/white" />
 </LinearLayout>

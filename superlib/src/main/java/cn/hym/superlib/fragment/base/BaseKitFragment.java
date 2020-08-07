@@ -296,6 +296,7 @@ public abstract class BaseKitFragment extends BaseFragment {
                 });
             }
         }
+
         return iv_right;
     }
 
@@ -353,7 +354,6 @@ public abstract class BaseKitFragment extends BaseFragment {
      * <p>
      * OtherTips
      */
-
     public abstract class ResponseImpl<T> implements IHttpResultListener<T> {
         @Override
         public void onStart(int mark) {
@@ -403,6 +403,8 @@ public abstract class BaseKitFragment extends BaseFragment {
 
         }
     }
+
+
 
     public TextView getTv_title() {
         return tv_title;

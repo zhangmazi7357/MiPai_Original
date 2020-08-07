@@ -31,7 +31,12 @@ public class ShopProductsBean {
          * totalnum : 1
          * currentpage : 1
          * totalpage : 1
-         * info : [{"case_id":"12","type":"1","store_id":"266","title":"哈哈","views":"0","length":"00:09","filepath":"http://pdyijsbww.bkt.clouddn.com/1536917564_e57df36d772f719cbcb65ab80ceb0653.mp4","image_default":"http://mpai.liandao.mobi/uploads/fa/5b/f2/2c/72/22bd64e043ab9f810671ba.jpg","logo":"http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg","store_name":"网红视频工作室","agree":"2","is_agree":"1","content_id":"38"}]
+         * info : [{"case_id":"12","type":"1","store_id":"266",
+         * "title":"哈哈","views":"0","length":"00:09",
+         * "filepath":"http://pdyijsbww.bkt.clouddn.com/1536917564_e57df36d772f719cbcb65ab80ceb0653.mp4",
+         * "image_default":"http://mpai.liandao.mobi/uploads/fa/5b/f2/2c/72/22bd64e043ab9f810671ba.jpg",
+         * "logo":"http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg",
+         * "store_name":"网红视频工作室","agree":"2","is_agree":"1","content_id":"38"}]
          */
 
         private String totalnum;

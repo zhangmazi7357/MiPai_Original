@@ -80,4 +80,5 @@
                 android:max="100" />
         </LinearLayout>
     </FrameLayout>
+
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.loginmodule.R;
 import com.hym.loginmodule.R2;
 import com.hym.loginmodule.activity.LoginMainActivity;
@@ -118,8 +120,13 @@ public abstract class BaseLoginFragment extends BaseKitFragment {
             public void onClick(View v) {
                 CheckCodeBean bean = getCheckCodeBean();
                 Logger.d(bean.toString());
-                if (bean != null && !TextUtils.isEmpty(bean.getPhone()) && bean.getPhone().length() == 11 && !TextUtils.isEmpty(bean.getCodeType())) {
+
+                if (bean != null && !TextUtils.isEmpty(bean.getPhone())
+                        && bean.getPhone().length() == 11 &&
+                        !TextUtils.isEmpty(bean.getCodeType())) {
+
                     getCheckCode(bean.getPhone(), bean.getCodeType());
+
                 } else {
                     ToastUtil.toast("请输入正确的手机号");
                 }
@@ -248,9 +255,11 @@ public abstract class BaseLoginFragment extends BaseKitFragment {
         }
         ToastUtil.toast("发送成功，请注意查收");
         //验证码类型-必须（1：注册，2：快捷登录，3：忘记密码，4：三方绑定，6：设置或修改密码，7：绑定手机，8：修改手机，9：支付密码有关）
+
         LoginApi.getCode(_mActivity, language, inputData, type, new ResponseImpl<Object>() {
             @Override
             public void onSuccess(Object data) {
+                Log.e("======", "验证码 = " + JSONObject.toJSONString(data));
                 ToastUtil.toast("发送成功，请注意查收");
 
             }
@@ -264,6 +273,8 @@ public abstract class BaseLoginFragment extends BaseKitFragment {
                 tvSendCode.setEnabled(true);
 
             }
+
+
 
             @Override
             public void onFailed(Exception e) {

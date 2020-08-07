@@ -86,7 +86,7 @@
     </declare-styleable>
 
 
-    <!--    -->
+    <!--   可以设置图标大小的 textView  -->
     <declare-styleable name="DrawableTextView">
         <attr name="drawableStartWidth" format="dimension" />
         <attr name="drawableStartHeight" format="dimension" />
@@ -98,18 +98,11 @@
         <attr name="drawableBottomHeight" format="dimension" />
     </declare-styleable>
 
-
-    <!-- 筛选框  -->
-    <declare-styleable name="DropDownMenu">
-        <attr name="ddunderlineColor" format="color" />
-        <attr name="dddividerColor" format="color" />
-        <attr name="ddtextSelectedColor" format="color" />
-        <attr name="ddtextUnselectedColor" format="color" />
-        <attr name="ddmenuBackgroundColor" format="color" />
-        <attr name="ddmaskColor" format="color" />
-        <attr name="ddmenuTextSize" format="dimension" />
-        <attr name="ddmenuSelectedIcon" format="reference" />
-        <attr name="ddmenuUnselectedIcon" format="reference" />
-        <attr name="ddmenuMenuHeightPercent" format="float" />
+    <!--   带横线的标题 -->
+    <declare-styleable name="MzShopDetailTitleView">
+        <attr name="detailTitle" format="string" />
+        <attr name="title_textSize" format="dimension" />
     </declare-styleable>
+
+
 </resources>

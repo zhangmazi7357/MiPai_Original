@@ -214,7 +214,7 @@ public class ShopApi {
 
     }
 
-    //首页更多视频
+    //
     public static <T> void getProductsList3(String search, String p, String type, IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Store");
@@ -422,7 +422,6 @@ public class ShopApi {
         request.addParamsNotEmpty("lon", lon);
         request.addParamsNotEmpty("lat", lat);
         request.addParamsNotEmpty("tags", tags);
-
 
 
         post(request, listener, clazz);

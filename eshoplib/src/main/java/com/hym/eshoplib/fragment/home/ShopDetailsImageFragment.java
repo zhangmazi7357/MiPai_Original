@@ -110,6 +110,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
 
     private String TAG = "ShopDetailsImageFragment";
+
     @BindView(R.id.rv_view)
     RecyclerView rvView;
     @BindView(R.id.tv_report)
@@ -144,22 +145,8 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     ImageView ivRating05;
     @BindView(R.id.rl_right)
     RelativeLayout rlRight;
-    @BindView(R.id.tv_0)
-    TextView tv0;
-    @BindView(R.id.tv_user_info)
-    TextView tvUserInfo;
-    @BindView(R.id.tv_1)
-    TextView tv1;
-    @BindView(R.id.tv_team_introduction)
-    TextView tvTeamIntroduction;
-    @BindView(R.id.tv_2)
-    TextView tv2;
-    @BindView(R.id.tv_project_content)
-    TextView tvProjectContent;
-    @BindView(R.id.tv_3)
-    TextView tv3;
-    @BindView(R.id.tv_recommend_goods)
-    TextView tvRecommendGoods;
+
+
     @BindView(R.id.rv_recommend_goods)
     RecyclerView rvRecommendGoods;
     @BindView(R.id.iv_b_01)
@@ -348,21 +335,27 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
     }
 
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         data = (GoodDetailModel) bundle.getSerializable("data");
 
-        Log.e(TAG, " 传递过来的产品详情  =" + data);
+        Log.e(TAG, "=======initData: " + data);
 
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
+
         if (TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")) {
+
             tvBeforePrice.setVisibility(View.GONE);
+
         } else {
+
             String originalPrice = RemoveZeroUtil.subZeroAndDot(db.getOriginal_price());
             tvBeforePrice.setText("原价" + originalPrice);
+
         }
 
         tvBuyCount.setText("销量" + data.getData().getWeight());
@@ -578,6 +571,12 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 llRating.getChildAt(i).setBackgroundResource(R.drawable.icon_full_start);
             }
         }
+    }
+
+
+    @Override
+    public boolean showToolBar() {
+        return false;
     }
 
     @Override
@@ -811,6 +810,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 }
             }, true);
         } else {
+
             //立即购买
             MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "", null, "立即预约", new View.OnClickListener() {
                 @Override
@@ -956,20 +956,21 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
             case R.id.rl_collection:              //收藏按钮 ;
 
-                ShopApi.AddFavorite(data.getData().getContent_id(), "case", new ResponseImpl<AddFavouriteBean>() {
-                    @Override
-                    public void onSuccess(AddFavouriteBean data) {
-                        if (data.getData().getStatus() == 1) {
-                            ivB03.setBackgroundResource(R.mipmap.icon_collection_light);
-                            ToastUtils.show("收藏");
-                            // tvCollect.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_collect_check, 0, 0);
-                        } else {
-                            ivB03.setBackgroundResource(R.mipmap.icon_collection);
-                            ToastUtils.show("取消收藏");
-                            // tvCollect.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_collect_uncheck, 0, 0);
-                        }
-                    }
-                }, AddFavouriteBean.class);
+                ShopApi.AddFavorite(data.getData().getContent_id(), "case",
+                        new ResponseImpl<AddFavouriteBean>() {
+                            @Override
+                            public void onSuccess(AddFavouriteBean data) {
+
+                                if (data.getData().getStatus() == 1) {
+                                    ivB03.setBackgroundResource(R.mipmap.icon_collection_light);
+                                    ToastUtils.show("收藏");
+                                } else {
+                                    ivB03.setBackgroundResource(R.mipmap.icon_collection);
+                                    ToastUtils.show("取消收藏");
+                                }
+                            }
+                        }, AddFavouriteBean.class);
+
                 break;
         }
     }

@@ -81,8 +81,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -158,8 +158,8 @@
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:paddingTop="10dp"
+                android:paddingRight="10dp"
                 android:visibility="gone">
 
                 <FrameLayout
@@ -326,9 +326,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="1111"
                     android:textSize="12sp" />
 
@@ -344,7 +344,8 @@
                 android:layout_height="40dp"
                 app:sLeftTextSize="12sp"
                 app:sLeftTextString="总计"
-                app:sRightTextColor="#ff0000"></com.allen.library.SuperTextView>
+                app:sRightTextColor="#ff0000" />
+
             <!--温馨提示-->
             <View
                 android:layout_width="match_parent"
@@ -354,10 +355,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="15dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="15dp"
                 android:paddingRight="10dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/tv_oder_number_title"
@@ -380,8 +381,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_oder_number_title"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="下单时间："
                     android:textColor="@color/black" />
 

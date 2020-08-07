@@ -2,7 +2,9 @@ package com.hym.eshoplib.fragment.order;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +81,7 @@ public class OrderDetailFragment extends BaseKitFragment {
     LinearLayout llButtons;
     Unbinder unbinder;
     String order_id;
+
     public static OrderDetailFragment newInstance(Bundle args) {
         OrderDetailFragment fragment = new OrderDetailFragment();
         fragment.setArguments(args);
@@ -94,7 +97,7 @@ public class OrderDetailFragment extends BaseKitFragment {
     public void doLogic() {
         showBackButton();
         setTitle(R.string.Detailsoforder);
-        order_id=getArguments().getString("id","");
+        order_id = getArguments().getString("id", "");
 
     }
 
@@ -104,17 +107,17 @@ public class OrderDetailFragment extends BaseKitFragment {
             @Override
             public void onSuccess(final OrderDetailBean data) {
                 //收货地址
-                tvName.setText(getResources().getString(R.string.Receiver)+"："+data.getData().getConsignee_name());
-                tvPhone.setText(data.getData().getConsignee_mobile()+"");
-                tvContent.setText(data.getData().getConsignee_address()+"");
+                tvName.setText(getResources().getString(R.string.Receiver) + "：" + data.getData().getConsignee_name());
+                tvPhone.setText(data.getData().getConsignee_mobile() + "");
+                tvContent.setText(data.getData().getConsignee_address() + "");
                 //店铺信息
                 ImageUtil.getInstance().loadImage(OrderDetailFragment.this, data.getData().getStore_logo(), ivShop);
-                tvShopName.setText(data.getData().getStore_name()+"");
+                tvShopName.setText(data.getData().getStore_name() + "");
                 //订单状态
-                tvStatus.setText(data.getData().getStatus_name()+"");
+                tvStatus.setText(data.getData().getStatus_name() + "");
                 //价格
-                tvPrice.setText(data.getData().getPayment_amount()+"RMB");
-                tvFreight.setText("("+getResources().getString(R.string.Freight)+"："+(TextUtils.isEmpty(data.getData().getFreight_amount())?"0":data.getData().getFreight_amount())+" RMB)");
+                tvPrice.setText(data.getData().getPayment_amount() + "RMB");
+                tvFreight.setText("(" + getResources().getString(R.string.Freight) + "：" + (TextUtils.isEmpty(data.getData().getFreight_amount()) ? "0" : data.getData().getFreight_amount()) + " RMB)");
                 llGoods.removeAllViews();
                 //设置店铺商品
                 for (final OrderDetailBean.DataBean.ItemsBean bean : data.getData().getItems()) {
@@ -122,9 +125,9 @@ public class OrderDetailFragment extends BaseKitFragment {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Bundle bundle=new Bundle();
-                            bundle.putString("id",bean.getSpecification_id());
-                            GoodsDetailActivity.start(_mActivity,bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id", bean.getSpecification_id());
+                            GoodsDetailActivity.start(_mActivity, bundle);
                         }
                     });
                     ImageView iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
@@ -135,13 +138,13 @@ public class OrderDetailFragment extends BaseKitFragment {
                     ImageUtil.getInstance().loadImage(OrderDetailFragment.this, bean.getGoods_image(), iv_icon);
                     tv_name.setText(bean.getGoods_name() + "");
                     tv_type.setText(bean.getProperty_relate() + "");
-                    tv_goods_price.setText(TextUtils.isEmpty(bean.getBuy_price())?"0":bean.getBuy_price() + " RMB");
+                    tv_goods_price.setText(TextUtils.isEmpty(bean.getBuy_price()) ? "0" : bean.getBuy_price() + " RMB");
                     tv_count.setText("x" + bean.getBuy_num());
                     //设置评价按钮
-                    LinearLayout ll_review= (LinearLayout) view.findViewById(R.id.ll_review);
-                    View diver=view.findViewById(R.id.view_diver);
-                    SuperButton btn_review= (SuperButton) view.findViewById(R.id.btn_review);
-                    if(data.getData().getPay_status().equals("1")&&data.getData().getStatus().equals("7")){
+                    LinearLayout ll_review = (LinearLayout) view.findViewById(R.id.ll_review);
+                    View diver = view.findViewById(R.id.view_diver);
+                    SuperButton btn_review = (SuperButton) view.findViewById(R.id.btn_review);
+                    if (data.getData().getPay_status().equals("1") && data.getData().getStatus().equals("7")) {
                         //待评价订单，每个商品可以评价
                         ll_review.setVisibility(View.VISIBLE);
                         //diver.setVisibility(View.VISIBLE);
@@ -149,17 +152,17 @@ public class OrderDetailFragment extends BaseKitFragment {
                             @Override
                             public void onClick(View v) {
                                 //ToastUtil.toast("去评价");
-                                Bundle bundle=new Bundle();
-                                bundle.putString("order_id",order_id);
-                                bundle.putString("id",bean.getSpecification_id());
-                                bundle.putString("url",bean.getGoods_image());
-                                bundle.putString("name",bean.getGoods_name());
-                                start(  PublishCommentsFragment.newInstance(bundle));
+                                Bundle bundle = new Bundle();
+                                bundle.putString("order_id", order_id);
+                                bundle.putString("id", bean.getSpecification_id());
+                                bundle.putString("url", bean.getGoods_image());
+                                bundle.putString("name", bean.getGoods_name());
+                                start(PublishCommentsFragment.newInstance(bundle));
 
                             }
                         });
 
-                    }else {
+                    } else {
                         ll_review.setVisibility(View.GONE);
                         diver.setVisibility(View.GONE);
                     }
@@ -167,24 +170,24 @@ public class OrderDetailFragment extends BaseKitFragment {
 
                 }
                 //设置日志信息
-                String log=getResources().getString(R.string.Ordernumber)+"："+data.getData().getChild_order_number()+"\n"+
-                           getResources().getString(R.string.Createdtime)+"："+data.getData().getCtime()+"\n";
-                if(!TextUtils.isEmpty(data.getData().getPay_time())){
-                    log+=getResources().getString(R.string.Paymenttime)+data.getData().getPay_time()+"\n";
+                String log = getResources().getString(R.string.Ordernumber) + "：" + data.getData().getChild_order_number() + "\n" +
+                        getResources().getString(R.string.Createdtime) + "：" + data.getData().getCtime() + "\n";
+                if (!TextUtils.isEmpty(data.getData().getPay_time())) {
+                    log += getResources().getString(R.string.Paymenttime) + data.getData().getPay_time() + "\n";
                 }
-                if(!TextUtils.isEmpty(data.getData().getDelivery_time())){
-                    log+=getResources().getString(R.string.Deliverytime)+"："+data.getData().getDelivery_time()+"\n";
+                if (!TextUtils.isEmpty(data.getData().getDelivery_time())) {
+                    log += getResources().getString(R.string.Deliverytime) + "：" + data.getData().getDelivery_time() + "\n";
                 }
-                if(!TextUtils.isEmpty(data.getData().getDeal_time())){
-                    log+=getResources().getString(R.string.Transactiontime)+"："+data.getData().getDeal_time();
+                if (!TextUtils.isEmpty(data.getData().getDeal_time())) {
+                    log += getResources().getString(R.string.Transactiontime) + "：" + data.getData().getDeal_time();
                 }
                 tvOrderStatus.setText(log);
                 //根据订单状态设置按钮
                 tvTips.setVisibility(View.GONE);
-                String status=data.getData().getStatus();
-                if(data.getData().getPay_status().equals("1")){
+                String status = data.getData().getStatus();
+                if (data.getData().getPay_status().equals("1")) {
                     //已支付
-                    if(status.equals("5")){
+                    if (status.equals("5")) {
                         //待收货
                         llButtons.setVisibility(View.VISIBLE);
                         btn1.setText(R.string.Logistics);
@@ -194,17 +197,17 @@ public class OrderDetailFragment extends BaseKitFragment {
                         btn1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                               // ToastUtil.toast("查看物流");
-                                Bundle bundle = EshopActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,EshopActionActivity.Action_order_order_logitics);
-                                bundle.putString("id",data.getData().getChild_order_id());
-                                bundle.putString("url",data.getData().getItems().get(0).getGoods_image());
-                                EshopActionActivity.start(_mActivity,bundle);
+                                // ToastUtil.toast("查看物流");
+                                Bundle bundle = EshopActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_order_logitics);
+                                bundle.putString("id", data.getData().getChild_order_id());
+                                bundle.putString("url", data.getData().getItems().get(0).getGoods_image());
+                                EshopActionActivity.start(_mActivity, bundle);
                             }
                         });
                         btn2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                               // ToastUtil.toast("确认收货");
+                                // ToastUtil.toast("确认收货");
                                 String confirm = getResources().getString(R.string.Confirm);
                                 String cancle = getResources().getString(R.string.Cancel);
                                 Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, getResources().getString(R.string.ConfirmOrder), "请确认货物已经收到", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
@@ -217,13 +220,13 @@ public class OrderDetailFragment extends BaseKitFragment {
                                     @Override
                                     public void onConfirmeClick(SweetAlertDialog sDialog) {
                                         sDialog.dismiss();
-                                        OrderApi.ConfirmOrder(_mActivity,data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                                        OrderApi.ConfirmOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
                                             @Override
                                             public void onSuccess(Object data) {
-                                               EventBus.getDefault().post(new UpdateDataEvent());
+                                                EventBus.getDefault().post(new UpdateDataEvent());
                                                 _mActivity.finish();
                                             }
-                                        },Object.class);
+                                        }, Object.class);
 
                                     }
                                 });
@@ -232,12 +235,12 @@ public class OrderDetailFragment extends BaseKitFragment {
                         });
                         //待收货订单显示确认时间
 
-                        if(data.getData().getRemaining_time()>0){
+                        if (data.getData().getRemaining_time() > 0) {
                             tvTips.setVisibility(View.VISIBLE);
-                            tvTips.setLeftString("剩余"+data.getData().getRemaining_time()+"小时自动确认订单");
+                            tvTips.setLeftString("剩余" + data.getData().getRemaining_time() + "小时自动确认订单");
                         }
 
-                    }else if(status.equals("7")){
+                    } else if (status.equals("7")) {
                         //待评价
 //                                              llButtons.setVisibility(View.VISIBLE);
 //                        btn1.setVisibility(View.GONE);
@@ -253,7 +256,7 @@ public class OrderDetailFragment extends BaseKitFragment {
                     }
 
 
-                }else {
+                } else {
                     //待支付
                     llButtons.setVisibility(View.VISIBLE);
                     btn1.setText(R.string.Cancelorder);
@@ -263,7 +266,7 @@ public class OrderDetailFragment extends BaseKitFragment {
                     btn1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                           // ToastUtil.toast("取消订单");
+                            // ToastUtil.toast("取消订单");
                             String confirm = getResources().getString(R.string.Confirm);
                             String cancle = getResources().getString(R.string.Cancel);
                             Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, getResources().getString(R.string.Cancel), "确定要取消订单吗?", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
@@ -276,14 +279,14 @@ public class OrderDetailFragment extends BaseKitFragment {
                                 @Override
                                 public void onConfirmeClick(SweetAlertDialog sDialog) {
                                     sDialog.dismiss();
-                                    OrderApi.CancelOrder(_mActivity,data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                                    OrderApi.CancelOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
                                         @Override
                                         public void onSuccess(Object data) {
                                             EventBus.getDefault().post(new UpdateDataEvent());
                                             _mActivity.finish();
 
                                         }
-                                    },Object.class);
+                                    }, Object.class);
 
                                 }
                             });
@@ -301,7 +304,7 @@ public class OrderDetailFragment extends BaseKitFragment {
 
 
             }
-        },OrderDetailBean.class);
+        }, OrderDetailBean.class);
 
     }
 

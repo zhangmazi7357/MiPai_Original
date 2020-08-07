@@ -38,12 +38,12 @@ import cn.hym.superlib.utils.view.ScreenUtil;
  * otherTips
  */
 
-public class ShopVadieoListFragment extends BaseListGridFragment<ShopProductsBean.DataBean.InfoBean> {
+public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean.DataBean.InfoBean> {
     ServiceDetailBean detailBean;
     Unbinder unbinder;
 
-    public static ShopVadieoListFragment newInstance(Bundle args) {
-        ShopVadieoListFragment fragment = new ShopVadieoListFragment();
+    public static ShopVideoListFragment newInstance(Bundle args) {
+        ShopVideoListFragment fragment = new ShopVideoListFragment();
         fragment.setArguments(args);
         return fragment;
     }

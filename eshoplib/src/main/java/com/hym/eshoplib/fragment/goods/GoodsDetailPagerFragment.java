@@ -33,7 +33,7 @@ public class GoodsDetailPagerFragment extends BaseTabViewPagerFragment {
     @Override
     public Fragment[] getSupportFragments() {
         fragments[0] = ShopDetailFragment.newInstance(getArguments());
-        fragments[1] = ShopVadieoListFragment.newInstance(getArguments());
+        fragments[1] = ShopVideoListFragment.newInstance(getArguments());
         fragments[2] = ShopCommentsListFragment.newInstance(getArguments());
         return fragments;
     }
@@ -42,7 +42,7 @@ public class GoodsDetailPagerFragment extends BaseTabViewPagerFragment {
     public List<Class<? extends Fragment>> getClasses() {
         List<Class<? extends Fragment>> classes = new ArrayList<>();
         classes.add(ShopDetailFragment.class);
-        classes.add(ShopVadieoListFragment.class);
+        classes.add(ShopVideoListFragment.class);
         classes.add(ShopCommentsListFragment.class);
         return classes;
     }

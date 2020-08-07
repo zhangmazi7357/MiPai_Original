@@ -200,7 +200,7 @@ public class GoodsDetailFragmentTaobao extends BaseKitFragment implements SlideD
         //加载产品列表/评价列表
         Bundle bunddle=new Bundle();
         bunddle.putInt("type",current_type);
-        mFragments[0] = ShopVadieoListFragment.newInstance(bunddle);
+        mFragments[0] = ShopVideoListFragment.newInstance(bunddle);
         mFragments[1] = ShopCommentsListFragment.newInstance(new Bundle());
         loadMultipleRootFragment(R.id.fl_fragments, 0, mFragments);
         //选择分类

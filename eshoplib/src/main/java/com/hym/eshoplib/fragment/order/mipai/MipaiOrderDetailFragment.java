@@ -9,8 +9,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -74,8 +76,10 @@ import io.rong.imlib.RongIMClient;
  */
 
 public class MipaiOrderDetailFragment extends BaseKitFragment {
+
     @BindView(R.id.ll_order_status)
     LinearLayout llOrderStatus;
+
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
     @BindView(R.id.tv_title)
@@ -307,7 +311,6 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
         }
 
 
-
         OrderApi.UserContentDetail(log_id, new ResponseImpl<OrderDetailBeanMipai>() {
             @Override
             public void onSuccess(final OrderDetailBeanMipai data) {
@@ -356,9 +359,9 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                 hasinit = true;
                 final OrderDetailBeanMipai.DataBean item = data.getData();
                 ImageUtil.getInstance().loadImage(MipaiOrderDetailFragment.this, data.getData().getLogo(), ivIcon);
-                if (data.getData().getProduct_name() != null){
+                if (data.getData().getProduct_name() != null) {
                     tvTitle.setText(data.getData().getProduct_name() + "");
-                }else{
+                } else {
                     tvTitle.setText(data.getData().getStore_name() + "");
                 }
                 tvDes.setText("购买类别：" + data.getData().getCategory_name());

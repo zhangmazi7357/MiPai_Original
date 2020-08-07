@@ -2,13 +2,17 @@ package com.hym.eshoplib.fragment.order;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.R2;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -40,6 +44,8 @@ import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static cn.hym.superlib.activity.base.BaseActionActivity.getActionBundle;
@@ -53,6 +59,9 @@ import static cn.hym.superlib.activity.base.BaseActionActivity.getActionBundle;
  */
 
 public class SelectPaymentFragment extends BaseKitFragment implements AliPay.PayResultListener {
+
+    private String TAG = "SelectPaymentFragment";
+
 
     private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
     //你所注册的APP Id
@@ -80,7 +89,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
     @Override
     public void onDestroy() {
         super.onDestroy();
-       // _mActivity.stopService(new Intent(_mActivity, PayPalService.class));
+        // _mActivity.stopService(new Intent(_mActivity, PayPalService.class));
     }
 
     @BindView(R2.id.tv_balance)
@@ -130,7 +139,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
         showBackButton();
         setTitle("提交订单");
         aliPay = new AliPay(getActivity(), this);
-        log_id=getArguments().getString("id2");
+        log_id = getArguments().getString("id2");
         child_order_id = getArguments().getString("id", "");
         //order_id = getArguments().getString("order_id", "");
         needPay = getArguments().getString("needPay");
@@ -152,87 +161,101 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
 
                 //支付
                 switch (payPosition) {
-                    case 0:
+                    case 0:     // 余额
                         //ToastUtil.toast("余额支付开发中,请选择支付宝支付");
                         //先判断 是否设置了支付密码
+
+
                         MeApi.IssetPaypass(new ResponseImpl<IFsetPayPwdBean>() {
                             @Override
                             public void onSuccess(IFsetPayPwdBean data) {
+                                Log.e(TAG, "是否设置支付密码 onSuccess: " + JSONObject.toJSONString(data));
+
                                 if (data.getData().getIs_set().equals("1")) {
                                     //设置了支付密码弹出 密码输入框
-                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity, "￥"+needPay, "",new PayPsdInputView.onPasswordListener() {
-                                        @Override
-                                        public void onDifference(String oldPsd, String newPsd) {
-
-                                        }
-
-                                        @Override
-                                        public void onEqual(String psd) {
-
-                                        }
-
-                                        @Override
-                                        public void inputFinished(String inputPsd) {
-                                            MipaiDialogUtil.dismiss();
-                                            //调用余额支付
-                                            OrderApi.aliPayMipai("activity",child_order_id, "3", inputPsd, new ResponseImpl<AliPayBean>() {
+                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity,
+                                            "￥" + needPay, "",
+                                            new PayPsdInputView.onPasswordListener() {
                                                 @Override
-                                                public void onSuccess(AliPayBean data) {
+                                                public void onDifference(String oldPsd, String newPsd) {
 
                                                 }
+
                                                 @Override
-                                                public void onDataError(String status, String errormessage) {
-                                                    super.onDataError(status, errormessage);
-                                                    if (status.equals("200")) {
-                                                        //ToastUtil.toast("余额支付成功");
-                                                        EventBus.getDefault().post(new UpdateDataEvent());
-                                                        Bundle bundle=new Bundle();
-                                                        bundle.putString("id",log_id);
-                                                        startWithPop(PaySuccessFragment.newInstance(bundle));
+                                                public void onEqual(String psd) {
 
-                                                    }
                                                 }
-                                            }, AliPayBean.class);
+
+                                                @Override
+                                                public void inputFinished(String inputPsd) {
+                                                    MipaiDialogUtil.dismiss();
+                                                    //调用余额支付
+                                                    OrderApi.aliPayMipai("activity", child_order_id, "3", inputPsd, new ResponseImpl<AliPayBean>() {
+                                                        @Override
+                                                        public void onSuccess(AliPayBean data) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onDataError(String status, String errormessage) {
+                                                            super.onDataError(status, errormessage);
+                                                            if (status.equals("200")) {
+                                                                //ToastUtil.toast("余额支付成功");
+                                                                EventBus.getDefault().post(new UpdateDataEvent());
+                                                                Bundle bundle = new Bundle();
+                                                                bundle.putString("id", log_id);
+                                                                startWithPop(PaySuccessFragment.newInstance(bundle));
+
+                                                            }
+                                                        }
+                                                    }, AliPayBean.class);
 
 
-                                        }
-                                    }, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            //ToastUtil.toast("忘记密码");
-                                            //忘记支付密码
-                                            Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
-                                            bundle.putInt("type", 3);
-                                            ActionActivity.start(_mActivity, bundle);
+                                                }
+                                            },
+                                            new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    //ToastUtil.toast("忘记密码");
+                                                    //忘记支付密码
+                                                    Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
+                                                    bundle.putInt("type", 3);
+                                                    ActionActivity.start(_mActivity, bundle);
 
-                                        }
-                                    });
+                                                }
+                                            });
                                     showSoftInput(et);
+
                                 } else {
-                                    //未设置 弹出提示框
-                                    String confirm = "立即设置";
-                                    String cancle = "继续支付";
-                                    Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "提示", "您当前未设置支付密码,是否立即设置?", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                        @Override
-                                        public void onCancleClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismiss();
 
-                                        }
 
-                                        @Override
-                                        public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                            sDialog.dismiss();
-                                            //去设置支付密码
-                                            Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
-                                            bundle.putInt("type", 1);
-                                            ActionActivity.start(_mActivity, bundle);
-                                        }
-                                    });
-                                    pDialog.show();
+                                    DialogManager.getInstance().initSimpleDialog(_mActivity, "提示",
+                                            "您当前未设置支付密码，是否立即设置?",
+                                            "继续支付", "立即设置",
+                                            new SimpleDialog.SimpleDialogOnClickListener() {
+                                                @Override
+                                                public void negativeClick(Dialog dialog) {
+                                                    dialog.dismiss();
+                                                }
+
+                                                @Override
+                                                public void positiveClick(Dialog dialog) {
+                                                    dialog.dismiss();
+
+                                                    Bundle bundle = getActionBundle(ActionActivity.ModelType_me,
+                                                            ActionActivity.Action_SetPayPwd);
+                                                    bundle.putInt("type", 1);
+                                                    ActionActivity.start(_mActivity, bundle);
+
+                                                }
+                                            }).show();
+
 
                                 }
                             }
                         }, IFsetPayPwdBean.class);
+
+
                         break;
                     case 1:
                         //ToastUtil.toast("微信支付开发中，请选择支付宝支付");
@@ -269,12 +292,12 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                     case 2:
                         // ToastUtil.toast("支付宝支付");
                         //支付宝
-                        OrderApi.aliPayMipai("activity",child_order_id, "2", password, new ResponseImpl<AliPayBean>() {
-                        @Override
-                        public void onSuccess(AliPayBean data) {
-                            aliPay.pay(data.getData().getStr());
-                        }
-                    }, AliPayBean.class);
+                        OrderApi.aliPayMipai("activity", child_order_id, "2", password, new ResponseImpl<AliPayBean>() {
+                            @Override
+                            public void onSuccess(AliPayBean data) {
+                                aliPay.pay(data.getData().getStr());
+                            }
+                        }, AliPayBean.class);
                         break;
 
                 }
@@ -300,7 +323,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
         upDatePayType();
         //设置余额
         tvBalance.setText("（￥" + balance + ")");
-        tvNeedpay.setText("￥"+needPay );
+        tvNeedpay.setText("￥" + needPay);
 //        若余额内有金额时，默认为勾选状态，可手动取消勾选
 //
 //        若余额内无金额时，默认为未勾选状态
@@ -309,7 +332,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
 //
 //        订单总金额小于余额时，余额可全部支付，第三方支付项无法选择，勾选按钮消失（此时取消勾选余额支付，第三方支付勾选按钮出现）
         ivBalance.setImageResource(R.drawable.ic_pay_uncheck);
-        tvRealpay.setText("￥"+needPay + "RMB");
+        tvRealpay.setText("￥" + needPay + "RMB");
 //        if (balance > 0) {
 //            //使用余额支付
 //            ivBalance.setImageResource(R.drawable.ic_pay_check);
@@ -330,6 +353,8 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
 //            ivBalance.setImageResource(R.drawable.ic_pay_uncheck);
 //            tvRealpay.setText(needPay + "RMB");
 //        }
+
+        // 余额
         ivBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -337,6 +362,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                 upDatePayType();
             }
         });
+        // 微信
         ivWechatpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -344,6 +370,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                 upDatePayType();
             }
         });
+        // 支付宝
         ivAlipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -379,7 +406,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
         switch (payPosition) {
             case 0:
                 //余额支付
-                if(balance<=0){
+                if (balance <= 0) {
                     ToastUtil.toast("余额不足");
                     return;
                 }
@@ -420,15 +447,15 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
     public void wxPayResutl(WxPayResultEvent event) {
         if (event.getCode() == 0) {
             //成功
-           // ToastUtil.toast("微信支付成功");
+            // ToastUtil.toast("微信支付成功");
 //            Bundle bundle = new Bundle();
 //            bundle.putString("id", order_id);
 //            start(PaySuccessFragment.newInstance(bundle));
             EventBus.getDefault().post(new UpdateDataEvent());
-            Bundle bundle=new Bundle();
-            bundle.putString("id",log_id);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", log_id);
             start(PaySuccessFragment.newInstance(bundle));
-           // pop();
+            // pop();
         } else {
             ToastUtil.toast("支付失败");
         }
@@ -443,8 +470,8 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
 //        bundle.putString("id", order_id);
 //        start(PaySuccessFragment.newInstance(bundle));
         EventBus.getDefault().post(new UpdateDataEvent());
-        Bundle bundle=new Bundle();
-        bundle.putString("id",log_id);
+        Bundle bundle = new Bundle();
+        bundle.putString("id", log_id);
         startWithPop(PaySuccessFragment.newInstance(bundle));
     }
 

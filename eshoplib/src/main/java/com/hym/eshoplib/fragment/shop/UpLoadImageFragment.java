@@ -478,10 +478,11 @@ public class UpLoadImageFragment extends BaseKitFragment {
         // 图片都上传到七牛云了
         String attachment = getAttachment();
 
-        Log.e(TAG, "attachment: " + attachment);
-//        String project_img = getProDetailPic();
 
         String project_img = getProDetailPic();
+
+//        Log.e(TAG, "attachment: " + attachment);
+
 //        Log.e(TAG, "项目详情 图片: " + project_img);
 
         if (TextUtils.isEmpty(attachment)) {
@@ -850,6 +851,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
     private void initProDetail(View footer) {
         mzProDetailRv = footer.findViewById(R.id.product_detail_rv);
         mzProDetailRv.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+
         mzProDetailAdapter = new MzProImageDetailAdapter(this, null);
         mzProDetailAdapter.setToken(qiniuToken);
         mzProDetailAdapter.addData(new UpLoadImageBean());

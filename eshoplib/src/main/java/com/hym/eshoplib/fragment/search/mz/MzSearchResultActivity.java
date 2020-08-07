@@ -3,6 +3,10 @@ package com.hym.eshoplib.fragment.search.mz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.transition.FragmentTransitionSupport;
@@ -12,6 +16,9 @@ import com.hym.eshoplib.R;
 import com.hym.eshoplib.databinding.MzActivitySearchResultBinding;
 import com.hym.eshoplib.mz.MzConstant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.hym.superlib.mz.MzBaseActivity;
 
 /**
@@ -20,8 +27,11 @@ import cn.hym.superlib.mz.MzBaseActivity;
 public class MzSearchResultActivity extends MzBaseActivity {
 
 
-    MzActivitySearchResultBinding binding;
+    private MzActivitySearchResultBinding binding;
     private String keyWord = "";
+
+
+    private View containerView;   // fragment的容器;
 
 
     @Override
@@ -37,6 +47,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
         keyWord = intent.getStringExtra(MzConstant.KEY_SEARCH_KEYWORD);
 
         initTab();
+        intDropDownMenu();
     }
 
 
@@ -60,8 +71,11 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, allFragment).show(allFragment);
-        transaction.add(R.id.container, shopFragment).hide(shopFragment);
+
+        containerView = LayoutInflater.from(this).inflate(R.layout.mz_result_container_view, null, false);
+        transaction.add(R.id.mz_container, allFragment).show(allFragment);
+        transaction.add(R.id.mz_container, shopFragment).hide(shopFragment);
+
 
         transaction.commit();
 
@@ -73,9 +87,11 @@ public class MzSearchResultActivity extends MzBaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+                binding.dropDownMenu.closeMenu();
                 switch (tab.getPosition()) {
                     case 0:
                         fragmentTransaction.show(allFragment).hide(shopFragment).commit();
+
                         break;
                     case 1:
                         fragmentTransaction.show(shopFragment).hide(allFragment).commit();
@@ -95,6 +111,30 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
             }
         });
+
+
+    }
+
+
+    private void intDropDownMenu() {
+        List<String> tabs = new ArrayList<>();
+        tabs.add("年龄");
+        tabs.add("性别");
+        tabs.add("身高");
+
+        List<View> pops = new ArrayList<>();
+        ImageView img = new ImageView(this);
+        pops.add(img);
+        TextView t = new TextView(this);
+        t.setText("秀儿");
+        pops.add(t);
+
+        TextView t2 = new TextView(this);
+        t2.setText("云龙");
+        pops.add(t2);
+
+
+        binding.dropDownMenu.setDropDownMenu(tabs, pops, containerView);
 
 
     }
