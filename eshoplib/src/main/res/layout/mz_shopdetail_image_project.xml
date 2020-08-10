@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--    商品信息 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
@@ -141,7 +142,10 @@
             tools:text="TextView" />
 
     </LinearLayout>
+    <!--    !!!!! 商品信息 end -->
 
+
+    <!--    工作室  -->
     <RelativeLayout
         android:id="@+id/rl_click_workhome"
         android:layout_width="match_parent"
@@ -281,6 +285,7 @@
     </RelativeLayout>
 
 
+    <!--   基本信息  -->
     <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -494,6 +499,7 @@
             android:layout_height="1dp"
             android:background="#f2f2f2" />
     </LinearLayout>
+    <!-- 基本信息 end -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_view"
@@ -502,54 +508,53 @@
         android:nestedScrollingEnabled="false"
         android:visibility="gone" />
 
-    <TextView
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#f2f2f2" />
 
     <!--  团队介绍  -->
-    <LinearLayout
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:layout_marginBottom="10dp"-->
+    <!--        android:gravity="center">-->
+
+    <!--        <View-->
+    <!--            android:layout_width="25dp"-->
+    <!--            android:layout_height="1dp"-->
+    <!--            android:layout_marginRight="5dp"-->
+    <!--            android:background="#555555" />-->
+
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/title"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textColor="#555555"-->
+    <!--            android:textSize="14sp"-->
+    <!--            android:text="团队介绍" />-->
+
+    <!--        <View-->
+    <!--            android:layout_width="25dp"-->
+    <!--            android:layout_height="1dp"-->
+    <!--            android:layout_marginLeft="5dp"-->
+    <!--            android:background="#555555" />-->
+
+    <!--    </LinearLayout>-->
+
+    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center">
-
-        <View
-            android:layout_width="25dp"
-            android:layout_height="1dp"
-            android:layout_marginRight="5dp"
-            android:background="#555555" />
-
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="#555555"
-            android:textSize="14sp"
-            tools:text="项目详情" />
-
-        <View
-            android:layout_width="25dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:background="#555555" />
-    </LinearLayout>
-
+        app:detailTitle="团队介绍"
+        app:title_textSize="14sp" />
 
     <include layout="@layout/header_shop_detail" />
 
-    <TextView
-        android:id="@+id/tv_team_introduce"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="15dp"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        android:visibility="gone" />
 
     <ImageView
         android:layout_width="match_parent"

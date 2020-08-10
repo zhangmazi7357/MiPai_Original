@@ -173,8 +173,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     TextView shootingDayTime;
     @BindView(R.id.tv_staffing)
     TextView tvStaffing;
-    @BindView(R.id.tv_team_introduce)
-    TextView tvTeamIntroduce;
+
     @BindView(R.id.tv_project_detail)
     TextView tvProjectDetail;
     @BindView(R.id.rl_click_workhome)
@@ -574,10 +573,10 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     }
 
 
-//    @Override
-//    public boolean showToolBar() {
-//        return false;
-//    }
+    @Override
+    public boolean showToolBar() {
+        return false;
+    }
 
     @Override
     public int getContentViewResId() {
