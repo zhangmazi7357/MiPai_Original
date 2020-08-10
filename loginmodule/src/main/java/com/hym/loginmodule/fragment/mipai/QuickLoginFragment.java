@@ -71,6 +71,7 @@ public class QuickLoginFragment extends BaseLoginFragment {
                 start(RegisterFragment.newInstance(new Bundle()));
             }
         });
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

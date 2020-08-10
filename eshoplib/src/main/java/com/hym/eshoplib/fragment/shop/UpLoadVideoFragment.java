@@ -937,18 +937,21 @@ public class UpLoadVideoFragment extends BaseKitFragment {
         hideSoftInput();
 
 
-        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您的产品还没有上传,确定退出吗？",
-                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
-                    @Override
-                    public void negativeClick(Dialog dialog) {
-                        dialog.dismiss();
-                    }
+        DialogManager.getInstance()
+                .initSimpleDialog(_mActivity, "提示",
+                        "您的产品还没有上传,确定退出吗？",
+                        "取消", "确定",
+                        new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
 
-                    @Override
-                    public void positiveClick(Dialog dialog) {
-                        pop();
-                    }
-                }).show();
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                pop();
+                            }
+                        }).show();
         return true;
 
     }

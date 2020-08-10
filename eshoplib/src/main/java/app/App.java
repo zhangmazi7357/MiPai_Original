@@ -80,11 +80,13 @@ public class App extends KitBaseApplication {
         CrashReport.initCrashReport(getApplicationContext(), "a9ff41288a", isDebug());
         instance = this;
         ToastUtil.init(this);
-//
-//        UMShareAPI.get(this);
-//        PlatformConfig.setWeixin("wx425c93f17a0de199", "b6df3f90ada2704b129457d51e8a1ab0");
-//        PlatformConfig.setSinaWeibo("998280657", "cb74b9785c962af35df49d18500c5080", "http://jzweb.liandao.mobi/");
-//        PlatformConfig.setQQZone("101523866", "5d445487c5423c665520073be7b762ee");
+
+        //
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx425c93f17a0de199", "b6df3f90ada2704b129457d51e8a1ab0");
+        PlatformConfig.setSinaWeibo("998280657", "cb74b9785c962af35df49d18500c5080", "http://jzweb.liandao.mobi/");
+
+        PlatformConfig.setQQZone("101523866", "5d445487c5423c665520073be7b762ee");
 
         RongIM.init(this);
         setMyExtensionModule();

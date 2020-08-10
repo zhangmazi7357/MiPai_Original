@@ -267,9 +267,12 @@ public class AddCommentsFragment extends BaseKitFragment {
 
                 } else {
 
-//                    imageType = 3;
-                    PhotoUtil.ShowDialog(AddCommentsFragment.this,
-                            10 - adapter.getData().size(), false, 2);
+
+                    PhotoUtil.showDialogAllType(AddCommentsFragment.this,
+                            10 - adapter.getData().size(), false);
+
+
+
 
 
                 }
@@ -379,7 +382,6 @@ public class AddCommentsFragment extends BaseKitFragment {
         }
         return imageBeen;
     }
-
 
 
     @Override

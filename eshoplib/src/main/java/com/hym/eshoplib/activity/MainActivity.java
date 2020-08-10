@@ -62,13 +62,16 @@ import zhy.com.highlight.shape.RectLightShape;
 
 public class MainActivity extends BaseMainActivity {
 
-    private UMShareAPI mShareAPI = null;
+    private String TAG = "MainActivity";
+    //    private UMShareAPI mShareAPI = null;
     SupportFragment[] fragments;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        UMShareAPI.get(this).onSaveInstanceState(outState);
+
+//        UMShareAPI.get(this).onSaveInstanceState(outState);
+        
     }
 
 
@@ -161,7 +164,7 @@ public class MainActivity extends BaseMainActivity {
     @Subscribe
     public void wechatLogin(final WeChatLoginEvent event) {
         if (event.getStatus() == 0)
-            mShareAPI.deleteOauth(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+            UMShareAPI.get(this).deleteOauth(this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
                 @Override
                 public void onStart(SHARE_MEDIA share_media) {
                     //ToastUtil.toast("撤销中");
@@ -171,63 +174,69 @@ public class MainActivity extends BaseMainActivity {
                 @Override
                 public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
                     // ToastUtil.toast("撤销完成");
-                    mShareAPI.getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
-                        @Override
-                        public void onStart(SHARE_MEDIA share_media) {
-                            ToastUtil.toast("授权中");
-                        }
 
-                        @Override
-                        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                            //ToastUtil.toast("授权成功");
-                            final String openId = map.get("unionid");
-                            Logger.d("Wechat返回个人信息:" + map);
-                            if (event.bindtype == 1) {
-                                //从设置进入直接调用绑定
-                                EventBus.getDefault().post(new NeedPerfectInformationEvent(openId));
-                                return;
-                            }
-                            LoginApi.otherLogin("", openId, new ResponseImpl<LoginBean>() {
-                                @Override
-                                public void onSuccess(LoginBean data) {
-                                    //已经绑定过直接进入
-                                    //ToastUtil.toast("登录成功");
-                                    UserUtil.setIsLogin(MainActivity.this, true);
-                                    UserUtil.saveToken(MainActivity.this, data.getData().getToken());//token
-                                    UserUtil.saveRongYunToken(MainActivity.this, data.getData().getRongcloud_token());//融云
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("id", data.getData().getUserid());
-                                    bundle.putString("name", data.getData().getNickname());
-                                    bundle.putString("url", data.getData().getAvatar());
-                                    EventBus.getDefault().post(new LoginEvent(bundle));
-                                    EventBus.getDefault().post(new NeedPerfectInformationEvent());
+                    UMShareAPI.get(MainActivity.this)
+                            .getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN,
+                                    new UMAuthListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                            ToastUtil.toast("授权中");
+                                        }
+
+                                        @Override
+                                        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                                            //ToastUtil.toast("授权成功");
+                                            final String openId = map.get("unionid");
+                                            Log.e(TAG, "Wechat返回个人信息" + map);
+                                            if (event.bindtype == 1) {
+                                                //从设置进入直接调用绑定
+                                                EventBus.getDefault().post(new NeedPerfectInformationEvent(openId));
+                                                return;
+                                            }
+
+                                            LoginApi.otherLogin("", openId, new ResponseImpl<LoginBean>() {
+                                                @Override
+                                                public void onSuccess(LoginBean data) {
+                                                    //已经绑定过直接进入
+                                                    //ToastUtil.toast("登录成功");
+                                                    UserUtil.setIsLogin(MainActivity.this, true);
+                                                    UserUtil.saveToken(MainActivity.this, data.getData().getToken());//token
+                                                    UserUtil.saveRongYunToken(MainActivity.this, data.getData().getRongcloud_token());//融云
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("id", data.getData().getUserid());
+                                                    bundle.putString("name", data.getData().getNickname());
+                                                    bundle.putString("url", data.getData().getAvatar());
+                                                    EventBus.getDefault().post(new LoginEvent(bundle));
+                                                    EventBus.getDefault().post(new NeedPerfectInformationEvent());
 
 
-                                }
+                                                }
 
-                                @Override
-                                public void onDataError(String status, String errormessage) {
-                                    super.onDataError(status, errormessage);
-                                    if (status.equals("2")) {
-                                        //未绑定过
-                                        ToastUtil.toast("请先绑定手机号");
-                                        EventBus.getDefault().post(new NeedPerfectInformationEvent(openId));
-                                    }
-                                }
-                            }, LoginBean.class);
-                        }
+                                                @Override
+                                                public void onDataError(String status, String errormessage) {
+                                                    super.onDataError(status, errormessage);
+                                                    if (status.equals("2")) {
+                                                        //未绑定过
+                                                        ToastUtil.toast("请先绑定手机号");
+                                                        EventBus.getDefault().post(new NeedPerfectInformationEvent(openId));
+                                                    }
+                                                }
+                                            }, LoginBean.class);
+                                        }
 
-                        @Override
-                        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                            Logger.d(share_media.toString() + ",thorw=" + throwable);
-                            ToastUtil.toast("授权失败");
-                        }
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+//                                    Logger.d(share_media.toString() + ",thorw=" + throwable);
+//                                            Log.e(TAG, "授权失败: " + share_media.toString() + ",thorw=" + throwable);
+                                            ToastUtil.toast("授权失败");
+                                        }
 
-                        @Override
-                        public void onCancel(SHARE_MEDIA share_media, int i) {
-                            ToastUtil.toast("授权取消");
-                        }
-                    });
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media, int i) {
+                                            ToastUtil.toast("授权取消");
+                                        }
+                                    });
                 }
 
                 @Override
@@ -255,7 +264,7 @@ public class MainActivity extends BaseMainActivity {
             AppLanguageUtils.changeAppLanguage(App.instance, newLanguage);
             // recreate();
         } else {
-            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+//            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         }
 
     }
@@ -274,7 +283,7 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mShareAPI = UMShareAPI.get(this);
+//        mShareAPI = UMShareAPI.get(this);
         EventBus.getDefault().register(this);
         String token = UserUtil.getToken(MainActivity.this);
 
@@ -321,7 +330,7 @@ public class MainActivity extends BaseMainActivity {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        UMShareAPI.get(this).release();
+//        UMShareAPI.get(this).release();
     }
 
     @Override
@@ -412,6 +421,7 @@ public class MainActivity extends BaseMainActivity {
 
             }
         }, UnReadMessageBean.class);
+
     }
 
     @Override

@@ -574,10 +574,10 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     }
 
 
-    @Override
-    public boolean showToolBar() {
-        return false;
-    }
+//    @Override
+//    public boolean showToolBar() {
+//        return false;
+//    }
 
     @Override
     public int getContentViewResId() {

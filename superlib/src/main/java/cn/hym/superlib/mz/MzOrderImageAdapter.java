@@ -75,7 +75,8 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
         super(data);
         this.fragment = fragment;
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
-        addItemType(UpLoadImageBean.type_add, R.layout.mz_item_add_image);
+        addItemType(UpLoadImageBean.type_add, R.layout.mz_order_add_image_video);
+
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
                 .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
@@ -84,6 +85,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
                 .responseTimeout(60)          // 服务器响应超时。默认60秒
                 .zone(FixedZone.zone1)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
                 .build();
+
         uploadManager = new UploadManager(config);
 
 

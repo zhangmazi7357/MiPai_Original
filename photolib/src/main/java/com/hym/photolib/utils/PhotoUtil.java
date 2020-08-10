@@ -32,7 +32,8 @@ public class PhotoUtil {
     public static final int REQUEST_CODE_CAMARA = 0x111;//请求码 拍照
     public static final int REQUEST_CODE_GALARY = 0x222;//请求码 手机相册
 
-    public static void ShowDialog(final Fragment from, final int limt, final boolean isCrop, int type) {
+    public static void ShowDialog(final Fragment from, final int limt,
+                                  final boolean isCrop, int type) {
 
 
         switch (type) {
@@ -124,11 +125,13 @@ public class PhotoUtil {
      * @param limt   选择数量上限
      * @param isCrop 是否裁剪
      */
-    public static void ShowDialog(final Fragment from, final int limt, final boolean isCrop) {
+    public static void ShowDialog(final Fragment from, final int limt,
+                                  final boolean isCrop) {
         final Dialog dialog = PhotoDialogUtil.getSelectDialog(from.getContext(), new PhotoDialogUtil.onSelectPhotoType() {
             @Override
             public void onCamara(Dialog dialog) {
                 dialog.dismiss();
+
                 PicturesActivity.Start(
                         from,
                         PicturesActivity.TYPE_CAMERA,
@@ -152,76 +155,161 @@ public class PhotoUtil {
         dialog.show();
     }
 
+
     //pictureSelector实现
     public static void ShowDialogPictureSelector(final Fragment from,
-                                                 final int limt, final boolean isCrop) {
+                                                 final int limt,
+                                                 final boolean isCrop) {
 
-        final Dialog dialog = PhotoDialogUtil.getSelectDialog(from.getContext(), new PhotoDialogUtil.onSelectPhotoType() {
-            @Override
-            public void onCamara(Dialog dialog) {
-                dialog.dismiss();
-                List<LocalMedia> selectList = new ArrayList<>();
-                PictureSelector.create(from)
-                        .openCamera(PictureMimeType.ofAll())
-                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
-                        .theme(R.style.picture_default_style)
-                        .maxSelectNum(limt)
-                        .minSelectNum(1)
-                        .selectionMode(limt > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
-                        .previewImage(true)
-                        .previewVideo(true)
-                        .enablePreviewAudio(true) // 是否可播放音频
-                        .isCamera(true)
-                        .enableCrop(isCrop)
-                        .compress(true)
-                        .glideOverride(160, 160)
-                        .previewEggs(true)
-                        .withAspectRatio(1, 1)
-                        .hideBottomControls(false)
-                        .isGif(false)
-                        .freeStyleCropEnabled(true)
-                        .circleDimmedLayer(true)
-                        .showCropFrame(true)
-                        .showCropGrid(true)
-                        .openClickSound(true)
-                        .selectionMedia(selectList)
-                        .forResult(REQUEST_CODE_CAMARA);
+        final Dialog dialog = PhotoDialogUtil
+                .getSelectDialog(from.getContext(),
+                        new PhotoDialogUtil.onSelectPhotoType() {
+                            @Override
+                            public void onCamara(Dialog dialog) {
+                                dialog.dismiss();
+                                List<LocalMedia> selectList = new ArrayList<>();
+                                PictureSelector.create(from)
+                                        .openCamera(PictureMimeType.ofAll())
+                                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
+                                        .theme(R.style.picture_default_style)
+                                        .maxSelectNum(limt)
+                                        .minSelectNum(1)
+                                        .selectionMode(limt > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
+                                        .previewImage(true)
+                                        .previewVideo(true)
+                                        .enablePreviewAudio(true) // 是否可播放音频
+                                        .isCamera(true)
+                                        .enableCrop(isCrop)
+                                        .compress(true)
+                                        .glideOverride(160, 160)
+                                        .previewEggs(true)
+                                        .withAspectRatio(1, 1)
+                                        .hideBottomControls(false)
+                                        .isGif(false)
+                                        .freeStyleCropEnabled(true)
+                                        .circleDimmedLayer(true)
+                                        .showCropFrame(true)
+                                        .showCropGrid(true)
+                                        .openClickSound(true)
+                                        .selectionMedia(selectList)
+                                        .forResult(REQUEST_CODE_CAMARA);
 
-            }
+                            }
 
-            @Override
-            public void onGalary(Dialog dialog) {
-                dialog.dismiss();
-                List<LocalMedia> selectList = new ArrayList<>();
+                            @Override
+                            public void onGalary(Dialog dialog) {
+                                dialog.dismiss();
+                                List<LocalMedia> selectList = new ArrayList<>();
 
 
-                PictureSelector.create(from)
-                        .openGallery(PictureMimeType.ofImage())
-                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
-                        .theme(R.style.picture_default_style)
-                        .maxSelectNum(limt)
-                        .minSelectNum(1)
-                        .selectionMode(limt > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
-                        .isPreviewImage(true)
-                        .isEnableCrop(isCrop)
-                        .isCompress(true)
-                        .glideOverride(160, 160)
-                        .previewEggs(true)
-                        .withAspectRatio(1, 1)
-                        .hideBottomControls(false)
-                        .isGif(false)
-                        .freeStyleCropEnabled(true)
-                        .circleDimmedLayer(true)
-                        .showCropFrame(true)
-                        .showCropGrid(true)
-                        .isOpenClickSound(false)
-                        .selectionMedia(selectList)
-                        .forResult(REQUEST_CODE_GALARY);
+                                PictureSelector.create(from)
+                                        .openGallery(PictureMimeType.ofImage())
+                                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
+                                        .theme(R.style.picture_default_style)
+                                        .maxSelectNum(limt)
+                                        .minSelectNum(1)
+                                        .selectionMode(limt > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
+                                        .isPreviewImage(true)
+                                        .isEnableCrop(isCrop)
+                                        .isCompress(true)
+                                        .glideOverride(160, 160)
+                                        .previewEggs(true)
+                                        .withAspectRatio(1, 1)
+                                        .hideBottomControls(false)
+                                        .isGif(false)
+                                        .freeStyleCropEnabled(true)
+                                        .circleDimmedLayer(true)
+                                        .showCropFrame(true)
+                                        .showCropGrid(true)
+                                        .isOpenClickSound(false)
+                                        .selectionMedia(selectList)
+                                        .forResult(REQUEST_CODE_GALARY);
 
-            }
-        });
+                            }
+                        });
         dialog.show();
     }
+
+
+    /**
+     * 全类型 包括图片和视频
+     *
+     * @param from
+     * @param limit
+     * @param isCrop
+     */
+    public static void showDialogAllType(final Fragment from, final int limit,
+                                         final boolean isCrop) {
+
+        Dialog dialog = PhotoDialogUtil
+                .getSelectDialog(from.getContext(),
+                        new PhotoDialogUtil.onSelectPhotoType() {
+                            @Override
+                            public void onCamara(Dialog dialog) {
+                                dialog.dismiss();
+                                List<LocalMedia> selectList = new ArrayList<>();
+                                PictureSelector.create(from)
+                                        .openCamera(PictureMimeType.ofAll())
+                                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
+                                        .theme(R.style.picture_default_style)
+                                        .maxSelectNum(limit)
+                                        .minSelectNum(1)
+                                        .selectionMode(limit > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
+                                        .previewImage(true)
+                                        .previewVideo(true)
+                                        .enablePreviewAudio(true) // 是否可播放音频
+                                        .isCamera(true)
+                                        .enableCrop(isCrop)
+                                        .compress(true)
+                                        .glideOverride(160, 160)
+                                        .previewEggs(true)
+                                        .withAspectRatio(1, 1)
+                                        .hideBottomControls(false)
+                                        .isGif(false)
+                                        .freeStyleCropEnabled(true)
+                                        .circleDimmedLayer(true)
+                                        .showCropFrame(true)
+                                        .showCropGrid(true)
+                                        .openClickSound(true)
+                                        .selectionMedia(selectList)
+                                        .forResult(REQUEST_CODE_CAMARA);
+
+                            }
+
+                            @Override
+                            public void onGalary(Dialog dialog) {
+                                dialog.dismiss();
+                                List<LocalMedia> selectList = new ArrayList<>();
+
+                                PictureSelector.create(from)
+                                        .openGallery(PictureMimeType.ofAll())
+                                        .loadImageEngine(GlideEngine.createGlideEngine()) // 必填  预览
+                                        .theme(R.style.picture_default_style)
+                                        .maxSelectNum(limit)
+                                        .minSelectNum(1)
+                                        .selectionMode(limit > 1 ? PictureConfig.MULTIPLE : PictureConfig.SINGLE)
+                                        .isPreviewImage(true)
+                                        .isEnableCrop(isCrop)
+                                        .isCompress(true)
+                                        .glideOverride(160, 160)
+                                        .previewEggs(true)
+                                        .withAspectRatio(1, 1)
+                                        .hideBottomControls(false)
+                                        .isGif(false)
+                                        .freeStyleCropEnabled(true)
+                                        .circleDimmedLayer(true)
+                                        .showCropFrame(true)
+                                        .showCropGrid(true)
+                                        .isOpenClickSound(false)
+                                        .selectionMedia(selectList)
+                                        .forResult(REQUEST_CODE_GALARY);
+
+                            }
+                        });
+        dialog.show();
+
+    }
+
 
     //处理返回结果
     public static ArrayList<TImage> getImageList(int requestCode, Intent result, OnImageResult listener) {
