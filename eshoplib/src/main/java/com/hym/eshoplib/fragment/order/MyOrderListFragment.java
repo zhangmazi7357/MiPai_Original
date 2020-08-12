@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.cardview.widget.CardView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,8 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
     int type = 0;
     String reason_id;//取消预约的理由id
 
+    private String TAG = "MyOrderListFragment";
+
     public static MyOrderListFragment newInstance(Bundle args) {
         MyOrderListFragment fragment = new MyOrderListFragment();
         fragment.setArguments(args);
@@ -81,14 +84,17 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
     public void excuteLogic() {
         setIsshowTop(true);
         type = getArguments().getInt("type", 0);
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //进入订单详情
-                Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_order_detail);
-                bundle.putString("id", getAdapter().getData().get(position).getLog_id());
-                EshopActionActivity.start(_mActivity, bundle);
 
+                Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                        EshopActionActivity.Action_order_order_detail);
+                bundle.putString("id", getAdapter().getData().get(position).getLog_id());
+
+                EshopActionActivity.start(_mActivity, bundle);
             }
         });
         View empty_view = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);
@@ -130,25 +136,26 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                 break;
         }
         //订单状态-非必须，默认全部（1:待接受预约,2:待付款,3:待确认收货(2+3),4:评价中心,5退款/售后）
-        OrderApi.getUserOrderList(orderStatus, pageNum + "", new ResponseImpl<OrderListBeanMiPai>() {
-            @Override
-            public void onSuccess(OrderListBeanMiPai data) {
-                int total = Integer.parseInt(data.getData().getTotalpage());
-                if (refresh) {
+        OrderApi.getUserOrderList(orderStatus, pageNum + "",
+                new ResponseImpl<OrderListBeanMiPai>() {
+                    @Override
+                    public void onSuccess(OrderListBeanMiPai data) {
+                        int total = Integer.parseInt(data.getData().getTotalpage());
+                        if (refresh) {
 
-                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
-                } else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
-                }
+                            setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                        } else {
+                            setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                        }
 
-            }
+                    }
 
-            @Override
-            public void onEmptyData() {
-                super.onEmptyData();
-                getAdapter().setNewData(null);
-            }
-        }, OrderListBeanMiPai.class);
+                    @Override
+                    public void onEmptyData() {
+                        super.onEmptyData();
+                        getAdapter().setNewData(null);
+                    }
+                }, OrderListBeanMiPai.class);
 
 
     }
@@ -405,7 +412,6 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                 public void onClick(View v) {
 
 
-
                     DialogManager.getInstance().initSimpleDialog(_mActivity, "确认收货", "请确认已收到产品，剩余款项将支付给与您合作的制作方",
                             "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
                                 @Override
@@ -428,17 +434,24 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                 }
             });
         }
+
         if (buttonBean.getComment() == 1) {
             //买家去评价
             btn_2.setVisibility(View.VISIBLE);
             btn_2.setText("评价");
             btn_2.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_add_comment);
-                    Logger.d("log_id=" + item.getLog_id());
+                    // 从这里跳转到  订单评论 ;
+                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                            EshopActionActivity.Action_order_add_comment);
+
+                    Log.e(TAG, " 订单评论 =  " + item);
+
                     bundle.putString("id", item.getLog_id());
                     bundle.putString("url", item.getLogo());
+
                     EshopActionActivity.start(_mActivity, bundle);
 
                 }

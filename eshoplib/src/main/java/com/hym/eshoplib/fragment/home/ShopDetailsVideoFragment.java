@@ -2,18 +2,12 @@ package com.hym.eshoplib.fragment.home;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -33,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.lib_amap.MapManager;
+import com.google.android.material.tabs.TabLayout;
 import com.hjq.base.BaseDialog;
 import com.hjq.base.BaseDialogFragment;
 import com.hjq.toast.ToastUtils;
@@ -55,6 +57,7 @@ import com.hym.eshoplib.bean.shop.ServiceDetailBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
+import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
@@ -87,6 +90,8 @@ import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.mz.utils.SizeUtils;
+import cn.hym.superlib.mz.widgets.TabWithScrollView;
 import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
@@ -102,7 +107,8 @@ import io.rong.imlib.RongIMClient;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-public class ShopDetailsVideoFragment extends BaseKitFragment implements View.OnClickListener, AliPay.PayResultListener {
+public class ShopDetailsVideoFragment extends BaseKitFragment implements View.OnClickListener {
+
     @BindView(R.id.rv_view)
     RecyclerView rvView;
     @BindView(R.id.tv_report)
@@ -137,22 +143,20 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     ImageView ivRating05;
     @BindView(R.id.rl_right)
     RelativeLayout rlRight;
-    @BindView(R.id.tv_0)
-    TextView tv0;
-    @BindView(R.id.tv_user_info)
-    TextView tvUserInfo;
-    @BindView(R.id.tv_1)
-    TextView tv1;
-    @BindView(R.id.tv_team_introduction)
-    TextView tvTeamIntroduction;
-    @BindView(R.id.tv_2)
-    TextView tv2;
-    @BindView(R.id.tv_project_content)
-    TextView tvProjectContent;
-    @BindView(R.id.tv_3)
-    TextView tv3;
-    @BindView(R.id.tv_recommend_goods)
-    TextView tvRecommendGoods;
+
+
+    //    @BindView(R.id.tv_1)
+//    TextView tv1;
+//    @BindView(R.id.tv_team_introduction)
+//    TextView tvTeamIntroduction;
+//    @BindView(R.id.tv_2)
+//    TextView tv2;
+//    @BindView(R.id.tv_project_content)
+//    TextView tvProjectContent;
+//    @BindView(R.id.tv_3)
+//    TextView tv3;
+//    @BindView(R.id.tv_recommend_goods)
+//    TextView tvRecommendGoods;
     @BindView(R.id.rv_recommend_goods)
     RecyclerView rvRecommendGoods;
     @BindView(R.id.iv_b_01)
@@ -251,12 +255,39 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     View diver_4;
 
 
+    @BindView(R.id.statusBar)
+    View statusBar;
+
+    @BindView(R.id.shop_back)
+    ImageView shopBack;                         // 返回键
+
+    @BindView(R.id.shop_share)
+    ImageView shopShare;                        // 分享按钮
+
+    @BindView(R.id.toolBar)
+    LinearLayout toolBar;                       // 顶部工具栏
+
+    @BindView(R.id.scrollView)
+    TabWithScrollView scrollView;
+
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+
+    @BindView(R.id.ll_shop_project)
+    LinearLayout llShopProject;
+
+    @BindView(R.id.ll_shop_detail)
+    LinearLayout llShopDetail;
+
+    @BindView(R.id.ll_shop_recommend)
+    LinearLayout llShopRecommend;
+
+
     private CustomShareListener mShareListener;
     private ShareAction mShareAction;
     private Unbinder unbinder;
     private GoodDetailModel.DataBean db;
     private GoodDetailModel data;
-    private BaseDialog message_dialog;
     private BaseDialog pay_dialog;
     private BaseListAdapter<PayTypeBean> pay_adapter;
     private int pay_position;
@@ -292,6 +323,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     @Override
     public void doLogic() {
 
+        statusBarHeight();
+        initScrollAndTab();
 
         //定位当前位置;
         MapManager.getInstance().location(_mActivity, true, new AMapLocationListener() {
@@ -329,33 +362,41 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         rlCollection.setOnClickListener(this);
         tvGoPay.setOnClickListener(this);
         tvAddShoppingcart.setOnClickListener(this);
-     /*   bean = (NewsListBean.DataBean.InfoBean) getArguments().getSerializable("data");
-        bean2 = (HomeDataBean.DataBean.AgencyBean) getArguments().getSerializable("data2");
-        btnJoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startChat();
-            }
-        });*/
+
+
+        shopBack.setOnClickListener(this);
+        shopShare.setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public boolean showToolBar() {
+        return false;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         data = (GoodDetailModel) getArguments().getSerializable("data");
+
         db = data.getData();
+
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
+
         if (!TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);
         } else {
             String originalPrice = RemoveZeroUtil.subZeroAndDot(db.getOriginal_price());
             tvBeforePrice.setText("原价" + originalPrice);
         }
+
         if (TextUtils.isEmpty(db.getLength()) || db.getLength().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvShootTime.getParent();
             llShootTime.setVisibility(View.GONE);
         }
         tvShootTime.setText(db.getEquipment());
+
         if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvQicai.getParent();
             llShootTime.setVisibility(View.GONE);
@@ -363,13 +404,14 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         tvBuyCount.setText("销量" + data.getData().getWeight());
         tvDescribe.setText(db.getTitle());
         tvWhoWork.setText(db.getStore_name());
-        // int childCount = llRating.getChildCount();
+
+
         String store_rank = db.getStore_rank();
         float v = Float.parseFloat(store_rank);
         ratingbar.setRating(v);
-        /*long round = Math.round(v);
-        showRing(childCount, round);*/
+
         Glide.with(_mActivity).load(db.getStore_logo()).into(ivUserPhoto);
+
         tvShootTime.setText(db.getLength());
         tvQicai.setText(db.getEquipment());
         if (!TextUtils.isEmpty(db.getShooting_time())) {
@@ -382,9 +424,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             llShootTime.setVisibility(View.GONE);
             shootingDayTime.setText("");
         }
-       /* long shootTime = Long.parseLong(db.getShooting_time());
-        long day = shootTime / 1000 / (60 * 60 * 24);
-        shootingDayTime.setText(day + "天");*/
+
         if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvStaffing.getParent();
             llShootTime.setVisibility(View.GONE);
@@ -393,6 +433,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             LinearLayout llShootTime = (LinearLayout) tvLoca.getParent();
             llShootTime.setVisibility(View.GONE);
         }
+
         tvStaffing.setText(db.getStaffing());
         tvTeamIntroduce.setText(db.getIntroduce());
         tvProjectDetail.setText(db.getDetails());
@@ -406,6 +447,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         } else {
             ivVip.setVisibility(View.GONE);
         }
+
+        // 推荐 ;
         HomeApi.getDetailComment("1", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(final SpecialTimeLimteBean data) {
@@ -458,87 +501,43 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             }
         }, SpecialTimeLimteBean.class);
 
-        ShopApi.GetContentDetail(db.getContent_id(), new ResponseImpl<ServiceDetailBean>() {
-            @Override
-            public void onSuccess(ServiceDetailBean data) {
-                mData = data;
-                category_id = data.getData().getCategory_id();
-                cate_list = data.getData().getCate_list();
-                if (category_id.equals("46")) {
-                    rlCallPhone.setVisibility(View.GONE);
-                    setCategoryId46(data);
-                }
+        ShopApi.GetContentDetail(db.getContent_id(),
+                new ResponseImpl<ServiceDetailBean>() {
+                    @Override
+                    public void onSuccess(ServiceDetailBean data) {
+                        mData = data;
+                        category_id = data.getData().getCategory_id();
+                        cate_list = data.getData().getCate_list();
 
-                setDetailData(data);
+                        if (category_id.equals("46")) {
+                            rlCallPhone.setVisibility(View.GONE);
+                            setCategoryId46(data);
+                        }
 
-            }
-        }, ServiceDetailBean.class);
+                        setDetailData(data);
 
-        setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareBoardConfig config = new ShareBoardConfig();
-                config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
-                String url = "";
-                String title = "";
-                String memo = "";
-                String image = "";
-                if (data != null) {
-                    url = data.getData().getShare_url();
-                    title = data.getData().getTitle();
-                    memo = data.getData().getDetails();
-                    image = data.getData().getImage_default();
-                } else {
-                    url = data.getData().getShare_url();
-                    title = data.getData().getTitle();
-                    memo = data.getData().getDetails();
-                    image = data.getData().getImage_default();
-                }
-                UMWeb web = new UMWeb(url + "&share=1");
-                //  web.setTitle(title+" | "+memo);
-                web.setTitle(title);
-                web.setThumb(new UMImage(_mActivity, image));
-                web.setDescription(memo);
-                mShareAction.withMedia(web);
-                mShareAction.open(config);
-            }
-        });
+                    }
+                }, ServiceDetailBean.class);
+
+
         //视频
-        videoplayer.setUp(
-                data.getData().getFilepath(), JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoplayer.setUp(data.getData().getFilepath(),
+                JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 data.getData().getTitle() + "");
-        ImageUtil.getInstance().loadImage(_mActivity, data.getData().getImage_default(), videoplayer.thumbImageView);
-        videoplayer.setType(1);//详情模式下不显示时间和观看次数和标题
+
+        ImageUtil.getInstance().loadImage(_mActivity, data.getData().getImage_default(),
+                videoplayer.thumbImageView);
+
+        //详情模式下不显示时间和观看次数和标题
+        videoplayer.setType(1);
         videoplayer.titleTextView.setVisibility(View.GONE);
         videoplayer.tv_see_count.setVisibility(View.GONE);
         videoplayer.tv_time_long.setVisibility(View.GONE);
         autoPlayVideo();
 
-        String content_id = db.getContent_id();
 
-/*        rvView.setLayoutManager(new LinearLayoutManager(_mActivity, LinearLayoutManager.VERTICAL, false));
-        ArrayList<BasicInfo> al = new ArrayList<>();
-        BasicInfo f1 = new BasicInfo();
-        BasicInfo f2 = new BasicInfo();
-        BasicInfo f3 = new BasicInfo();
-        BasicInfo f4 = new BasicInfo();
-        BasicInfo f5 = new BasicInfo();
-        al.add(f1);
-        al.add(f2);
-        al.add(f3);
-        al.add(f4);
-        al.add(f5);
-        TakeInfoAdapter takeInfoAdapter = new TakeInfoAdapter(R.layout.take_item, al);
-        rvView.setAdapter(takeInfoAdapter);*/
     }
 
-    private void showRing(int childCount, long round) {
-        for (int i = 0; i < childCount; i++) {
-            if (i <= round - 1) {
-                llRating.getChildAt(i).setBackgroundResource(R.drawable.icon_full_start);
-            }
-        }
-    }
 
     @Override
     public int getContentViewResId() {
@@ -551,11 +550,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         return fragment;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     //显示选择框
     private void showSelectTypeDialog(final int i) {
@@ -563,7 +557,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             ToastUtil.toast("数据异常");
             return;
         }
-        //选择数量
+
         //设置header
         final View header = LayoutInflater.from(_mActivity).inflate(R.layout.header_type_dialog, null, false);
         ImageView iv_logo = header.findViewById(R.id.iv_logo);
@@ -576,6 +570,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_type_dialog, null, false);
         TextView tv_life_circle = footer.findViewById(R.id.tv_life_circle);
         TextView tv_sub_title = footer.findViewById(R.id.tv_sub_title);
+
         switch (category_id) {
             case "1":
                 //文案策划
@@ -632,6 +627,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 // tvCurrentGoods.setText("\"" + name + "\"" + "数量x" + count);
             }
         });
+
         adapter1 = new BaseListAdapter<ServiceDetailBean.DataBean.CateListBean>(R.layout.item_spec_btn, cate_list) {
             @Override
             public void handleView(BaseViewHolder helper, final ServiceDetailBean.DataBean.CateListBean item, final int position) {
@@ -679,6 +675,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         adapter1.addHeaderView(header);
         adapter1.addFooterView(footer);
         if (i == 0) {
+
             //选择规格
             MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "加入购物车", new View.OnClickListener() {
                 @Override
@@ -692,13 +689,15 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                         ToastUtil.toast("不能购买自己工作室的服务");
                         return;
                     }
+
                     //加入购物车
-                    ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(), count + "", new ResponseImpl<Object>() {
-                        @Override
-                        public void onSuccess(Object data) {
-                            ToastUtil.toast("加入购物车成功，请到购物车中查看");
-                        }
-                    }, Object.class);
+                    ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(),
+                            String.valueOf(count), new ResponseImpl<Object>() {
+                                @Override
+                                public void onSuccess(Object data) {
+                                    ToastUtil.toast("加入购物车成功，请到购物车中查看");
+                                }
+                            }, Object.class);
                 }
             }, "立即预约", new View.OnClickListener() {
                 @Override
@@ -734,24 +733,30 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                         ToastUtil.toast("数据异常");
                         return;
                     }
+
                     if (data.getData().getIs_mine().equals("1")) {
                         ToastUtil.toast("不能购买自己工作室的服务");
                         return;
                     }
+
                     //立即预约
-                    ShopApi.attachNow(data.getData().getContent_id(), count + "", new ResponseImpl<AttachResultBean>() {
-                        @Override
-                        public void onSuccess(AttachResultBean data) {
-                            ToastUtil.toast("已提交预约");
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", data.getData().getLog_id());
-                            start(MipaiOrderDetailFragment.newInstance(bundle));
-                        }
-                    }, AttachResultBean.class);
+                    ShopApi.attachNow(data.getData().getContent_id(),
+                            String.valueOf(count), new ResponseImpl<AttachResultBean>() {
+                                @Override
+                                public void onSuccess(AttachResultBean data) {
+                                    ToastUtil.toast("已提交预约");
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", data.getData().getLog_id());
+                                    start(MipaiOrderDetailFragment.newInstance(bundle));
+
+                                }
+                            }, AttachResultBean.class);
 
 
                 }
             }, true);
+
         } else if (i == 1) {
             //加入购物车
             MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "", null, "加入购物车", new View.OnClickListener() {
@@ -876,6 +881,16 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                     }
                 }, AddFavouriteBean.class);
                 break;
+
+            case R.id.shop_back:
+
+                pop();
+
+                break;
+            case R.id.shop_share:
+                share();
+
+                break;
         }
     }
 
@@ -908,159 +923,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         MipaiDialogUtil.showGoToPayDialog(_mActivity, db.getPresent_price(), db.getTitle(), listener);
     }
 
-    private void share(MedetailBean data) {
-        //分享到朋友圈
-        ShareAction mShareAction = new ShareAction(_mActivity).setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE);
-        ShareBoardConfig config = new ShareBoardConfig();
-        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
-
-        UMWeb web = new UMWeb(data.getData().getShare_video_url());
-        web.setTitle("我在“觅拍”拍视频 时尚酷炫新玩法");
-        web.setThumb(new UMImage(_mActivity, R.mipmap.ic_launcher));
-        web.setDescription("我在“觅拍”拍视频 时尚酷炫新玩法");
-        mShareAction.withMedia(web);
-        mShareAction.setCallback(new UMShareListener() {
-            @Override
-            public void onStart(SHARE_MEDIA share_media) {
-
-            }
-
-            @Override
-            public void onResult(SHARE_MEDIA platform) {
-
-                OrderApi.shareVipOrder(_mActivity, new ResponseImpl<Object>() {
-                    @Override
-                    public void onSuccess(Object data) {
-                        ToastUtil.toast("恭喜您!开通会员成功");
-                    }
-                }, Object.class);
-
-
-            }
-
-            @Override
-            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                ToastUtil.toast("分享失败");
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA share_media) {
-                // Logger.d("取消分享");
-                ToastUtil.toast("分享取消");
-            }
-        });
-        mShareAction.open(config);
-
-    }
-
-
-    //付款方式获得订单
-    private void pay() {
-        //付款
-        OrderApi.createVipOrder(_mActivity, new ResponseImpl<VipOrderBean>() {
-            @Override
-            public void onSuccess(final VipOrderBean data) {
-                final ArrayList<PayTypeBean> payType = new ArrayList<PayTypeBean>();
-                payType.add(new PayTypeBean(2));
-                payType.add(new PayTypeBean(3));
-                if (pay_dialog == null) {
-                    View dialogView = LayoutInflater.from(_mActivity).inflate(R.layout.dialog_menu, null, false);
-                    RecyclerView rvlist = dialogView.findViewById(R.id.rv_dialog_menu_list);
-                    rvlist.setLayoutManager(new LinearLayoutManager(_mActivity));
-                    pay_adapter = new BaseListAdapter<PayTypeBean>(R.layout.item_pay_type, null) {
-                        @Override
-                        public void handleView(BaseViewHolder helper, PayTypeBean item, final int position) {
-                            ImageView iv_icon = helper.getView(R.id.iv_icon);
-                            TextView tv_name = helper.getView(R.id.tv_name);
-                            ImageView iv_select = helper.getView(R.id.iv_select);
-                            switch (item.type) {
-                                case 2:
-                                    //微信
-                                    iv_icon.setImageResource(R.drawable.ic_wechat_pay);
-                                    tv_name.setText("微信支付");
-                                    break;
-                                case 3:
-                                    //支付宝
-                                    tv_name.setText("支付宝支付");
-                                    iv_icon.setImageResource(R.drawable.ic_alipay);
-                                    break;
-                            }
-                            if (pay_position == position) {
-                                iv_select.setImageResource(R.drawable.ic_cb_checked);
-                            } else {
-                                iv_select.setImageResource(R.drawable.ic_cb_unchecked);
-                            }
-                        }
-                    };
-                    pay_adapter.setNewData(payType);
-                    pay_adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter a, View view, int position) {
-                            pay_position = position;
-                            pay_adapter.notifyDataSetChanged();
-                        }
-                    });
-                    rvlist.setAdapter(pay_adapter);
-                    pay_dialog =
-                            new BaseDialogFragment.Builder(_mActivity)
-                                    .setContentView(dialogView)
-                                    .setGravity(Gravity.BOTTOM)
-                                    .setAnimStyle(BaseDialog.AnimStyle.BOTTOM).setCancelable(true)
-                                    .setOnClickListener(R.id.tv_dialog_menu_cancel, new BaseDialog.OnClickListener() {
-                                        @Override
-                                        public void onClick(Dialog dialog, View view) {
-                                            if (pay_position < 0) {
-                                                ToastUtil.toast("请选择支付方式");
-                                                return;
-                                            }
-                                            pay_dialog.dismiss();
-                                            switch (pay_adapter.getData().get(pay_position).type) {
-
-                                                case 2:
-                                                    //微信支付
-                                                    OrderApi.WxPay(_mActivity, data.getData().getOrdernumber(), "pay", new ResponseImpl<WxpayBean>() {
-                                                        @Override
-                                                        public void onSuccess(WxpayBean data) {
-                                                            //调启微信支付
-                                                            //微信支付
-                                                            IWXAPI api = WXAPIFactory.createWXAPI(_mActivity, Constants.APP_ID);
-                                                            api.registerApp(Constants.APP_ID);
-                                                            PayReq req = new PayReq();
-                                                            req.appId = Constants.APP_ID;
-                                                            req.nonceStr = data.getData().getNonce_str();
-                                                            req.packageValue = "Sign=WXPay";
-                                                            req.partnerId = Constants.partnerId;
-                                                            req.prepayId = data.getData().getPrepay_id();
-                                                            req.timeStamp = data.getData().getTimestamp() + "";
-                                                            req.sign = data.getData().getSign();
-                                                            api.sendReq(req);
-                                                        }
-                                                    }, WxpayBean.class);
-                                                    break;
-                                                case 3:
-                                                    //支付宝支付
-                                                    OrderApi.aliPayMipai("pay", data.getData().getOrdernumber(), "", "", new ResponseImpl<AliPayBean>() {
-                                                        @Override
-                                                        public void onSuccess(AliPayBean data) {
-                                                            AliPay aliPay;
-                                                            aliPay = new AliPay(_mActivity, ShopDetailsVideoFragment.this);
-                                                            aliPay.pay(data.getData().getStr());
-                                                        }
-                                                    }, AliPayBean.class);
-                                                    break;
-                                            }
-                                        }
-                                    }).setWidth(ScreenUtil.getScreenWidth(_mActivity) - ScreenUtil.dip2px(_mActivity, 20)).create();
-                }
-                if (pay_dialog != null && !pay_dialog.isShowing()) {
-                    if (pay_adapter != null) {
-                        pay_adapter.notifyDataSetChanged();
-                    }
-                    pay_dialog.show();
-                }
-            }
-        }, VipOrderBean.class);
-    }
 
     private void reconnect(String token) {
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -1111,21 +973,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         return super.onBackPressedSupport();
     }
 
-    @Override
-    public void paySuccess() {
-        //支付宝支付成功
-        ToastUtil.toast("恭喜您!开通会员成功");
-    }
-
-    @Override
-    public void payFail() {
-        //支付宝支付失败
-        ToastUtil.toast("支付宝支付失败");
-
-    }
-
-    /*//工作室
-     */
 
     // 计算距离
     private void addAddressDistance() {
@@ -1217,4 +1064,148 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         tv_height.setText(data.getData().getHeight() + "cm");
         tv_weight.setText(data.getData().getWeight() + "kg");
     }
+
+    // 分享 ;
+    private void share() {
+        mShareListener = new CustomShareListener(_mActivity);
+        mShareAction = new ShareAction(_mActivity)
+                .setDisplayList(
+                        SHARE_MEDIA.WEIXIN_CIRCLE,
+                        SHARE_MEDIA.WEIXIN,
+                        SHARE_MEDIA.QQ,
+                        SHARE_MEDIA.QZONE,
+                        SHARE_MEDIA.SINA)
+                .setCallback(mShareListener);
+
+        ShareBoardConfig config = new ShareBoardConfig();
+        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
+        String url = "";
+        String title = "";
+        String memo = "";
+        String image = "";
+
+        if (data != null) {
+            url = data.getData().getShare_url();
+            title = data.getData().getTitle();
+            memo = data.getData().getDetails();
+            image = data.getData().getImage_default();
+        } else {
+            url = data.getData().getShare_url();
+            title = data.getData().getTitle();
+            memo = data.getData().getDetails();
+            image = data.getData().getImage_default();
+        }
+        UMWeb web = new UMWeb(url + "&share=1");
+        web.setTitle(title);
+        web.setThumb(new UMImage(_mActivity, image));
+        web.setDescription(memo);
+        mShareAction.withMedia(web);
+        mShareAction.open(config);
+    }
+
+
+    // 设置状态栏高度
+    private int statusBarHeight() {
+        int height = 0;
+        int resourceId = getContext().getResources()
+                .getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            height = getContext().getResources().getDimensionPixelSize(resourceId);
+        }
+
+        statusBar.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, height));
+        return height;
+    }
+
+
+    private void initScrollAndTab() {
+        //  toolBar.setAlpha(0);
+        toolBar.setBackgroundColor(setAlpha(R.color.white, 1));
+        String[] tabList = new String[]{"项目", /*"评论",*/ "详情", "推荐"};
+
+        for (String s : tabList) {
+            tabLayout.addTab(tabLayout.newTab().setText(s));
+        }
+
+        List<View> views = new ArrayList<>();
+        views.add(llShopProject);
+        views.add(llShopDetail);
+        views.add(llShopRecommend);
+
+        scrollView.setAnchorList(views);
+        scrollView.setupWithTabLayout(tabLayout);
+
+        scrollView.setTranslationY(SizeUtils.getMeasuredHeight(toolBar) + statusBarHeight());
+//        int bannerHeight = SizeUtils.getMeasuredHeight(rvList);
+
+        scrollView.setOnScrollCallback(new TabWithScrollView.OnScrollCallback() {
+            @Override
+            public void onScrollCallback(int l, int t, int oldl, int oldt) {
+//                setBgAlphaChange(t, bannerHeight);
+
+            }
+        });
+
+    }
+
+
+    //
+    private int setAlpha(@ColorRes int resId, int alpha) {
+        int color = getColor(resId);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
+
+    }
+
+
+    private int getColor(@ColorRes int resId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getContext().getColor(resId);
+        } else {
+            return getContext().getResources().getColor(resId);
+        }
+    }
+
+
+    private void setBgAlphaChange(int t, float height) {
+        assert toolBar != null;
+        if (t <= 0) {
+            tabLayout.setAlpha(1);
+            //
+        } else if (t < height) {
+            float scale = (float) t / height;
+            if (scale > 0.2f) {
+                tabLayout.setVisibility(View.VISIBLE);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
+
+            tabLayout.setAlpha(scale);
+            toolBar.setBackgroundColor(setAlpha(R.color.white, (int) (255 * scale)));
+        }
+    }
+
+
+    // 取得评论
+    private void getComment() {
+
+        String caseId = data.getData().getCase_id();
+
+//        MzNewApi.getComment(caseId, 1, new ResponseImpl<T>() {
+//            @Override
+//            public void onSuccess(T data) {
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
 }

@@ -119,6 +119,7 @@ public class ShopListFragment extends BaseKitFragment {
         headers.add("智能排序");
         current_type = getArguments().getInt("type", 1);
         category_id = current_type + "";
+
         switch (current_type) {
             case 1:
                 //文案策划
@@ -199,9 +200,13 @@ public class ShopListFragment extends BaseKitFragment {
     private void initSource() {
         try {
             //城市
-            final View view1 = LayoutInflater.from(_mActivity).inflate(R.layout.fragment_select_city_2, null, false);
+            final View view1 = LayoutInflater.from(_mActivity)
+                    .inflate(R.layout.fragment_select_city_2, null, false);
+
             rv_city_1 = view1.findViewById(R.id.rv_list_1);
             rv_city_2 = view1.findViewById(R.id.rv_list_2);
+//
+//
 //            rv_city = view1.findViewById(R.id.super_recycle_view);
 //            superSideBar = view1.findViewById(R.id.super_side_bar);
 //            superTvHint = view1.findViewById(R.id.super_tv_hint);
@@ -218,6 +223,8 @@ public class ShopListFragment extends BaseKitFragment {
             order_by = getDataByType(1);
             priceAdapter = new ListDropDownAdapter(_mActivity, order_by);
             view2.setAdapter(priceAdapter);
+
+
             //筛选
             final ListView view3 = new ListView(_mActivity);
             view3.setDividerHeight(0);
@@ -406,7 +413,9 @@ public class ShopListFragment extends BaseKitFragment {
                     dropDownMenu.closeMenu();
                     goSearch();
                 } else {
+
                     String pid = adapter_1.getData().get(position).getRegion_id();
+
                     ShopApi.getCityList2(pid, new ResponseImpl<ServerCityBean>() {
                         @Override
                         public void onSuccess(ServerCityBean data) {

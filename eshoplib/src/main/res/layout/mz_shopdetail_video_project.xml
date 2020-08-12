@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_shop_project"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--    商品信息 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list"
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="200dp"
+        android:layout_margin="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -143,10 +142,7 @@
             tools:text="TextView" />
 
     </LinearLayout>
-    <!--    !!!!! 商品信息 end -->
 
-
-    <!--    工作室  -->
     <RelativeLayout
         android:id="@+id/rl_click_workhome"
         android:layout_width="match_parent"
@@ -285,8 +281,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-
-    <!--   基本信息  -->
+    <!-- 基本信息 -->
     <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -307,7 +302,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="12dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -347,7 +342,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="12dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -387,7 +382,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="12dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -399,7 +394,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="拍摄器材"
+                android:text="摄影器材"
                 android:textColor="#646464"
                 android:textSize="12sp" />
 
@@ -427,7 +422,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="12dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -467,7 +462,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="12dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
@@ -500,7 +495,6 @@
             android:layout_height="1dp"
             android:background="#f2f2f2" />
     </LinearLayout>
-    <!-- 基本信息 end -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_view"
@@ -509,12 +503,12 @@
         android:nestedScrollingEnabled="false"
         android:visibility="gone" />
 
-    <View
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#f2f2f2" />
 
-
+    <!-- 团队介绍-->
     <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -525,10 +519,14 @@
 
     <include layout="@layout/header_shop_detail" />
 
-
-    <ImageView
+    <TextView
+        android:id="@+id/tv_team_introduce"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@drawable/draw_platform_support" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.hym.eshoplib.fragment.order;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -22,31 +23,33 @@ import me.yokeyword.fragmentation.SupportFragment;
  * otherTips
  */
 
-public class MyOrderMainFragment extends BaseTabScrollFragment{
+public class MyOrderMainFragment extends BaseTabScrollFragment {
     public static MyOrderMainFragment newInstance(Bundle args) {
         MyOrderMainFragment fragment = new MyOrderMainFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
     MyOrderListFragment fragment;
+
     @Override
     public SupportFragment[] getSupportFragments() {
-        SupportFragment[] fragments=new SupportFragment[1];
-        fragment= MyOrderListFragment.newInstance(getArguments());
-        fragments[0]= fragment;
+        SupportFragment[] fragments = new SupportFragment[1];
+        fragment = MyOrderListFragment.newInstance(getArguments());
+        fragments[0] = fragment;
         return fragments;
     }
 
     @Override
     public List<Class<? extends SupportFragment>> getClasses() {
-        List<Class<? extends SupportFragment>> classes=new ArrayList<>();
-        classes.add( MyOrderListFragment.class);
+        List<Class<? extends SupportFragment>> classes = new ArrayList<>();
+        classes.add(MyOrderListFragment.class);
         return classes;
     }
 
     @Override
     public ArrayList<CustomTabEntity> getTabs() {
-        ArrayList<CustomTabEntity>tabs=new ArrayList<>();
+        ArrayList<CustomTabEntity> tabs = new ArrayList<>();
         tabs.add(new TabEntity(getResources().getString(R.string.All), R.mipmap.ic_launcher, R.mipmap.ic_launcher));
         tabs.add(new TabEntity("待接受预约", R.mipmap.ic_launcher, R.mipmap.ic_launcher));
         tabs.add(new TabEntity("待付款", R.mipmap.ic_launcher, R.mipmap.ic_launcher));
@@ -59,7 +62,7 @@ public class MyOrderMainFragment extends BaseTabScrollFragment{
     @Override
     public void doLogic() {
         int width = ScreenUtil.getScreenWidth(_mActivity);
-        int height=ScreenUtil.getScreenHeight(_mActivity);
+        int height = ScreenUtil.getScreenHeight(_mActivity);
         //Logger.d("width="+width+",height="+height);
 //        if(height/width>=2){
 //            getTabLayout().setTextsize(10);
@@ -69,12 +72,12 @@ public class MyOrderMainFragment extends BaseTabScrollFragment{
 //        getTabLayout().setIndicatorMargin(10,7,10,7);
         showBackButton();
         setTitle(R.string.MyOrder);
-      //  getTabLayout().setCurrentTab(getArguments().getInt("type",0));
+        //  getTabLayout().setCurrentTab(getArguments().getInt("type",0));
     }
 
     @Override
     public int getSelectPosition() {
-        return getArguments().getInt("type",0);
+        return getArguments().getInt("type", 0);
     }
 
     @Override

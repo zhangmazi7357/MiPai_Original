@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +18,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.order.CommentLableListBean;
 import com.hym.eshoplib.bean.shop.ShopProductsBean;
-import com.hym.eshoplib.fragment.shop.UpLoadImageFragment;
+import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.mz.decoration.SpacesItemDecoration;
 import com.hym.imagelib.ImageUtil;
@@ -34,10 +32,8 @@ import com.jph.takephoto.model.TImage;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.orhanobut.logger.Logger;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,10 +45,8 @@ import butterknife.Unbinder;
 import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.bean.local.UpLoadImageBean;
-import cn.hym.superlib.event.UpdateDataEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.MzOrderImageAdapter;
-import cn.hym.superlib.mz.MzProImageDetailAdapter;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
@@ -80,8 +74,8 @@ public class AddCommentsFragment extends BaseKitFragment {
     @BindView(R.id.iv_shop_logo)
     ImageView ivShopLogo;
 
-    @BindView(R.id.mz_order_text)
-    EditText mzOrderText;
+    @BindView(R.id.mz_order_et)
+    EditText mzOrderEt;
     @BindView(R.id.mz_order_rv)
     RecyclerView mzOrderRv;
 
@@ -92,8 +86,18 @@ public class AddCommentsFragment extends BaseKitFragment {
     String log_id;
     BaseListAdapter<CommentLableListBean.DataBean.LabelListBean> adapter;
     Unbinder unbinder;
-    HashMap<Integer, String> ids = new HashMap<>();
-    String url;
+    private HashMap<Integer, String> ids = new HashMap<>();             // tagID
+    private String shopLogoUrl;                                          // 店铺logo
+
+
+    private String mzCaseId = "";               // 产品 id;
+    private String mzOrderId = "";             // 订单 id;
+    private String mzTitle = "";               // 标题;
+    private String mzContent = "";              //评论内容；
+    private String mzStore = "";                    // 星级
+    private String mzTagId = "";               //标签id;
+    private String mzImages = "";               // 上传图片 ;
+    private String mzPid = "";                  // 回复评论id ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,24 +123,31 @@ public class AddCommentsFragment extends BaseKitFragment {
     public void doLogic() {
         showBackButton();
         log_id = getArguments().getString("id", "");
-        url = getArguments().getString("url", "");
+        shopLogoUrl = getArguments().getString("url", "");
+
+
+        Log.e(TAG, " 订单评价 log_id =" + log_id + ",url  = " + shopLogoUrl);
+
 
         ImageUtil.getInstance()
-                .loadCircleImage(AddCommentsFragment.this, url, ivShopLogo);
+                .loadCircleImage(AddCommentsFragment.this, shopLogoUrl, ivShopLogo);
 
         setTitle("订单评价");
 
         initOrderCommentText();
 
         rvList.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+
         adapter = new BaseListAdapter<CommentLableListBean.DataBean.LabelListBean>(R.layout.item_label, null) {
             @Override
             public void handleView(BaseViewHolder helper, final CommentLableListBean.DataBean.LabelListBean item, final int position) {
                 TextView btn_lable = helper.getView(R.id.btn_label);
+
                 int width = (ScreenUtil.getScreenWidth(_mActivity) - ScreenUtil.dip2px(_mActivity, 130)) / 3;
                 btn_lable.getLayoutParams().width = width;
                 btn_lable.getLayoutParams().height = width / 2;
                 btn_lable.setText(item.getLabel_name() + "");
+
                 if (item.isSelect()) {
                     btn_lable.setBackgroundResource(R.drawable.shape_grayb3985b_solid_conner5);
                     btn_lable.setTextColor(ContextCompat.getColor(_mActivity, R.color.white));
@@ -174,43 +185,26 @@ public class AddCommentsFragment extends BaseKitFragment {
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = "";
 
-                if (TextUtils.isEmpty(log_id)) {
-                    ToastUtil.toast("数据异常");
-                    return;
-                }
 
-                if (ids.size() == 0) {
-                    ToastUtil.toast("请至少选择一个标签");
-                    return;
-                }
+                upLoadComment();
 
-                Iterator<Integer> it = ids.keySet().iterator();
-
-                while (it.hasNext()) {
-                    int key = it.next();
-                    id += ids.get(key) + ",";
-                }
-
-                String rating = ratingbar.getRating() + "";
-
+//                String rating = ratingbar.getRating() + "";
 //                Logger.d("id=" + id + ",rating=" + rating + ",log_id=" + log_id);
-
-
-                ShopApi.addComment(log_id,
-                        ratingbar.getRating() + "",
-                        id, new ResponseImpl<Object>() {
-
-                            @Override
-                            public void onSuccess(Object data) {
-                                ToastUtil.toast("感谢您的评价，祝您生活愉快");
-                                EventBus.getDefault().post(new UpdateDataEvent());
-                                _mActivity.finish();
-
-                            }
-
-                        }, Object.class);
+//                ShopApi.addComment(log_id,
+//                        ratingbar.getRating() + "",
+//                        id, new ResponseImpl<Object>() {
+//
+//                            @Override
+//                            public void onSuccess(Object data) {
+//
+//                                ToastUtil.toast("感谢您的评价，祝您生活愉快");
+//                                EventBus.getDefault().post(new UpdateDataEvent());
+//                                _mActivity.finish();
+//
+//                            }
+//
+//                        }, Object.class);
 
 
             }
@@ -268,12 +262,8 @@ public class AddCommentsFragment extends BaseKitFragment {
                 } else {
 
 
-                    PhotoUtil.showDialogAllType(AddCommentsFragment.this,
-                            10 - adapter.getData().size(), false);
-
-
-
-
+                    PhotoUtil.ShowDialog(AddCommentsFragment.this,
+                            10 - adapter.getData().size(), false, 2);
 
                 }
             }
@@ -337,6 +327,7 @@ public class AddCommentsFragment extends BaseKitFragment {
     }
 
 
+    // 将图片显示在 列表上
     public List<UpLoadImageBean> getImageData(BaseQuickAdapter adapter,
                                               ArrayList<LocalMedia> source) {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
@@ -388,5 +379,58 @@ public class AddCommentsFragment extends BaseKitFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    /**
+     * 添加评论
+     */
+    private void upLoadComment() {
+
+        if (TextUtils.isEmpty(log_id)) {
+            ToastUtil.toast("数据异常");
+            return;
+        }
+
+
+        if (ids.size() == 0) {
+            ToastUtil.toast("请至少选择一个标签");
+            return;
+        }
+        Iterator<Integer> it = ids.keySet().iterator();
+        while (it.hasNext()) {
+            int key = it.next();
+            mzTagId += ids.get(key) + ",";
+        }
+
+
+        mzContent = mzOrderEt.getText().toString();
+        mzStore = String.valueOf(ratingbar.getRating());
+
+        mzImages = getProDetailPic();
+
+        MzNewApi.sendComment(mzCaseId, mzOrderId, mzTitle,
+                mzContent, mzStore,
+                mzTagId, mzImages, mzPid,
+                new ResponseImpl<Object>() {
+                    @Override
+                    public void onSuccess(Object data) {
+
+                    }
+                }, Object.class);
+
+    }
+
+    // 拿到上传图片 地址 ;
+    private String getProDetailPic() {
+        String result = "";
+        for (int i = 0; i < mzAdapter.getData().size(); i++) {
+            String file_name = mzAdapter.getData().get(i).getQiniuFileName();
+
+            if (!TextUtils.isEmpty(file_name)) {
+                result += file_name + ",";
+            }
+        }
+        return result;
     }
 }

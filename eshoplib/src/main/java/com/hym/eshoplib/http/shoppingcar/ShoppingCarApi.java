@@ -31,7 +31,8 @@ public class ShoppingCarApi {
     /**
      * 添加购物车
      */
-    public static <T>void addToShoppingCar(Context context,String content_id,String quantity,IHttpResultListener<T> listener, Class<T> clazz){
+    public static <T>void addToShoppingCar(Context context,String
+            content_id,String quantity,IHttpResultListener<T> listener, Class<T> clazz){
         HttpUtil.BaseHttpRequest request=HttpUtil.getRequest();
         request.setApp("Bts");
         request.setClassName("CartAdd");

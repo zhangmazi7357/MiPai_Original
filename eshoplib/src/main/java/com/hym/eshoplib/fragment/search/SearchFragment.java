@@ -222,14 +222,14 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
         hideSoftInput();
 
         //
-//        Intent intent = new Intent(_mActivity, MzSearchResultActivity.class);
-//        intent.putExtra(MzConstant.KEY_SEARCH_KEYWORD, keywords);
-//        startActivity(intent);
+        Intent intent = new Intent(_mActivity, MzSearchResultActivity.class);
+        intent.putExtra(MzConstant.KEY_SEARCH_KEYWORD, keywords);
+        startActivity(intent);
 
 
-        Bundle bundle = new Bundle();
-        bundle.putString("keywords", keywords);
-        start(SearchResultFragment.newInstance(bundle));
+//        Bundle bundle = new Bundle();
+//        bundle.putString("keywords", keywords);
+//        start(SearchResultFragment.newInstance(bundle));
 
     }
 

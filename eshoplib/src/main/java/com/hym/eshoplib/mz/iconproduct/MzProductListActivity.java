@@ -142,7 +142,6 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                     @Override
                     public void onSuccess(GoodDetailModel data) {
 
-                        Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
 
                         if (data.getData().getType().equals("1")) {
 

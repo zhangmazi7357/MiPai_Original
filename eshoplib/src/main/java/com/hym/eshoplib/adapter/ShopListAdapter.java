@@ -20,9 +20,11 @@ import java.util.List;
 import cn.hym.superlib.utils.view.ScreenUtil;
 
 public class ShopListAdapter extends BaseQuickAdapter<SpecialTimeLimteBean.DataBean.VideoBean, BaseViewHolder> {
+
     public ShopListAdapter(int layoutResId, @Nullable List<SpecialTimeLimteBean.DataBean.VideoBean> data) {
         super(layoutResId, data);
     }
+
 
     @Override
     protected void convert(BaseViewHolder helper, SpecialTimeLimteBean.DataBean.VideoBean item) {
@@ -32,8 +34,6 @@ public class ShopListAdapter extends BaseQuickAdapter<SpecialTimeLimteBean.DataB
         ImageView ivView = helper.getView(R.id.iv_view);
         ScreenUtil.ViewAdapter(mContext, ivView, 16, 9, 20);
         Glide.with(mContext).load(item.getImage_default()).into(ivView);
-        // ImageUtil.getInstance().loadRoundCornerImage(mContext, item.getImage_default(), ivView, 6);
-        //Glide.with(mContext).load(item.getImage_default()).into(ivView);
         TextView tvBeforePrice = helper.getView(R.id.tv_before_price);
         if (TextUtils.isEmpty(item.getOriginal_price()) || item.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);

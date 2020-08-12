@@ -31,4 +31,7 @@ public class MzSearchAllFragment extends Fragment {
         binding = FragmentMzSearchAllBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
+
+
 }

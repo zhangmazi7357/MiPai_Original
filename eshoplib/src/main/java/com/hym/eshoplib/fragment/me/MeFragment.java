@@ -374,7 +374,7 @@ public class MeFragment extends BaseKitFragment {
 
                 }
                 break;
-            case R.id.tv_myorder:
+            case R.id.tv_myorder:               // 我的订单  全部
                 goOrder(0);
                 break;
             case R.id.tv_order_1:
@@ -474,6 +474,7 @@ public class MeFragment extends BaseKitFragment {
         //我的订单
         Bundle bundle = BaseActionActivity.getActionBundle
                 (EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_list);
+
         bundle.putInt("type", position);
         EshopActionActivity.start(_mActivity, bundle);
     }

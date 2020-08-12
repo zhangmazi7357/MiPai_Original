@@ -2,7 +2,9 @@ package cn.hym.superlib.widgets.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -81,7 +83,7 @@ public class DropDownMenuUpdate extends LinearLayout {
         menuTextSize = a.getDimensionPixelSize(com.yyydjk.library.R.styleable.DropDownMenu_ddmenuTextSize, menuTextSize);
         menuSelectedIcon = a.getResourceId(com.yyydjk.library.R.styleable.DropDownMenu_ddmenuSelectedIcon, menuSelectedIcon);
         menuUnselectedIcon = a.getResourceId(com.yyydjk.library.R.styleable.DropDownMenu_ddmenuUnselectedIcon, menuUnselectedIcon);
-        menuHeighPercent = a.getFloat(com.yyydjk.library.R.styleable.DropDownMenu_ddmenuMenuHeightPercent,menuHeighPercent);
+        menuHeighPercent = a.getFloat(com.yyydjk.library.R.styleable.DropDownMenu_ddmenuMenuHeightPercent, menuHeighPercent);
         a.recycle();
 
         //初始化tabMenuView并添加到tabMenuView
@@ -134,12 +136,12 @@ public class DropDownMenuUpdate extends LinearLayout {
         });
         containerView.addView(maskView, 1);
         maskView.setVisibility(GONE);
-        if (containerView.getChildAt(2) != null){
+        if (containerView.getChildAt(2) != null) {
             containerView.removeViewAt(2);
         }
 
         popupMenuViews = new FrameLayout(getContext());
-        popupMenuViews.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (DeviceUtils.getScreenSize(getContext()).y*menuHeighPercent)));
+        popupMenuViews.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (DeviceUtils.getScreenSize(getContext()).y * menuHeighPercent)));
         popupMenuViews.setVisibility(GONE);
         containerView.addView(popupMenuViews, 2);
 
@@ -151,15 +153,15 @@ public class DropDownMenuUpdate extends LinearLayout {
     }
 
     private void addTab(@NonNull List<String> tabTexts, int i) {
-        final FrameLayout containner=new FrameLayout(getContext());
+        final FrameLayout containner = new FrameLayout(getContext());
         containner.setLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         final TextView tab = new TextView(getContext());
         tab.setSingleLine();
         tab.setEllipsize(TextUtils.TruncateAt.END);
         tab.setGravity(Gravity.CENTER);
-        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX,menuTextSize);
-        FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity=Gravity.CENTER;
+        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
         tab.setLayoutParams(layoutParams);
         tab.setTextColor(textUnselectedColor);
         tab.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
@@ -246,8 +248,11 @@ public class DropDownMenuUpdate extends LinearLayout {
         //System.out.println(current_tab_position);
         for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2) {
             if (target == tabMenuView.getChildAt(i)) {
+
                 if (current_tab_position == i) {
+
                     closeMenu();
+
                 } else {
                     if (current_tab_position == -1) {
                         popupMenuViews.setVisibility(View.VISIBLE);
@@ -270,16 +275,25 @@ public class DropDownMenuUpdate extends LinearLayout {
                 popupMenuViews.getChildAt(i / 2).setVisibility(View.GONE);
             }
         }
+
     }
 
     public int dpTpPx(float value) {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm) + 0.5);
     }
+
     //将textview外边包一层framelayout
-    private TextView getChildTextView(int position){
-        FrameLayout containner= (FrameLayout) tabMenuView.getChildAt(position);
+    private TextView getChildTextView(int position) {
+        FrameLayout containner = (FrameLayout) tabMenuView.getChildAt(position);
         return (TextView) containner.getChildAt(0);
+    }
+
+    // position  == 0，2，4    ///   1 和 3 是竖直分割线 .
+    public FrameLayout getContainer(int position) {
+
+        return (FrameLayout) tabMenuView.getChildAt(position);
 
     }
+
 }

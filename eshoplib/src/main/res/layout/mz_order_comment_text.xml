@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/mz_order_text"
+        android:id="@+id/mz_order_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"

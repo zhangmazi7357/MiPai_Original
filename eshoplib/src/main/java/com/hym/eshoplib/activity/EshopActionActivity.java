@@ -58,9 +58,6 @@ public class EshopActionActivity extends BaseActionActivity implements IFragment
     public static final int Action_order_comment_detail = 0x47;//评论详情
 
 
-
-
-
     public static void start(Activity from, Bundle args) {
         Intent intent = new Intent(from, EshopActionActivity.class);
         if (args != null) {
@@ -68,12 +65,13 @@ public class EshopActionActivity extends BaseActionActivity implements IFragment
         }
         from.startActivity(intent);
     }
-    public static void startFroresult(Activity from, Bundle args,int reqCode) {
+
+    public static void startFroresult(Activity from, Bundle args, int reqCode) {
         Intent intent = new Intent(from, EshopActionActivity.class);
         if (args != null) {
             intent.putExtras(args);
         }
-        from.startActivityForResult(intent,reqCode);
+        from.startActivityForResult(intent, reqCode);
     }
 
     @Override
@@ -84,72 +82,77 @@ public class EshopActionActivity extends BaseActionActivity implements IFragment
     @Override
     public SupportFragment getTargetFragment(int model_type, int action) {
         SupportFragment fragment = null;
+
         if (model_type == ModelType_Eshop) {
             switch (action) {
                 case Action_eshop_classic:
                     //商品分类
-                    fragment= GoodsClassicFragment.newInstance(getIntent().getExtras());
+                    fragment = GoodsClassicFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_eshop_orderby:
-                    fragment= GoodsOrderByFragment.newInstance(getIntent().getExtras());
+                    fragment = GoodsOrderByFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_eshop_spec:
-                    fragment= SpecListFragment.newInstance(getIntent().getExtras());
+                    fragment = SpecListFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_eshop_comments:
-                    fragment= GoodsCommentsListFragment.newInstance(getIntent().getExtras());
+                    fragment = GoodsCommentsListFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_eshop_service:
-                    fragment= CustomServiceFragment.newInstance(getIntent().getExtras());
+                    fragment = CustomServiceFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_eshop_search:
-                    fragment= SearchGoodsFragment.newInstance(getIntent().getExtras());
+                    fragment = SearchGoodsFragment.newInstance(getIntent().getExtras());
                     break;
 
             }
-        }else if(model_type==ModelType_Address){
+        } else if (model_type == ModelType_Address) {
             switch (action) {
                 case Action_address_addresslist:
                     //收货地址列表
-                    fragment= AddressListFragment.newInstance(getIntent().getExtras());
+                    fragment = AddressListFragment.newInstance(getIntent().getExtras());
                     break;
 
             }
-        }else if(model_type==ModelType_Shoppingcart){
+        } else if (model_type == ModelType_Shoppingcart) {
             switch (action) {
                 case Action_shoppingcart_main:
                     //购物车
-                    fragment= ShoppingcartFragment.newInstance(getIntent().getExtras());
+                    fragment = ShoppingcartFragment.newInstance(getIntent().getExtras());
                     break;
 
             }
-        }else if(model_type==ModelType_Order){
+        } else if (model_type == ModelType_Order) {
+
             switch (action) {
                 case Action_order_confirm_order:
                     //确认订单
-                    fragment= ConfirmOrderFragment.newInstance(getIntent().getExtras());
+                    fragment = ConfirmOrderFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_order_list:
                     //订单列表
-                    fragment= MyOrderMainFragment.newInstance(getIntent().getExtras());
+                    fragment = MyOrderMainFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_order_order_detail:
                     //订单详情
-                    fragment= MipaiOrderDetailFragment.newInstance(getIntent().getExtras());
+                    fragment = MipaiOrderDetailFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_order_order_pay:
                     //订单支付，从订单列表中进入
-                    fragment= SelectPaymentFragment.newInstance(getIntent().getExtras());
+                    fragment = SelectPaymentFragment.newInstance(getIntent().getExtras());
                     break;
+
                 case Action_order_order_logitics:
                     //物流
-                    fragment= LogicalsFragment.newInstance(getIntent().getExtras());
+                    fragment = LogicalsFragment.newInstance(getIntent().getExtras());
                     break;
+
                 case Action_order_add_comment:
-                    fragment= AddCommentsFragment.newInstance(getIntent().getExtras());
+                    fragment = AddCommentsFragment.newInstance(getIntent().getExtras());
                     break;
+
                 case Action_order_comment_detail:
-                    fragment= CommentDetailFragment.newInstance(getIntent().getExtras());
+                    fragment = CommentDetailFragment.newInstance(getIntent().getExtras());
                     break;
 
             }

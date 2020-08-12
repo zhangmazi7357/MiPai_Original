@@ -122,6 +122,36 @@ public class OrderListBeanMiPai {
             private String auth_store;
             private String auth_user;
 
+            @Override
+            public String toString() {
+                return "InfoBean{" +
+                        "log_id='" + log_id + '\'' +
+                        ", order_number='" + order_number + '\'' +
+                        ", buy_num='" + buy_num + '\'' +
+                        ", money='" + money + '\'' +
+                        ", ctime='" + ctime + '\'' +
+                        ", status='" + status + '\'' +
+                        ", orderstatus='" + orderstatus + '\'' +
+                        ", cust_status='" + cust_status + '\'' +
+                        ", price='" + price + '\'' +
+                        ", store_name='" + store_name + '\'' +
+                        ", logo='" + logo + '\'' +
+                        ", category_name='" + category_name + '\'' +
+                        ", nickname='" + nickname + '\'' +
+                        ", avatar='" + avatar + '\'' +
+                        ", log_userid='" + log_userid + '\'' +
+                        ", store_userid='" + store_userid + '\'' +
+                        ", dtime='" + dtime + '\'' +
+                        ", store_del='" + store_del + '\'' +
+                        ", user_del='" + user_del + '\'' +
+                        ", is_store='" + is_store + '\'' +
+                        ", button=" + button +
+                        ", comment_id='" + comment_id + '\'' +
+                        ", auth_store='" + auth_store + '\'' +
+                        ", auth_user='" + auth_user + '\'' +
+                        '}';
+            }
+
             public String getAuth_store() {
                 return auth_store;
             }
@@ -349,6 +379,30 @@ public class OrderListBeanMiPai {
                 private int wait_comm;
                 private int check_comm;
                 private int accept;
+
+
+                @Override
+                public String toString() {
+                    return "ButtonBean{" +
+                            "yuyue_notice=" + yuyue_notice +
+                            ", yuyue_confirm=" + yuyue_confirm +
+                            ", cancel=" + cancel +
+                            ", pay=" + pay +
+                            ", shoot_notice=" + shoot_notice +
+                            ", collect_notice=" + collect_notice +
+                            ", cust=" + cust +
+                            ", shoot_confirm=" + shoot_confirm +
+                            ", collect_confirm=" + collect_confirm +
+                            ", comment=" + comment +
+                            ", delete=" + delete +
+                            ", refuse=" + refuse +
+                            ", refund=" + refund +
+                            ", refrefund=" + refrefund +
+                            ", wait_comm=" + wait_comm +
+                            ", check_comm=" + check_comm +
+                            ", accept=" + accept +
+                            '}';
+                }
 
                 public int getAccept() {
                     return accept;

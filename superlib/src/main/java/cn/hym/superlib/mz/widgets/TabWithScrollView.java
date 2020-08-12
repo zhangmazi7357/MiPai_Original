@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.List;
 
 /**
+ * Created by Hao on 2019/7/21.
  * Describe ScrollView和TabLayout的联动
  */
 public class TabWithScrollView extends ScrollView {

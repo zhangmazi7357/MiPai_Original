@@ -90,16 +90,19 @@ public class MzNewApi {
      * @param clazz
      * @param <T>
      */
-    public static <T> void sendComment(String case_id, String title, String content,
-                                       String store, String tag_id, String images,
+    public static <T> void sendComment(String case_id,
+                                       String order_id, String title,
+                                       String content, String store,
+                                       String tag_id, String images,
                                        String pid,
                                        IHttpResultListener<T> listener,
                                        Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Comment");
         request.setClassName("Publish");
-//        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
         request.addParamsNotEmpty("case_id", case_id);
+        request.addParamsNotEmpty("order_id", order_id);
         request.addParamsNotEmpty("title", title);
         request.addParamsNotEmpty("content", content);
         request.addParamsNotEmpty("store", store);
@@ -107,9 +110,58 @@ public class MzNewApi {
         request.addParamsNotEmpty("images", images);
         request.addParamsNotEmpty("pid", pid);
 
+        Log.e(TAG, "添加评论 参数: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
 
     }
 
+
+    /**
+     * 搜索 ；
+     *
+     * @param str
+     * @param type
+     * @param sort_type
+     * @param p
+     * @param listener
+     * @param clazz
+     * @param <T>
+     */
+    public static <T> void search(String str, String type,
+                                  String sort_type,
+                                  String p,
+                                  IHttpResultListener<T> listener,
+                                  Class<T> clazz) {
+
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Activity");
+        request.setClassName("Search");
+        request.addParamsNotEmpty("str", str);
+        request.addParamsNotEmpty("type", type);
+        request.addParamsNotEmpty("sort_type", sort_type);
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("p", p);
+        request.addParamsNotEmpty("psize", "10");
+
+        //  Log.e(TAG, "搜索 参数: " + JSONObject.toJSONString(request));
+        post(request, listener, clazz);
+    }
+
+
+    // 商品详情 评论
+    public static <T> void getComment(String case_id, String p,
+                                      IHttpResultListener<T> listener,
+                                      Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Comment");
+        request.setClassName("GetCommentList");
+        request.addParamsNotEmpty("case_id", case_id);
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("p", p);
+        request.addParamsNotEmpty("psize", "10");
+
+        //  Log.e(TAG, "评论 参数: " + JSONObject.toJSONString(request));
+        post(request, listener, clazz);
+    }
 
 }
