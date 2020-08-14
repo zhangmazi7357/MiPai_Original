@@ -1,4 +1,4 @@
-package com.hym.eshoplib.fragment.search.mz;
+package com.hym.eshoplib.fragment.search.mz.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

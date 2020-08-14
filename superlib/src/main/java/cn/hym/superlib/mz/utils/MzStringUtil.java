@@ -46,7 +46,7 @@ public class MzStringUtil {
 
 
     /**
-     * 分割 tag
+     * 分割 带 , 的字符串 ;
      *
      * @param tags
      * @return
@@ -65,4 +65,21 @@ public class MzStringUtil {
             return new String[]{tags};
         }
     }
+
+
+    /**
+     * 隐藏用户名 用 * 代替 ;
+     *
+     * @param userName
+     * @return
+     */
+    public static String hideUserName(String userName) {
+
+
+        String newName = userName.charAt(0) + "***" + userName.charAt(userName.length() - 1);
+
+        return newName;
+    }
+
+
 }

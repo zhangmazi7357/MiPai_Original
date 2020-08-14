@@ -54,6 +54,7 @@ import com.hym.eshoplib.bean.order.WxpayBean;
 import com.hym.eshoplib.bean.shop.AddFavouriteBean;
 import com.hym.eshoplib.bean.shop.AttachResultBean;
 import com.hym.eshoplib.bean.shop.ServiceDetailBean;
+import com.hym.eshoplib.bean.shop.ShopCommentsBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
@@ -63,7 +64,9 @@ import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
+import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
 import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
+import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
 import com.hym.imagelib.ImageUtil;
@@ -275,6 +278,18 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
     @BindView(R.id.ll_shop_project)
     LinearLayout llShopProject;
+
+    // 评论
+    @BindView(R.id.ll_shop_comment)
+    LinearLayout llShopComment;
+    @BindView(R.id.commentAll)
+    TextView commentAll;
+    @BindView(R.id.commentRv)
+    RecyclerView commentRv;
+    @BindView(R.id.commentNoView)
+    TextView commentNoView;
+    @BindView(R.id.commentMore)
+    TextView commentMore;
 
     @BindView(R.id.ll_shop_detail)
     LinearLayout llShopDetail;
@@ -501,6 +516,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             }
         }, SpecialTimeLimteBean.class);
 
+
+        getComment();
+
+
+        // 工作室详情 ;
         ShopApi.GetContentDetail(db.getContent_id(),
                 new ResponseImpl<ServiceDetailBean>() {
                     @Override
@@ -1122,7 +1142,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private void initScrollAndTab() {
         //  toolBar.setAlpha(0);
         toolBar.setBackgroundColor(setAlpha(R.color.white, 1));
-        String[] tabList = new String[]{"项目", /*"评论",*/ "详情", "推荐"};
+        String[] tabList = new String[]{"项目", "评论", "详情", "推荐"};
 
         for (String s : tabList) {
             tabLayout.addTab(tabLayout.newTab().setText(s));
@@ -1130,12 +1150,15 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
         List<View> views = new ArrayList<>();
         views.add(llShopProject);
+        views.add(llShopComment);
         views.add(llShopDetail);
         views.add(llShopRecommend);
 
         scrollView.setAnchorList(views);
         scrollView.setupWithTabLayout(tabLayout);
 
+
+        // 这个本来是要做成渐变色的，现在后悔了不想做了。
         scrollView.setTranslationY(SizeUtils.getMeasuredHeight(toolBar) + statusBarHeight());
 //        int bannerHeight = SizeUtils.getMeasuredHeight(rvList);
 
@@ -1189,17 +1212,61 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     }
 
 
-    // 取得评论
+    // 评论请求
     private void getComment() {
-
         String caseId = data.getData().getCase_id();
 
-//        MzNewApi.getComment(caseId, 1, new ResponseImpl<T>() {
-//            @Override
-//            public void onSuccess(T data) {
-//
-//            }
-//        });
+        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
+        commentRv.setLayoutManager(new LinearLayoutManager(_mActivity));
+
+        ShopCommentAdapter adapter = new ShopCommentAdapter(commentList);
+        commentRv.setAdapter(adapter);
+
+        // 查看全部评论
+        commentAll.setOnClickListener(v -> {
+            Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
+            intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            startActivity(intent);
+        });
+
+        // 更多评价 ;
+        commentMore.setOnClickListener(v -> {
+            Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
+            intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            startActivity(intent);
+
+        });
+
+        MzNewApi.getComment(caseId, "1",
+                new ResponseImpl<MzShopCommentBean>() {
+                    @Override
+                    public void onSuccess(MzShopCommentBean data) {
+
+                        List<MzShopCommentBean.DataBean.InfoBean> infoBeanList = data.getData().getInfo();
+
+                        // Log.e(TAG, "评论列表 onSuccess: " + JSONObject.toJSONString(data));
+
+                        if (infoBeanList.size() == 0) {
+                            commentNoView.setVisibility(View.VISIBLE);
+                            commentMore.setVisibility(View.GONE);
+                            commentAll.setClickable(false);
+                        } else {
+
+                            commentNoView.setVisibility(View.GONE);
+                            commentMore.setVisibility(View.VISIBLE);
+
+                            commentAll.setText("好评度 " + data.getData().getComment_rate());
+                            commentAll.setClickable(true);
+
+
+                            List<MzShopCommentBean.DataBean.InfoBean> commentList = infoBeanList.subList(0, 2);
+                            adapter.setNewData(commentList);
+                        }
+                    }
+
+                }, MzShopCommentBean.class);
+
+
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.hym.httplib.model.HttpRequest;
 public class HttpUtil {
 
 
-    //    public static final String SERVER_IP = HttpConstans.server_ip + "/api";
+//    public static final String SERVER_IP = HttpConstans.server_ip + "/api";
     public static final String SERVER_IP = "http://121.40.80.45/api";
 
 

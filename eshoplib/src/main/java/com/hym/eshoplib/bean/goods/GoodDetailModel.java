@@ -3,7 +3,7 @@ package com.hym.eshoplib.bean.goods;
 import java.io.Serializable;
 import java.util.List;
 
-public class GoodDetailModel implements Serializable{
+public class GoodDetailModel implements Serializable {
     /**
      * data : {"agree_count":"2","attachment":[],"attachment_key":[],"auth":1,"case_id":"2100","content_id":"1888","ctime":"2019-07-16 16:00:56","details":"YYYYY","equipment":"MMMMMMMMMMM","expression":"","filepath":"http://mpic.liandao.mobi/kY7fqlsXHUEFn6qttLfWjIkUvFE=/lqRTWLIu9z1OKnpRqSEN5Vt53F4n","image_default":"http://mpai.liandao.mobi/uploads/db/8f/4c/6c/f8/ad30684bd9627b60ae86a2.jpeg","industry":"购物旅行-旅游度假","introduce":"NNNNNNN","is_agree":0,"is_del":"0","is_favorite":0,"is_index":"1","is_mine":"0","is_verify":"1","length":"04:16","original_price":"77.00","other":"","present_price":"11.00","qaction_id":"z1.0A1E1B437936C295985D2DBEB837C9E6","qcode":"0","region_id":"39","region_name":"-国内港台","remarks":"ZZZZZZZZZZZZZ","share_url":"http://wenjie.youwoapp.cn/activity/index/detail?content_id=2100","shooting_time":"1568610574","staffing":"XXXXXXXX","store_id":"1194","store_logo":"http://mpai.liandao.mobi/uploads/92/26/ea/c6/43/2700b77fd5aa92f384bd42.jpeg","store_name":"北京剑风影视文化","store_rank":"2.5","title":"骑行-在路上","toptime":"1567144785","type":"1","userid":"4254","video":"纪录片-梦想","videotype":"2,3","views":"707"}
      */
@@ -18,7 +18,7 @@ public class GoodDetailModel implements Serializable{
         this.data = data;
     }
 
-    public static class DataBean implements Serializable{
+    public static class DataBean implements Serializable {
         @Override
         public String toString() {
             return "DataBean{" +
@@ -116,7 +116,6 @@ public class GoodDetailModel implements Serializable{
          * videotype : 2,3
          * views : 707
          */
-
 
 
         private String agree_count;

@@ -36,4 +36,13 @@ public class MzConstant {
 
 
     public static final String KEY_SEARCH_KEYWORD = "KEY_SEARCH_KEYWORD";
+
+
+    // 订单 商品信息
+    public static final String KEY_ORDER_CASE_ID = "KEY_ORDER_CASE_ID";
+    // 订单 号
+    public static final String KEY_ORDER_ID = "KEY_ORDER_ID";
+
+    // 商品详情 评论
+    public static final String KEY_DETAIL_COMMENT_CASE_ID = "KEY_DETAIL_COMMENT_CASE_ID";
 }

@@ -75,7 +75,7 @@
                     android:maxHeight="25dp"
                     android:minHeight="25dp"
                     android:rating="0"
-                    android:stepSize="0.5"
+                    android:stepSize="1"
                     app:mrb_progressBackgroundTint="#cfb06d"
                     app:mrb_progressTint="#cfb06d"
                     app:mrb_secondaryProgressTint="#cfb06d" />

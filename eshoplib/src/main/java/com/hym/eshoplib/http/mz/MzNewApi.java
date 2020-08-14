@@ -80,9 +80,8 @@ public class MzNewApi {
      * 发表评价
      *
      * @param case_id
-     * @param title
      * @param content
-     * @param store
+     * @param score
      * @param tag_id
      * @param images
      * @param pid
@@ -91,8 +90,8 @@ public class MzNewApi {
      * @param <T>
      */
     public static <T> void sendComment(String case_id,
-                                       String order_id, String title,
-                                       String content, String store,
+                                       String log_id,
+                                       String content, String score,
                                        String tag_id, String images,
                                        String pid,
                                        IHttpResultListener<T> listener,
@@ -102,15 +101,16 @@ public class MzNewApi {
         request.setClassName("Publish");
         request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
         request.addParamsNotEmpty("case_id", case_id);
-        request.addParamsNotEmpty("order_id", order_id);
-        request.addParamsNotEmpty("title", title);
+        request.addParamsNotEmpty("log_id", log_id);
+//        request.addParamsNotEmpty("title", title);
         request.addParamsNotEmpty("content", content);
-        request.addParamsNotEmpty("store", store);
+        request.addParamsNotEmpty("score", score);
         request.addParamsNotEmpty("tag_id", tag_id);
         request.addParamsNotEmpty("images", images);
         request.addParamsNotEmpty("pid", pid);
 
-        Log.e(TAG, "添加评论 参数: " + JSONObject.toJSONString(request));
+//        Log.e(TAG, "添加评论 参数: " + JSONObject.toJSONString(request));
+
         post(request, listener, clazz);
 
     }
@@ -143,7 +143,7 @@ public class MzNewApi {
         request.addParamsNotEmpty("p", p);
         request.addParamsNotEmpty("psize", "10");
 
-        //  Log.e(TAG, "搜索 参数: " + JSONObject.toJSONString(request));
+//        Log.e(TAG, "搜索 参数: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
     }
 

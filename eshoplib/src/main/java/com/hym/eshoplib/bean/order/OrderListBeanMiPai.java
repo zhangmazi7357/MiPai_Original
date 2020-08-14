@@ -12,8 +12,9 @@ import java.util.List;
 
 public class OrderListBeanMiPai {
 
+
     /**
-     * data : {"totalnum":1,"currentpage":"1","totalpage":"1","info":[{"log_id":"51","order_number":"20180918-16165454-100971","buy_num":"2","money":"1600.00","ctime":"2018-09-18 16:16:54","status":"0","orderstatus":"0","cust_status":"0","price":"800.00","store_name":"神司工作室","logo":"http://mpai.liandao.mobi/uploads/f9/e4/78/6b/71/224d8f311e58ce6b19c125.jpeg","category_name":"PPT方案","nickname":"网红视频工作室","avatar":"http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg","log_userid":"1869","store_userid":"1859","dtime":"0","store_del":"0","user_del":"0","is_store":"0","button":{"yuyue_notice":1,"yuyue_confirm":0,"cancel":1,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0},"comment_id":""}]}
+     * data : {"totalnum":9,"currentpage":"1","totalpage":"1","info":[{"log_id":"5067","service_id":"2043","order_number":"20200814-11534798-981005","buy_num":"1","money":"45.00","ctime":"2020-08-14 11:53:47","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5066","service_id":"2043","order_number":"20200814-11484056-555099","buy_num":"1","money":"45.00","ctime":"2020-08-14 11:48:40","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5065","service_id":"2043","order_number":"20200813-17380848-101995","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:38:08","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5064","service_id":"2043","order_number":"20200813-17372250-101549","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:37:22","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5063","service_id":"2043","order_number":"20200813-17301252-975353","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:30:12","status":"0","orderstatus":"2","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":1,"shoot_confirm":1,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5062","service_id":"2043","order_number":"20200813-17295010-197100","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:29:50","status":"0","orderstatus":"4","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":1,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5061","service_id":"2043","order_number":"20200807-14384654-575555","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:38:46","status":"0","orderstatus":"4","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":1,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5060","service_id":"2043","order_number":"20200807-14355054-531015","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:35:50","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5059","service_id":"2043","order_number":"20200807-14220710-299569","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:22:07","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0}]}
      */
 
     private DataBean data;
@@ -28,10 +29,10 @@ public class OrderListBeanMiPai {
 
     public static class DataBean {
         /**
-         * totalnum : 1
+         * totalnum : 9
          * currentpage : 1
          * totalpage : 1
-         * info : [{"log_id":"51","order_number":"20180918-16165454-100971","buy_num":"2","money":"1600.00","ctime":"2018-09-18 16:16:54","status":"0","orderstatus":"0","cust_status":"0","price":"800.00","store_name":"神司工作室","logo":"http://mpai.liandao.mobi/uploads/f9/e4/78/6b/71/224d8f311e58ce6b19c125.jpeg","category_name":"PPT方案","nickname":"网红视频工作室","avatar":"http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg","log_userid":"1869","store_userid":"1859","dtime":"0","store_del":"0","user_del":"0","is_store":"0","button":{"yuyue_notice":1,"yuyue_confirm":0,"cancel":1,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0},"comment_id":""}]
+         * info : [{"log_id":"5067","service_id":"2043","order_number":"20200814-11534798-981005","buy_num":"1","money":"45.00","ctime":"2020-08-14 11:53:47","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5066","service_id":"2043","order_number":"20200814-11484056-555099","buy_num":"1","money":"45.00","ctime":"2020-08-14 11:48:40","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5065","service_id":"2043","order_number":"20200813-17380848-101995","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:38:08","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5064","service_id":"2043","order_number":"20200813-17372250-101549","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:37:22","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5063","service_id":"2043","order_number":"20200813-17301252-975353","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:30:12","status":"0","orderstatus":"2","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":1,"shoot_confirm":1,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5062","service_id":"2043","order_number":"20200813-17295010-197100","buy_num":"1","money":"45.00","ctime":"2020-08-13 17:29:50","status":"0","orderstatus":"4","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":1,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5061","service_id":"2043","order_number":"20200807-14384654-575555","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:38:46","status":"0","orderstatus":"4","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":0,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":1,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5060","service_id":"2043","order_number":"20200807-14355054-531015","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:35:50","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0},{"log_id":"5059","service_id":"2043","order_number":"20200807-14220710-299569","buy_num":"1","money":"45.00","ctime":"2020-08-07 14:22:07","status":"0","orderstatus":"1","cust_status":"0","price":"45.00","now_price":"28000.00","store_name":"韩国","logo":"http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.","category_name":"专业级","category_id":"18","nickname":"17666666666","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","log_userid":"4894","store_userid":"4344","dtime":"0","store_del":"0","user_del":"0","caseid":"2809","is_store":"0","button":{"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0},"comment_id":"","auth_store":1,"auth_user":0}]
          */
 
         private int totalnum;
@@ -73,31 +74,38 @@ public class OrderListBeanMiPai {
 
         public static class InfoBean {
             /**
-             * log_id : 51
-             * order_number : 20180918-16165454-100971
-             * buy_num : 2
-             * money : 1600.00
-             * ctime : 2018-09-18 16:16:54
+             * log_id : 5067
+             * service_id : 2043
+             * order_number : 20200814-11534798-981005
+             * buy_num : 1
+             * money : 45.00
+             * ctime : 2020-08-14 11:53:47
              * status : 0
-             * orderstatus : 0
+             * orderstatus : 1
              * cust_status : 0
-             * price : 800.00
-             * store_name : 神司工作室
-             * logo : http://mpai.liandao.mobi/uploads/f9/e4/78/6b/71/224d8f311e58ce6b19c125.jpeg
-             * category_name : PPT方案
-             * nickname : 网红视频工作室
-             * avatar : http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg
-             * log_userid : 1869
-             * store_userid : 1859
+             * price : 45.00
+             * now_price : 28000.00
+             * store_name : 韩国
+             * logo : http://mpai.liandao.mobi/uploads/21/49/c8/f5/3b/1e34ab8a540b0af1649820.
+             * category_name : 专业级
+             * category_id : 18
+             * nickname : 17666666666
+             * avatar : http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png
+             * log_userid : 4894
+             * store_userid : 4344
              * dtime : 0
              * store_del : 0
              * user_del : 0
+             * caseid : 2809
              * is_store : 0
-             * button : {"yuyue_notice":1,"yuyue_confirm":0,"cancel":1,"pay":0,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0}
+             * button : {"yuyue_notice":0,"yuyue_confirm":0,"cancel":1,"pay":1,"shoot_notice":0,"collect_notice":0,"cust":0,"shoot_confirm":0,"collect_confirm":0,"comment":0,"delete":0,"refuse":0,"refund":0,"refrefund":0,"wait_comm":0,"check_comm":0,"accept":0}
              * comment_id :
+             * auth_store : 1
+             * auth_user : 0
              */
 
             private String log_id;
+            private String service_id;
             private String order_number;
             private String buy_num;
             private String money;
@@ -106,9 +114,11 @@ public class OrderListBeanMiPai {
             private String orderstatus;
             private String cust_status;
             private String price;
+            private String now_price;
             private String store_name;
             private String logo;
             private String category_name;
+            private String category_id;
             private String nickname;
             private String avatar;
             private String log_userid;
@@ -116,57 +126,12 @@ public class OrderListBeanMiPai {
             private String dtime;
             private String store_del;
             private String user_del;
+            private String caseid;
             private String is_store;
             private ButtonBean button;
             private String comment_id;
-            private String auth_store;
-            private String auth_user;
-
-            @Override
-            public String toString() {
-                return "InfoBean{" +
-                        "log_id='" + log_id + '\'' +
-                        ", order_number='" + order_number + '\'' +
-                        ", buy_num='" + buy_num + '\'' +
-                        ", money='" + money + '\'' +
-                        ", ctime='" + ctime + '\'' +
-                        ", status='" + status + '\'' +
-                        ", orderstatus='" + orderstatus + '\'' +
-                        ", cust_status='" + cust_status + '\'' +
-                        ", price='" + price + '\'' +
-                        ", store_name='" + store_name + '\'' +
-                        ", logo='" + logo + '\'' +
-                        ", category_name='" + category_name + '\'' +
-                        ", nickname='" + nickname + '\'' +
-                        ", avatar='" + avatar + '\'' +
-                        ", log_userid='" + log_userid + '\'' +
-                        ", store_userid='" + store_userid + '\'' +
-                        ", dtime='" + dtime + '\'' +
-                        ", store_del='" + store_del + '\'' +
-                        ", user_del='" + user_del + '\'' +
-                        ", is_store='" + is_store + '\'' +
-                        ", button=" + button +
-                        ", comment_id='" + comment_id + '\'' +
-                        ", auth_store='" + auth_store + '\'' +
-                        ", auth_user='" + auth_user + '\'' +
-                        '}';
-            }
-
-            public String getAuth_store() {
-                return auth_store;
-            }
-
-            public void setAuth_store(String auth_store) {
-                this.auth_store = auth_store;
-            }
-
-            public String getAuth_user() {
-                return auth_user;
-            }
-
-            public void setAuth_user(String auth_user) {
-                this.auth_user = auth_user;
-            }
+            private int auth_store;
+            private int auth_user;
 
             public String getLog_id() {
                 return log_id;
@@ -174,6 +139,14 @@ public class OrderListBeanMiPai {
 
             public void setLog_id(String log_id) {
                 this.log_id = log_id;
+            }
+
+            public String getService_id() {
+                return service_id;
+            }
+
+            public void setService_id(String service_id) {
+                this.service_id = service_id;
             }
 
             public String getOrder_number() {
@@ -240,6 +213,14 @@ public class OrderListBeanMiPai {
                 this.price = price;
             }
 
+            public String getNow_price() {
+                return now_price;
+            }
+
+            public void setNow_price(String now_price) {
+                this.now_price = now_price;
+            }
+
             public String getStore_name() {
                 return store_name;
             }
@@ -262,6 +243,14 @@ public class OrderListBeanMiPai {
 
             public void setCategory_name(String category_name) {
                 this.category_name = category_name;
+            }
+
+            public String getCategory_id() {
+                return category_id;
+            }
+
+            public void setCategory_id(String category_id) {
+                this.category_id = category_id;
             }
 
             public String getNickname() {
@@ -320,6 +309,14 @@ public class OrderListBeanMiPai {
                 this.user_del = user_del;
             }
 
+            public String getCaseid() {
+                return caseid;
+            }
+
+            public void setCaseid(String caseid) {
+                this.caseid = caseid;
+            }
+
             public String getIs_store() {
                 return is_store;
             }
@@ -344,12 +341,28 @@ public class OrderListBeanMiPai {
                 this.comment_id = comment_id;
             }
 
+            public int getAuth_store() {
+                return auth_store;
+            }
+
+            public void setAuth_store(int auth_store) {
+                this.auth_store = auth_store;
+            }
+
+            public int getAuth_user() {
+                return auth_user;
+            }
+
+            public void setAuth_user(int auth_user) {
+                this.auth_user = auth_user;
+            }
+
             public static class ButtonBean {
                 /**
-                 * yuyue_notice : 1
+                 * yuyue_notice : 0
                  * yuyue_confirm : 0
                  * cancel : 1
-                 * pay : 0
+                 * pay : 1
                  * shoot_notice : 0
                  * collect_notice : 0
                  * cust : 0
@@ -360,6 +373,9 @@ public class OrderListBeanMiPai {
                  * refuse : 0
                  * refund : 0
                  * refrefund : 0
+                 * wait_comm : 0
+                 * check_comm : 0
+                 * accept : 0
                  */
 
                 private int yuyue_notice;
@@ -379,54 +395,6 @@ public class OrderListBeanMiPai {
                 private int wait_comm;
                 private int check_comm;
                 private int accept;
-
-
-                @Override
-                public String toString() {
-                    return "ButtonBean{" +
-                            "yuyue_notice=" + yuyue_notice +
-                            ", yuyue_confirm=" + yuyue_confirm +
-                            ", cancel=" + cancel +
-                            ", pay=" + pay +
-                            ", shoot_notice=" + shoot_notice +
-                            ", collect_notice=" + collect_notice +
-                            ", cust=" + cust +
-                            ", shoot_confirm=" + shoot_confirm +
-                            ", collect_confirm=" + collect_confirm +
-                            ", comment=" + comment +
-                            ", delete=" + delete +
-                            ", refuse=" + refuse +
-                            ", refund=" + refund +
-                            ", refrefund=" + refrefund +
-                            ", wait_comm=" + wait_comm +
-                            ", check_comm=" + check_comm +
-                            ", accept=" + accept +
-                            '}';
-                }
-
-                public int getAccept() {
-                    return accept;
-                }
-
-                public void setAccept(int accept) {
-                    this.accept = accept;
-                }
-
-                public int getCheck_comm() {
-                    return check_comm;
-                }
-
-                public void setCheck_comm(int check_comm) {
-                    this.check_comm = check_comm;
-                }
-
-                public int getWait_comm() {
-                    return wait_comm;
-                }
-
-                public void setWait_comm(int wait_comm) {
-                    this.wait_comm = wait_comm;
-                }
 
                 public int getYuyue_notice() {
                     return yuyue_notice;
@@ -538,6 +506,30 @@ public class OrderListBeanMiPai {
 
                 public void setRefrefund(int refrefund) {
                     this.refrefund = refrefund;
+                }
+
+                public int getWait_comm() {
+                    return wait_comm;
+                }
+
+                public void setWait_comm(int wait_comm) {
+                    this.wait_comm = wait_comm;
+                }
+
+                public int getCheck_comm() {
+                    return check_comm;
+                }
+
+                public void setCheck_comm(int check_comm) {
+                    this.check_comm = check_comm;
+                }
+
+                public int getAccept() {
+                    return accept;
+                }
+
+                public void setAccept(int accept) {
+                    this.accept = accept;
                 }
             }
         }

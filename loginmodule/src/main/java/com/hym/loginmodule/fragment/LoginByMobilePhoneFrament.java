@@ -180,7 +180,7 @@ public class LoginByMobilePhoneFrament extends BaseKitFragment {
                 String regionName = data.getData().getRegion_name();
                 String token = data.getData().getToken();
 
-                Log.e(TAG, "手机号登录  = " + JSONObject.toJSONString(data));
+//                Log.e(TAG, "手机号登录  = " + JSONObject.toJSONString(data));
 
                 UserUtil.saveToken(_mActivity, token);
                 Bundle bundle = new Bundle();

@@ -48,7 +48,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".mz.iconproduct.MzProductListActivity"></activity>
+        <activity android:name=".fragment.home.AllShopCommentActivity"></activity>
+        <activity android:name=".mz.iconproduct.MzProductListActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzLocationActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzProductTagActivity" />
         <activity android:name=".fragment.shop.mzupload.ui.MzSubProductActivity" />

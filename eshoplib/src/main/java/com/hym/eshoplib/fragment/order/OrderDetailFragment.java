@@ -39,7 +39,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 /**
  * Created by 胡彦明 on 2018/4/14.
  * <p>
- * Description 订单详情
+ * Description 订单详情    完全没有用到 ？？？？？？？
  * <p>
  * otherTips
  */
@@ -103,6 +103,7 @@ public class OrderDetailFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
         OrderApi.DetailOrder(_mActivity, order_id, new ResponseImpl<OrderDetailBean>() {
             @Override
             public void onSuccess(final OrderDetailBean data) {

@@ -4,13 +4,20 @@
     android:id="@+id/ll_shop_comment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
+    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:detailTitle="评价"
+        app:title_textSize="14sp" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingLeft="19dp"
         android:paddingRight="19dp">
@@ -20,20 +27,22 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:text="宝贝评价"
+            android:text="评价"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
 
+        <!--  好评度 也是跳到更多-->
         <TextView
             android:id="@+id/commentAll"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right|center_vertical"
+            android:clickable="false"
             android:drawableRight="@drawable/ic_arrow_right"
             android:drawablePadding="10dp"
             android:gravity="center"
-            android:text="查看全部" />
+            android:text="好评度 0" />
 
     </FrameLayout>
 
@@ -47,16 +56,36 @@
         android:id="@+id/commentRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="20dp" />
+
 
     <TextView
         android:id="@+id/commentNoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="暂无评价" />
+        android:text="暂无评价"
+        android:visibility="gone" />
+
+
+    <!--  查看更多 -->
+    <Button
+        android:id="@+id/commentMore"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/mz_bg_comment_more"
+        android:gravity="center"
+        android:text="查看全部评价"
+        android:textColor="@color/toolbar_bg_end"
+        android:textSize="12sp" />
+
 </LinearLayout>

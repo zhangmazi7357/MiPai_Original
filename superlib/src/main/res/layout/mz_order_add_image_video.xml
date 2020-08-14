@@ -15,7 +15,7 @@
         android:background="@drawable/selector_upload_card"
         android:gravity="bottom|center_horizontal"
         android:singleLine="true"
-        android:text="添加图片"
+        android:text="添加图片/视频"
         android:textSize="10sp" />
 
 

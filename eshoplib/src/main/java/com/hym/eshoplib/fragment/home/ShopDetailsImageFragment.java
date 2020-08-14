@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -51,6 +52,7 @@ import com.hym.eshoplib.bean.shop.AttachResultBean;
 import com.hym.eshoplib.bean.shop.ServiceDetailBean;
 import com.hym.eshoplib.bean.shop.ShopCommentsBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
+import com.hym.eshoplib.fragment.search.mz.model.LngLonModel;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
@@ -60,6 +62,7 @@ import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
 import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
+import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
 import com.hym.imagelib.ImageUtil;
@@ -264,12 +267,18 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     // 评论
     @BindView(R.id.ll_shop_comment)
     LinearLayout llShopComment;
+
     @BindView(R.id.commentAll)
     TextView commentAll;
+
     @BindView(R.id.commentRv)
     RecyclerView commentRv;
+
     @BindView(R.id.commentNoView)
     TextView commentNoView;
+
+    @BindView(R.id.commentMore)
+    Button commentMore;
 
 
     // 项目详情
@@ -505,11 +514,13 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 final List<SpecialTimeLimteBean.DataBean.VideoBean> vbData = data.getData().getVideo();
                 ShopListAdapter shopListAdapter = new ShopListAdapter(R.layout.item_shop, vbData);
                 rvRecommendGoods.setAdapter(shopListAdapter);
+
                 shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                         String case_id = vbData.get(position).getCase_id();
+
                         HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
                             @Override
                             public void onSuccess(GoodDetailModel data) {
@@ -535,6 +546,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                             public void onDataError(String status, String errormessage) {
                                 super.onDataError(status, errormessage);
                             }
+
                         }, GoodDetailModel.class, case_id);
                     }
                 });
@@ -550,6 +562,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             public void onFailed(Exception e) {
                 super.onFailed(e);
             }
+
         }, SpecialTimeLimteBean.class);
 
 
@@ -586,10 +599,12 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         ImageUtil.getInstance().loadImage(ShopDetailsImageFragment.this, mData.getData().getLogo(), iv_logo);
         tv_shop_name.setText(mData.getData().getStore_name() + "");
         tv_price.setText("￥：" + mData.getData().getCate_list().get(select_position).getPrice());
+
         //设置footer
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.footer_type_dialog, null, false);
         TextView tv_life_circle = footer.findViewById(R.id.tv_life_circle);
         TextView tv_sub_title = footer.findViewById(R.id.tv_sub_title);
+
         switch (category_id) {
             case "1":
                 //文案策划
@@ -647,6 +662,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 // tvCurrentGoods.setText("\"" + name + "\"" + "数量x" + count);
             }
         });
+
         adapter1 = new BaseListAdapter<ServiceDetailBean.DataBean.CateListBean>(R.layout.item_spec_btn, cate_list) {
             @Override
             public void handleView(BaseViewHolder helper, final ServiceDetailBean.DataBean.CateListBean item, final int position) {
@@ -697,130 +713,147 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         if (i == 0) {
             //选择规格
-            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "加入购物车", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MipaiDialogUtil.dismiss();
-                    if (data == null) {
-                        ToastUtil.toast("数据异常");
-                        return;
-                    }
-                    if (data.getData().getIs_mine().equals("1")) {
-                        ToastUtil.toast("不能购买自己工作室的服务");
-                        return;
-                    }
-                    //加入购物车
-                    ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(), count + "", new ResponseImpl<Object>() {
+            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1,
+                    "加入购物车", new View.OnClickListener() {
                         @Override
-                        public void onSuccess(Object data) {
-                            ToastUtil.toast("加入购物车成功，请到购物车中查看");
+                        public void onClick(View v) {
+                            MipaiDialogUtil.dismiss();
+                            if (data == null) {
+                                ToastUtil.toast("数据异常");
+                                return;
+                            }
+                            if (data.getData().getIs_mine().equals("1")) {
+                                ToastUtil.toast("不能购买自己工作室的服务");
+                                return;
+                            }
+                            //加入购物车
+                            ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(), count + "", new ResponseImpl<Object>() {
+                                @Override
+                                public void onSuccess(Object data) {
+                                    ToastUtil.toast("加入购物车成功，请到购物车中查看");
+                                }
+                            }, Object.class);
                         }
-                    }, Object.class);
-                }
-            }, "立即预约", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (data.getData().getAuth() == 0) {
-                        //弹出认证
-                        Dialog dilog = MipaiDialogUtil.getAuthDialog(_mActivity, "认证信息", "完善资料才可以预约合作哦", new MipaiDialogUtil.OnBtnSlectListener() {
-                            @Override
-                            public void on1(Dialog dialog) {
-                                dialog.dismiss();
-                                //个人认证
-                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Auth_Personal);
-                                bundle.putString("type", data.getData().getAuth() + "");
-                                ActionActivity.start(_mActivity, bundle);
-
-                            }
-
-                            @Override
-                            public void on2(Dialog dialog) {
-                                dialog.dismiss();
-                                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Auth_Business);
-                                bundle.putString("type", mData.getData().getAuth_store());
-                                ActionActivity.start(_mActivity, bundle);
-
-                            }
-                        });
-                        dilog.show();
-                        return;
-                    }
-                    MipaiDialogUtil.dismiss();
-
-                    if (data == null) {
-                        ToastUtil.toast("数据异常");
-                        return;
-                    }
-                    if (data.getData().getIs_mine().equals("1")) {
-                        ToastUtil.toast("不能购买自己工作室的服务");
-                        return;
-                    }
-                    //立即预约
-                    ShopApi.attachNow(data.getData().getContent_id(), count + "", new ResponseImpl<AttachResultBean>() {
+                    }, "立即预约", new View.OnClickListener() {
                         @Override
-                        public void onSuccess(AttachResultBean data) {
-                            ToastUtil.toast("已提交预约");
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", data.getData().getLog_id());
-                            start(MipaiOrderDetailFragment.newInstance(bundle));
+                        public void onClick(View v) {
+                            if (data.getData().getAuth() == 0) {
+                                //弹出认证
+                                Dialog dilog = MipaiDialogUtil.getAuthDialog(_mActivity, "认证信息", "完善资料才可以预约合作哦", new MipaiDialogUtil.OnBtnSlectListener() {
+                                    @Override
+                                    public void on1(Dialog dialog) {
+                                        dialog.dismiss();
+                                        //个人认证
+                                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Auth_Personal);
+                                        bundle.putString("type", data.getData().getAuth() + "");
+                                        ActionActivity.start(_mActivity, bundle);
+
+                                    }
+
+                                    @Override
+                                    public void on2(Dialog dialog) {
+                                        dialog.dismiss();
+                                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_Auth_Business);
+                                        bundle.putString("type", mData.getData().getAuth_store());
+                                        ActionActivity.start(_mActivity, bundle);
+
+                                    }
+                                });
+                                dilog.show();
+                                return;
+                            }
+                            MipaiDialogUtil.dismiss();
+
+                            if (data == null) {
+                                ToastUtil.toast("数据异常");
+                                return;
+                            }
+                            if (data.getData().getIs_mine().equals("1")) {
+                                ToastUtil.toast("不能购买自己工作室的服务");
+                                return;
+                            }
+                            //立即预约
+                            ShopApi.attachNow(data.getData().getContent_id(), count + "", new ResponseImpl<AttachResultBean>() {
+                                @Override
+                                public void onSuccess(AttachResultBean data) {
+                                    ToastUtil.toast("已提交预约");
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", data.getData().getLog_id());
+                                    start(MipaiOrderDetailFragment.newInstance(bundle));
+                                }
+                            }, AttachResultBean.class);
+
+
                         }
-                    }, AttachResultBean.class);
-
-
-                }
-            }, true);
+                    }, true);
 
 
         } else if (i == 1) {
+
             //加入购物车
-            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "", null, "加入购物车", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MipaiDialogUtil.dismiss();
-                    if (data == null) {
-                        ToastUtil.toast("数据异常");
-                        return;
-                    }
-                    if (data.getData().getIs_mine().equals("1")) {
-                        ToastUtil.toast("不能购买自己工作室的服务");
-                        return;
-                    }
-                    ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(), count + "", new ResponseImpl<Object>() {
+            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1,
+                    "", null, "加入购物车",
+                    new View.OnClickListener() {
                         @Override
-                        public void onSuccess(Object data) {
-                            ToastUtil.toast("加入购物车成功，请到购物车中查看");
+                        public void onClick(View v) {
+                            MipaiDialogUtil.dismiss();
+                            if (data == null) {
+                                ToastUtil.toast("数据异常");
+                                return;
+                            }
+                            if (data.getData().getIs_mine().equals("1")) {
+                                ToastUtil.toast("不能购买自己工作室的服务");
+                                return;
+                            }
+                            ShoppingCarApi.addToShoppingCar(_mActivity, data.getData().getContent_id(), count + "", new ResponseImpl<Object>() {
+                                @Override
+                                public void onSuccess(Object data) {
+                                    ToastUtil.toast("加入购物车成功，请到购物车中查看");
+                                }
+                            }, Object.class);
                         }
-                    }, Object.class);
-                }
-            }, true);
+                    },
+                    true);
+
         } else {
 
             //立即购买
-            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1, "", null, "立即预约", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MipaiDialogUtil.dismiss();
-                    if (mData == null) {
-                        ToastUtil.toast("数据异常");
-                        return;
-                    }
-                    if (mData.getData().getIs_mine().equals("1")) {
-                        ToastUtil.toast("不能购买自己工作室的服务");
-                        return;
-                    }
-                    ShopApi.CreateDetailOrder(_mActivity, db.getContent_id(), count + "", db.getCase_id(), new ResponseImpl<CreateOrderBean>() {
+            MipaiDialogUtil.showSpetificDialog(_mActivity, "", adapter1,
+                    "", null, "立即预约",
+                    new View.OnClickListener() {
                         @Override
-                        public void onSuccess(CreateOrderBean data) {
-                            //付款
-                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_order_pay);
-                            bundle.putString("id", data.getData().getOrder_number());
-                            bundle.putString("needPay", data.getData().getMoney() + "");
-                            bundle.putString("id2", data.getData().getLog_id());
-                            EshopActionActivity.start(_mActivity, bundle);
+                        public void onClick(View v) {
+                            MipaiDialogUtil.dismiss();
+                            if (mData == null) {
+                                ToastUtil.toast("数据异常");
+                                return;
+                            }
+                            if (mData.getData().getIs_mine().equals("1")) {
+                                ToastUtil.toast("不能购买自己工作室的服务");
+                                return;
+                            }
+
+
+                            ShopApi.CreateDetailOrder(_mActivity, db.getContent_id(),
+                                    String.valueOf(count), db.getCase_id(),
+                                    new ResponseImpl<CreateOrderBean>() {
+                                        @Override
+                                        public void onSuccess(CreateOrderBean data) {
+                                            //付款
+                                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                                                    EshopActionActivity.Action_order_order_pay);
+
+                                            bundle.putString("id", data.getData().getOrder_number());
+                                            bundle.putString("needPay", data.getData().getMoney() + "");
+                                            bundle.putString("id2", data.getData().getLog_id());
+                                            EshopActionActivity.start(_mActivity, bundle);
+
+                                        }
+                                    }, CreateOrderBean.class);
                         }
-                    }, CreateOrderBean.class);
-                }
-            }, true);
+                    },
+                    true);
+
         }
     }
 
@@ -830,19 +863,24 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         public void getCoutn(int count) {
 
 
-            ShopApi.CreateDetailOrder(_mActivity, db.getContent_id(), count + "", db.getCase_id(), new ResponseImpl<CreateOrderBean>() {
-                @Override
-                public void onSuccess(CreateOrderBean data) {
-                    //付款
-                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
-                            EshopActionActivity.Action_order_order_pay);
-                    bundle.putString("id", data.getData().getOrder_number());
-                    bundle.putString("needPay", data.getData().getMoney() + "");
-                    bundle.putString("id2", data.getData().getLog_id());
-                    EshopActionActivity.start(_mActivity, bundle);
+            ShopApi.CreateDetailOrder(_mActivity,
+                    db.getContent_id(),
+                    count + "", db.getCase_id(),
 
-                }
-            }, CreateOrderBean.class);
+                    new ResponseImpl<CreateOrderBean>() {
+                        @Override
+                        public void onSuccess(CreateOrderBean data) {
+
+                            //付款
+                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                                    EshopActionActivity.Action_order_order_pay);
+                            bundle.putString("id", data.getData().getOrder_number());
+                            bundle.putString("needPay", data.getData().getMoney() + "");
+                            bundle.putString("id2", data.getData().getLog_id());
+                            EshopActionActivity.start(_mActivity, bundle);
+
+                        }
+                    }, CreateOrderBean.class);
         }
 
         @Override
@@ -859,6 +897,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 showSelectTypeDialog(1);
                 break;
             case R.id.tv_go_pay:                     // 付款
+
                 if (db == null) {
                     ToastUtils.show("数据异常,请稍后再试");
                 }
@@ -872,6 +911,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
 
                 break;
+
             case R.id.tv_report:                    // 举报
 
                 break;
@@ -958,13 +998,11 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 break;
 
             case R.id.shop_back:
-
                 pop();
-
                 break;
+
             case R.id.shop_share:
                 share();
-
                 break;
         }
     }
@@ -1035,7 +1073,8 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     // 计算距离
     private void addAddressDistance() {
         Bundle bundle = getArguments();
-        HomeIconProductBean.DataBean.VideoBean item = (HomeIconProductBean.DataBean.VideoBean) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+        LngLonModel item =
+                (LngLonModel) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
 
 
         String lon = item.getLon();
@@ -1220,26 +1259,55 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private void getComment() {
         String caseId = data.getData().getCase_id();
 
-        List<ShopCommentsBean.DataBean.InfoBean> commentList = new ArrayList<>();
+        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
         commentRv.setLayoutManager(new LinearLayoutManager(_mActivity));
 
         ShopCommentAdapter adapter = new ShopCommentAdapter(commentList);
         commentRv.setAdapter(adapter);
 
+        // 查看全部评论
+        commentAll.setOnClickListener(v -> {
+            Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
+            intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            startActivity(intent);
+        });
+
+        // 更多评价 ;
+        commentMore.setOnClickListener(v -> {
+            Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
+            intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            startActivity(intent);
+
+        });
 
         MzNewApi.getComment(caseId, "1",
-                new ResponseImpl<ShopCommentsBean>() {
+                new ResponseImpl<MzShopCommentBean>() {
                     @Override
-                    public void onSuccess(ShopCommentsBean data) {
-                        List<ShopCommentsBean.DataBean.InfoBean> infoBeanList = data.getData().getInfo();
+                    public void onSuccess(MzShopCommentBean data) {
 
-                        // 商品详情页就展示一个 ;
-                        List<ShopCommentsBean.DataBean.InfoBean> commentList = infoBeanList.subList(0, 1);
-                        adapter.setNewData(commentList);
+                        List<MzShopCommentBean.DataBean.InfoBean> infoBeanList = data.getData().getInfo();
 
+
+                        if (infoBeanList.size() == 0) {
+                            commentNoView.setVisibility(View.VISIBLE);
+                            commentMore.setVisibility(View.GONE);
+                            commentAll.setClickable(false);
+                        } else {
+
+                            commentNoView.setVisibility(View.GONE);
+                            commentMore.setVisibility(View.VISIBLE);
+
+                            commentAll.setText("好评度 " + data.getData().getComment_rate());
+                            commentAll.setClickable(true);
+
+
+                            List<MzShopCommentBean.DataBean.InfoBean> commentList = infoBeanList.subList(0, 2);
+                            adapter.setNewData(commentList);
+                        }
                     }
 
-                }, ShopCommentsBean.class);
+                }, MzShopCommentBean.class);
+
 
     }
 }

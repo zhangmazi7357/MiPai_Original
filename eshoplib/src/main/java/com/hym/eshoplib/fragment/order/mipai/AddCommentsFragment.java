@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
@@ -25,6 +26,7 @@ import com.hym.eshoplib.bean.order.CommentLableListBean;
 import com.hym.eshoplib.bean.shop.ShopProductsBean;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.decoration.SpacesItemDecoration;
 import com.hym.imagelib.ImageUtil;
 import com.hym.photolib.utils.PhotoUtil;
@@ -83,7 +85,7 @@ public class AddCommentsFragment extends BaseKitFragment {
     private String qiniuToken = "";
     private MzOrderImageAdapter mzAdapter;
 
-    String log_id;
+    private String log_id;
     BaseListAdapter<CommentLableListBean.DataBean.LabelListBean> adapter;
     Unbinder unbinder;
     private HashMap<Integer, String> ids = new HashMap<>();             // tagID
@@ -91,7 +93,7 @@ public class AddCommentsFragment extends BaseKitFragment {
 
 
     private String mzCaseId = "";               // 产品 id;
-    private String mzOrderId = "";             // 订单 id;
+    //    private String mzOrderId = "";             // 订单 id;
     private String mzTitle = "";               // 标题;
     private String mzContent = "";              //评论内容；
     private String mzStore = "";                    // 星级
@@ -122,11 +124,17 @@ public class AddCommentsFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
         showBackButton();
-        log_id = getArguments().getString("id", "");
-        shopLogoUrl = getArguments().getString("url", "");
+
+        Bundle bundle = getArguments();
+
+        log_id = bundle.getString("id", "");
+        shopLogoUrl = bundle.getString("url", "");
+
+        mzCaseId = bundle.getString(MzConstant.KEY_ORDER_CASE_ID);
+//        mzOrderId = bundle.getString(MzConstant.KEY_ORDER_ID);
 
 
-        Log.e(TAG, " 订单评价 log_id =" + log_id + ",url  = " + shopLogoUrl);
+        //  Log.e(TAG, " 订单评价 log_id =" + log_id + ",url  = " + shopLogoUrl);
 
 
         ImageUtil.getInstance()
@@ -189,23 +197,6 @@ public class AddCommentsFragment extends BaseKitFragment {
 
                 upLoadComment();
 
-//                String rating = ratingbar.getRating() + "";
-//                Logger.d("id=" + id + ",rating=" + rating + ",log_id=" + log_id);
-//                ShopApi.addComment(log_id,
-//                        ratingbar.getRating() + "",
-//                        id, new ResponseImpl<Object>() {
-//
-//                            @Override
-//                            public void onSuccess(Object data) {
-//
-//                                ToastUtil.toast("感谢您的评价，祝您生活愉快");
-//                                EventBus.getDefault().post(new UpdateDataEvent());
-//                                _mActivity.finish();
-//
-//                            }
-//
-//                        }, Object.class);
-
 
             }
         });
@@ -262,8 +253,8 @@ public class AddCommentsFragment extends BaseKitFragment {
                 } else {
 
 
-                    PhotoUtil.ShowDialog(AddCommentsFragment.this,
-                            10 - adapter.getData().size(), false, 2);
+                    PhotoUtil.showDialogAllType(AddCommentsFragment.this,
+                            10 - adapter.getData().size(), false);
 
                 }
             }
@@ -405,16 +396,22 @@ public class AddCommentsFragment extends BaseKitFragment {
 
 
         mzContent = mzOrderEt.getText().toString();
-        mzStore = String.valueOf(ratingbar.getRating());
+        int rating = (int) ratingbar.getRating();
+        mzStore = String.valueOf(rating);
 
         mzImages = getProDetailPic();
 
-        MzNewApi.sendComment(mzCaseId, mzOrderId, mzTitle,
+
+        MzNewApi.sendComment(mzCaseId, log_id,
                 mzContent, mzStore,
                 mzTagId, mzImages, mzPid,
                 new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
+
+                        ToastUtil.toast("评价已发布");
+                        //TODO 评价 已经发布， 刷新 我的订单页面 ;
+                        pop();
 
                     }
                 }, Object.class);

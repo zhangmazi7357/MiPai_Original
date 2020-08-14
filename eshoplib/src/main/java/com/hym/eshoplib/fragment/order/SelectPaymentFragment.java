@@ -141,6 +141,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
         aliPay = new AliPay(getActivity(), this);
         log_id = getArguments().getString("id2");
         child_order_id = getArguments().getString("id", "");
+
         //order_id = getArguments().getString("order_id", "");
         needPay = getArguments().getString("needPay");
         tvConfirm.setOnClickListener(new View.OnClickListener() {
@@ -189,26 +190,32 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                                                 @Override
                                                 public void inputFinished(String inputPsd) {
                                                     MipaiDialogUtil.dismiss();
+
                                                     //调用余额支付
-                                                    OrderApi.aliPayMipai("activity", child_order_id, "3", inputPsd, new ResponseImpl<AliPayBean>() {
-                                                        @Override
-                                                        public void onSuccess(AliPayBean data) {
+                                                    OrderApi.aliPayMipai("activity", child_order_id,
+                                                            "3", inputPsd,
+                                                            new ResponseImpl<AliPayBean>() {
+                                                                @Override
+                                                                public void onSuccess(AliPayBean data) {
 
-                                                        }
+                                                                }
 
-                                                        @Override
-                                                        public void onDataError(String status, String errormessage) {
-                                                            super.onDataError(status, errormessage);
-                                                            if (status.equals("200")) {
-                                                                //ToastUtil.toast("余额支付成功");
-                                                                EventBus.getDefault().post(new UpdateDataEvent());
-                                                                Bundle bundle = new Bundle();
-                                                                bundle.putString("id", log_id);
-                                                                startWithPop(PaySuccessFragment.newInstance(bundle));
+                                                                @Override
+                                                                public void onDataError(String status, String errormessage) {
+                                                                    super.onDataError(status, errormessage);
 
-                                                            }
-                                                        }
-                                                    }, AliPayBean.class);
+                                                                    if (status.equals("200")) {
+                                                                        //ToastUtil.toast("余额支付成功");
+                                                                        EventBus.getDefault().post(new UpdateDataEvent());
+                                                                        Bundle bundle = new Bundle();
+                                                                        bundle.putString("id", log_id);
+                                                                        startWithPop(PaySuccessFragment.newInstance(bundle));
+                                                                    }
+
+                                                                }
+                                                            },
+
+                                                            AliPayBean.class);
 
 
                                                 }

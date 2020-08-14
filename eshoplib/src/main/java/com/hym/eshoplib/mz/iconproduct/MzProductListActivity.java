@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.goods.GoodDetailModel;
+import com.hym.eshoplib.fragment.search.mz.model.LngLonModel;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.mz.MzConstant;
@@ -133,8 +134,13 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeIconProductBean.DataBean.VideoBean bean = (HomeIconProductBean.DataBean.VideoBean) adapter.getItem(position);
+
+                HomeIconProductBean.DataBean.VideoBean bean =
+                        (HomeIconProductBean.DataBean.VideoBean) adapter.getItem(position);
+
                 String case_id = bean.getCase_id();
+
+                LngLonModel lngLonModel = new LngLonModel(bean.getLon(), bean.getLat(), bean.getAddress());
 
 //                Log.e(TAG, " == " + JSONObject.toJSONString(bean));
 
@@ -152,7 +158,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                             bundle.putSerializable("data", data);
 
                             // 产品 地址 经纬度。
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
+                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
 
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
@@ -164,7 +170,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                                     ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
 
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, bean);
+                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
 
@@ -221,6 +227,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                         if (list != null && list.size() > 0) {
 
                             setData(isRefresh, list);
+
                         } else {
                             noView.setVisibility(View.VISIBLE);
                         }

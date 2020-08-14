@@ -168,9 +168,12 @@ public class ShoppingcartFragment extends BaseListFragment<ShoppingcatrtListBean
         tv_type.setText("类别：" + item.getCategory_name());
         TextView tv_price = helper.getView(R.id.tv_price);
         tv_price.setText("￥：" + item.getPrice());
+
         TextView tv_attach_now = helper.getView(R.id.tv_attach_now);
         SnappingStepper stepper = helper.getView(R.id.stepper);
         stepper.setValue(Integer.parseInt(item.getQuantity()));
+
+
         stepper.setOnValueChangeListener(new SnappingStepperValueChangeListener() {
             @Override
             public void onValueChange(View view, int value) {

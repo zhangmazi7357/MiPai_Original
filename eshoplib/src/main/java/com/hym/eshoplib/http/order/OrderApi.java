@@ -78,11 +78,10 @@ public class OrderApi {
     }
 
     //获取用户余额
-    public static <T> void createOrder
-    (Context context, String consignee_id,
-     String c_type, String specification_id, String buy_num,
-     String invoice, String is_return, String refund_usermsg,
-     IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void createOrder(Context context, String consignee_id,
+                                       String c_type, String specification_id, String buy_num,
+                                       String invoice, String is_return, String refund_usermsg,
+                                       IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Bts");
         request.setClassName("CreatOrder");
@@ -256,7 +255,7 @@ public class OrderApi {
     //获取用户订单列表
     public static <T> void getUserOrderList(String status, String p, IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
-        ;
+
         request.setApp("Activity");
         request.setClassName("GetUserList");
         request.AddParems("token", UserUtil.getToken(App.instance));

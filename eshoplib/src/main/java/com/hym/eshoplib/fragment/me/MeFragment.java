@@ -210,10 +210,13 @@ public class MeFragment extends BaseKitFragment {
                         tvFunction.setText("待提交审核");
                         break;
                 }
+
                 tvName.setText(data.getData().getNickname() + "");
+
                 if (!TextUtils.isEmpty(data.getData().getAvatar())) {
                     ImageUtil.getInstance().loadCircleImage(MeFragment.this, data.getData().getAvatar(), ivAvatar);
                 }
+
                 tvMyMonye.setRightString(data.getData().getBts_bean().equals("0") ? "0.00" : data.getData().getBts_bean());
                 ratingbar.setRating(Float.parseFloat(data.getData().getRank_average()));
 

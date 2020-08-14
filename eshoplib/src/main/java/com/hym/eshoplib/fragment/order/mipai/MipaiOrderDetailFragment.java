@@ -19,6 +19,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -77,6 +79,7 @@ import io.rong.imlib.RongIMClient;
 
 public class MipaiOrderDetailFragment extends BaseKitFragment {
 
+    private String TAG = "MipaiOrderDetailFragment";
     @BindView(R.id.ll_order_status)
     LinearLayout llOrderStatus;
 
@@ -187,13 +190,16 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
 
     @Override
     public void doLogic() {
+
+        Log.e(TAG, "进入订单详情 =");
         ivIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bean == null) {
                     return;
                 }
-                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopDetail);
+                Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
+                        ActionActivity.Action_ShopDetail);
                 // bundle.putInt("type",getArguments().getInt("type",1));//工作室类型，对应首页
                 bundle.putString("id", bean.getData().getService_id());
                 ActionActivity.start(_mActivity, bundle);
@@ -311,9 +317,13 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
         }
 
 
+        // 订单详情 ;
         OrderApi.UserContentDetail(log_id, new ResponseImpl<OrderDetailBeanMipai>() {
             @Override
             public void onSuccess(final OrderDetailBeanMipai data) {
+
+                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
+
                 //发票
                 bean = data;
                 if (TextUtils.isEmpty(bean.getData().getReason())) {
@@ -495,6 +505,7 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                         @Override
                         public void onClick(View v) {
                             // ToastUtil.toast("提醒接受预约");
+
                             ShopApi.EditNotice(item.getLog_id(), "1", new ResponseImpl<Object>() {
                                 @Override
                                 public void onSuccess(Object data) {

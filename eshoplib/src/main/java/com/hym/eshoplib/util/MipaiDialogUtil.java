@@ -382,6 +382,7 @@ public class MipaiDialogUtil {
             }
         });
 
+        // 提交订单 ;
         tvGoToPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

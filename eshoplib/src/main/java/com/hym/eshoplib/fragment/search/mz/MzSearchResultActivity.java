@@ -2,6 +2,8 @@ package com.hym.eshoplib.fragment.search.mz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.city.ServerCityBean;
 import com.hym.eshoplib.databinding.MzActivitySearchResultBinding;
+import com.hym.eshoplib.fragment.search.mz.adapter.MzSearchSortAdapter;
+import com.hym.eshoplib.fragment.search.mz.viewmodel.MzSearchViewModel;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.mz.MzConstant;
 
@@ -49,6 +52,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
     private int selectPosition = 0;
     private int searchType = 1;                   // 搜索类型 1:产品 ，2: 工作室
 
+
     private String keyWord = "";
     private String regionId = "";           // 城市id ;
 
@@ -60,6 +64,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
         binding = MzActivitySearchResultBinding
                 .inflate(LayoutInflater.from(this));
+
         setContentView(binding.getRoot());
 
 
@@ -69,7 +74,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
         Intent intent = getIntent();
         keyWord = intent.getStringExtra(MzConstant.KEY_SEARCH_KEYWORD);
         binding.etSearch.setText(keyWord);
-
+        searchViewModel.setContent(keyWord);
 
         initTab();
         intDropDownMenu();
@@ -86,7 +91,24 @@ public class MzSearchResultActivity extends MzBaseActivity {
             finish();
         });
 
-        itemChange();
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e(TAG, "是不是执行这里了");
+                searchViewModel.setContent(s.toString());
+
+            }
+        });
 
 
     }
@@ -101,7 +123,8 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        containerView = LayoutInflater.from(this).inflate(R.layout.mz_result_container_view, null, false);
+        containerView = LayoutInflater.from(this).inflate(R.layout.mz_result_container_view,
+                null, false);
         transaction.add(R.id.mz_container, allFragment).show(allFragment);
         transaction.add(R.id.mz_container, shopFragment).hide(shopFragment);
 
@@ -112,6 +135,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
         binding.mzTabLayout.addTab(binding.mzTabLayout.newTab().setText("工作室"));
 
 
+        // 类型 切换
         binding.mzTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -170,13 +194,14 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
 
         //  4   因为还有竖向分割线 ;  单独把 全部拿出来修改一下 ;
-        FrameLayout container = binding.dropDownMenu.getContainer(4);
-        TextView tabAll = (TextView) container.getChildAt(0);
+        FrameLayout containerAll = binding.dropDownMenu.getContainer(4);
+        TextView tabAll = (TextView) containerAll.getChildAt(0);
         tabAll.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_down), null);
 
-        container.setOnClickListener(v -> {
-
+        // 全部 点击事件
+        containerAll.setOnClickListener(v -> {
             binding.dropDownMenu.closeMenu();
+
         });
 
 
@@ -222,6 +247,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 selectPosition = position;
                 proAdapter.notifyDataSetChanged();
+
                 if (position == 0) {
                     regionId = "";
                     binding.dropDownMenu.setTabText("全国");
@@ -243,6 +269,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
                 }
             }
         });
+
         cityAdapter = new BaseListAdapter<ServerCityBean.DataBean.InfoBean>(R.layout.item_check, null) {
             @Override
             public void handleView(BaseViewHolder helper, ServerCityBean.DataBean.InfoBean item, int position) {
@@ -268,7 +295,9 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
                 binding.dropDownMenu.setTabText(cityAdapter.getData().get(position).getRegion_name());
                 binding.dropDownMenu.closeMenu();
-//                goSearch();
+
+                // TODO  切换城市要重新搜索 ;
+
             }
         });
 
@@ -301,6 +330,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
         MzSearchSortAdapter adapter = new MzSearchSortAdapter(this);
 
+
         adapter.setSearchSortClickListener(new MzSearchSortAdapter.SearchSortClickListener() {
             @Override
             public void onItemClick(int position, String sortTitle) {
@@ -309,49 +339,40 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
                 binding.dropDownMenu.setTabText(sortTitle);
                 binding.dropDownMenu.closeMenu();
+
+                /*
+                   改变智能排序类型
+                   如果没有点击智能排序, liveData = null;
+                 */
+
+                Integer sortType = null;
+                switch (position) {
+                    case 0:
+                        sortType = 1;
+                        break;
+
+                    case 1:
+                        sortType = 2;
+                        break;
+
+                    case 2:
+                        sortType = 3;
+                        break;
+
+                    case 3:
+                        sortType = 4;
+                        break;
+
+                }
+
+                searchViewModel.setSearchSortType(sortType);
+
             }
         });
 
         sortRv.setAdapter(adapter);
 
         return sortRv;
-    }
-
-
-    private void itemChange() {
-        searchViewModel.setContent(keyWord);
-
-        searchViewModel.getContent().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-
-                search();
-            }
-        });
-
-        searchViewModel.getType().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-
-            }
-        });
-
-
-    }
-
-
-    private void search() {
-        searchViewModel.search()
-                .observe(this, new Observer<MzSearchResultModel>() {
-            @Override
-            public void onChanged(MzSearchResultModel data) {
-               // type = 1
-                Log.e(TAG, "onChanged: " + data);
-
-            }
-        });
-
-
     }
 
 

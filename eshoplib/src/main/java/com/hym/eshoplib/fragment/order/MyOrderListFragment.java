@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,6 +27,7 @@ import com.hym.eshoplib.bean.order.OrderListBeanMiPai;
 import com.hym.eshoplib.bean.order.ReasonBean;
 import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.imagelib.ImageUtil;
 import com.orhanobut.logger.Logger;
@@ -88,13 +90,19 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //进入订单详情
+                //TODO 进入订单详情  提交订单需要的参数 有 case_id 和 orderNumber
+
+                OrderListBeanMiPai.DataBean.InfoBean infoBean = getAdapter().getData().get(position);
 
                 Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
                         EshopActionActivity.Action_order_order_detail);
-                bundle.putString("id", getAdapter().getData().get(position).getLog_id());
+
+                // log_id
+                bundle.putString("id", infoBean.getLog_id());
 
                 EshopActionActivity.start(_mActivity, bundle);
+
+
             }
         });
         View empty_view = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);
@@ -135,18 +143,24 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                 orderStatus = "5";
                 break;
         }
+
         //订单状态-非必须，默认全部（1:待接受预约,2:待付款,3:待确认收货(2+3),4:评价中心,5退款/售后）
-        OrderApi.getUserOrderList(orderStatus, pageNum + "",
+        OrderApi.getUserOrderList(orderStatus, String.valueOf(pageNum),
                 new ResponseImpl<OrderListBeanMiPai>() {
                     @Override
                     public void onSuccess(OrderListBeanMiPai data) {
+
+                        Log.e(TAG, "订单列表  bean = " + JSONObject.toJSONString(data));
+
                         int total = Integer.parseInt(data.getData().getTotalpage());
+
                         if (refresh) {
 
                             setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
                         } else {
                             setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
                         }
+
 
                     }
 
@@ -452,6 +466,11 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                     bundle.putString("id", item.getLog_id());
                     bundle.putString("url", item.getLogo());
 
+                    // 传递 caseId 和 orderNumber ;
+                    bundle.putString(MzConstant.KEY_ORDER_CASE_ID, item.getCaseid());
+                    bundle.putString(MzConstant.KEY_ORDER_ID, item.getOrder_number());
+
+
                     EshopActionActivity.start(_mActivity, bundle);
 
                 }
@@ -476,7 +495,7 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
             btn_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!item.getAuth_store().equals("1") && item.getAuth_store().equals("2")) {
+                    if (item.getAuth_store() == 2) {
                         //如果工作室没认证
                     }
                     ShopApi.editeOrder(item.getLog_id(), "1", "", "", new ResponseImpl<Object>() {
@@ -612,19 +631,19 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
         }
         ImageView iv_vip = helper.getView(R.id.iv_vip);
         ImageView iv_vip_shop = helper.getView(R.id.iv_vip_shop);
-        if (item.getAuth_user().equals("1")) {
+        if (item.getAuth_user() == 1) {
             iv_vip.setVisibility(View.VISIBLE);
             iv_vip.setImageResource(R.drawable.ic_person_circle);
-        } else if (item.getAuth_user().equals("2")) {
+        } else if (item.getAuth_user() == 2) {
             iv_vip.setVisibility(View.VISIBLE);
             iv_vip.setImageResource(R.drawable.ic_business_circle);
         } else {
             iv_vip.setVisibility(View.GONE);
         }
-        if (item.getAuth_store().equals("1")) {
+        if (item.getAuth_store() == 1) {
             iv_vip_shop.setVisibility(View.VISIBLE);
             iv_vip_shop.setImageResource(R.drawable.ic_person_rt);
-        } else if (item.getAuth_store().equals("2")) {
+        } else if (item.getAuth_store() == 2) {
             iv_vip_shop.setVisibility(View.VISIBLE);
             iv_vip_shop.setImageResource(R.drawable.ic_business_rt);
         } else {
