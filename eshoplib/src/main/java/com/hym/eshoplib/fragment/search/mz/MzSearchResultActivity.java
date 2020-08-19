@@ -104,7 +104,6 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e(TAG, "是不是执行这里了");
                 searchViewModel.setContent(s.toString());
 
             }
@@ -137,6 +136,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
         // 类型 切换
         binding.mzTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -144,7 +144,6 @@ public class MzSearchResultActivity extends MzBaseActivity {
                 binding.dropDownMenu.closeMenu();
                 switch (tab.getPosition()) {
                     case 0:
-
                         fragmentTransaction.show(allFragment).hide(shopFragment).commit();
                         searchType = 1;
                         break;
@@ -154,6 +153,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
                         break;
 
                 }
+
                 searchViewModel.setType(searchType);
             }
 
@@ -252,7 +252,6 @@ public class MzSearchResultActivity extends MzBaseActivity {
                     regionId = "";
                     binding.dropDownMenu.setTabText("全国");
                     binding.dropDownMenu.closeMenu();
-//                    goSearch();
 
                 } else {
 

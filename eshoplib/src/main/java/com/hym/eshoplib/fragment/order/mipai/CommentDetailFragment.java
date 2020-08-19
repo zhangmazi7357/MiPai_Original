@@ -1,7 +1,10 @@
 package com.hym.eshoplib.fragment.order.mipai;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,10 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  */
 
 public class CommentDetailFragment extends BaseKitFragment {
+
+
+    private String TAG = "CommentDetailFragment";
+
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
     @BindView(R.id.tv_name)
@@ -97,6 +104,8 @@ public class CommentDetailFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+//        Log.e(TAG, "查看评价: commentId = " + id);
+
         ShopApi.GetCommentDetail(id, new ResponseImpl<CommentDetailBean>() {
             @Override
             public void onSuccess(CommentDetailBean data) {
@@ -111,8 +120,8 @@ public class CommentDetailFragment extends BaseKitFragment {
                 tvCount.setText("x" + data.getData().getUser_num());
                 tvTotalPrice.setRightString("￥：" + data.getData().getMoney());
                 List<CommentDetailBean.DataBean.LabelListBean> labels = data.getData().getLabel_list();
-                ArrayList<String>arr=new ArrayList<String>();
-                for(int i=0;i<labels.size();i++){
+                ArrayList<String> arr = new ArrayList<String>();
+                for (int i = 0; i < labels.size(); i++) {
                     arr.add(labels.get(i).getLabel_name());
                 }
                 flCommnents.setAdapter(new TagAdapter<String>(arr) {

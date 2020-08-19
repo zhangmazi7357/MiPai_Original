@@ -59,7 +59,7 @@ class MzProductAdapter extends BaseQuickAdapter<HomeIconProductBean.DataBean.Vid
         String tags = item.getTags();
 
         if (!TextUtils.isEmpty(tags)) {
-            String[] subTags = MzStringUtil.splitTag(tags);
+            String[] subTags = MzStringUtil.splitComma(tags);
             List<String> subTagList = Arrays.asList(subTags);
             helper.flowLayout.setAdapter(new TagAdapter<String>(subTagList) {
                 @Override

@@ -1259,39 +1259,47 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private void getComment() {
         String caseId = data.getData().getCase_id();
 
-        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
         commentRv.setLayoutManager(new LinearLayoutManager(_mActivity));
 
-        ShopCommentAdapter adapter = new ShopCommentAdapter(commentList);
+        ShopCommentAdapter adapter = new ShopCommentAdapter(null);
         commentRv.setAdapter(adapter);
 
         // 查看全部评论
         commentAll.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
             intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            intent.putExtra(MzConstant.KEY_COMMENT_SHARE, data);
             startActivity(intent);
         });
 
         // 更多评价 ;
         commentMore.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
+            intent.putExtra(MzConstant.KEY_COMMENT_SHARE, data);
             intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
             startActivity(intent);
 
         });
 
+        // 商品评论
         MzNewApi.getComment(caseId, "1",
                 new ResponseImpl<MzShopCommentBean>() {
                     @Override
                     public void onSuccess(MzShopCommentBean data) {
 
+                        // 评论列表
                         List<MzShopCommentBean.DataBean.InfoBean> infoBeanList = data.getData().getInfo();
 
+                        // 标签 ;
+                        List<MzShopCommentBean.DataBean.TagsBean> tagList = data.getData().getTags();
+
+                        // TODO  这里的标签要不要展示c
 
                         if (infoBeanList.size() == 0) {
                             commentNoView.setVisibility(View.VISIBLE);
                             commentMore.setVisibility(View.GONE);
                             commentAll.setClickable(false);
+
                         } else {
 
                             commentNoView.setVisibility(View.GONE);
@@ -1300,10 +1308,16 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                             commentAll.setText("好评度 " + data.getData().getComment_rate());
                             commentAll.setClickable(true);
 
+                            List<MzShopCommentBean.DataBean.InfoBean> commentList;
+                            if (infoBeanList.size() > 1) {
+                                commentList = infoBeanList.subList(0, 2);
+                            } else {
+                                commentList = infoBeanList.subList(0, 1);
 
-                            List<MzShopCommentBean.DataBean.InfoBean> commentList = infoBeanList.subList(0, 2);
+                            }
                             adapter.setNewData(commentList);
                         }
+
                     }
 
                 }, MzShopCommentBean.class);

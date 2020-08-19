@@ -2,7 +2,6 @@ package com.hym.eshoplib.fragment.search.mz.adapter;
 
 import android.graphics.Paint;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,7 +55,7 @@ public class MzSearchAllAdapter extends BaseQuickAdapter<MzSearchAllModel.DataBe
         if (!TextUtils.isEmpty(tags)) {
 
             helper.flowLayout.setVisibility(View.VISIBLE);
-            String[] subTags = MzStringUtil.splitTag(tags);
+            String[] subTags = MzStringUtil.splitComma(tags);
             List<String> subTagList = Arrays.asList(subTags);
 
             helper.flowLayout.setAdapter(new TagAdapter<String>(subTagList) {

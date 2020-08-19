@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hym.eshoplib.fragment.search.mz.model.MzSearchAllModel;
+import com.hym.eshoplib.fragment.search.mz.model.MzSearchShopModel;
 import com.hym.eshoplib.http.mz.MzNewApi;
 
 import cn.hym.superlib.mz.MzAbsViewModel;
@@ -67,7 +68,7 @@ public class MzSearchViewModel extends MzAbsViewModel {
     }
 
 
-    ///////////////      智能排序  /////////////
+    ///////////////      智能排序      /////////////
     public LiveData<Integer> getSearchSortType() {
         return sortType;
     }
@@ -77,7 +78,7 @@ public class MzSearchViewModel extends MzAbsViewModel {
     }
 
 
-    public LiveData<MzSearchAllModel> search(int page) {
+    public LiveData<MzSearchAllModel> searchAll(int page) {
 
 
         MutableLiveData<MzSearchAllModel> liveData = new MutableLiveData<>();
@@ -112,5 +113,31 @@ public class MzSearchViewModel extends MzAbsViewModel {
 
     }
 
+    // 搜索 工作室 ;
+    public LiveData<MzSearchShopModel> searchShop(int page) {
+        MutableLiveData<MzSearchShopModel> liveData = new MutableLiveData<>();
+
+        MzNewApi.search(content.getValue(),
+                String.valueOf(type.getValue()),
+                String.valueOf(sortType.getValue()),
+                String.valueOf(page),
+
+                new ResponseImpl<MzSearchShopModel>() {
+                    @Override
+                    public void onSuccess(MzSearchShopModel data) {
+
+//                        Log.e(TAG, "onSuccess: " + data.toString());
+                        liveData.setValue(data);
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+                        super.onFailed(e);
+                        liveData.setValue(null);
+                    }
+                }, MzSearchShopModel.class);
+
+        return liveData;
+    }
 
 }

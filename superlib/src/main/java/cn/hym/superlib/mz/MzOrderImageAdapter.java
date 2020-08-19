@@ -1,5 +1,6 @@
 package cn.hym.superlib.mz;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,13 +36,13 @@ import cn.hym.superlib.utils.view.ScreenUtil;
 
 public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBean, BaseViewHolder> {
 
-    Fragment fragment;
-    onDeleteListener listener;
+    private Fragment fragment;
+    private onDeleteListener listener;
     boolean showMain = true;        //显示主图
     boolean showDelete = true;      //显示删除按钮
-    String token;
-    Configuration config;
-    UploadManager uploadManager;
+    private String token;
+    private Configuration config;
+    private UploadManager uploadManager;
 
     public String getToken() {
         return token;
@@ -77,6 +78,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
         addItemType(UpLoadImageBean.type_add, R.layout.mz_order_add_image_video);
 
+
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
                 .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
@@ -91,7 +93,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
     }
 
-    int max = 8;
+    int max = 2;
 
     public void setMax(int max) {
         this.max = max - 1;
@@ -99,10 +101,12 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
     @Override
     protected void convert(final BaseViewHolder helper, final UpLoadImageBean item) {
+
         int width = ScreenUtil.getScreenWidth(fragment.getContext())
                 - ScreenUtil.dip2px(fragment.getContext(), 100);
 
         switch (item.getItemType()) {
+
             case UpLoadImageBean.type_normal:
                 //适配
                 final int position = helper.getLayoutPosition() - getHeaderLayoutCount();
@@ -115,12 +119,14 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
                 TextView tv_main = helper.getView(R.id.tv_main_image);
 
                 if (helper.getLayoutPosition() == 0 && showMain) {
-                    tv_main.setVisibility(View.GONE);    // Visiable  不明白意图 ;
+                    tv_main.setVisibility(View.GONE);                     // Visiable  不明白意图 ;
                 } else {
                     tv_main.setVisibility(View.GONE);
                 }
 
+                // 删除图片 ;
                 iv_delete.setVisibility(showDelete ? View.VISIBLE : View.GONE);
+
                 iv_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -132,6 +138,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
                         if (mData.size() == max) {
                             boolean hasAdd = false;
+
                             for (UpLoadImageBean bean : mData) {
                                 if (bean.getItemType() == UpLoadImageBean.type_add) {
                                     hasAdd = true;
@@ -146,6 +153,8 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
                     }
                 });
+
+
                 final LinearLayout ll_uploading = helper.getView(R.id.ll_uploading);
                 final TextView tv_percent = helper.getView(R.id.tv_percent);
                 final ProgressBar progressBar = helper.getView(R.id.progressbar);
@@ -219,6 +228,8 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
                 tv_add.getLayoutParams().height = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
                 break;
         }
+
+
     }
 
     public interface onDeleteListener {

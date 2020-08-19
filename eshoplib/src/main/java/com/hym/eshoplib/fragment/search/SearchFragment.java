@@ -161,11 +161,13 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
 
     private void getHistory() {
         dissMissDialog();
+
         GoodsApi.getSearchHistory(new ResponseImpl<SearchHistoryBean>() {
             @Override
             public void onSuccess(SearchHistoryBean data) {
                 List<String> hots = data.getData().getHotword();
                 List<String> history = data.getData().getHistory();
+
                 flHot.setAdapter(new TagAdapter<String>(hots) {
                     @Override
                     public View getView(FlowLayout parent, int position, String s) {
@@ -180,10 +182,12 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
                         return textView;
                     }
                 });
+
                 flHistory.setAdapter(new TagAdapter<String>(history) {
                     @Override
                     public View getView(FlowLayout parent, int position, String s) {
-                        final SuperButton textView = (SuperButton) LayoutInflater.from(_mActivity).inflate(R.layout.item_search_tab, parent, false);
+                        final SuperButton textView = (SuperButton) LayoutInflater.from(_mActivity)
+                                .inflate(R.layout.item_search_tab, parent, false);
                         textView.setText(s);
                         textView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -234,6 +238,7 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
     }
 
     private void deleteHistory() {
+
         HomeApi.deleteHistory(new ResponseImpl<Object>() {
             @Override
             public void onStart(int mark) {

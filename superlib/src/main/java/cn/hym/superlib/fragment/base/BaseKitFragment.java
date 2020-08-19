@@ -397,7 +397,7 @@ public abstract class BaseKitFragment extends BaseFragment {
         @Override
         public void dataRes(int code, String data) {
 
-            //  Log.e(TAG, "dataRes: " + data);
+//            Log.e(TAG, "dataRes: " + data);
             //请求回来的原始数据未处理过的
 //            Logger.d("sourceData=" + data);
 

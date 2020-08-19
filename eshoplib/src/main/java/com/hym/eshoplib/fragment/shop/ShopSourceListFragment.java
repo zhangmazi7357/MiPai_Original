@@ -56,6 +56,7 @@ public class ShopSourceListFragment extends BaseListFragment<ShopListBean.DataBe
     @Override
     public void excuteLogic() {
         final int type = getArguments().getInt("type");
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -63,10 +64,12 @@ public class ShopSourceListFragment extends BaseListFragment<ShopListBean.DataBe
 
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop,
                         ActionActivity.Action_ShopDetail);
+
                 // bundle.putInt("type",getArguments().getInt("type",1));//工作室类型，对应首页
                 bundle.putString("id", content_id);
                 bundle.putInt("type", type);
                 ActionActivity.start(_mActivity, bundle);
+
             }
         });
 //        View emptyView = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);
@@ -87,23 +90,25 @@ public class ShopSourceListFragment extends BaseListFragment<ShopListBean.DataBe
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
-        ShopApi.getShopList(regon_id, order, sort, category_id, gender, age_min, age_max, pageNum + "", new ResponseImpl<ShopListBean>() {
-            @Override
-            public void onSuccess(ShopListBean data) {
-                int total = Integer.parseInt(data.getData().getTotalpage());
-                if (refresh) {
-                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
-                } else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
-                }
-            }
 
-            @Override
-            public void onEmptyData() {
-                super.onEmptyData();
-                getAdapter().setNewData(null);
-            }
-        }, ShopListBean.class);
+        ShopApi.getShopList(regon_id, order, sort, category_id, gender,
+                age_min, age_max, pageNum + "", new ResponseImpl<ShopListBean>() {
+                    @Override
+                    public void onSuccess(ShopListBean data) {
+                        int total = Integer.parseInt(data.getData().getTotalpage());
+                        if (refresh) {
+                            setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                        } else {
+                            setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                        }
+                    }
+
+                    @Override
+                    public void onEmptyData() {
+                        super.onEmptyData();
+                        getAdapter().setNewData(null);
+                    }
+                }, ShopListBean.class);
 
     }
 
@@ -122,14 +127,18 @@ public class ShopSourceListFragment extends BaseListFragment<ShopListBean.DataBe
         MaterialRatingBar ratingBar = helper.getView(R.id.ratingbar);
         TextView tv_comments = helper.getView(R.id.tv_comments);
         TextView tv_good_comment = helper.getView(R.id.tv_good_comments);
+
         ImageUtil.getInstance().loadImage(ShopSourceListFragment.this, item.getLogo(), iv_logo);
         tv_shop_name.setText(item.getStore_name() + "");
         tv_memo.setText("个人简介：\n" + (TextUtils.isEmpty(item.getRemark()) ? "暂无" : item.getRemark()));
         tv_price.setText("￥：" + item.getPrice());
+
         ratingBar.setRating(Float.parseFloat(item.getRank_average()));
         // tv_comments.setText("评价："+item.getComment());
+
         tv_comments.setText("成交量：" + item.getOrder_count());
         tv_good_comment.setText("好评率：" + item.getPraise_rate() + "%");
+
         ImageView iv_vip = helper.getView(R.id.iv_vip);
         if (item.getAuth().equals("1")) {
             iv_vip.setVisibility(View.VISIBLE);

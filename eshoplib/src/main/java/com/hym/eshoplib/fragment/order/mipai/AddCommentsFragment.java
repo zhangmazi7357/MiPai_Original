@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +80,7 @@ public class AddCommentsFragment extends BaseKitFragment {
 
     @BindView(R.id.mz_order_et)
     EditText mzOrderEt;
+
     @BindView(R.id.mz_order_rv)
     RecyclerView mzOrderRv;
 
@@ -96,7 +99,7 @@ public class AddCommentsFragment extends BaseKitFragment {
     //    private String mzOrderId = "";             // 订单 id;
     private String mzTitle = "";               // 标题;
     private String mzContent = "";              //评论内容；
-    private String mzStore = "";                    // 星级
+    private String mzStore = "0";                    // 星级
     private String mzTagId = "";               //标签id;
     private String mzImages = "";               // 上传图片 ;
     private String mzPid = "";                  // 回复评论id ;
@@ -131,10 +134,6 @@ public class AddCommentsFragment extends BaseKitFragment {
         shopLogoUrl = bundle.getString("url", "");
 
         mzCaseId = bundle.getString(MzConstant.KEY_ORDER_CASE_ID);
-//        mzOrderId = bundle.getString(MzConstant.KEY_ORDER_ID);
-
-
-        //  Log.e(TAG, " 订单评价 log_id =" + log_id + ",url  = " + shopLogoUrl);
 
 
         ImageUtil.getInstance()
@@ -226,22 +225,16 @@ public class AddCommentsFragment extends BaseKitFragment {
 
         mzOrderRv.setLayoutManager(manager);
 
-        // 设置个间距
-        HashMap<String, Integer> spacesVelue = new HashMap<>();
-        spacesVelue.put(SpacesItemDecoration.TOP_SPACE, 10);
-        spacesVelue.put(SpacesItemDecoration.BOTTOM_SPACE, 20);
-        spacesVelue.put(SpacesItemDecoration.LEFT_SPACE, 0);
-        spacesVelue.put(SpacesItemDecoration.RIGHT_SPACE, 0);
-
-        mzOrderRv.addItemDecoration(new SpacesItemDecoration(2, spacesVelue, false));
 
         mzAdapter = new MzOrderImageAdapter(this, null);
 
         mzAdapter.addData(new UpLoadImageBean());
+
         mzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mzAdapter.getData().get(position).getItemType() == 1) {
+
+                if (mzAdapter.getData().get(position).getItemType() == UpLoadImageBean.type_normal) {
 
                     // 可能是预览图片吧;
                     ArrayList<String> images_str = new ArrayList<String>();
@@ -253,8 +246,8 @@ public class AddCommentsFragment extends BaseKitFragment {
                 } else {
 
 
-                    PhotoUtil.showDialogAllType(AddCommentsFragment.this,
-                            10 - adapter.getData().size(), false);
+                    PhotoUtil.ShowDialogPictureSelector(AddCommentsFragment.this,
+                            4 - adapter.getData().size(), false);
 
                 }
             }
@@ -309,7 +302,6 @@ public class AddCommentsFragment extends BaseKitFragment {
 
                     getImageData(mzAdapter, resultGalary);
 
-
                 }
 
 
@@ -333,8 +325,8 @@ public class AddCommentsFragment extends BaseKitFragment {
         int oldSize = adapter.getData().size();
         if (oldSize == 0) {
             //第一次添加
-            if (imageBeen.size() == 9) {
-                //一次性添加了9次图片，则直接加入
+            if (imageBeen.size() == 3) {
+                //一次性添加了3次图片，则直接加入
                 adapter.setNewData(imageBeen);
             } else {
                 //没有一次性添加完毕，则追加 addIcon
@@ -344,7 +336,7 @@ public class AddCommentsFragment extends BaseKitFragment {
             }
         }
         //不是第一次添加，并且第二次就 加满
-        else if (imageBeen.size() + oldSize == 10) {
+        else if (imageBeen.size() + oldSize == 4) {
             //说明有9张图片，1个添加图片，移除原adapter的最后一张图片,并且将所有的图片都加入adapter
             Logger.d("不是第一次");
             adapter.getData().remove(adapter.getData().size() - 1);
@@ -372,7 +364,6 @@ public class AddCommentsFragment extends BaseKitFragment {
         unbinder.unbind();
     }
 
-
     /**
      * 添加评论
      */
@@ -394,8 +385,29 @@ public class AddCommentsFragment extends BaseKitFragment {
             mzTagId += ids.get(key) + ",";
         }
 
+        mzOrderEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        mzContent = mzOrderEt.getText().toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mzContent = s.toString();
+            }
+        });
+
+        if ("".equals(mzContent)) {
+
+            ToastUtil.toast("请输入评价内容");
+            return;
+        }
+
         int rating = (int) ratingbar.getRating();
         mzStore = String.valueOf(rating);
 
@@ -410,7 +422,7 @@ public class AddCommentsFragment extends BaseKitFragment {
                     public void onSuccess(Object data) {
 
                         ToastUtil.toast("评价已发布");
-                        //TODO 评价 已经发布， 刷新 我的订单页面 ;
+
                         pop();
 
                     }
@@ -430,4 +442,6 @@ public class AddCommentsFragment extends BaseKitFragment {
         }
         return result;
     }
+
+
 }

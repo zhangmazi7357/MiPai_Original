@@ -80,10 +80,10 @@ public class MzLocationActivity extends AppCompatActivity {
             @Override
             public void rightButton() {
 
-                // 透传 address 和经纬度 ;
-
 
             }
+
+
         });
 
         etPoi = findViewById(R.id.et_poi);

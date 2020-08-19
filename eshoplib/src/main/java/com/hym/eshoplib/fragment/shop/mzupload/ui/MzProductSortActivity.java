@@ -54,6 +54,8 @@ public class MzProductSortActivity extends MzBaseActivity {
 
                 choiceSort();
             }
+
+
         });
 
 

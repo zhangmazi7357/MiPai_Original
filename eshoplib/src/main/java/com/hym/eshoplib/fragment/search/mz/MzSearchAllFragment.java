@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.goods.GoodDetailModel;
 import com.hym.eshoplib.databinding.FragmentMzSearchAllBinding;
@@ -42,9 +42,9 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
 
     private MzSearchAllAdapter adapter;
 
-    private int page = 1;
-    private int totalPage = 1;
-    private int pageSize = 0;
+    private int page = 0;
+    private int totalPage = 0;
+    private int pageSize = 10;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,8 +85,6 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
         viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-
-
                 search(true);
 
             }
@@ -98,7 +96,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                         new Observer<Integer>() {
                             @Override
                             public void onChanged(Integer integer) {
-
+//                                Log.e(TAG, "onChanged:  sortType");
                                 search(true);
 
                             }
@@ -111,7 +109,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
             viewModel.getType().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
-
+//                    Log.e(TAG, "onChanged: type");
                     search(true);
                 }
             });
@@ -124,13 +122,13 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
     private void search(boolean isRefresh) {
 
 
-        viewModel.search(page)
-                .observe(this, new Observer<MzSearchAllModel>() {
+        viewModel.searchAll(page)
+                .observe(getViewLifecycleOwner(), new Observer<MzSearchAllModel>() {
                     @Override
                     public void onChanged(MzSearchAllModel data) {
                         binding.swipe.setRefreshing(false);
 
-                        Log.e(TAG, "onChanged: " + JSONObject.toJSONString(data));
+                        // Log.e(TAG, "onChanged: " + JSONObject.toJSONString(data));
                         totalPage = Integer.parseInt(data.getData().getTotalpage());
 
                         setData(isRefresh, data.getData().getInfo());
@@ -149,7 +147,12 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
         binding.allRv.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
 
         adapter = new MzSearchAllAdapter(null);
-        binding.allRv.setAdapter(adapter);
+
+
+        adapter.bindToRecyclerView(binding.allRv);
+
+        //设置空布局
+        adapter.setEmptyView(R.layout.mz_invite_empty_layout, binding.allRv);
 
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -213,7 +216,10 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
             }
         });
 
+        // 取消掉默认的第一次 就loadMore ;
+        adapter.disableLoadMoreIfNotFullPage();
 
+        //加载更多 ;
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -221,11 +227,14 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                 if (page > totalPage) {
                     adapter.loadMoreEnd();
                 } else {
+
                     search(false);
                 }
             }
         }, binding.allRv);
 
+
+        onRefresh();
     }
 
 
@@ -233,12 +242,16 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
         int size = list == null ? 0 : list.size();
 
         if (isRefresh) {
+
             adapter.setNewData(list);
             binding.allRv.smoothScrollToPosition(0);
+
         } else {
+
             if (size > 0) {
                 adapter.addData(list);
             }
+
         }
 
         if (size < pageSize) {
@@ -254,6 +267,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
     public void onRefresh() {
         page = 1;
         adapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+//        Log.e(TAG, "search onRefresh");
         search(true);
     }
 

@@ -90,7 +90,7 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //TODO 进入订单详情  提交订单需要的参数 有 case_id 和 orderNumber
+
 
                 OrderListBeanMiPai.DataBean.InfoBean infoBean = getAdapter().getData().get(position);
 
@@ -150,7 +150,6 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                     @Override
                     public void onSuccess(OrderListBeanMiPai data) {
 
-                        Log.e(TAG, "订单列表  bean = " + JSONObject.toJSONString(data));
 
                         int total = Integer.parseInt(data.getData().getTotalpage());
 
@@ -176,10 +175,13 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
 
     @Override
     public void bindData(BaseViewHolder helper, final OrderListBeanMiPai.DataBean.InfoBean item, int position) {
+
+
         CardView cardView = helper.getView(R.id.cardview);
         //适配间距
         RelativeLayout rl = helper.getView(R.id.rl_container);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) rl.getLayoutParams();
+
         if (position == 0) {
             layoutParams.setMargins(ScreenUtil.dip2px(_mActivity, 10), ScreenUtil.dip2px(_mActivity, 10), ScreenUtil.dip2px(_mActivity, 10), ScreenUtil.dip2px(_mActivity, 10));
         } else {
@@ -461,14 +463,13 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                     Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
                             EshopActionActivity.Action_order_add_comment);
 
-                    Log.e(TAG, " 订单评论 =  " + item);
 
                     bundle.putString("id", item.getLog_id());
                     bundle.putString("url", item.getLogo());
 
                     // 传递 caseId 和 orderNumber ;
                     bundle.putString(MzConstant.KEY_ORDER_CASE_ID, item.getCaseid());
-                    bundle.putString(MzConstant.KEY_ORDER_ID, item.getOrder_number());
+                    // bundle.putString(MzConstant.KEY_ORDER_ID, item.getOrder_number());
 
 
                     EshopActionActivity.start(_mActivity, bundle);
@@ -622,7 +623,11 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
             btn_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_comment_detail);
+
+                    //  Log.e(TAG, " 我的订单 ： " + JSONObject.toJSONString(item));
+
+                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                            EshopActionActivity.Action_order_comment_detail);
                     bundle.putString("id", item.getComment_id());
                     EshopActionActivity.start(_mActivity, bundle);
 

@@ -186,6 +186,7 @@ public class ShopListFragment extends BaseKitFragment {
 
     //获取筛选列表
     public void getFilterList() {
+
         GoodsApi.getCategory(current_type + "", new ResponseImpl<CategoryListBean>() {
             @Override
             public void onSuccess(CategoryListBean data) {
@@ -368,12 +369,16 @@ public class ShopListFragment extends BaseKitFragment {
                     .inflate(R.layout.layout_flcontainer, null, false);
             //init dropdownview
             dropDownMenu.setDropDownMenu(headers, popupViews, contentView);
+
             Bundle bundle = new Bundle();
             bundle.putInt("type", current_type);
             //fragment = ShopSourceListFragment.newInstance(getArguments());
+
             fragment = ShopSourceListFragment.newInstance(bundle);
             loadRootFragment(R.id.fl_fragment_container, fragment);
+
             goSearch();
+
 
         } catch (Exception e) {
             Logger.d(e.toString());

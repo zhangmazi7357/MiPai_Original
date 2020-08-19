@@ -9,7 +9,7 @@ public class MzShopCommentBean {
 
 
     /**
-     * data : {"totalnum":"8","currentpage":"1","totalpage":"1","comment_rate":"75%","is_replay":1,"info":[{"id":"14","pid":"0","case_id":"2809","userid":"4894","content":"试试","score":"5","ctime":"2020-08-14 16:01:07","images":"1597392059_IMG_CMP_139980186.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[{"id":"15","pid":"14","case_id":"2809","userid":"4894","content":"谢谢支持","ctime":"2020-08-14 15:01:07","nickname":"17666666666"}]},{"id":"13","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:59:10","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"12","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:58","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"11","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:51","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"10","pid":"0","case_id":"2809","userid":"4894","content":"可以的","score":"5","ctime":"2020-08-14 15:56:42","images":"1597391794_IMG_CMP_173980393.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"9","pid":"0","case_id":"2809","userid":"4894","content":"ZAGG开斋","score":"5","ctime":"2020-08-14 14:59:11","images":"1597388346_IMG_CMP_70410132.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"8","pid":"0","case_id":"2809","userid":"4894","content":"墨迹","score":null,"ctime":"2020-08-14 14:54:53","images":"1597388086_IMG_CMP_66581537.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"7","pid":"0","case_id":"2809","userid":"4894","content":"还可以","score":null,"ctime":"2020-08-14 14:53:59","images":"1597388029_IMG_CMP_125601706.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]}]}
+     * data : {"totalnum":"8","currentpage":"1","totalpage":"1","comment_rate":"75%","is_replay":0,"tags":[{"name":"服务很差","nums":2},{"name":"非常好，下次继续合作","nums":1},{"name":"片子质量很棒","nums":1},{"name":"态度诚恳","nums":1}],"info":[{"id":"14","pid":"0","case_id":"2809","userid":"4894","content":"试试","score":"5","ctime":"2020-08-14 16:01:07","images":"1597392059_IMG_CMP_139980186.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[{"id":"15","pid":"14","case_id":"2809","userid":"4894","content":"谢谢支持","ctime":"2020-08-14 15:01:07","nickname":"17666666666"}]},{"id":"13","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:59:10","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"12","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:58","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"11","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:51","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"10","pid":"0","case_id":"2809","userid":"4894","content":"可以的","score":"5","ctime":"2020-08-14 15:56:42","images":"1597391794_IMG_CMP_173980393.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"9","pid":"0","case_id":"2809","userid":"4894","content":"ZAGG开斋","score":"5","ctime":"2020-08-14 14:59:11","images":"1597388346_IMG_CMP_70410132.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"8","pid":"0","case_id":"2809","userid":"4894","content":"墨迹","score":null,"ctime":"2020-08-14 14:54:53","images":"1597388086_IMG_CMP_66581537.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"7","pid":"0","case_id":"2809","userid":"4894","content":"还可以","score":null,"ctime":"2020-08-14 14:53:59","images":"1597388029_IMG_CMP_125601706.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]}]}
      */
 
     private DataBean data;
@@ -28,7 +28,8 @@ public class MzShopCommentBean {
          * currentpage : 1
          * totalpage : 1
          * comment_rate : 75%
-         * is_replay : 1
+         * is_replay : 0
+         * tags : [{"name":"服务很差","nums":2},{"name":"非常好，下次继续合作","nums":1},{"name":"片子质量很棒","nums":1},{"name":"态度诚恳","nums":1}]
          * info : [{"id":"14","pid":"0","case_id":"2809","userid":"4894","content":"试试","score":"5","ctime":"2020-08-14 16:01:07","images":"1597392059_IMG_CMP_139980186.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[{"id":"15","pid":"14","case_id":"2809","userid":"4894","content":"谢谢支持","ctime":"2020-08-14 15:01:07","nickname":"17666666666"}]},{"id":"13","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:59:10","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"12","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:58","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"11","pid":"0","case_id":"2809","userid":"4894","content":"改行","score":"4","ctime":"2020-08-14 15:58:51","images":"1597391922_IMG_CMP_142381085.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"10","pid":"0","case_id":"2809","userid":"4894","content":"可以的","score":"5","ctime":"2020-08-14 15:56:42","images":"1597391794_IMG_CMP_173980393.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"9","pid":"0","case_id":"2809","userid":"4894","content":"ZAGG开斋","score":"5","ctime":"2020-08-14 14:59:11","images":"1597388346_IMG_CMP_70410132.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"8","pid":"0","case_id":"2809","userid":"4894","content":"墨迹","score":null,"ctime":"2020-08-14 14:54:53","images":"1597388086_IMG_CMP_66581537.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]},{"id":"7","pid":"0","case_id":"2809","userid":"4894","content":"还可以","score":null,"ctime":"2020-08-14 14:53:59","images":"1597388029_IMG_CMP_125601706.jpeg,","avatar":"http://mpai.liandao.mobi/uploads/4a/bd/d6/a0/0a/f1311be55cb14d70f9b67e.png","nickname":"17666666666","agree_count":"0","is_agree":"0","replay":[]}]
          */
 
@@ -37,6 +38,7 @@ public class MzShopCommentBean {
         private String totalpage;
         private String comment_rate;
         private int is_replay;
+        private List<TagsBean> tags;
         private List<InfoBean> info;
 
         public String getTotalnum() {
@@ -79,12 +81,46 @@ public class MzShopCommentBean {
             this.is_replay = is_replay;
         }
 
+        public List<TagsBean> getTags() {
+            return tags;
+        }
+
+        public void setTags(List<TagsBean> tags) {
+            this.tags = tags;
+        }
+
         public List<InfoBean> getInfo() {
             return info;
         }
 
         public void setInfo(List<InfoBean> info) {
             this.info = info;
+        }
+
+        public static class TagsBean {
+            /**
+             * name : 服务很差
+             * nums : 2
+             */
+
+            private String name;
+            private int nums;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getNums() {
+                return nums;
+            }
+
+            public void setNums(int nums) {
+                this.nums = nums;
+            }
         }
 
         public static class InfoBean {

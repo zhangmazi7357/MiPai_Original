@@ -109,7 +109,7 @@ public class MzNewApi {
         request.addParamsNotEmpty("images", images);
         request.addParamsNotEmpty("pid", pid);
 
-//        Log.e(TAG, "添加评论 参数: " + JSONObject.toJSONString(request));
+        Log.e(TAG, "添加评论 参数: " + JSONObject.toJSONString(request));
 
         post(request, listener, clazz);
 

@@ -220,6 +220,7 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                 }
 
                 break;
+
             case UpLoadImageBean.type_add:
                 TextView tv_add = helper.getView(R.id.tv_add);
                 tv_add.getLayoutParams().width = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);

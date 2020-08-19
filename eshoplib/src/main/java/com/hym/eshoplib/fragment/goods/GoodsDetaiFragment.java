@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +101,8 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayResultListener {
 
+    private String TAG = "GoodsDetaiFragment";
+
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
     @BindView(R.id.tv_name)
@@ -172,9 +176,12 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
     public void doLogic() {
         setShowProgressDialog(true);
         int type = getArguments().getInt("type", 1);
+
         if (type == 46) {
             tvCallPhone.setVisibility(View.GONE);
         }
+
+        // content_id
         shop_id = getArguments().getString("id", "");
         showBackButton();
         appBar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -232,6 +239,7 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
         ShopApi.GetContentDetail(shop_id, new ResponseImpl<ServiceDetailBean>() {
             @Override
             public void onSuccess(ServiceDetailBean data) {
@@ -243,6 +251,12 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
                 GoodsDetailPagerFragment pagerFragment = GoodsDetailPagerFragment.newInstance(bunddle);
                 loadRootFragment(R.id.fl_fragment_container, pagerFragment);
                 bindeDetail();
+            }
+
+            @Override
+            public void dataRes(int code, String data) {
+                super.dataRes(code, data);
+
             }
         }, ServiceDetailBean.class);
     }

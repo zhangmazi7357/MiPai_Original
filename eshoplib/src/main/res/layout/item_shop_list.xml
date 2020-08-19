@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="10dp"
-       android:background="#f1f1f1"
-       android:id="@+id/view_diver"/>
+
+    <View
+        android:id="@+id/view_diver"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f1f1f1" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:padding="10dp">
+
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginRight="10dp"
-            android:scaleType="centerCrop"
-             />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -30,31 +32,32 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/iv_icon"
             android:layout_toRightOf="@id/iv_icon"
-            tools:text="华谊兄弟传媒工作室"
+            android:drawablePadding="5dp"
             android:textColor="@color/black"
-            android:drawablePadding="5dp"/>
+            tools:text="华谊兄弟传媒工作室" />
+
         <ImageView
+            android:id="@+id/iv_vip"
             android:layout_width="26dp"
             android:layout_height="13dp"
-            android:src="@drawable/ic_business_rt"
-            android:layout_toRightOf="@id/tv_title"
             android:layout_marginLeft="5dp"
-            android:id="@+id/iv_vip"
             android:layout_marginTop="3dp"
-            android:visibility="gone"
-            />
+            android:layout_toRightOf="@id/tv_title"
+            android:src="@drawable/ic_business_rt"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
             android:layout_marginTop="3dp"
-            android:maxLines="3"
-            android:ellipsize="end"
             android:layout_toRightOf="@id/iv_icon"
-            tools:text="个人简介：\n多年从事影视广告、企业宣传片制作、能够熟练运用FINACUT、PREMIERE\AE"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:textColor="@color/mipaiTextColorNormal"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="个人简介：\n多年从事影视广告、企业宣传片制作、能够熟练运用FINACUT、PREMIERE\AE" />
 
 
         <TextView
@@ -62,27 +65,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_des"
-            android:layout_toRightOf="@id/iv_icon"
             android:layout_marginTop="3dp"
-            tools:text="￥：800"
+            android:layout_toRightOf="@id/iv_icon"
             android:textColor="#ff0000"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="￥：800" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-
-        >
+        android:paddingBottom="10dp">
 
         <me.zhanghai.android.materialratingbar.MaterialRatingBar
             android:id="@+id/ratingbar"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:clickable="false"
             android:isIndicator="true"
@@ -120,7 +121,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="#e1e1e1"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:background="#e1e1e1" />
 </LinearLayout>

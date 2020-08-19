@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,10 +19,12 @@ import cn.hym.superlib.R;
  */
 public class MzHeaderBar extends FrameLayout {
 
-
     private LinearLayout back;
     private TextView tvTitle;
     private TextView tvRight;
+    private LinearLayout lRightIv;
+    private ImageView rightIv;
+    private int rightDrawableId = -1;
 
     public MzHeaderBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,11 +37,15 @@ public class MzHeaderBar extends FrameLayout {
         boolean showBack = ta.getBoolean(R.styleable.MzHeaderBar_showBack, true);
         String title = ta.getString(R.styleable.MzHeaderBar_header_title);
         String rightTv = ta.getString(R.styleable.MzHeaderBar_rightTv);
-        boolean showRight = ta.getBoolean(R.styleable.MzHeaderBar_showRightTv, true);
+        boolean showRightTv = ta.getBoolean(R.styleable.MzHeaderBar_showRightTv, true);
+        rightDrawableId = ta.getResourceId(R.styleable.MzHeaderBar_rightIvDrawable, rightDrawableId);
+        // boolean showRightIv = ta.getBoolean(R.styleable.MzHeaderBar_showRightTv, false);
 
         back = root.findViewById(R.id.back);
         tvTitle = root.findViewById(R.id.title);
         tvRight = root.findViewById(R.id.rightTv);
+        rightIv = root.findViewById(R.id.rightIv);
+        lRightIv = root.findViewById(R.id.l_rightIv);
 
         back.setVisibility(showBack ? View.VISIBLE : View.GONE);
         if (!TextUtils.isEmpty(title)) {
@@ -46,6 +53,15 @@ public class MzHeaderBar extends FrameLayout {
         }
         if (!TextUtils.isEmpty(rightTv)) {
             tvRight.setText(rightTv);
+        }
+
+        // rightIv.setVisibility(showRightIv ? View.VISIBLE : View.GONE);
+
+        if (rightDrawableId != -1) {
+            rightIv.setVisibility(VISIBLE);
+            rightIv.setImageDrawable(getResources().getDrawable(rightDrawableId));
+        } else {
+            rightIv.setVisibility(GONE);
         }
 
 
@@ -58,6 +74,7 @@ public class MzHeaderBar extends FrameLayout {
             }
         });
 
+
         tvRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +85,15 @@ public class MzHeaderBar extends FrameLayout {
             }
         });
 
+        lRightIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (rightDrawableListener != null) {
+                    rightDrawableListener.onRightDrawableClick();
+                }
+            }
+        });
 
         ta.recycle();
 
@@ -79,16 +105,26 @@ public class MzHeaderBar extends FrameLayout {
         }
     }
 
-
     public interface HeaderBarListener {
         void back();
 
         void rightButton();
     }
 
+    public interface RightDrawableListener {
+        void onRightDrawableClick();
+    }
+
     private HeaderBarListener headerBarListener;
+
+    private RightDrawableListener rightDrawableListener;
 
     public void setHeaderBarListener(HeaderBarListener headerBarListener) {
         this.headerBarListener = headerBarListener;
     }
+
+    public void setRightDrawableListener(RightDrawableListener rightDrawableListener) {
+        this.rightDrawableListener = rightDrawableListener;
+    }
+
 }

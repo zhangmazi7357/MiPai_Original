@@ -1216,16 +1216,17 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private void getComment() {
         String caseId = data.getData().getCase_id();
 
-        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
+//        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
         commentRv.setLayoutManager(new LinearLayoutManager(_mActivity));
 
-        ShopCommentAdapter adapter = new ShopCommentAdapter(commentList);
+        ShopCommentAdapter adapter = new ShopCommentAdapter(null);
         commentRv.setAdapter(adapter);
 
         // 查看全部评论
         commentAll.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
             intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            intent.putExtra(MzConstant.KEY_COMMENT_SHARE, data);
             startActivity(intent);
         });
 
@@ -1233,6 +1234,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         commentMore.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
             intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
+            intent.putExtra(MzConstant.KEY_COMMENT_SHARE, data);
             startActivity(intent);
 
         });
@@ -1259,7 +1261,15 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                             commentAll.setClickable(true);
 
 
-                            List<MzShopCommentBean.DataBean.InfoBean> commentList = infoBeanList.subList(0, 2);
+                            // 商品详情页要显示的评论 ;
+                            List<MzShopCommentBean.DataBean.InfoBean> commentList;
+                            if (infoBeanList.size() > 1) {
+                                commentList = infoBeanList.subList(0, 2);
+                            } else {
+                                commentList = infoBeanList.subList(0, 1);
+
+                            }
+
                             adapter.setNewData(commentList);
                         }
                     }

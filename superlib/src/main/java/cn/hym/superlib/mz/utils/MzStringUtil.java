@@ -51,7 +51,7 @@ public class MzStringUtil {
      * @param tags
      * @return
      */
-    public static String[] splitTag(String tags) {
+    public static String[] splitComma(String tags) {
 
         if (TextUtils.isEmpty(tags)) {
             return null;
@@ -66,6 +66,26 @@ public class MzStringUtil {
         }
     }
 
+
+    /**
+     * 分割 date 时间 ;
+     *
+     * @param time
+     * @return
+     */
+    public static String splitTime(String time) {
+        if (TextUtils.isEmpty(time)) {
+            return null;
+        }
+
+        boolean contains = time.contains(" ");
+        if (contains) {
+            String[] s = time.split(" ");
+            return s[0];
+        } else {
+            return time;
+        }
+    }
 
     /**
      * 隐藏用户名 用 * 代替 ;

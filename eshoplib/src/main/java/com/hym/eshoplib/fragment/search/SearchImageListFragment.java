@@ -56,6 +56,7 @@ public class SearchImageListFragment extends BaseListFragment<ShopProductsBean.D
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {

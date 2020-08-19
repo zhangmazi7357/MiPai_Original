@@ -73,7 +73,9 @@
         <attr name="showBack" format="boolean" />
         <attr name="header_title" format="string" />
         <attr name="rightTv" format="string" />
-        <attr name="showRightTv" format="string" />
+        <attr name="showRightTv" format="boolean" />
+        <attr name="rightIvDrawable" format="reference" />
+        <attr name="showRightIv" format="boolean" />
     </declare-styleable>
 
     <!--    上传产品信息输入item -->
