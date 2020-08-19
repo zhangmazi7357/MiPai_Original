@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.core.LatLonPoint;
@@ -56,6 +58,7 @@ import com.hym.eshoplib.bean.shop.AttachResultBean;
 import com.hym.eshoplib.bean.shop.ServiceDetailBean;
 import com.hym.eshoplib.bean.shop.ShopCommentsBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
+import com.hym.eshoplib.fragment.search.mz.model.LngLonModel;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
@@ -98,6 +101,8 @@ import cn.hym.superlib.mz.widgets.TabWithScrollView;
 import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.DialogView;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
@@ -111,6 +116,9 @@ import me.yokeyword.fragmentation.SupportFragment;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class ShopDetailsVideoFragment extends BaseKitFragment implements View.OnClickListener {
+
+
+    private String TAG = "ShopDetailsVideoFragment";
 
     @BindView(R.id.rv_view)
     RecyclerView rvView;
@@ -305,7 +313,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private GoodDetailModel data;
     private BaseDialog pay_dialog;
     private BaseListAdapter<PayTypeBean> pay_adapter;
-    private int pay_position;
 
     private SnappingStepper stepper;
     private String name;
@@ -318,6 +325,9 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
 
     // 地址
+    @BindView(R.id.l_address)
+    LinearLayout lAddress;
+
     @BindView(R.id.proAddress)
     TextView proAddress;
 
@@ -325,7 +335,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     @BindView(R.id.proDistance)
     TextView proDistance;
 
+    // 定位 当前位置
     private LatLonPoint dest;
+
+    // 目标位置
+    private LatLonPoint point;
 
     @Nullable
     @Override
@@ -345,13 +359,17 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         MapManager.getInstance().location(_mActivity, true, new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
+
+                Log.e(TAG, " 定位 =  " + aMapLocation);
+
                 double longitude = aMapLocation.getLongitude();
                 double latitude = aMapLocation.getLatitude();
-                dest = new LatLonPoint(longitude, latitude);
+                dest = new LatLonPoint(latitude, longitude);
 
                 if (longitude == 0 || latitude == 0) {
                     ToastUtil.toast("定位失败");
                 } else {
+
                     addAddressDistance();
                 }
 
@@ -381,6 +399,9 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
         shopBack.setOnClickListener(this);
         shopShare.setOnClickListener(this);
+
+        // 点击地址导航
+        lAddress.setOnClickListener(this);
 
     }
 
@@ -911,6 +932,16 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 share();
 
                 break;
+
+            case R.id.l_address:
+
+                if (TextUtils.isEmpty(proAddress.getText()) || TextUtils.isEmpty(proDistance.getText())) {
+                    return;
+                }
+
+                choiceMap();
+
+                break;
         }
     }
 
@@ -997,7 +1028,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     // 计算距离
     private void addAddressDistance() {
         Bundle bundle = getArguments();
-        HomeIconProductBean.DataBean.VideoBean item = (HomeIconProductBean.DataBean.VideoBean) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+        LngLonModel item = (LngLonModel) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
 
 
         String lon = item.getLon();
@@ -1016,10 +1047,10 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
             if (longitute != 0 && latitude != 0) {
 
-                LatLonPoint point = new LatLonPoint(longitute, latitude);
+                point = new LatLonPoint(latitude, longitute);
                 ArrayList<LatLonPoint> list = new ArrayList();
                 list.add(point);
-//                Log.e(TAG, "计算");
+
 
                 MapManager.getInstance().calculateInstance(_mActivity, dest, list,
                         DistanceSearch.TYPE_DISTANCE,
@@ -1173,7 +1204,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     }
 
 
-    //
     private int setAlpha(@ColorRes int resId, int alpha) {
         int color = getColor(resId);
         int red = Color.red(color);
@@ -1283,6 +1313,43 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    private void choiceMap() {
+        DialogView dialogView = DialogManager.getInstance().initView(getContext(), R.layout.mz_map_dialog, Gravity.BOTTOM);
+        dialogView.show();
+
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mapPackName = "";
+
+                switch (v.getId()) {
+                    case R.id.aMap:
+                        mapPackName = MapManager.aMapPackageName;
+                        break;
+                    case R.id.baiduMap:
+                        mapPackName = MapManager.baiduMapPackageName;
+                        break;
+
+                    case R.id.tentcentMap:
+                        mapPackName = MapManager.tencentMapPackageName;
+                        break;
+                }
+
+                MapManager.getInstance().jumpMap(_mActivity, mapPackName, point);
+                dialogView.dismiss();
+            }
+        };
+
+
+        dialogView.findViewById(R.id.aMap).setOnClickListener(listener);
+        dialogView.findViewById(R.id.baiduMap).setOnClickListener(listener);
+        dialogView.findViewById(R.id.tentcentMap).setOnClickListener(listener);
+
+
     }
 
 }

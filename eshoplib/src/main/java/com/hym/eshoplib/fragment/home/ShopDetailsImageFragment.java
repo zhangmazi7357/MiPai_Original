@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,8 @@ import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.utils.SizeUtils;
 import cn.hym.superlib.mz.widgets.TabWithScrollView;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.DialogView;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
@@ -173,6 +176,10 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
 
     // 地址
+
+    @BindView(R.id.l_address)
+    LinearLayout lAddress;
+
     @BindView(R.id.proAddress)
     TextView proAddress;
 
@@ -185,6 +192,9 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
     @BindView(R.id.tv_go_pay)
     TextView tvGoPay;
+
+
+    private LatLonPoint point;
 
 
     //////////////////////// 工作室详情  ///////////////////
@@ -331,7 +341,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             public void onLocationChanged(AMapLocation aMapLocation) {
                 double longitude = aMapLocation.getLongitude();
                 double latitude = aMapLocation.getLatitude();
-                dest = new LatLonPoint(longitude, latitude);
+                dest = new LatLonPoint(latitude, longitude);
 
                 if (longitude == 0 || latitude == 0) {
                     ToastUtil.toast("定位失败");
@@ -359,6 +369,9 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         shopBack.setOnClickListener(this);
         shopShare.setOnClickListener(this);
+
+        // 点击地址去导航;
+        lAddress.setOnClickListener(this);
 
     }
 
@@ -1004,6 +1017,14 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             case R.id.shop_share:
                 share();
                 break;
+
+            case R.id.l_address:
+                // 定位不成功  或者 没有计算出距离 ;
+                if (TextUtils.isEmpty(proAddress.getText()) || TextUtils.isEmpty(proDistance.getText())) {
+                    return;
+                }
+                choiceMap();
+                break;
         }
     }
 
@@ -1093,7 +1114,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
             if (longitute != 0 && latitude != 0) {
 
-                LatLonPoint point = new LatLonPoint(longitute, latitude);
+                point = new LatLonPoint(latitude, longitute);
                 ArrayList<LatLonPoint> list = new ArrayList();
                 list.add(point);
 
@@ -1322,6 +1343,46 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
                 }, MzShopCommentBean.class);
 
+    }
+
+
+    //选择地图
+    private void choiceMap() {
+        DialogView dialogView = DialogManager.getInstance().initView(getContext(), R.layout.mz_map_dialog, Gravity.BOTTOM);
+        dialogView.show();
+
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mapPackName = "";
+
+                switch (v.getId()) {
+                    case R.id.aMap:
+                        mapPackName = MapManager.aMapPackageName;
+                        break;
+                    case R.id.baiduMap:
+                        mapPackName = MapManager.baiduMapPackageName;
+                        break;
+
+                    case R.id.tentcentMap:
+                        mapPackName = MapManager.tencentMapPackageName;
+                        break;
+                }
+
+                if (point != null) {
+                    MapManager.getInstance().jumpMap(_mActivity, mapPackName, point);
+                    dialogView.dismiss();
+                }
+            }
+        };
+
+
+        dialogView.findViewById(R.id.aMap).setOnClickListener(listener);
+        dialogView.findViewById(R.id.baiduMap).setOnClickListener(listener);
+        dialogView.findViewById(R.id.tentcentMap).setOnClickListener(listener);
+
 
     }
+
 }

@@ -149,6 +149,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                     public void onSuccess(GoodDetailModel data) {
 
 
+                        // 视频 ;
                         if (data.getData().getType().equals("1")) {
 
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
@@ -160,9 +161,11 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                             // 产品 地址 经纬度。
                             bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
 
+
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
 
+                            // 图片 ;
                         } else if (data.getData().getType().equals("2")) {
 
 

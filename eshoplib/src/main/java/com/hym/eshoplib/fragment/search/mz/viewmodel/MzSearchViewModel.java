@@ -29,7 +29,7 @@ public class MzSearchViewModel extends MzAbsViewModel {
     private MutableLiveData<Integer> p = new MutableLiveData<>();
 
     // 城市
-    private MutableLiveData<String> city;
+    private MutableLiveData<String> regionId = new MutableLiveData<>();
 
 
     ///////////////////////  搜索内容  /////////////////
@@ -78,6 +78,15 @@ public class MzSearchViewModel extends MzAbsViewModel {
     }
 
 
+    /////////////////////   城市 ////////////////////////////
+    public LiveData<String> getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(String cityRegionId) {
+        regionId.setValue(cityRegionId);
+    }
+
     public LiveData<MzSearchAllModel> searchAll(int page) {
 
 
@@ -85,14 +94,16 @@ public class MzSearchViewModel extends MzAbsViewModel {
 
 //        Log.e(TAG, "当前搜索参数 ： 内容 =" + content.getValue() +
 //                ",类型 =" + type.getValue() +
-//                ",智能 = " + sortType.getValue());
+//                ",智能 = " + sortType.getValue()
+//                + "，城市 =" + regionId.getValue()
+//        );
 
 
         MzNewApi.search(content.getValue(),
                 String.valueOf(type.getValue()),
                 String.valueOf(sortType.getValue()),
+                regionId.getValue(),
                 String.valueOf(page),
-
                 new ResponseImpl<MzSearchAllModel>() {
                     @Override
                     public void onSuccess(MzSearchAllModel data) {
@@ -120,6 +131,7 @@ public class MzSearchViewModel extends MzAbsViewModel {
         MzNewApi.search(content.getValue(),
                 String.valueOf(type.getValue()),
                 String.valueOf(sortType.getValue()),
+                regionId.getValue(),
                 String.valueOf(page),
 
                 new ResponseImpl<MzSearchShopModel>() {

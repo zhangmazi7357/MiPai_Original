@@ -1,8 +1,13 @@
 package com.example.lib_amap;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -16,6 +21,7 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.help.Inputtips;
@@ -23,6 +29,7 @@ import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.route.DistanceSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +41,13 @@ public class MapManager {
     private AMap aMap;
 
     private String TAG = "Map";
+
+    // 高德地图包名
+    public final static String aMapPackageName = "com.autonavi.minimap";
+    // 百度地图包名
+    public final static String baiduMapPackageName = "com.baidu.BaiduMap";
+    // 腾讯地图包名
+    public final static String tencentMapPackageName = "com.tencent.map";
 
     private MapManager() {
     }
@@ -349,4 +363,107 @@ public class MapManager {
         geocoderSearch.getFromLocationAsyn(query);
     }
 
+
+    // 点击地址跳到第三方地图导航 ;
+    public void jumpMap(Activity activity, String packageName, LatLonPoint latLonPoint) {
+
+
+        if (isAvilible(activity, packageName)) {
+            switch (packageName) {
+                case aMapPackageName:
+                    jumpAMap(activity, latLonPoint, "");
+                    break;
+                case baiduMapPackageName:
+                    jumpBaiduMap(activity, latLonPoint);
+                    break;
+                case tencentMapPackageName:
+                    jumpTencentMap(activity, latLonPoint);
+                    break;
+            }
+
+        } else {
+            switch (packageName) {
+                case aMapPackageName:
+                    Toast.makeText(activity, "本机没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                case baiduMapPackageName:
+                    Toast.makeText(activity, "本机没有安装百度地图", Toast.LENGTH_SHORT).show();
+                    break;
+                case tencentMapPackageName:
+                    Toast.makeText(activity, "本机没有安装腾讯地图", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+    }
+
+
+    /**
+     * 检查手机上是否安装了指定的软件
+     *
+     * @param activity
+     * @param packageName：应用包名
+     * @return
+     */
+    private boolean isAvilible(Activity activity, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = activity.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
+    }
+
+
+    /**
+     * @param activity lon      经度
+     *                 lat      纬度
+     */
+    private void jumpAMap(Activity activity, LatLonPoint latLonPoint, String dest) {
+
+        Intent intent = new Intent("android.intent.action.VIEW",
+                android.net.Uri.parse("androidamap://route?sourceApplication=" +
+                        "appName&slat=&slon=&sname=我的位置&dlat=" + latLonPoint.getLatitude()
+                        + "&dlon=" + latLonPoint.getLongitude() + "&dname=" + "目的地" + "&dev=0&t=2"));
+        activity.startActivity(intent);
+
+    }
+
+    /**
+     * 调起百度地图
+     *
+     * @param activity
+     */
+    private void jumpBaiduMap(Activity activity, LatLonPoint latLonPoint) {
+        Intent intent = new Intent("android.intent.action.VIEW",
+                android.net.Uri.parse("baidumap://map/direction?region=我的位置" +
+                        "&destination=" + latLonPoint.getLatitude() + "," + latLonPoint.getLongitude()
+                        + "&coord_type=gcj02&mode=driving&src=andr.baidu.openAPIdemo"));
+        activity.startActivity(intent);
+
+    }
+
+    /**
+     * 腾讯地图
+     *
+     * @param activity
+     */
+    private void jumpTencentMap(Activity activity, LatLonPoint latLonPoint) {
+        Intent intent = new Intent("android.intent.action.VIEW",
+                android.net.Uri.parse("qqmap://map/routeplan?type=drive&from=&fromcoord=&to=目的地  &tocoord=" + latLonPoint.getLatitude() + ","
+                        + latLonPoint.getLongitude()
+                        + "&policy=0&referer=appName"));
+        activity.startActivity(intent);
+
+
+    }
 }

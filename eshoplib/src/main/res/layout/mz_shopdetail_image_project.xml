@@ -115,6 +115,7 @@
         android:textSize="18sp" />
 
     <LinearLayout
+        android:id="@+id/l_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -143,7 +144,7 @@
             tools:text="TextView" />
 
     </LinearLayout>
-    <!--    !!!!! 商品信息 end -->
+    <!--   !!!!! 商品信息 end -->
 
 
     <!--    工作室  -->
@@ -285,6 +286,21 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <!--  团队介绍 -->
+    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:detailTitle="团队介绍"
+        app:title_textSize="14sp" />
+
+    <include layout="@layout/header_shop_detail" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@drawable/draw_platform_support" />
 
     <!--   基本信息  -->
     <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
@@ -514,21 +530,5 @@
         android:layout_height="1dp"
         android:background="#f2f2f2" />
 
-
-    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:detailTitle="团队介绍"
-        app:title_textSize="14sp" />
-
-    <include layout="@layout/header_shop_detail" />
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@drawable/draw_platform_support" />
 
 </LinearLayout>

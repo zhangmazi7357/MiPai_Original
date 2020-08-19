@@ -102,6 +102,12 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
                     }
                 });
 
+        viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                search(true);
+            }
+        });
 
         // 监听类型 工作室 ;
         Integer value = viewModel.getType().getValue();
@@ -169,7 +175,7 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
         }, binding.shopRv);
 
         // 今天先刷新一下;
-        onRefresh();
+      //  onRefresh();
 
     }
 

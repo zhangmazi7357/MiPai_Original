@@ -103,6 +103,14 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                         });
 
 
+        // 城市
+        viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                search(true);
+            }
+        });
+
         // 监听类型 只管  全部 ;
         Integer value = viewModel.getType().getValue();
         if (value == 1) {

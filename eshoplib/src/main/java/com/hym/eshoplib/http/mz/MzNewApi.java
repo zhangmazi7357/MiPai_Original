@@ -129,6 +129,7 @@ public class MzNewApi {
      */
     public static <T> void search(String str, String type,
                                   String sort_type,
+                                  String region_id,
                                   String p,
                                   IHttpResultListener<T> listener,
                                   Class<T> clazz) {
@@ -140,6 +141,8 @@ public class MzNewApi {
         request.addParamsNotEmpty("type", type);
         request.addParamsNotEmpty("sort_type", sort_type);
         request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("region_id", region_id);
+
         request.addParamsNotEmpty("p", p);
         request.addParamsNotEmpty("psize", "10");
 

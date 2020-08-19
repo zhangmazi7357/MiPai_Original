@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -296,6 +297,7 @@ public class MzSearchResultActivity extends MzBaseActivity {
                 binding.dropDownMenu.closeMenu();
 
                 // TODO  切换城市要重新搜索 ;
+                searchViewModel.setRegionId(regionId);
 
             }
         });
