@@ -467,14 +467,16 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         break;
                     case R.id.tv_tehui_odd_more:
                         SpecialTimeLimteBean.DataBean tehuiAddMore = firstPagerShopBeans.get(0);
-                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.moreshop);
+                        Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                ActionActivity.moreshop);
                         bundle.putSerializable("data", tehuiAddMore);
                         bundle.putSerializable("title", "限时特惠");
                         ActionActivity.start(_mActivity, bundle);
                         break;
                     case R.id.tv_strict_select_more:
                         SpecialTimeLimteBean.DataBean yanXuanAddMore = firstPagerShopBeans.get(1);
-                        Bundle bundle1 = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.moreshop);
+                        Bundle bundle1 = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                ActionActivity.moreshop);
                         bundle1.putSerializable("data", yanXuanAddMore);
                         bundle1.putSerializable("title", "觅拍严选");
                         ActionActivity.start(_mActivity, bundle1);
@@ -1502,7 +1504,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     // 觅拍严选
     private void initSelectData() {
-        HomeApi.getStrictSelectData(1 + "", new ResponseImpl<SpecialTimeLimteBean>() {
+        HomeApi.getStrictSelectData(String.valueOf(1), "", "", new ResponseImpl<SpecialTimeLimteBean>() {
 
             @Override
             public void onSuccess(SpecialTimeLimteBean data) {
@@ -1564,7 +1566,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     // 限时特惠
     private void initSpecialTimeLimteData() {
-        HomeApi.getSpecialTimeLimteData(1 + "", new ResponseImpl<SpecialTimeLimteBean>() {
+        HomeApi.getSpecialTimeLimteData(1 + "", "", "", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(SpecialTimeLimteBean data) {
                 if (firstPagerShopBeans.size() > 0) {

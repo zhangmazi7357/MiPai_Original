@@ -384,13 +384,13 @@ public class MapManager {
         } else {
             switch (packageName) {
                 case aMapPackageName:
-                    Toast.makeText(activity, "本机没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "本设备没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 case baiduMapPackageName:
-                    Toast.makeText(activity, "本机没有安装百度地图", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "本设备没有安装百度地图", Toast.LENGTH_SHORT).show();
                     break;
                 case tencentMapPackageName:
-                    Toast.makeText(activity, "本机没有安装腾讯地图", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "本设备没有安装腾讯地图", Toast.LENGTH_SHORT).show();
                     break;
             }
         }

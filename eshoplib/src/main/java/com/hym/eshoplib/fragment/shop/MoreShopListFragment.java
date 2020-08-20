@@ -71,6 +71,7 @@ public class MoreShopListFragment extends BaseKitFragment {
 
     private int selectPosition = 0;
     private String regionId = "";           // 城市id ;
+    private String sortType = "";           // 智能搜索类型;
 
     private BaseListAdapter<ServerCityBean.DataBean.InfoBean> proAdapter;
     private BaseListAdapter<ServerCityBean.DataBean.InfoBean> cityAdapter;
@@ -118,49 +119,11 @@ public class MoreShopListFragment extends BaseKitFragment {
 
         if (title.equals("限时特惠")) {
 
-            HomeApi.getSpecialTimeLimteData(String.valueOf(currentPage),
-                    new ResponseImpl<SpecialTimeLimteBean>() {
-                        @Override
-                        public void onSuccess(SpecialTimeLimteBean data) {
-                            List<SpecialTimeLimteBean.DataBean.VideoBean> video = data.getData().getVideo();
-
-                            if (refresh) {
-
-                                shopListAdapter.setNewData(video);
-                                shopListAdapter.notifyDataSetChanged();
-                                srfLayout.finishRefresh();
-
-                            } else {
-
-                                shopListAdapter.addData(video);
-                                shopListAdapter.notifyDataSetChanged();
-                                srfLayout.finishLoadMore();
-
-                            }
-                        }
-                    }, SpecialTimeLimteBean.class);
-
+            strict(refresh, sortType, regionId);
         } else if (title.equals("觅拍严选")) {
 
-            HomeApi.getStrictSelectData(String.valueOf(currentPage),
-                    new ResponseImpl<SpecialTimeLimteBean>() {
-                        @Override
-                        public void onSuccess(SpecialTimeLimteBean data) {
-
-                            List<SpecialTimeLimteBean.DataBean.VideoBean> video = data.getData().getVideo();
-
-                            if (refresh) {
-                                shopListAdapter.setNewData(video);
-                                shopListAdapter.notifyDataSetChanged();
-                                srfLayout.finishRefresh();
-                            } else {
-                                shopListAdapter.addData(video);
-                                //shopListAdapter.setNewData(video);
-                                shopListAdapter.notifyDataSetChanged();
-                                srfLayout.finishLoadMore();
-                            }
-                        }
-                    }, SpecialTimeLimteBean.class);
+            // 觅拍严选 ;
+            select(refresh, sortType, regionId);
         }
 
 
@@ -369,6 +332,17 @@ public class MoreShopListFragment extends BaseKitFragment {
                 dropDownMenu.closeMenu();
 
                 //TODO 切换城市之后要重新搜索 ;
+
+                if (title.equals("限时特惠")) {
+
+                    strict(true, sortType, regionId);
+                } else if (title.equals("觅拍严选")) {
+
+                    // 觅拍严选 ;
+                    select(true, sortType, regionId);
+                }
+
+
             }
         });
 
@@ -416,27 +390,35 @@ public class MoreShopListFragment extends BaseKitFragment {
                    如果没有点击智能排序, liveData = null;
                  */
 
-                Integer sortType = null;
                 switch (position) {
                     case 0:
-                        sortType = 1;
+                        sortType = "1";
                         break;
 
                     case 1:
-                        sortType = 2;
+                        sortType = "2";
                         break;
 
                     case 2:
-                        sortType = 3;
+                        sortType = "3";
                         break;
 
                     case 3:
-                        sortType = 4;
+                        sortType = "4";
                         break;
 
                 }
 
-//                searchViewModel.setSearchSortType(sortType);
+                if (title.equals("限时特惠")) {
+
+                    strict(true, sortType, regionId);
+                } else if (title.equals("觅拍严选")) {
+
+                    // 觅拍严选 ;
+                    select(true, sortType, regionId);
+                }
+
+
 
             }
         });
@@ -460,4 +442,51 @@ public class MoreShopListFragment extends BaseKitFragment {
     }
 
 
+    private void strict(boolean refresh, String sort_type, String regionId) {
+        // 限时特惠
+        HomeApi.getSpecialTimeLimteData(String.valueOf(currentPage), sort_type, regionId,
+                new ResponseImpl<SpecialTimeLimteBean>() {
+                    @Override
+                    public void onSuccess(SpecialTimeLimteBean data) {
+                        List<SpecialTimeLimteBean.DataBean.VideoBean> video = data.getData().getVideo();
+
+                        if (refresh) {
+
+                            shopListAdapter.setNewData(video);
+                            shopListAdapter.notifyDataSetChanged();
+                            srfLayout.finishRefresh();
+
+                        } else {
+
+                            shopListAdapter.addData(video);
+                            shopListAdapter.notifyDataSetChanged();
+                            srfLayout.finishLoadMore();
+
+                        }
+                    }
+                }, SpecialTimeLimteBean.class);
+    }
+
+
+    private void select(boolean refresh, String sort_type, String regionId) {
+        HomeApi.getStrictSelectData(String.valueOf(currentPage), sort_type, regionId,
+                new ResponseImpl<SpecialTimeLimteBean>() {
+                    @Override
+                    public void onSuccess(SpecialTimeLimteBean data) {
+
+                        List<SpecialTimeLimteBean.DataBean.VideoBean> video = data.getData().getVideo();
+
+                        if (refresh) {
+                            shopListAdapter.setNewData(video);
+                            shopListAdapter.notifyDataSetChanged();
+                            srfLayout.finishRefresh();
+                        } else {
+                            shopListAdapter.addData(video);
+                            //shopListAdapter.setNewData(video);
+                            shopListAdapter.notifyDataSetChanged();
+                            srfLayout.finishLoadMore();
+                        }
+                    }
+                }, SpecialTimeLimteBean.class);
+    }
 }

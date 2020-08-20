@@ -77,24 +77,31 @@ public class HomeApi {
     }
 
     //觅拍严选
-    public static <T> void getStrictSelectData(String page, IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void getStrictSelectData(String page, String sort_type, String region_id,
+                                               IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Index");
         request.setClassName("GetMipai");
         request.AddParems("token", UserUtil.getToken(App.instance));
         request.AddParems("psize", "10");
         request.AddParems("p", page);
+        request.AddParems("sort_type", sort_type);
+        request.AddParems("region_id", region_id);
+
         postFirstPager(request, "0", listener, clazz);
     }
 
     //获取限时特惠信息
-    public static <T> void getSpecialTimeLimteData(String page, IHttpResultListener<T> listener, Class<T> clazz) {
+    public static <T> void getSpecialTimeLimteData(String page, String sort_type, String region_id,
+                                                   IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Index");
         request.setClassName("GetDiscount");
         request.AddParems("token", UserUtil.getToken(App.instance));
         request.AddParems("psize", "10");
         request.AddParems("p", page);
+        request.AddParems("sort_type", sort_type);
+        request.AddParems("region_id", region_id);
         postFirstPager(request, "0", listener, clazz);
     }
 
