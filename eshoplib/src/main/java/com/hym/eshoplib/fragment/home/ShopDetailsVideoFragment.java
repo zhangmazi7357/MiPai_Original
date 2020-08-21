@@ -1173,7 +1173,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private void initScrollAndTab() {
         //  toolBar.setAlpha(0);
         toolBar.setBackgroundColor(setAlpha(R.color.white, 1));
-        String[] tabList = new String[]{"项目", "评论", "详情", "推荐"};
+        String[] tabList = new String[]{"项目",  "详情","评论", "推荐"};
 
         for (String s : tabList) {
             tabLayout.addTab(tabLayout.newTab().setText(s));
@@ -1181,8 +1181,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
         List<View> views = new ArrayList<>();
         views.add(llShopProject);
-        views.add(llShopComment);
         views.add(llShopDetail);
+        views.add(llShopComment);
         views.add(llShopRecommend);
 
         scrollView.setAnchorList(views);

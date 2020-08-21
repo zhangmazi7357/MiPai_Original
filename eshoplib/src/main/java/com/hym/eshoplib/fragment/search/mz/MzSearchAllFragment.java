@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -81,39 +82,41 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
      */
     private void itemChange() {
 
-        // 搜索内容改变  去 搜索 ;
-        viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                search(true);
-
-            }
-        });
-
-        // 智能排序类型改变 去搜索 ;
-        viewModel.getSearchSortType()
-                .observe(getViewLifecycleOwner(),
-                        new Observer<Integer>() {
-                            @Override
-                            public void onChanged(Integer integer) {
-//                                Log.e(TAG, "onChanged:  sortType");
-                                search(true);
-
-                            }
-                        });
-
-
-        // 城市
-        viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                search(true);
-            }
-        });
 
         // 监听类型 只管  全部 ;
         Integer value = viewModel.getType().getValue();
         if (value == 1) {
+            // 搜索内容改变  去 搜索 ;
+            viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    search(true);
+
+                }
+            });
+
+            // 智能排序类型改变 去搜索 ;
+            viewModel.getSearchSortType()
+                    .observe(getViewLifecycleOwner(),
+                            new Observer<Integer>() {
+                                @Override
+                                public void onChanged(Integer integer) {
+//                                Log.e(TAG, "onChanged:  sortType");
+                                    search(true);
+
+                                }
+                            });
+
+            // 城市
+            viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    search(true);
+                }
+            });
+
+
+            // 类型 ;
             viewModel.getType().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
@@ -121,6 +124,8 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                     search(true);
                 }
             });
+
+
         }
 
 
@@ -136,7 +141,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                     public void onChanged(MzSearchAllModel data) {
                         binding.swipe.setRefreshing(false);
 
-                        // Log.e(TAG, "onChanged: " + JSONObject.toJSONString(data));
+                        Log.e(TAG, "全部 onChanged: " + JSONObject.toJSONString(data));
                         totalPage = Integer.parseInt(data.getData().getTotalpage());
 
                         setData(isRefresh, data.getData().getInfo());
@@ -166,8 +171,10 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+
                 // 跳到产品详情 ;
-                MzSearchAllModel.DataBean.Info item = (MzSearchAllModel.DataBean.Info) adapter.getItem(position);
+                MzSearchAllModel.DataBean.InfoBean item = (MzSearchAllModel.DataBean.InfoBean) adapter.getItem(position);
 
                 String caseId = item.getCase_id();
 
@@ -246,7 +253,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
     }
 
 
-    private void setData(boolean isRefresh, List<MzSearchAllModel.DataBean.Info> list) {
+    private void setData(boolean isRefresh, List<MzSearchAllModel.DataBean.InfoBean> list) {
         int size = list == null ? 0 : list.size();
 
         if (isRefresh) {

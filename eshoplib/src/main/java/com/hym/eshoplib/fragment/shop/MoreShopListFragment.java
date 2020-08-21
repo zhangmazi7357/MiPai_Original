@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ import cn.hym.superlib.widgets.view.DropDownMenuUpdate;
 public class MoreShopListFragment extends BaseKitFragment {
 
 
+    private String TAG = "MoreShopListFragment";
     Unbinder unbinder;
 
 
@@ -412,12 +414,12 @@ public class MoreShopListFragment extends BaseKitFragment {
                 if (title.equals("限时特惠")) {
 
                     strict(true, sortType, regionId);
+
                 } else if (title.equals("觅拍严选")) {
 
                     // 觅拍严选 ;
                     select(true, sortType, regionId);
                 }
-
 
 
             }
@@ -443,6 +445,8 @@ public class MoreShopListFragment extends BaseKitFragment {
 
 
     private void strict(boolean refresh, String sort_type, String regionId) {
+
+        Log.e(TAG, "执行了限时优惠搜索 ");
         // 限时特惠
         HomeApi.getSpecialTimeLimteData(String.valueOf(currentPage), sort_type, regionId,
                 new ResponseImpl<SpecialTimeLimteBean>() {
@@ -469,6 +473,8 @@ public class MoreShopListFragment extends BaseKitFragment {
 
 
     private void select(boolean refresh, String sort_type, String regionId) {
+
+        Log.e(TAG, "执行了精选搜索 ");
         HomeApi.getStrictSelectData(String.valueOf(currentPage), sort_type, regionId,
                 new ResponseImpl<SpecialTimeLimteBean>() {
                     @Override

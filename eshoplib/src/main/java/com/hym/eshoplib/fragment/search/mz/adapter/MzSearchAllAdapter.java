@@ -25,15 +25,15 @@ import cn.hym.superlib.mz.utils.MzStringUtil;
 /**
  * 搜索结果  - 全部
  */
-public class MzSearchAllAdapter extends BaseQuickAdapter<MzSearchAllModel.DataBean.Info, MzSearchAllAdapter.ViewHolder> {
+public class MzSearchAllAdapter extends BaseQuickAdapter<MzSearchAllModel.DataBean.InfoBean, MzSearchAllAdapter.ViewHolder> {
 
 
-    public MzSearchAllAdapter(List<MzSearchAllModel.DataBean.Info> data) {
+    public MzSearchAllAdapter(List<MzSearchAllModel.DataBean.InfoBean> data) {
         super(R.layout.mz_adapter_icon_product, data);
     }
 
     @Override
-    protected void convert(MzSearchAllAdapter.ViewHolder helper, MzSearchAllModel.DataBean.Info item) {
+    protected void convert(MzSearchAllAdapter.ViewHolder helper, MzSearchAllModel.DataBean.InfoBean item) {
 
         Glide.with(mContext).load(item.getImage_default()).into(helper.proImg);
 

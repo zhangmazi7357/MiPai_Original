@@ -1,6 +1,5 @@
 package com.hym.eshoplib.fragment.search.mz.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,8 +7,9 @@ import java.util.List;
  */
 public class MzSearchAllModel {
 
+
     /**
-     * data : {"totalnum":"0","currentpage":"1","totalpage":"0","info":null}
+     * data : {"totalnum":"226","currentpage":"1","totalpage":"23","info":[{"case_id":"2852","title":"写真、旅拍、街拍","image_default":"/cf/c3/ef/be/12/9a4d3dd976ac3c87fe3a19.jpeg","address":"北京","lon":"116.555840","lat":"39.915580","present_price":"499","original_price":"0","tags":"","store_id":"1544","content_id":"0","views":"0","length":"一天","type":"2"},{"case_id":"2772","title":"飞机","image_default":"/49/27/cb/3f/43/fd92b8c9db5010a9b79d04.jpg","address":"北京市沙河镇于辛庄村中心街53号","lon":"116.889252","lat":"39.833538","present_price":"0","original_price":"0","tags":"可上门,不满意免费重拍","store_id":"920","content_id":"0","views":"7","length":"","type":"2"},{"case_id":"2837","title":"拍拍","image_default":"/05/4e/50/99/a7/17d79154e89ee959e75733.jpeg","address":"朝阳","lon":"116.408625","lat":"39.918449","present_price":"100","original_price":"0","tags":"","store_id":"1530","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2836","title":"测试产品","image_default":"/7c/4d/27/53/c6/67abc4093ebcfb201b84c8.jpeg","address":"肯德基","lon":"116.28693381690978","lat":"39.826596984672975","present_price":"0","original_price":"0","tags":"","store_id":"1521","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2834","title":"牛仔","image_default":"/ca/55/2a/21/3b/ec14ecc65cfd6921f8d167.jpeg","address":"北京南站","lon":"116.3782764433493","lat":"39.86362708635704","present_price":"0","original_price":"0","tags":"","store_id":"1521","content_id":"0","views":"2","length":"","type":"2"},{"case_id":"2833","title":"giao","image_default":"/fc/b2/75/c7/19/a8d0de1006459571c6528e.jpeg","address":"朝阳","lon":"116.502409","lat":"39.915185","present_price":"1000","original_price":"0","tags":"","store_id":"1530","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2832","title":"拍","image_default":"/5b/5c/06/6e/e7/6ae19e0a33d36cd49bfa6a.jpeg","address":"朝阳区","lon":"116.502409","lat":"39.915185","present_price":"1000","original_price":"0","tags":"","store_id":"1529","content_id":"0","views":"1","length":"","type":"2"},{"case_id":"2831","title":"拍","image_default":"/05/4e/50/99/a7/17d79154e89ee959e75733.jpeg","address":"朝阳区","lon":"116.502409","lat":"39.915185","present_price":"0","original_price":"0","tags":"","store_id":"1528","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2830","title":"乖巧","image_default":"/f9/6c/28/b8/dd/41e908658da3f36c0ce63f.jpeg","address":"天安门","lon":"116.397451","lat":"39.909187","present_price":"888","original_price":"999","tags":"","store_id":"1527","content_id":"0","views":"4","length":"00:05","type":"1"},{"case_id":"2829","title":"乖巧","image_default":"/f9/6c/28/b8/dd/41e908658da3f36c0ce63f.jpeg","address":"北京","lon":"116.397036","lat":"39.917834","present_price":"888","original_price":"0","tags":"可上门,分享送底片,不满意免费重拍","store_id":"1527","content_id":"0","views":"4","length":"","type":"2"}]}
      */
 
     private DataBean data;
@@ -24,16 +24,16 @@ public class MzSearchAllModel {
 
     public static class DataBean {
         /**
-         * totalnum : 0
+         * totalnum : 226
          * currentpage : 1
-         * totalpage : 0
-         * info : null
+         * totalpage : 23
+         * info : [{"case_id":"2852","title":"写真、旅拍、街拍","image_default":"/cf/c3/ef/be/12/9a4d3dd976ac3c87fe3a19.jpeg","address":"北京","lon":"116.555840","lat":"39.915580","present_price":"499","original_price":"0","tags":"","store_id":"1544","content_id":"0","views":"0","length":"一天","type":"2"},{"case_id":"2772","title":"飞机","image_default":"/49/27/cb/3f/43/fd92b8c9db5010a9b79d04.jpg","address":"北京市沙河镇于辛庄村中心街53号","lon":"116.889252","lat":"39.833538","present_price":"0","original_price":"0","tags":"可上门,不满意免费重拍","store_id":"920","content_id":"0","views":"7","length":"","type":"2"},{"case_id":"2837","title":"拍拍","image_default":"/05/4e/50/99/a7/17d79154e89ee959e75733.jpeg","address":"朝阳","lon":"116.408625","lat":"39.918449","present_price":"100","original_price":"0","tags":"","store_id":"1530","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2836","title":"测试产品","image_default":"/7c/4d/27/53/c6/67abc4093ebcfb201b84c8.jpeg","address":"肯德基","lon":"116.28693381690978","lat":"39.826596984672975","present_price":"0","original_price":"0","tags":"","store_id":"1521","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2834","title":"牛仔","image_default":"/ca/55/2a/21/3b/ec14ecc65cfd6921f8d167.jpeg","address":"北京南站","lon":"116.3782764433493","lat":"39.86362708635704","present_price":"0","original_price":"0","tags":"","store_id":"1521","content_id":"0","views":"2","length":"","type":"2"},{"case_id":"2833","title":"giao","image_default":"/fc/b2/75/c7/19/a8d0de1006459571c6528e.jpeg","address":"朝阳","lon":"116.502409","lat":"39.915185","present_price":"1000","original_price":"0","tags":"","store_id":"1530","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2832","title":"拍","image_default":"/5b/5c/06/6e/e7/6ae19e0a33d36cd49bfa6a.jpeg","address":"朝阳区","lon":"116.502409","lat":"39.915185","present_price":"1000","original_price":"0","tags":"","store_id":"1529","content_id":"0","views":"1","length":"","type":"2"},{"case_id":"2831","title":"拍","image_default":"/05/4e/50/99/a7/17d79154e89ee959e75733.jpeg","address":"朝阳区","lon":"116.502409","lat":"39.915185","present_price":"0","original_price":"0","tags":"","store_id":"1528","content_id":"0","views":"0","length":"","type":"2"},{"case_id":"2830","title":"乖巧","image_default":"/f9/6c/28/b8/dd/41e908658da3f36c0ce63f.jpeg","address":"天安门","lon":"116.397451","lat":"39.909187","present_price":"888","original_price":"999","tags":"","store_id":"1527","content_id":"0","views":"4","length":"00:05","type":"1"},{"case_id":"2829","title":"乖巧","image_default":"/f9/6c/28/b8/dd/41e908658da3f36c0ce63f.jpeg","address":"北京","lon":"116.397036","lat":"39.917834","present_price":"888","original_price":"0","tags":"可上门,分享送底片,不满意免费重拍","store_id":"1527","content_id":"0","views":"4","length":"","type":"2"}]
          */
 
         private String totalnum;
         private String currentpage;
         private String totalpage;
-        private List<Info> info;
+        private List<InfoBean> info;
 
         public String getTotalnum() {
             return totalnum;
@@ -59,33 +59,31 @@ public class MzSearchAllModel {
             this.totalpage = totalpage;
         }
 
-        public List<Info> getInfo() {
+        public List<InfoBean> getInfo() {
             return info;
         }
 
-        public void setInfo(List<Info> info) {
+        public void setInfo(List<InfoBean> info) {
             this.info = info;
         }
 
-        public static class Info implements Serializable {
-
+        public static class InfoBean {
             /**
-             * case_id : 2809
-             * title : 韩国
-             * image_default : /21/49/c8/f5/3b/1e34ab8a540b0af1649820.
-             * address : 格格货栈
-             * lon : 116.329340
-             * lat : 39.773749
-             * present_price : 45
+             * case_id : 2852
+             * title : 写真、旅拍、街拍
+             * image_default : /cf/c3/ef/be/12/9a4d3dd976ac3c87fe3a19.jpeg
+             * address : 北京
+             * lon : 116.555840
+             * lat : 39.915580
+             * present_price : 499
              * original_price : 0
-             * tags : 分享送底片
-             * store_id : 1258
+             * tags :
+             * store_id : 1544
              * content_id : 0
-             * views : 3
-             * length :
+             * views : 0
+             * length : 一天
              * type : 2
              */
-
 
             private String case_id;
             private String title;

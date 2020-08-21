@@ -70,12 +70,13 @@
                 <!--项目-->
                 <include layout="@layout/mz_shopdetail_video_project" />
 
+                <!--   项目详情-->
+                <include layout="@layout/mz_shopdetail_detail" />
+
 
                 <!--  评论-->
                 <include layout="@layout/mz_shopdetail_comment" />
 
-                <!--   项目详情-->
-                <include layout="@layout/mz_shopdetail_detail" />
 
                 <!--  推荐商品 -->
                 <include layout="@layout/mz_shopdetail_recommend" />

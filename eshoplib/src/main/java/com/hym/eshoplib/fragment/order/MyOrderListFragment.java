@@ -176,7 +176,6 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
     @Override
     public void bindData(BaseViewHolder helper, final OrderListBeanMiPai.DataBean.InfoBean item, int position) {
 
-
         CardView cardView = helper.getView(R.id.cardview);
         //适配间距
         RelativeLayout rl = helper.getView(R.id.rl_container);
@@ -618,6 +617,7 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
 
         //通用 查看评价 进入评价详情
         if (buttonBean.getCheck_comm() == 1) {
+
             btn_2.setVisibility(View.VISIBLE);
             btn_2.setText("查看评价");
             btn_2.setOnClickListener(new View.OnClickListener() {
@@ -626,16 +626,24 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
 
                     //  Log.e(TAG, " 我的订单 ： " + JSONObject.toJSONString(item));
 
+                    // comment_id 可能为空... 有问题啊。
+                    if (TextUtils.isEmpty(item.getComment_id())) {
+                        ToastUtil.toast("数据异常，请稍后查看");
+                        return;
+
+                    }
                     Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
                             EshopActionActivity.Action_order_comment_detail);
                     bundle.putString("id", item.getComment_id());
                     EshopActionActivity.start(_mActivity, bundle);
-
                 }
             });
+
         }
+
         ImageView iv_vip = helper.getView(R.id.iv_vip);
         ImageView iv_vip_shop = helper.getView(R.id.iv_vip_shop);
+
         if (item.getAuth_user() == 1) {
             iv_vip.setVisibility(View.VISIBLE);
             iv_vip.setImageResource(R.drawable.ic_person_circle);

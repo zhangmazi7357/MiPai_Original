@@ -402,9 +402,13 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         tvDescribe.setText(db.getTitle());
         tvWhoWork.setText(db.getStore_name());
         // int childCount = llRating.getChildCount();
+
         String store_rank = db.getStore_rank();
-        float v = Float.parseFloat(store_rank);
-        ratingbar.setRating(v);
+        if (!TextUtils.isEmpty(store_rank)) {
+            float v = Float.parseFloat(store_rank);
+            ratingbar.setRating(v);
+        }
+
 
         /*long round = Math.round(v);
         showRing(childCount, round);*/
@@ -1208,7 +1212,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     private void initScrollAndTab() {
         //  toolBar.setAlpha(0);
         toolBar.setBackgroundColor(setAlpha(R.color.white, 1));
-        String[] tabList = new String[]{"项目", "评论", "详情", "推荐"};
+        String[] tabList = new String[]{"项目", "详情", "评论", "推荐"};
 
         for (String s : tabList) {
             tabLayout.addTab(tabLayout.newTab().setText(s));
@@ -1216,8 +1220,8 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         List<View> views = new ArrayList<>();
         views.add(llShopProject);
-        views.add(llShopComment);
         views.add(llShopDetail);
+        views.add(llShopComment);
         views.add(llShopRecommend);
 
         scrollView.setAnchorList(views);

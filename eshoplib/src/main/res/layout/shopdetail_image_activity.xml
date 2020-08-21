@@ -68,11 +68,12 @@
                 <!-- banner + 价钱 +基本信息 + 团队介绍 -->
                 <include layout="@layout/mz_shopdetail_image_project" />
 
+                <!--项目详情-->
+                <include layout="@layout/mz_shopdetail_detail" />
+
                 <!--  评论-->
                 <include layout="@layout/mz_shopdetail_comment" />
 
-                <!--项目详情-->
-                <include layout="@layout/mz_shopdetail_detail" />
 
                 <!--  商品推荐-->
                 <include layout="@layout/mz_shopdetail_recommend" />

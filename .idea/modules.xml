@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FJMtSortButtonLib/FJMtSortButtonLib.iml" filepath="$PROJECT_DIR$/.idea/modules/FJMtSortButtonLib/FJMtSortButtonLib.iml" group="mipai/FJMtSortButtonLib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/.idea/modules/IMKit/IMKit.iml" group="mipai/IMKit" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/IMLib/IMLib.iml" filepath="$PROJECT_DIR$/.idea/modules/IMLib/IMLib.iml" group="mipai/IMLib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-push-settings-advisor-master/android-push-settings-advisor-master.iml" filepath="$PROJECT_DIR$/.idea/modules/android-push-settings-advisor-master/android-push-settings-advisor-master.iml" group="mipai/android-push-settings-advisor-master" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/base.iml" filepath="$PROJECT_DIR$/.idea/modules/base/base.iml" group="mipai/base" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dialog/dialog.iml" filepath="$PROJECT_DIR$/.idea/modules/dialog/dialog.iml" group="mipai/dialog" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eshoplib/eshoplib.iml" filepath="$PROJECT_DIR$/.idea/modules/eshoplib/eshoplib.iml" group="mipai/eshoplib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/httplib/httplib.iml" filepath="$PROJECT_DIR$/.idea/modules/httplib/httplib.iml" group="mipai/httplib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagelib/imagelib.iml" filepath="$PROJECT_DIR$/.idea/modules/imagelib/imagelib.iml" group="mipai/imagelib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jcvideoplayer-lib/jcvideoplayer-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/jcvideoplayer-lib/jcvideoplayer-lib.iml" group="mipai/jcvideoplayer-lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jiaozivideoplayer/jiaozivideoplayer.iml" filepath="$PROJECT_DIR$/.idea/modules/jiaozivideoplayer/jiaozivideoplayer.iml" group="mipai/jiaozivideoplayer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib_amap/lib_amap.iml" filepath="$PROJECT_DIR$/.idea/modules/lib_amap/lib_amap.iml" group="mipai/lib_amap" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/loginmodule/loginmodule.iml" filepath="$PROJECT_DIR$/.idea/modules/loginmodule/loginmodule.iml" group="mipai/loginmodule" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marqueelibrary/marqueelibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/marqueelibrary/marqueelibrary.iml" group="mipai/marqueelibrary" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mipai.iml" filepath="$PROJECT_DIR$/.idea/modules/mipai.iml" group="mipai" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/multipleimageselect/multipleimageselect.iml" filepath="$PROJECT_DIR$/.idea/modules/multipleimageselect/multipleimageselect.iml" group="mipai/multipleimageselect" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/photolib/photolib.iml" filepath="$PROJECT_DIR$/.idea/modules/photolib/photolib.iml" group="mipai/photolib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/resourcelib/resourcelib.iml" filepath="$PROJECT_DIR$/.idea/modules/resourcelib/resourcelib.iml" group="mipai/resourcelib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/superlib/superlib.iml" filepath="$PROJECT_DIR$/.idea/modules/superlib/superlib.iml" group="mipai/superlib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/takephoto_library/takephoto_library.iml" filepath="$PROJECT_DIR$/.idea/modules/takephoto_library/takephoto_library.iml" group="mipai/takephoto_library" />
+    </modules>
+  </component>
+</project>

@@ -81,37 +81,41 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
      */
     private void itemChange() {
 
-        // 搜索内容改变  去 搜索 ;
-        viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-
-                search(true);
-
-            }
-        });
-
-        // 智能排序类型改变 去搜索 ;
-        viewModel.getSearchSortType().observe(getViewLifecycleOwner(),
-                new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer integer) {
-
-                        search(true);
-
-                    }
-                });
-
-        viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                search(true);
-            }
-        });
 
         // 监听类型 工作室 ;
         Integer value = viewModel.getType().getValue();
+
         if (value == 2) {
+            // 搜索内容改变  去 搜索 ;
+            viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+
+                    search(true);
+
+                }
+            });
+
+            // 智能排序类型改变 去搜索 ;
+            viewModel.getSearchSortType().observe(getViewLifecycleOwner(),
+                    new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer integer) {
+
+                            search(true);
+
+                        }
+                    });
+
+            //城市 ;
+            viewModel.getRegionId().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    search(true);
+                }
+            });
+
+
             viewModel.getType().observe(getViewLifecycleOwner(), new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
@@ -119,7 +123,9 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
                     search(true);
                 }
             });
+
         }
+
 
 
     }
@@ -175,7 +181,7 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
         }, binding.shopRv);
 
         // 今天先刷新一下;
-      //  onRefresh();
+        //  onRefresh();
 
     }
 
@@ -187,7 +193,7 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
                     public void onChanged(MzSearchShopModel data) {
                         binding.swipe.setRefreshing(false);
 
-//                        Log.e(TAG, "onChanged: " + JSONObject.toJSONString(data));
+                        Log.e(TAG, "工作室 onChanged: " + JSONObject.toJSONString(data));
                         String totalpage = data.getData().getTotalpage();
                         if (!TextUtils.isEmpty(totalpage)) {
                             totalPage = Integer.parseInt(totalpage);
