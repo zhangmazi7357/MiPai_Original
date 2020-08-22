@@ -87,6 +87,7 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
         setIsshowTop(true);
         type = getArguments().getInt("type", 0);
 
+        // 订单列表 跳 到 订单详情页  ;
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -624,18 +625,19 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                 @Override
                 public void onClick(View v) {
 
-                    //  Log.e(TAG, " 我的订单 ： " + JSONObject.toJSONString(item));
+
 
                     // comment_id 可能为空... 有问题啊。
                     if (TextUtils.isEmpty(item.getComment_id())) {
                         ToastUtil.toast("数据异常，请稍后查看");
                         return;
-
                     }
+
                     Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
                             EshopActionActivity.Action_order_comment_detail);
                     bundle.putString("id", item.getComment_id());
                     EshopActionActivity.start(_mActivity, bundle);
+
                 }
             });
 

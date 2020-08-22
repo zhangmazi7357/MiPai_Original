@@ -98,7 +98,6 @@ public class LoginApi {
         request.addParamsNotEmpty("device_type", "1");
         request.addParamsNotEmpty("channelid", SharePreferenceUtil.getStringData(context, "channelid"));
 
-        Log.e("=== ", "login: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
 
     }

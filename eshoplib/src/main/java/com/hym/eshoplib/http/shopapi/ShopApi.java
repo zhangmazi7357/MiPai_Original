@@ -349,7 +349,6 @@ public class ShopApi {
         request.addParamsNotEmpty("tags", tags);
 
 
-        Log.e("UpLoad", "==" + JSONObject.toJSONString(request));
 
 
         post(request, listener, clazz);
@@ -827,7 +826,7 @@ public class ShopApi {
 
     }
 
-    //评价详情
+
     public static <T> void changeCount(String cart_id, String quantity, IHttpResultListener<T> listener, Class<T> clazz) {
         HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
         request.setApp("Bts");

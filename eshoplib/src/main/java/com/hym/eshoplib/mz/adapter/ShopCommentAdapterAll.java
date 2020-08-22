@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
@@ -62,7 +64,10 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
 
 
         ImageView headerView = helper.getView(R.id.header);
-        Glide.with(mContext).load(item.getAvatar()).into(headerView);
+        Glide.with(mContext)
+                .load(item.getAvatar())
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(headerView);
         helper.setText(R.id.commentContent, item.getContent());
 
 
@@ -73,20 +78,35 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
         }
 
         // 图片
-        RecyclerView commentImgRv = helper.getView(R.id.commentImgRv);
-        commentImgRv.setLayoutManager(new GridLayoutManager(mContext, 3));
-        ShopCommentPicAdapterAll picAdapterAll = new ShopCommentPicAdapterAll(null);
-
-        commentImgRv.setAdapter(picAdapterAll);
 
 
         String images = item.getImages();
         String[] strings = MzStringUtil.splitComma(images);
 
+        RecyclerView commentImgRv = helper.getView(R.id.commentImgRv);
+
+        GridLayoutManager gridLayoutManager = null;
         if (strings != null && strings.length > 0) {
+
+            // 要看 size 数量 来定义 一行显示几个；
+            if (strings.length == 2) {
+                gridLayoutManager = new GridLayoutManager(mContext, 2);
+            } else {
+                gridLayoutManager = new GridLayoutManager(mContext, 3);
+            }
+
+            commentImgRv.setLayoutManager(gridLayoutManager);
+
+            ShopCommentPicAdapterAll picAdapterAll = new ShopCommentPicAdapterAll(mContext);
+
+            commentImgRv.setAdapter(picAdapterAll);
+
+
             commentImgRv.setVisibility(View.VISIBLE);
             List<String> imgList = Arrays.asList(strings);
-            picAdapterAll.setNewData(imgList);
+
+            picAdapterAll.setDatas(imgList);
+
         } else {
             commentImgRv.setVisibility(View.GONE);
         }

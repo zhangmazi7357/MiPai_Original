@@ -2,7 +2,9 @@ package com.hym.eshoplib.fragment.me;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,8 @@ import butterknife.Unbinder;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -54,11 +58,11 @@ public class SettingCommonFragment extends BaseKitFragment {
         showBackButton();
         setTitle("通用");
         tv3.setRightString(GlideCacheUtil.getInstance().getCacheSize(getContext()));
-        switchButton.setChecked( SharePreferenceUtil.getBooleangData(_mActivity,"wifyautoplay",true));
+        switchButton.setChecked(SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true));
         switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                SharePreferenceUtil.setBooleanData(_mActivity,"wifyautoplay",isChecked);
+                SharePreferenceUtil.setBooleanData(_mActivity, "wifyautoplay", isChecked);
             }
         });
 
@@ -84,7 +88,6 @@ public class SettingCommonFragment extends BaseKitFragment {
     }
 
 
-
     @OnClick({R.id.tv_1, R.id.tv_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -92,25 +95,24 @@ public class SettingCommonFragment extends BaseKitFragment {
                 start(NoticeSetFragment.newInstance(new Bundle()));
                 break;
             case R.id.tv_3:
-                String confirm = getResources().getString(R.string.Confirm);
-                String cancle = getResources().getString(R.string.Cancel);
-                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "提示", "确定要清除缓存么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                    @Override
-                    public void onCancleClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
 
-                    }
+                DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您确定要清除缓存么",
+                        "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
+                            @Override
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
+                            }
 
-                    @Override
-                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
-                        GlideCacheUtil.getInstance().clearImageAllCache(getContext());
-                        tv3.setRightString("0B");
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
 
+                                GlideCacheUtil.getInstance().clearImageAllCache(getContext());
+                                tv3.setRightString("0B");
 
-                    }
-                });
-                pDialog.show();
+                            }
+                        }).show();
+
 
                 break;
         }

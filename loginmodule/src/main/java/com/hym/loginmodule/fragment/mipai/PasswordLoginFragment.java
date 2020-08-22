@@ -79,7 +79,6 @@ public class PasswordLoginFragment extends BaseLoginFragment {
                         UserUtil.saveToken(_mActivity, data.getData().getToken());//token
                         UserUtil.saveRongYunToken(_mActivity, data.getData().getRongcloud_token());//融云
                         String token = data.getData().getToken();
-                        Log.e("PasswordLoginFragment", "密码登录 = " + JSONObject.toJSONString(data));
 //                       SharePreferenceUtil.setStringData(_mActivity, "region",(TextUtils.isEmpty(data.getData().getRegion_name())?"":data.getData().getRegion_name()));//区域
                         Bundle bundle = new Bundle();
                         bundle.putString("id", data.getData().getUserid());

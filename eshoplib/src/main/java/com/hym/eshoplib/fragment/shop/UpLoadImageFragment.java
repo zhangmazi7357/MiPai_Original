@@ -790,7 +790,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
                     mzLocation.setContent(mapAddress);
 
-                    Log.e(TAG, "address =" + mzAddress + ",lat = " + mzLat + ",lon=" + mzLon);
 
                     break;
             }

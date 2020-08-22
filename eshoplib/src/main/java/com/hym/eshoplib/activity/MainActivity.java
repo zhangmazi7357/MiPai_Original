@@ -187,7 +187,7 @@ public class MainActivity extends BaseMainActivity {
                                         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
                                             //ToastUtil.toast("授权成功");
                                             final String openId = map.get("unionid");
-                                            Log.e(TAG, "Wechat返回个人信息" + map);
+//                                            Log.e(TAG, "Wechat返回个人信息" + map);
                                             if (event.bindtype == 1) {
                                                 //从设置进入直接调用绑定
                                                 EventBus.getDefault().post(new NeedPerfectInformationEvent(openId));

@@ -344,7 +344,6 @@ public class MapManager {
 
                 aMap.clear(true);
                 addMarker(latLng, "", "");
-                Log.e(TAG, "onMapClick: " + latLng);
 
                 LatLonPoint point = new LatLonPoint(latLng.latitude, latLng.longitude);
                 geoCode(context, point, listener);

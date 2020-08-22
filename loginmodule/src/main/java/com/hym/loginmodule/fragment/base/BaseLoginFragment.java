@@ -259,7 +259,6 @@ public abstract class BaseLoginFragment extends BaseKitFragment {
         LoginApi.getCode(_mActivity, language, inputData, type, new ResponseImpl<Object>() {
             @Override
             public void onSuccess(Object data) {
-                Log.e("======", "验证码 = " + JSONObject.toJSONString(data));
                 ToastUtil.toast("发送成功，请注意查收");
 
             }

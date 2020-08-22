@@ -24,7 +24,9 @@ public class ShopCommentPicAdapter extends BaseQuickAdapter<String, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, String item) {
 
+
         ImageView view = helper.getView(R.id.pic);
+
 
         Glide.with(mContext)
                 .load(item)

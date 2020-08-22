@@ -88,7 +88,6 @@
                     android:textColor="#c2c2c2"
                     android:textSize="12sp" />
 
-
                 <include layout="@layout/mz_order_comment_text" />
 
 
@@ -111,6 +110,7 @@
                 android:background="@drawable/selector_btn"
                 android:text="提交评价"
                 android:textColor="@color/white" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

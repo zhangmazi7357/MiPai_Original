@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.order.CommentDetailBean;
+import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.imagelib.ImageUtil;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -95,6 +97,7 @@ public class CommentDetailFragment extends BaseKitFragment {
 
     @Override
     public void doLogic() {
+        // commentId
         id = getArguments().getString("id", "");
         showBackButton();
         setTitle("评价详情");
@@ -104,21 +107,40 @@ public class CommentDetailFragment extends BaseKitFragment {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-//        Log.e(TAG, "查看评价: commentId = " + id);
 
-        ShopApi.GetCommentDetail(id, new ResponseImpl<CommentDetailBean>() {
+        MzNewApi.getCommentInfo(id, new ResponseImpl<CommentDetailBean>() {
             @Override
             public void onSuccess(CommentDetailBean data) {
-                ImageUtil.getInstance().loadCircleImage(CommentDetailFragment.this, data.getData().getAvatar(), ivAvatar);
+
+
+                ImageUtil.getInstance()
+                        .loadCircleImage(CommentDetailFragment.this,
+                                data.getData().getAvatar(), ivAvatar);
+
                 tvName.setText(data.getData().getNickname() + "");
                 tvTime.setText(data.getData().getCtime());
-                ratingbar.setRating(Float.parseFloat(data.getData().getRank_type()));
-                ImageUtil.getInstance().loadImage(CommentDetailFragment.this, data.getData().getLogo(), ivIcon);
-                tvShopName.setText(data.getData().getStore_name() + "");
-                tvType.setText("类别：" + data.getData().getCategory_name());
-                tvPrice.setText("￥：" + data.getData().getPrice());
-                tvCount.setText("x" + data.getData().getUser_num());
+                String rank_type = data.getData().getRank_type();
+                if (!TextUtils.isEmpty(rank_type)) {
+                    ratingbar.setRating(Float.parseFloat(rank_type));
+                }
+
+
+                ImageUtil.getInstance()
+                        .loadImage(CommentDetailFragment.this,
+                                data.getData().getLogo(), ivIcon);
+
+                CommentDetailBean.DataBean item = data.getData();
+
+
+                tvShopName.setText(item.getStore_name());
+
+                tvType.setText("类别：" + item.getCategory_name());
+                tvPrice.setText("￥：" + item.getPrice());
+                tvCount.setText("x" + item.getUser_num());
                 tvTotalPrice.setRightString("￥：" + data.getData().getMoney());
+
+
+                // 还有标签 ；
                 List<CommentDetailBean.DataBean.LabelListBean> labels = data.getData().getLabel_list();
                 ArrayList<String> arr = new ArrayList<String>();
                 for (int i = 0; i < labels.size(); i++) {
@@ -138,6 +160,7 @@ public class CommentDetailFragment extends BaseKitFragment {
                         return textView;
                     }
                 });
+
                 switch (labels.size()) {
                     case 1:
                         laybel1.setVisibility(View.VISIBLE);
@@ -158,20 +181,20 @@ public class CommentDetailFragment extends BaseKitFragment {
                         laybel3.setText(labels.get(2).getLabel_name());
                         break;
                 }
-                if (data.getData().getAuth_user().equals("1")) {
+                if (data.getData().getAuth_user() == 1) {
                     ivVip.setVisibility(View.VISIBLE);
                     ivVip.setImageResource(R.drawable.ic_person_circle);
-                } else if (data.getData().getAuth_user().equals("2")) {
+                } else if (data.getData().getAuth_user() == 2) {
                     ivVip.setVisibility(View.VISIBLE);
                     ivVip.setImageResource(R.drawable.ic_business_circle);
                 } else {
                     ivVip.setVisibility(View.GONE);
                 }
 
-                if (data.getData().getAuth_store().equals("1")) {
+                if (data.getData().getAuth_store() == 1) {
                     ivVipShop.setVisibility(View.VISIBLE);
                     ivVipShop.setImageResource(R.drawable.ic_person_rt);
-                } else if (data.getData().getAuth_store().equals("2")) {
+                } else if (data.getData().getAuth_store() == 2) {
                     ivVipShop.setVisibility(View.VISIBLE);
                     ivVipShop.setImageResource(R.drawable.ic_business_rt);
                 } else {
@@ -180,13 +203,19 @@ public class CommentDetailFragment extends BaseKitFragment {
 
 
             }
+
+            @Override
+            public void dataRes(int code, String data) {
+                super.dataRes(code, data);
+             //   Log.e(TAG, "dataRes: " + data);
+            }
         }, CommentDetailBean.class);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
+
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
@@ -197,4 +226,6 @@ public class CommentDetailFragment extends BaseKitFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

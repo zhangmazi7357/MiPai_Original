@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -33,20 +33,19 @@
                 <ImageView
                     android:id="@+id/iv_notify"
                     android:layout_width="12dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="13dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/icon_notifa"
-                    />
+                    android:background="@drawable/icon_notifa" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/iv_notify"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="20sp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_toRightOf="@id/iv_notify"
                     android:text="平台交易保障好  线下交易风险高"
                     android:textColor="#FF5203"
                     android:textSize="12sp" />
@@ -82,9 +81,9 @@
                     android:id="@+id/tv_total_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="2sp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_toRightOf="@id/tv_01"
                     android:text="1000"
                     android:textColor="#DF4650"
@@ -120,8 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
-                android:paddingBottom="10dp"
                 android:paddingLeft="19dp"
+                android:paddingBottom="10dp"
                 android:text="宣传片拍摄/各种拍摄等"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -136,11 +135,10 @@
                     android:id="@+id/iv_user_photo"
                     android:layout_width="35sp"
                     android:layout_height="35sp"
-                    android:scaleType="fitXY"
-                    android:layout_marginBottom="12sp"
                     android:layout_marginLeft="19sp"
                     android:layout_marginTop="12sp"
-                     />
+                    android:layout_marginBottom="12sp"
+                    android:scaleType="fitXY" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -158,33 +156,32 @@
                         android:textSize="12sp" />
 
                     <ImageView
+                        android:id="@+id/iv_vip"
                         android:layout_width="26dp"
                         android:layout_height="13dp"
-                        android:src="@drawable/ic_business_rt"
-                        android:layout_toRightOf="@id/tv_who_work"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:id="@+id/iv_vip"
-                        android:visibility="gone"
-                        />
+                        android:layout_toRightOf="@id/tv_who_work"
+                        android:src="@drawable/ic_business_rt"
+                        android:visibility="gone" />
 
 
                     <TextView
                         android:id="@+id/tv_is_shimin"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="14dp"
                         android:layout_toRightOf="@id/tv_who_work"
                         android:background="@drawable/bg_yellow_shape"
-                        android:paddingBottom="1dp"
                         android:paddingLeft="4dp"
-                        android:paddingRight="4dp"
                         android:paddingTop="1dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="1dp"
                         android:text="实名"
                         android:textColor="@color/white"
-                        android:textSize="8sp" />
+                        android:textSize="8sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -206,13 +203,13 @@
 
                 <LinearLayout
                     android:id="@+id/ll_rating"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/iv_user_photo"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/iv_user_photo"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_rating01"
@@ -270,8 +267,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_0"
@@ -302,8 +299,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -320,9 +317,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/time"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -338,6 +335,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -359,9 +357,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/local"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -377,6 +375,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -398,9 +397,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="拍摄器材"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -416,6 +415,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -437,9 +437,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="拍摄天数"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -455,6 +455,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -476,9 +477,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="人员配置"
                         android:textColor="#646464"
                         android:textSize="12sp" />
@@ -494,6 +495,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -502,11 +504,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_view"
-                android:visibility="gone"
-                android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -517,8 +518,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_1"
@@ -546,15 +547,15 @@
                     android:background="#555555" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_team_introduce"
-                android:padding="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:textColor="#000000"
-                android:textSize="13sp"
-                />
+            <!--            <TextView-->
+            <!--                android:id="@+id/tv_team_introduce"-->
+            <!--                android:padding="15dp"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@color/white"-->
+            <!--                android:textColor="#000000"-->
+            <!--                android:textSize="13sp"-->
+            <!--                />-->
 
             <ImageView
                 android:layout_width="match_parent"
@@ -565,8 +566,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_2"
@@ -596,20 +597,19 @@
 
             <TextView
                 android:id="@+id/tv_project_detail"
-                android:padding="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:padding="15dp"
                 android:textColor="#000000"
-                android:textSize="13sp"
-                />
+                android:textSize="13sp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/tv_3"
@@ -648,8 +648,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="76dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginBottom="76dp"
                 android:text="没东西了,我可是有底线的"
                 android:textColor="#A19FA0"
                 android:textSize="12sp" />
@@ -761,11 +761,11 @@
                 android:layout_height="34dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="加入购物车"
+                android:background="@drawable/shape_add_car"
                 android:gravity="center"
-                android:textSize="12sp"
+                android:text="加入购物车"
                 android:textColor="@color/white"
-                android:background="@drawable/shape_add_car" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="5dp"
@@ -776,11 +776,11 @@
                 android:layout_height="34dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:background="@drawable/shape_pay"
                 android:gravity="center"
                 android:text="付款"
-                android:textSize="12sp"
                 android:textColor="@color/white"
-                android:background="@drawable/shape_pay" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

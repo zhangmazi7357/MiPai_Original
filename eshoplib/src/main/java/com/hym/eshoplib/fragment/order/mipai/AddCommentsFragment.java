@@ -94,11 +94,8 @@ public class AddCommentsFragment extends BaseKitFragment {
     private HashMap<Integer, String> ids = new HashMap<>();             // tagID
     private String shopLogoUrl;                                          // 店铺logo
 
-
     private String mzCaseId = "";               // 产品 id;
-    //    private String mzOrderId = "";             // 订单 id;
-    private String mzTitle = "";               // 标题;
-    private String mzContent = "";              //评论内容；
+    private String mzContent;              //评论内容；
     private String mzStore = "0";                    // 星级
     private String mzTagId = "";               //标签id;
     private String mzImages = "";               // 上传图片 ;
@@ -130,14 +127,16 @@ public class AddCommentsFragment extends BaseKitFragment {
 
         Bundle bundle = getArguments();
 
+
         log_id = bundle.getString("id", "");
         shopLogoUrl = bundle.getString("url", "");
-
         mzCaseId = bundle.getString(MzConstant.KEY_ORDER_CASE_ID);
 
+//        Log.e(TAG, "caseId =  " + mzCaseId);
 
         ImageUtil.getInstance()
                 .loadCircleImage(AddCommentsFragment.this, shopLogoUrl, ivShopLogo);
+
 
         setTitle("订单评价");
 
@@ -158,12 +157,11 @@ public class AddCommentsFragment extends BaseKitFragment {
                 if (item.isSelect()) {
                     btn_lable.setBackgroundResource(R.drawable.shape_grayb3985b_solid_conner5);
                     btn_lable.setTextColor(ContextCompat.getColor(_mActivity, R.color.white));
-                    btn_lable.invalidate();
                 } else {
                     btn_lable.setBackgroundResource(R.drawable.shape_grayf3ebd8_solid_conner5);
                     btn_lable.setTextColor(ContextCompat.getColor(_mActivity, R.color.mipaiTextColorSelect));
-                    btn_lable.invalidate();
                 }
+                btn_lable.invalidate();
                 btn_lable.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -188,11 +186,29 @@ public class AddCommentsFragment extends BaseKitFragment {
         };
         rvList.setAdapter(adapter);
 
+
+        mzOrderEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mzContent = s.toString();
+            }
+        });
+
+
         // 提交评价 ;
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 upLoadComment();
 
@@ -219,16 +235,17 @@ public class AddCommentsFragment extends BaseKitFragment {
     }
 
 
+    // 评价图片
     private void initOrderCommentText() {
 
         GridLayoutManager manager = new GridLayoutManager(_mActivity, 3);
 
         mzOrderRv.setLayoutManager(manager);
 
-
         mzAdapter = new MzOrderImageAdapter(this, null);
 
         mzAdapter.addData(new UpLoadImageBean());
+        mzOrderRv.setAdapter(mzAdapter);
 
         mzAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -262,14 +279,15 @@ public class AddCommentsFragment extends BaseKitFragment {
                     @Override
                     public void dataRes(int code, String data) {
                         super.dataRes(code, data);
-
+//                        Log.e(TAG, "qiniu token =");
                         try {
                             org.json.JSONObject j = new org.json.JSONObject(data);
                             org.json.JSONObject data1 = j.getJSONObject("data");
+
                             qiniuToken = data1.getString("qiniu_token");
 
                             mzAdapter.setToken(qiniuToken);
-                            mzOrderRv.setAdapter(mzAdapter);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -280,32 +298,29 @@ public class AddCommentsFragment extends BaseKitFragment {
                 },
                 ShopProductsBean.class);
 
-
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
 
             PhotoUtil.getImageList2(requestCode, data, new PhotoUtil.OnImageResult2() {
                 @Override
                 public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
-
                     getImageData(mzAdapter, resultCamara);
-
                 }
 
                 @Override
                 public void onResultGalary(ArrayList<LocalMedia> resultGalary) {
-
                     getImageData(mzAdapter, resultGalary);
-
                 }
 
 
             });
+
         }
     }
 
@@ -358,21 +373,10 @@ public class AddCommentsFragment extends BaseKitFragment {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     /**
      * 添加评论
      */
     private void upLoadComment() {
-
-        if (TextUtils.isEmpty(log_id)) {
-            ToastUtil.toast("数据异常");
-            return;
-        }
 
 
         if (ids.size() == 0) {
@@ -385,25 +389,8 @@ public class AddCommentsFragment extends BaseKitFragment {
             mzTagId += ids.get(key) + ",";
         }
 
-        mzOrderEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mzContent = s.toString();
-            }
-        });
-
-        if ("".equals(mzContent)) {
-
+        if (TextUtils.isEmpty(mzContent)) {
             ToastUtil.toast("请输入评价内容");
             return;
         }
@@ -414,6 +401,7 @@ public class AddCommentsFragment extends BaseKitFragment {
         mzImages = getProDetailPic();
 
 
+        // 发布评价 需要 caseId ;
         MzNewApi.sendComment(mzCaseId, log_id,
                 mzContent, mzStore,
                 mzTagId, mzImages, mzPid,
@@ -421,10 +409,17 @@ public class AddCommentsFragment extends BaseKitFragment {
                     @Override
                     public void onSuccess(Object data) {
 
+//                        Log.e(TAG, "发布评价 返回 json : " + JSONObject.toJSONString(data));
                         ToastUtil.toast("评价已发布");
 
                         pop();
 
+                    }
+
+                    @Override
+                    public void dataRes(int code, String data) {
+                        super.dataRes(code, data);
+//                        Log.e(TAG, "dataRes: " + data);
                     }
                 }, Object.class);
 
@@ -443,5 +438,11 @@ public class AddCommentsFragment extends BaseKitFragment {
         return result;
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
 }

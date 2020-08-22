@@ -446,7 +446,6 @@ public class MoreShopListFragment extends BaseKitFragment {
 
     private void strict(boolean refresh, String sort_type, String regionId) {
 
-        Log.e(TAG, "执行了限时优惠搜索 ");
         // 限时特惠
         HomeApi.getSpecialTimeLimteData(String.valueOf(currentPage), sort_type, regionId,
                 new ResponseImpl<SpecialTimeLimteBean>() {
@@ -474,7 +473,6 @@ public class MoreShopListFragment extends BaseKitFragment {
 
     private void select(boolean refresh, String sort_type, String regionId) {
 
-        Log.e(TAG, "执行了精选搜索 ");
         HomeApi.getStrictSelectData(String.valueOf(currentPage), sort_type, regionId,
                 new ResponseImpl<SpecialTimeLimteBean>() {
                     @Override

@@ -48,4 +48,8 @@ public class MzConstant {
 
     // 商品评论 分享
     public static final String KEY_COMMENT_SHARE = "KEY_COMMENT_SHARE";
+
+
+    // 彩蛋标记
+    public static final String KEY_COLOR_EGG = "KEY_COLOR_EGG";
 }

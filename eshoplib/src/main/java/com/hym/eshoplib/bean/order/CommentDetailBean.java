@@ -12,8 +12,9 @@ import java.util.List;
 
 public class CommentDetailBean {
 
+
     /**
-     * data : {"user_num":"1","money":"900.01","price":"900.01","logo":"http://mpai.liandao.mobi/uploads/f9/e4/78/6b/71/224d8f311e58ce6b19c125.jpeg","store_name":"神司工作室","nickname":"网红视频工作室","avatar":"http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg","phone":"18940105285","email":null,"category_id":"12","category_name":"文案策划-WORD方案","label_list":[{"label_name":"店主超赞"},{"label_name":"品质超高"},{"label_name":"服务超好"}],"ctime":"2018-09-20 14:04:11","rank_type":"5"}
+     * data : {"user_num":"1","money":"0.01","price":"28000.00","logo":"http://mpai.liandao.mobi/uploads/5c/46/a6/17/68/8cccb1ca3a2a7651ebb4b1.jpeg","store_name":"风行工作室","nickname":"红***牛","avatar":"http://mpai.liandao.mobi/uploads/07/34/c4/66/f6/d379a53ea45506beda953a.jpeg","phone":"17611020312","email":null,"category_id":"18","store_userid":"4344","log_userid":"5019","category_name":"视频团队-专业级","label_list":[],"ctime":"2020-08-21 16:04:01","rank_type":null,"auth_store":1,"auth_user":0}
      */
 
     private DataBean data;
@@ -27,21 +28,27 @@ public class CommentDetailBean {
     }
 
     public static class DataBean {
+
+
         /**
          * user_num : 1
-         * money : 900.01
-         * price : 900.01
-         * logo : http://mpai.liandao.mobi/uploads/f9/e4/78/6b/71/224d8f311e58ce6b19c125.jpeg
-         * store_name : 神司工作室
-         * nickname : 网红视频工作室
-         * avatar : http://mpai.liandao.mobi/uploads/a4/7a/13/14/60/e24630ddf405fb3b94b4a3.jpg
-         * phone : 18940105285
+         * money : 0.01
+         * price : 28000.00
+         * logo : http://mpai.liandao.mobi/uploads/5c/46/a6/17/68/8cccb1ca3a2a7651ebb4b1.jpeg
+         * store_name : 风行工作室
+         * nickname : 红***牛
+         * avatar : http://mpai.liandao.mobi/uploads/07/34/c4/66/f6/d379a53ea45506beda953a.jpeg
+         * phone : 17611020312
          * email : null
-         * category_id : 12
-         * category_name : 文案策划-WORD方案
-         * label_list : [{"label_name":"店主超赞"},{"label_name":"品质超高"},{"label_name":"服务超好"}]
-         * ctime : 2018-09-20 14:04:11
-         * rank_type : 5
+         * category_id : 18
+         * store_userid : 4344
+         * log_userid : 5019
+         * category_name : 视频团队-专业级
+         * label_list : []
+         * ctime : 2020-08-21 16:04:01
+         * rank_type : null
+         * auth_store : 1
+         * auth_user : 0
          */
 
         private String user_num;
@@ -52,29 +59,34 @@ public class CommentDetailBean {
         private String nickname;
         private String avatar;
         private String phone;
-        private Object email;
+        private String email;
         private String category_id;
+        private String store_userid;
+        private String log_userid;
         private String category_name;
         private String ctime;
         private String rank_type;
+        private int auth_store;
+        private int auth_user;
         private List<LabelListBean> label_list;
-        private String auth_user;
-        private String auth_store;
 
-        public String getAuth_user() {
-            return auth_user;
-        }
 
-        public void setAuth_user(String auth_user) {
-            this.auth_user = auth_user;
-        }
+        public static class LabelListBean {
+            /**
+             * label_name : 店主超赞
+             */
 
-        public String getAuth_store() {
-            return auth_store;
-        }
+            private String label_name;
 
-        public void setAuth_store(String auth_store) {
-            this.auth_store = auth_store;
+            public String getLabel_name() {
+                return label_name;
+            }
+
+            public void setLabel_name(String label_name) {
+                this.label_name = label_name;
+            }
+
+
         }
 
         public String getUser_num() {
@@ -145,7 +157,7 @@ public class CommentDetailBean {
             return email;
         }
 
-        public void setEmail(Object email) {
+        public void setEmail(String email) {
             this.email = email;
         }
 
@@ -155,6 +167,22 @@ public class CommentDetailBean {
 
         public void setCategory_id(String category_id) {
             this.category_id = category_id;
+        }
+
+        public String getStore_userid() {
+            return store_userid;
+        }
+
+        public void setStore_userid(String store_userid) {
+            this.store_userid = store_userid;
+        }
+
+        public String getLog_userid() {
+            return log_userid;
+        }
+
+        public void setLog_userid(String log_userid) {
+            this.log_userid = log_userid;
         }
 
         public String getCategory_name() {
@@ -181,6 +209,22 @@ public class CommentDetailBean {
             this.rank_type = rank_type;
         }
 
+        public int getAuth_store() {
+            return auth_store;
+        }
+
+        public void setAuth_store(int auth_store) {
+            this.auth_store = auth_store;
+        }
+
+        public int getAuth_user() {
+            return auth_user;
+        }
+
+        public void setAuth_user(int auth_user) {
+            this.auth_user = auth_user;
+        }
+
         public List<LabelListBean> getLabel_list() {
             return label_list;
         }
@@ -189,20 +233,5 @@ public class CommentDetailBean {
             this.label_list = label_list;
         }
 
-        public static class LabelListBean {
-            /**
-             * label_name : 店主超赞
-             */
-
-            private String label_name;
-
-            public String getLabel_name() {
-                return label_name;
-            }
-
-            public void setLabel_name(String label_name) {
-                this.label_name = label_name;
-            }
-        }
     }
 }

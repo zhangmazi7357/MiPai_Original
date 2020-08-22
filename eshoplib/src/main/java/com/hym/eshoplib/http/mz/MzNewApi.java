@@ -142,12 +142,12 @@ public class MzNewApi {
         request.addParamsNotEmpty("sort_type", sort_type);
         request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
         request.addParamsNotEmpty("region_id", region_id);
-
         request.addParamsNotEmpty("p", p);
         request.addParamsNotEmpty("psize", "10");
 
 //        Log.e(TAG, "搜索 参数: " + JSONObject.toJSONString(request));
         post(request, listener, clazz);
+
     }
 
 
@@ -167,4 +167,19 @@ public class MzNewApi {
         post(request, listener, clazz);
     }
 
+
+    // 查看评价
+    public static <T> void getCommentInfo(String comment_id,
+                                          IHttpResultListener<T> listener,
+                                          Class<T> clazz) {
+
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Activity");
+        request.setClassName("GetCommentInfo");
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("comment_id", comment_id);
+
+        post(request, listener, clazz);
+
+    }
 }

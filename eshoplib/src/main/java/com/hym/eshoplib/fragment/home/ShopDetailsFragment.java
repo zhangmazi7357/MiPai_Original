@@ -108,8 +108,8 @@ public class ShopDetailsFragment extends BaseKitFragment implements View.OnClick
     TextView shootingDayTime;
     @BindView(R.id.tv_staffing)
     TextView tvStaffing;
-    @BindView(R.id.tv_team_introduce)
-    TextView tvTeamIntroduce;
+//    @BindView(R.id.tv_team_introduce)
+//    TextView tvTeamIntroduce;
     @BindView(R.id.tv_project_detail)
     TextView tvProjectDetail;
     @BindView(R.id.rl_click_workhome)
@@ -205,7 +205,7 @@ public class ShopDetailsFragment extends BaseKitFragment implements View.OnClick
         long day = shootTime / 1000 / (60 * 60 * 24);
         shootingDayTime.setText(day + "天");
         tvStaffing.setText(db.getStaffing());
-        tvTeamIntroduce.setText(db.getIntroduce());
+//        tvTeamIntroduce.setText(db.getIntroduce());
         tvProjectDetail.setText(db.getDetails());
         tvLoca.setText(db.getRegion_id());
         if (db.getAuth() == 1) {

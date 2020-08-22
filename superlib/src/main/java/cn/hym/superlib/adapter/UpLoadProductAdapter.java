@@ -160,7 +160,6 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
 
 //                Logger.d("qiniufilename=" + qiniufile_name + ",token=" + token);
 
-                Log.e(TAG, "七牛云 =" + qiniufile_name);
 
                 boolean hasUpload = item.isHasUpload();
 
@@ -186,10 +185,8 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
                                             item.setHasUpload(true);
                                             item.setQiniuFileName(key);
 
-                                            Log.e(TAG, "complete: ");
 
                                         } else {
-                                            Log.e(TAG, "失败: " + com.alibaba.fastjson.JSONObject.toJSONString(info));
                                             //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                                         }
                                         Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);

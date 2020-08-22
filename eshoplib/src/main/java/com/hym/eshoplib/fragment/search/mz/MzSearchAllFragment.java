@@ -141,7 +141,6 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                     public void onChanged(MzSearchAllModel data) {
                         binding.swipe.setRefreshing(false);
 
-                        Log.e(TAG, "全部 onChanged: " + JSONObject.toJSONString(data));
                         totalPage = Integer.parseInt(data.getData().getTotalpage());
 
                         setData(isRefresh, data.getData().getInfo());

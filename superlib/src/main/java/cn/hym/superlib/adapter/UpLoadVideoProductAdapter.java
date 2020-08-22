@@ -178,7 +178,6 @@ public class UpLoadVideoProductAdapter extends
                 tv_time_long.setVisibility(View.VISIBLE);
                 tv_time_long.setText(item.getDuration());
 
-                Log.e(TAG, " item =" + com.alibaba.fastjson.JSONObject.toJSONString(item));
                 boolean hasUpload = item.isHasUpload();
 
                 if (!hasUpload) {
@@ -191,7 +190,6 @@ public class UpLoadVideoProductAdapter extends
                     ll_uploading.setVisibility(View.VISIBLE);
                     iv_icon.setVisibility(View.GONE);
 
-                    Log.e(TAG, "path = " + path + ",qiniufile_name=" + qiniufile_name);
 
                     uploadManager.put(path,
                             qiniufile_name,
@@ -201,8 +199,6 @@ public class UpLoadVideoProductAdapter extends
                                 public void complete(String key, ResponseInfo info, JSONObject response) {
                                     //res包含hash、key等信息，具体字段取决于上传策略的设置
 
-                                    Log.e(TAG, "complete: " + info
-                                    );
                                     try {
                                         if (info.isOK()) {
                                             ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
@@ -210,10 +206,8 @@ public class UpLoadVideoProductAdapter extends
                                             ll_uploading.setVisibility(View.GONE);
                                             item.setHasUpload(true);
                                             item.setQiniuFileName(key);
-                                            Log.e(TAG, "upLoad success: ");
                                         } else {
 
-                                            Log.e(TAG, "upLoad fail: ");
 
                                             //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                                         }
@@ -241,7 +235,6 @@ public class UpLoadVideoProductAdapter extends
                                     }, null));
 
                 } else {
-                    Log.e(TAG, " 已上传 =");
                     //已上传
                     ImageUtil.getInstance().loadRoundCornerImage(fragment, item.getImage().getCompressPath(), iv_icon, 5);
                     iv_icon.setVisibility(View.VISIBLE);

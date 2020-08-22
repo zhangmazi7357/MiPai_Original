@@ -43,6 +43,7 @@ import com.hym.eshoplib.bean.order.OrderDetailBeanMipai;
 import com.hym.eshoplib.bean.order.ReasonBean;
 import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.imagelib.ImageUtil;
 import com.hym.loginmodule.activity.LoginMainActivity;
@@ -63,6 +64,8 @@ import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DateUtil;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -191,7 +194,7 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
 
-        Log.e(TAG, "进入订单详情 =");
+//        Log.e(TAG, "进入订单详情 =");
         ivIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,8 +324,8 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
         OrderApi.UserContentDetail(log_id, new ResponseImpl<OrderDetailBeanMipai>() {
             @Override
             public void onSuccess(final OrderDetailBeanMipai data) {
-
-                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
+                //  Log.e(TAG, "onSuccess: log_id = " + log_id);
+//                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
 
                 //发票
                 bean = data;
@@ -766,36 +769,35 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     btn4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String confirm = getResources().getString(R.string.Confirm);
-                            String cancle = getResources().getString(R.string.Cancel);
-                            Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "确认收货", "请确认已收到产品，剩余款项将支付给与您合作的制作方", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
 
-                                }
-
-                                @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    ShopApi.editeOrder(item.getLog_id(), "5", "", "", new ResponseImpl<Object>() {
+                            DialogManager.getInstance().initSimpleDialog(_mActivity, "确认收货",
+                                    "请确认已收到产品，剩余款项将支付给与您合作的制作方", "取消", "确认",
+                                    new SimpleDialog.SimpleDialogOnClickListener() {
                                         @Override
-                                        public void onSuccess(Object data) {
-                                            ToastUtil.toast("确认收货成功，请给个评价吧^_^");
-                                            initData(null);
+                                        public void negativeClick(Dialog dialog) {
+                                            dialog.dismiss();
                                         }
 
                                         @Override
-                                        public void onDataError(String status, String errormessage) {
-                                            super.onDataError(status, errormessage);
-                                            initData(null);
+                                        public void positiveClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                            ShopApi.editeOrder(item.getLog_id(), "5", "", "",
+                                                    new ResponseImpl<Object>() {
+                                                        @Override
+                                                        public void onSuccess(Object data) {
+                                                            ToastUtil.toast("确认收货成功，请给个评价吧^_^");
+                                                            initData(null);
+                                                        }
+
+                                                        @Override
+                                                        public void onDataError(String status, String errormessage) {
+                                                            super.onDataError(status, errormessage);
+                                                            initData(null);
+                                                        }
+                                                    }, Object.class);
+
                                         }
-                                    }, Object.class);
-
-
-                                }
-                            });
-                            pDialog.show();
+                                    }).show();
                         }
                     });
 
@@ -841,37 +843,34 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     btn4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String confirm = getResources().getString(R.string.Confirm);
-                            String cancle = getResources().getString(R.string.Cancel);
-                            Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "确认拍摄结束", "请确认前期拍摄工作已完成，款项的30%将支付给与您合作的制作方", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
 
-                                }
 
-                                @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    //确认拍摄结束
-                                    ShopApi.editeOrder(item.getLog_id(), "4", "", "", new ResponseImpl<Object>() {
+                            DialogManager.getInstance().initSimpleDialog(_mActivity, "确认拍摄结束",
+                                    "请确认前期拍摄工作已完成，款项的30%将支付给与您合作的制作方", "取消", "确认",
+                                    new SimpleDialog.SimpleDialogOnClickListener() {
                                         @Override
-                                        public void onSuccess(Object data) {
-                                            ToastUtil.toast("确认拍摄结束成功");
-                                            initData(null);
+                                        public void negativeClick(Dialog dialog) {
+                                            dialog.dismiss();
                                         }
 
                                         @Override
-                                        public void onDataError(String status, String errormessage) {
-                                            super.onDataError(status, errormessage);
-                                            initData(null);
+                                        public void positiveClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                            ShopApi.editeOrder(item.getLog_id(), "4", "", "", new ResponseImpl<Object>() {
+                                                @Override
+                                                public void onSuccess(Object data) {
+                                                    ToastUtil.toast("确认拍摄结束成功");
+                                                    initData(null);
+                                                }
+
+                                                @Override
+                                                public void onDataError(String status, String errormessage) {
+                                                    super.onDataError(status, errormessage);
+                                                    initData(null);
+                                                }
+                                            }, Object.class);
                                         }
-                                    }, Object.class);
-
-
-                                }
-                            });
-                            pDialog.show();
+                                    }).show();
                         }
                     });
 
@@ -1024,12 +1023,17 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     btn4.setVisibility(View.VISIBLE);
                     btn4.setText("评价");
                     tvRefuseReason.setVisibility(View.GONE);
+
                     btn4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_add_comment);
+                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                                    EshopActionActivity.Action_order_add_comment);
                             bundle.putString("id", item.getLog_id());
                             bundle.putString("url", item.getLogo());
+
+                            bundle.putString(MzConstant.KEY_ORDER_CASE_ID, item.getCaseid());
+
                             EshopActionActivity.start(_mActivity, bundle);
 
                         }
@@ -1070,6 +1074,8 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     btn4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+
                             Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order, EshopActionActivity.Action_order_comment_detail);
                             bundle.putString("id", item.getComment_id());
                             EshopActionActivity.start(_mActivity, bundle);
@@ -1117,36 +1123,35 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                         @Override
                         public void onClick(View v) {
                             //删除订单
-                            String confirm = getResources().getString(R.string.Confirm);
-                            String cancle = getResources().getString(R.string.Cancel);
-                            Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "删除订单", "您确定要删除此订单么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
 
-                                }
-
-                                @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    ShopApi.delete(item.getLog_id(), new ResponseImpl<Object>() {
+                            DialogManager.getInstance().initSimpleDialog(_mActivity,
+                                    "删除订单", "您确定要删除此订单么",
+                                    "取消", "确认",
+                                    new SimpleDialog.SimpleDialogOnClickListener() {
                                         @Override
-                                        public void onSuccess(Object data) {
-                                            ToastUtil.toast("删除成功");
-                                            postUpdate();
-                                            pop();
+                                        public void negativeClick(Dialog dialog) {
+                                            dialog.dismiss();
                                         }
 
                                         @Override
-                                        public void onDataError(String status, String errormessage) {
-                                            super.onDataError(status, errormessage);
-                                            initData(null);
-                                        }
-                                    }, Object.class);
+                                        public void positiveClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                            ShopApi.delete(item.getLog_id(), new ResponseImpl<Object>() {
+                                                @Override
+                                                public void onSuccess(Object data) {
+                                                    ToastUtil.toast("删除成功");
+                                                    postUpdate();
+                                                    pop();
+                                                }
 
-                                }
-                            });
-                            pDialog.show();
+                                                @Override
+                                                public void onDataError(String status, String errormessage) {
+                                                    super.onDataError(status, errormessage);
+                                                    initData(null);
+                                                }
+                                            }, Object.class);
+                                        }
+                                    }).show();
                         }
                     });
 

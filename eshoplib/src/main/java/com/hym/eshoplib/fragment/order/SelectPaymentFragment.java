@@ -170,7 +170,6 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                         MeApi.IssetPaypass(new ResponseImpl<IFsetPayPwdBean>() {
                             @Override
                             public void onSuccess(IFsetPayPwdBean data) {
-                                Log.e(TAG, "是否设置支付密码 onSuccess: " + JSONObject.toJSONString(data));
 
                                 if (data.getData().getIs_set().equals("1")) {
                                     //设置了支付密码弹出 密码输入框

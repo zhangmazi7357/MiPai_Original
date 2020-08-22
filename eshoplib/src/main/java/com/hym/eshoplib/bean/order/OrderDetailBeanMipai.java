@@ -109,6 +109,17 @@ public class OrderDetailBeanMipai {
         private String auth_user;
         private String product_name;
 
+        // 缺少的 caseid;
+        private String caseid;
+
+        public String getCaseid() {
+            return caseid;
+        }
+
+        public void setCaseid(String caseid) {
+            this.caseid = caseid;
+        }
+
         public String getProduct_name() {
             return product_name;
         }

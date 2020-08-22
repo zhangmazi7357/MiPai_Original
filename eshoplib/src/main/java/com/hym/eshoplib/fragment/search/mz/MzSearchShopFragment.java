@@ -127,7 +127,6 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
         }
 
 
-
     }
 
 
@@ -193,7 +192,6 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
                     public void onChanged(MzSearchShopModel data) {
                         binding.swipe.setRefreshing(false);
 
-                        Log.e(TAG, "工作室 onChanged: " + JSONObject.toJSONString(data));
                         String totalpage = data.getData().getTotalpage();
                         if (!TextUtils.isEmpty(totalpage)) {
                             totalPage = Integer.parseInt(totalpage);

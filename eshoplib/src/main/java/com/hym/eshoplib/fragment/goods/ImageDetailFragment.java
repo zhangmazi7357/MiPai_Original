@@ -172,7 +172,7 @@ public class ImageDetailFragment extends BaseKitFragment {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-        Log.e(TAG, "产品详情 id : " + id);
+//        Log.e(TAG, "产品详情 id : " + id);
         ShopApi.getProductDetail(id, new ResponseImpl<ProductDetailBean>() {
             @Override
             public void onSuccess(final ProductDetailBean result) {

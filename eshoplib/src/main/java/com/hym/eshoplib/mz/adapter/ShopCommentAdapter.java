@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
@@ -39,7 +41,7 @@ public class ShopCommentAdapter extends BaseQuickAdapter<MzShopCommentBean.DataB
         helper.setText(R.id.username, MzStringUtil.hideUserName(item.getNickname()));
 
         int position = helper.getLayoutPosition();
-        Log.e(TAG, "position = " + position);
+//        Log.e(TAG, "position = " + position);
         int itemCount = getItemCount();
         View divider = helper.getView(R.id.divider);
         divider.setVisibility(View.VISIBLE);
@@ -48,8 +50,11 @@ public class ShopCommentAdapter extends BaseQuickAdapter<MzShopCommentBean.DataB
         }
 
 
+        // 头像 ;
         ImageView headerView = helper.getView(R.id.header);
-        Glide.with(mContext).load(item.getAvatar()).into(headerView);
+        Glide.with(mContext).load(item.getAvatar())
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .into(headerView);
         helper.setText(R.id.commentContent, item.getContent());
 
 
@@ -61,7 +66,7 @@ public class ShopCommentAdapter extends BaseQuickAdapter<MzShopCommentBean.DataB
         }
 
 
-        // 图片 & 视频
+        // 图片
         RecyclerView commentImgRv = helper.getView(R.id.commentImgRv);
         commentImgRv.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
         ShopCommentPicAdapter picAdapter = new ShopCommentPicAdapter(null);

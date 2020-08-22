@@ -73,6 +73,7 @@ public class SearchFragment extends BaseKitFragment implements SwipeRefreshLayou
 //    @BindView(R.id.ll_toolbar_bg)
 //    LinearLayout llToolbarBg;
     Unbinder unbinder;
+
     @BindView(R.id.btn_clear)
     Button btnClear;
 

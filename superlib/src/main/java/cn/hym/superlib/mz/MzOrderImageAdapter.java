@@ -75,6 +75,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
     public MzOrderImageAdapter(Fragment fragment, List<UpLoadImageBean> data) {
         super(data);
         this.fragment = fragment;
+
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
         addItemType(UpLoadImageBean.type_add, R.layout.mz_order_add_image_video);
 
@@ -93,7 +94,7 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
     }
 
-    int max = 2;
+    int max = 8;
 
     public void setMax(int max) {
         this.max = max - 1;
@@ -222,10 +223,11 @@ public class MzOrderImageAdapter extends BaseMultiItemQuickAdapter<UpLoadImageBe
 
             case UpLoadImageBean.type_add:
 
-                TextView tv_add = helper.getView(R.id.tv_add);
+                TextView tv_add = helper.getView(R.id.add_pic_tv);
 
                 tv_add.getLayoutParams().width = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
                 tv_add.getLayoutParams().height = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
+
                 break;
         }
 

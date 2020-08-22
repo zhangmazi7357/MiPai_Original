@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.core.LatLonPoint;
@@ -38,48 +37,36 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.lib_amap.MapManager;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.base.BaseDialog;
-import com.hjq.base.BaseDialogFragment;
 import com.hjq.toast.ToastUtils;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.activity.EshopActionActivity;
 import com.hym.eshoplib.adapter.ShopListAdapter;
-import com.hym.eshoplib.alipay.AliPay;
 import com.hym.eshoplib.bean.goods.GoodDetailModel;
 import com.hym.eshoplib.bean.home.CreateOrderBean;
 import com.hym.eshoplib.bean.home.SpecialTimeLimteBean;
 import com.hym.eshoplib.bean.me.MedetailBean;
-import com.hym.eshoplib.bean.order.AliPayBean;
 import com.hym.eshoplib.bean.order.PayTypeBean;
-import com.hym.eshoplib.bean.order.VipOrderBean;
-import com.hym.eshoplib.bean.order.WxpayBean;
 import com.hym.eshoplib.bean.shop.AddFavouriteBean;
 import com.hym.eshoplib.bean.shop.AttachResultBean;
 import com.hym.eshoplib.bean.shop.ServiceDetailBean;
-import com.hym.eshoplib.bean.shop.ShopCommentsBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
 import com.hym.eshoplib.fragment.search.mz.model.LngLonModel;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
-import com.hym.eshoplib.http.order.OrderApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
-import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
 import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
 import com.hym.imagelib.ImageUtil;
 import com.hym.loginmodule.activity.LoginMainActivity;
 import com.orhanobut.logger.Logger;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
@@ -97,8 +84,8 @@ import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.utils.SizeUtils;
+import cn.hym.superlib.mz.widgets.MzShopDetailTitleView;
 import cn.hym.superlib.mz.widgets.TabWithScrollView;
-import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
@@ -194,8 +181,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     TextView shootingDayTime;
     @BindView(R.id.tv_staffing)
     TextView tvStaffing;
-    @BindView(R.id.tv_team_introduce)
-    TextView tvTeamIntroduce;
+
     @BindView(R.id.tv_project_detail)
     TextView tvProjectDetail;
     @BindView(R.id.rl_click_workhome)
@@ -306,6 +292,12 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     LinearLayout llShopRecommend;
 
 
+    // 彩蛋
+    @BindView(R.id.colorEgg)
+    MzShopDetailTitleView colorEgg;
+
+    private String colorEgg_caseID = "";
+
     private CustomShareListener mShareListener;
     private ShareAction mShareAction;
     private Unbinder unbinder;
@@ -360,7 +352,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
 
-                Log.e(TAG, " 定位 =  " + aMapLocation);
+//                Log.e(TAG, " 定位 =  " + aMapLocation);
 
                 double longitude = aMapLocation.getLongitude();
                 double latitude = aMapLocation.getLatitude();
@@ -403,6 +395,35 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         // 点击地址导航
         lAddress.setOnClickListener(this);
 
+        // 这里完全是个彩蛋。
+        colorEgg.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                //  需要的参数   log_id   LogoUrl ;
+//                Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+//                        EshopActionActivity.Action_order_add_comment);
+//
+//                EshopActionActivity.start(_mActivity, bundle);
+
+                if (!TextUtils.isEmpty(colorEgg_caseID)) {
+                    //  需要的参数   log_id   LogoUrl ;
+                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                            EshopActionActivity.Action_order_add_comment);
+
+
+                    // caseId
+                    bundle.putString(MzConstant.KEY_ORDER_CASE_ID, colorEgg_caseID);
+
+                    EshopActionActivity.start(_mActivity, bundle);
+                } else {
+                    ToastUtil.toast("caseId 为空 ");
+                }
+
+                return false;
+
+            }
+        });
+
     }
 
 
@@ -417,8 +438,12 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
         db = data.getData();
 
+
+        colorEgg_caseID = db.getCase_id();
+
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
+
 
         if (!TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);
@@ -471,7 +496,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         }
 
         tvStaffing.setText(db.getStaffing());
-        tvTeamIntroduce.setText(db.getIntroduce());
+//        tvTeamIntroduce.setText(db.getIntroduce());
+
         tvProjectDetail.setText(db.getDetails());
         tvLoca.setText(db.getOther());
         if (db.getAuth() == 1) {
@@ -1173,7 +1199,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     private void initScrollAndTab() {
         //  toolBar.setAlpha(0);
         toolBar.setBackgroundColor(setAlpha(R.color.white, 1));
-        String[] tabList = new String[]{"项目",  "详情","评论", "推荐"};
+        String[] tabList = new String[]{"项目", "详情", "评论", "推荐"};
 
         for (String s : tabList) {
             tabLayout.addTab(tabLayout.newTab().setText(s));

@@ -88,6 +88,7 @@ import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.utils.SizeUtils;
+import cn.hym.superlib.mz.widgets.MzShopDetailTitleView;
 import cn.hym.superlib.mz.widgets.TabWithScrollView;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
@@ -295,6 +296,14 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     @BindView(R.id.ll_shop_detail)
     LinearLayout llShopDetail;
 
+
+    // 彩蛋 ;
+    @BindView(R.id.colorEgg)
+    MzShopDetailTitleView colorEgg;
+
+    // caseId
+    private String colorEgg_caseID = "";
+
     // 推荐商品
     @BindView(R.id.ll_shop_recommend)
     LinearLayout llShopRecommend;
@@ -373,6 +382,30 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         // 点击地址去导航;
         lAddress.setOnClickListener(this);
 
+        // 彩蛋   -- 添加评论 ;
+        colorEgg.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                if (!TextUtils.isEmpty(colorEgg_caseID)) {
+                    //  需要的参数   log_id   LogoUrl ;
+                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                            EshopActionActivity.Action_order_add_comment);
+
+
+                    // caseId
+                    bundle.putString(MzConstant.KEY_ORDER_CASE_ID, colorEgg_caseID);
+
+                    EshopActionActivity.start(_mActivity, bundle);
+                } else {
+                    ToastUtil.toast("caseId 为空 ");
+                }
+
+                return false;
+            }
+        });
+
     }
 
 
@@ -387,12 +420,13 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
         tvTotalPrice.setText(presentPrice);
 
+        colorEgg_caseID = db.getCase_id();
+
         if (TextUtils.isEmpty(db.getOriginal_price()) || db.getOriginal_price().equals("0")) {
 
             tvBeforePrice.setVisibility(View.GONE);
 
         } else {
-
             String originalPrice = RemoveZeroUtil.subZeroAndDot(db.getOriginal_price());
             tvBeforePrice.setText("原价" + originalPrice);
 
@@ -410,33 +444,28 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
 
 
-        /*long round = Math.round(v);
-        showRing(childCount, round);*/
-
         Glide.with(_mActivity).load(db.getStore_logo()).into(ivUserPhoto);
         if (TextUtils.isEmpty(db.getLength()) || db.getLength().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvShootTime.getParent();
             llShootTime.setVisibility(View.GONE);
         }
+
         tvShootTime.setText(db.getEquipment());
         if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvQicai.getParent();
             llShootTime.setVisibility(View.GONE);
         }
+
         tvQicai.setText(db.getEquipment());
         if (!TextUtils.isEmpty(db.getShooting_time())) {
-           /* long shootTime = Long.parseLong(db.getShooting_time());
-            long day = shootTime / 1000 / (60 * 60 * 24);
-            shootingDayTime.setText(day + "天");*/
+
             shootingDayTime.setText(db.getShooting_time());
         } else {
             LinearLayout llShootTime = (LinearLayout) shootingDayTime.getParent();
             llShootTime.setVisibility(View.GONE);
             shootingDayTime.setText("");
         }
-       /* long shootTime = Long.parseLong(db.getShooting_time());
-        long day = shootTime / 1000 / (60 * 60 * 24);
-        shootingDayTime.setText(day + "天");*/
+
         if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvStaffing.getParent();
             llShootTime.setVisibility(View.GONE);
@@ -447,8 +476,6 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         }
         tvStaffing.setText(db.getStaffing());
 
-        // 原来的团队介绍 ;
-//        tvTeamIntroduce.setText(db.getIntroduce());
 
         tvProjectDetail.setText(db.getDetails());
         tvLoca.setText(db.getOther());
@@ -462,6 +489,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             ivVip.setVisibility(View.GONE);
         }
         rvList.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+
         adapter = new BaseListAdapter<String>(R.layout.item_image_gridlist, null) {
             @Override
             public void handleView(BaseViewHolder helper, String item, int position) {
@@ -524,13 +552,17 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         getComment();
 
 
-        // 推荐 ;
+        // 推荐 ;  2 - 图片
         HomeApi.getDetailComment("2", new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(final SpecialTimeLimteBean data) {
+
                 final List<SpecialTimeLimteBean.DataBean.VideoBean> vbData = data.getData().getVideo();
+
                 ShopListAdapter shopListAdapter = new ShopListAdapter(R.layout.item_shop, vbData);
                 rvRecommendGoods.setAdapter(shopListAdapter);
+
+
 
                 shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
@@ -542,12 +574,14 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                             @Override
                             public void onSuccess(GoodDetailModel data) {
                                 if (data.getData().getType().equals("1")) {
-                                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
+                                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                            ActionActivity.ShopVideoDetail);
                                     bundle.putSerializable("data", data);
                                     bundle.putString("title", "产品详情");
                                     ActionActivity.start(_mActivity, bundle);
                                 } else if (data.getData().getType().equals("2")) {
-                                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopDetail);
+                                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                                            ActionActivity.ShopDetail);
                                     bundle.putSerializable("data", data);
                                     bundle.putString("title", "产品详情");
                                     ActionActivity.start(_mActivity, bundle);

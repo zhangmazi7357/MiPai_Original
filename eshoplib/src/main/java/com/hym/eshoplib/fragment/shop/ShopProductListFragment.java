@@ -175,7 +175,6 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                     @Override
                     public void dataRes(int code, String data) {
                         // super.dataRes(code, data);
-                        Log.e(TAG, "dataRes: ");
                         ShopProductsBean bean = JSON.parseObject(data, ShopProductsBean.class);
                         id = bean.getData().getStore_id();
                         token = bean.getData().getQiniu_token();
