@@ -3,7 +3,9 @@ package com.hym.eshoplib.fragment.me.pocket;
 import android.app.Dialog;
 import android.graphics.Paint;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,7 +22,9 @@ import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.me.GetCashAccountBean;
 import com.hym.eshoplib.bean.me.GetCashInfoBean;
 import com.hym.eshoplib.bean.me.IFsetPayPwdBean;
+import com.hym.eshoplib.bean.shop.AddFavouriteBean;
 import com.hym.eshoplib.http.me.MeApi;
+import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.widgets.PayPsdInputView;
 import com.orhanobut.logger.Logger;
@@ -34,6 +38,8 @@ import cn.hym.superlib.event.UpdateDataEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -73,6 +79,7 @@ public class GetCashFragment extends BaseKitFragment {
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
     GetCashAccountBean.DataBean bean;
+
     public static GetCashFragment newInstance(Bundle args) {
         GetCashFragment fragment = new GetCashFragment();
         fragment.setArguments(args);
@@ -103,16 +110,16 @@ public class GetCashFragment extends BaseKitFragment {
             public void afterTextChanged(Editable s) {
                 Logger.d(s.toString());
                 try {
-                    if(s.toString().contains(".")){
-                        String []result=s.toString().split("\\.");
+                    if (s.toString().contains(".")) {
+                        String[] result = s.toString().split("\\.");
                         Logger.d(result);
-                        if(result[1].length()>2){
-                            etMoney.setText(s.toString().substring(0,s.toString().length()-1));
-                            etMoney.setSelection(s.toString().length()-1);
+                        if (result[1].length() > 2) {
+                            etMoney.setText(s.toString().substring(0, s.toString().length() - 1));
+                            etMoney.setSelection(s.toString().length() - 1);
                             ToastUtil.toast("最多只能输入两位小数");
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     Logger.d(e.toString());
 
                 }
@@ -132,12 +139,12 @@ public class GetCashFragment extends BaseKitFragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String money=etMoney.getText().toString();
-                if(TextUtils.isEmpty(money)){
+                String money = etMoney.getText().toString();
+                if (TextUtils.isEmpty(money)) {
                     ToastUtil.toast("请输入提现金额");
                     return;
                 }
-                if(bean==null||TextUtils.isEmpty(bean.getUserbank_id())){
+                if (bean == null || TextUtils.isEmpty(bean.getUserbank_id())) {
                     ToastUtil.toast("请选择提现账户");
                     return;
                 }
@@ -149,7 +156,7 @@ public class GetCashFragment extends BaseKitFragment {
                             MeApi.PoundageInfo(etMoney.getText().toString(), new ResponseImpl<GetCashInfoBean>() {
                                 @Override
                                 public void onSuccess(GetCashInfoBean data) {
-                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity, "￥"+data.getData().getTotal(),data.getData().getMemo(), new PayPsdInputView.onPasswordListener() {
+                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity, "￥" + data.getData().getTotal(), data.getData().getMemo(), new PayPsdInputView.onPasswordListener() {
                                         @Override
                                         public void onDifference(String oldPsd, String newPsd) {
 
@@ -171,8 +178,7 @@ public class GetCashFragment extends BaseKitFragment {
                                                     EventBus.getDefault().post(new UpdateDataEvent());
                                                     pop();
                                                 }
-                                            },Object.class);
-
+                                            }, Object.class);
 
 
                                         }
@@ -189,36 +195,35 @@ public class GetCashFragment extends BaseKitFragment {
                                     });
                                     showSoftInput(et);
                                 }
-                            },GetCashInfoBean.class);
+                            }, GetCashInfoBean.class);
 
 
                         } else {
                             //未设置 弹出提示框
                             String confirm = "立即设置";
                             String cancle = "暂不提现";
-                            Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "提示", "您当前未设置支付密码,是否立即设置?", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
 
-                                }
+                            DialogManager.getInstance().initSimpleDialog(_mActivity, "提示",
+                                    "您当前未设置支付密码,是否立即设置?", cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
+                                        @Override
+                                        public void negativeClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                        }
 
-                                @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    //去设置支付密码
-                                    Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
-                                    bundle.putInt("type", 1);
-                                    ActionActivity.start(_mActivity, bundle);
-                                }
-                            });
-                            pDialog.show();
+                                        @Override
+                                        public void positiveClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                            //去设置支付密码
+                                            Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
+                                            bundle.putInt("type", 1);
+                                            ActionActivity.start(_mActivity, bundle);
+                                        }
+                                    }).show();
+
 
                         }
                     }
                 }, IFsetPayPwdBean.class);
-
-
 
 
             }
@@ -226,21 +231,21 @@ public class GetCashFragment extends BaseKitFragment {
         tvGetcash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                if(bean!=null){
-                    bundle.putString("id",bean.getUserbank_id());
+                Bundle bundle = new Bundle();
+                if (bean != null) {
+                    bundle.putString("id", bean.getUserbank_id());
                 }
-                startForResult(SelectAccountFragment.newInstance(bundle),0x01);
+                startForResult(SelectAccountFragment.newInstance(bundle), 0x01);
             }
         });
         llAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
-                if(bean!=null){
-                    bundle.putString("id",bean.getUserbank_id());
+                Bundle bundle = new Bundle();
+                if (bean != null) {
+                    bundle.putString("id", bean.getUserbank_id());
                 }
-                startForResult(SelectAccountFragment.newInstance(bundle),0x01);
+                startForResult(SelectAccountFragment.newInstance(bundle), 0x01);
             }
         });
 
@@ -250,27 +255,27 @@ public class GetCashFragment extends BaseKitFragment {
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            if(requestCode==0x01){
-                bean= (GetCashAccountBean.DataBean) data.getSerializable("data");
-                if(bean!=null){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0x01) {
+                bean = (GetCashAccountBean.DataBean) data.getSerializable("data");
+                if (bean != null) {
                     tvGetcash.setVisibility(View.GONE);
                     llAccount.setVisibility(View.VISIBLE);
-                    String type=bean.getType();
-                    if(type.equals("1")){
+                    String type = bean.getType();
+                    if (type.equals("1")) {
                         //支付宝
                         tv1.setText("支付宝账号");
-                        tv2.setText("支付宝昵称："+bean.getBankname());
-                        tv3.setText("支付宝账号："+bean.getBankcard());
-                        tv4.setText("真实姓名："+bean.getBankuser());
-                        tv5.setText("支付宝绑定手机号："+bean.getPhone());
-                    }else if(type.equals("2")){
+                        tv2.setText("支付宝昵称：" + bean.getBankname());
+                        tv3.setText("支付宝账号：" + bean.getBankcard());
+                        tv4.setText("真实姓名：" + bean.getBankuser());
+                        tv5.setText("支付宝绑定手机号：" + bean.getPhone());
+                    } else if (type.equals("2")) {
                         //银行卡号
                         tv1.setText("银行卡号");
-                        tv2.setText("银行卡号："+bean.getBankcard());
-                        tv3.setText("开户银行："+bean.getBankname());
-                        tv4.setText("真实姓名："+bean.getBankuser());
-                        tv5.setText("银行预留手机号："+bean.getPhone());
+                        tv2.setText("银行卡号：" + bean.getBankcard());
+                        tv3.setText("开户银行：" + bean.getBankname());
+                        tv4.setText("真实姓名：" + bean.getBankuser());
+                        tv5.setText("银行预留手机号：" + bean.getPhone());
 
                     }
                 }

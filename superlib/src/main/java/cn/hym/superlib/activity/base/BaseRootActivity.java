@@ -14,6 +14,9 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 public abstract class BaseRootActivity extends BasekitActivity {
+    public BaseRootActivity() {
+    }
+
     @Override
     public int getContentViewResId() {
         return R.layout.activity_common_root;

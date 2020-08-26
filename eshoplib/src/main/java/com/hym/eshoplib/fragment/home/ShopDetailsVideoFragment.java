@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -379,7 +380,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         mShareAction = new ShareAction(_mActivity).setDisplayList(
                 SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA)
                 .setCallback(mShareListener);
-        rvRecommendGoods.setLayoutManager(new GridLayoutManager(_mActivity, 2, LinearLayoutManager.VERTICAL, false));
+        rvRecommendGoods.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         tvReport.setOnClickListener(this);
         rlClickWorkhome.setOnClickListener(this);
         rlContactHim.setOnClickListener(this);

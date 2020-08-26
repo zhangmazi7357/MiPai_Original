@@ -69,7 +69,7 @@ public class MzNewApi {
         request.setClassName("GetProductionList");
         request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
         request.addParamsNotEmpty("p", p);
-        request.addParamsNotEmpty("psize", "20");
+        request.addParamsNotEmpty("psize", "10");
         request.addParamsNotEmpty("icon_id", iconId);
 
         post(request, listener, clazz);

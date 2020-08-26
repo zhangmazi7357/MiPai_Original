@@ -18,6 +18,8 @@ import cn.hym.superlib.activity.base.BasekitActivity;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -58,12 +60,12 @@ public class RongConversationaActivity extends BasekitActivity {
             }, MedetailBean.class);
         }
         if (targetId.equals("2010")) {
-            tvTips=findViewById(R.id.tv_tips);
+            tvTips = findViewById(R.id.tv_tips);
             tvTips.setVisibility(View.VISIBLE);
             return;
         }
         if (targetId.equals("3681")) {
-            tvTips=findViewById(R.id.tv_tips);
+            tvTips = findViewById(R.id.tv_tips);
             tvTips.setVisibility(View.VISIBLE);
             tvTips.setText("请将拍摄需求告知\"小觅\"，将为您第一时间匹配最合适的工作室");
             return;
@@ -95,29 +97,33 @@ public class RongConversationaActivity extends BasekitActivity {
                     @Override
                     public void onBtnTwoClick(Dialog dialog) {
                         dialog.dismiss();
-                        DialogUtil.getTowButtonDialog(RongConversationaActivity.this, "提示", "您确定要清空聊天记录么", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-                            @Override
-                            public void onCancleClick(SweetAlertDialog sDialog) {
 
-                            }
-
-                            @Override
-                            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                //清空聊天记录
-                                RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, targetId, new RongIMClient.ResultCallback<Boolean>() {
+                        DialogManager.getInstance().initSimpleDialog(RongConversationaActivity.this, "提示", "您确定要清空聊天记录么",
+                                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
                                     @Override
-                                    public void onSuccess(Boolean aBoolean) {
-                                        ToastUtil.toast("清除成功");
-
+                                    public void negativeClick(Dialog dialog) {
+                                        dialog.dismiss();
                                     }
 
                                     @Override
-                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                    public void positiveClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        //清空聊天记录
+                                        RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, targetId, new RongIMClient.ResultCallback<Boolean>() {
+                                            @Override
+                                            public void onSuccess(Boolean aBoolean) {
+                                                ToastUtil.toast("清除成功");
 
+                                            }
+
+                                            @Override
+                                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                            }
+                                        });
                                     }
-                                });
-                            }
-                        }).show();
+                                }).show();
+
 
                     }
                 });

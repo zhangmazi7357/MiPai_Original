@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.shop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -63,6 +64,8 @@ import cn.hym.superlib.mz.widgets.UploadItemView;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -941,18 +944,21 @@ public class EditVideoFragment extends BaseKitFragment {
     @Override
     public boolean onBackPressedSupport() {
         hideSoftInput();
-        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您的产品还没有保存,您确定要退出么?", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
 
-            }
+        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您的产品还没有保存，您确定要退出么?",
+                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
+                    @Override
+                    public void negativeClick(Dialog dialog) {
+                        dialog.dismiss();
+                    }
 
-            @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                pop();
+                    @Override
+                    public void positiveClick(Dialog dialog) {
+                        dialog.dismiss();
+                        pop();
+                    }
+                }).show();
 
-            }
-        }).show();
         return true;
 
     }

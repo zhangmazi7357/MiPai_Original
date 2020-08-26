@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.message;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import cn.hym.superlib.event.lgoin.UnLoginEvent;
 import cn.hym.superlib.fragment.base.BaseListFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.http.HttpResultUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -40,12 +43,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * otherTips
  */
 
-public class SystemMessageFragment extends BaseListFragment<SystemMessageListBean.DataBean.InfoBean>{
+public class SystemMessageFragment extends BaseListFragment<SystemMessageListBean.DataBean.InfoBean> {
     public static SystemMessageFragment newInstance(Bundle args) {
         SystemMessageFragment fragment = new SystemMessageFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public boolean showToolBar() {
         return false;
@@ -61,11 +65,11 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
     public void excuteLogic() {
 
         View emptyView = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);
-        ImageView iv_icon=emptyView.findViewById(R.id.iv_icon);
+        ImageView iv_icon = emptyView.findViewById(R.id.iv_icon);
         iv_icon.setImageResource(R.drawable.rc_conversation_list_empty);
-        TextView tv_message=emptyView.findViewById(R.id.tv_message);
-        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv_message.getLayoutParams();
-        layoutParams.setMargins(0,0,0,0);
+        TextView tv_message = emptyView.findViewById(R.id.tv_message);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv_message.getLayoutParams();
+        layoutParams.setMargins(0, 0, 0, 0);
         tv_message.setLayoutParams(layoutParams);
         tv_message.setText("暂无平台消息");
         tv_message.setTextColor(Color.parseColor("#999999"));
@@ -76,45 +80,53 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
                 HomeApi.ReadMsg(getAdapter().getData().get(position).getMsg_id(), new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
-                        MessageEvent event=new MessageEvent();
-                        event.type=1;
+                        MessageEvent event = new MessageEvent();
+                        event.type = 1;
                         EventBus.getDefault().post(event);
                         getAdapter().getData().get(position).setStatus("0");
                         getAdapter().notifyDataSetChanged();
                         //进入系统消息详情
-                        if(getAdapter().getData().get(position).getType().equals("5")){
-                            Bundle bundle= BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_system_messgae_detail);
-                            bundle.putSerializable("data",getAdapter().getData().get(position));
-                            ActionActivity.start(_mActivity,bundle);
-                        }else {
+                        if (getAdapter().getData().get(position).getType().equals("5")) {
+                            Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.Action_system_messgae_detail);
+                            bundle.putSerializable("data", getAdapter().getData().get(position));
+                            ActionActivity.start(_mActivity, bundle);
+                        } else {
                             ToastUtil.toast("已标记为已读");
 
                         }
 
                     }
-                },Object.class);
+                }, Object.class);
             }
         });
         getAdapter().setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
-                DialogUtil.getTowButtonDialog(_mActivity, "删除消息", "您确定要删除这条消息么", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-                    @Override
-                    public void onCancleClick(SweetAlertDialog sDialog) {
 
-                    }
 
-                    @Override
-                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                        //删除消息
-                        HomeApi.DeleteMsg(getAdapter().getData().get(position).getMsg_id(), new ResponseImpl<Object>() {
+                DialogManager.getInstance().initSimpleDialog(_mActivity, "删除消息",
+                        "您确定要删除这条消息么", "取消", "确定",
+                        new SimpleDialog.SimpleDialogOnClickListener() {
                             @Override
-                            public void onSuccess(Object data) {
-                                getAdapter().remove(position);
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
                             }
-                        },Object.class);
-                    }
-                }).show();
+
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
+
+                                //删除消息
+                                HomeApi.DeleteMsg(getAdapter().getData().get(position).getMsg_id(), new ResponseImpl<Object>() {
+                                    @Override
+                                    public void onSuccess(Object data) {
+                                        getAdapter().remove(position);
+                                    }
+                                }, Object.class);
+
+                            }
+                        })
+                        .show();
                 return true;
             }
         });
@@ -123,14 +135,14 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
-        HomeApi.GetSystemMsg(pageNum+"", new ResponseImpl<SystemMessageListBean>() {
+        HomeApi.GetSystemMsg(pageNum + "", new ResponseImpl<SystemMessageListBean>() {
             @Override
             public void onSuccess(SystemMessageListBean data) {
-                int total=Integer.parseInt(data.getData().getTotalpage());
-                if(refresh){
-                    setPageNum(HttpResultUtil.onRefreshSuccess(total,pageNum,data.getData().getInfo(),getAdapter()));
-                }else {
-                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total,pageNum,data.getData().getInfo(),getAdapter()));
+                int total = Integer.parseInt(data.getData().getTotalpage());
+                if (refresh) {
+                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                } else {
+                    setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
                 }
 
             }
@@ -140,22 +152,21 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
                 super.onEmptyData();
                 getAdapter().setNewData(null);
             }
-        },SystemMessageListBean.class);
-
+        }, SystemMessageListBean.class);
 
 
     }
 
     @Override
     public void bindData(BaseViewHolder helper, SystemMessageListBean.DataBean.InfoBean item, int position) {
-        helper.setText(R.id.tv_time,item.getDate()+"");
-        ImageUtil.getInstance().loadImage(SystemMessageFragment.this,item.getImage_default(), (ImageView) helper.getView(R.id.iv_bg));
-        helper.setText(R.id.tv_title,item.getTitle()+"");
-        helper.setText(R.id.tv_des,item.getMemo());
-        ImageView iv_read=helper.getView(R.id.iv_read);
-        if(item.getStatus().equals("0")){
+        helper.setText(R.id.tv_time, item.getDate() + "");
+        ImageUtil.getInstance().loadImage(SystemMessageFragment.this, item.getImage_default(), (ImageView) helper.getView(R.id.iv_bg));
+        helper.setText(R.id.tv_title, item.getTitle() + "");
+        helper.setText(R.id.tv_des, item.getMemo());
+        ImageView iv_read = helper.getView(R.id.iv_read);
+        if (item.getStatus().equals("0")) {
             iv_read.setVisibility(View.GONE);
-        }else {
+        } else {
             iv_read.setVisibility(View.VISIBLE);
         }
         ScreenUtil.ViewAdapter(_mActivity, helper.getView(R.id.iv_bg), 5, 2);
@@ -166,20 +177,23 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
     public boolean openEventBus() {
         return true;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void upDataMsg(MessageEvent event){
-        if(event.type==-1){
+    public void upDataMsg(MessageEvent event) {
+        if (event.type == -1) {
             onRefresh();
         }
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void changeLogin(LoginEvent event){
+    public void changeLogin(LoginEvent event) {
         onRefresh();
         Logger.d("更新系统消息");
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void changeLogin(UnLoginEvent event){
-       getAdapter().setNewData(null);
+    public void changeLogin(UnLoginEvent event) {
+        getAdapter().setNewData(null);
     }
 }

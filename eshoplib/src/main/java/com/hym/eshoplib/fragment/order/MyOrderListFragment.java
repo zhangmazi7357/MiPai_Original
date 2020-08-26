@@ -151,6 +151,7 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                     @Override
                     public void onSuccess(OrderListBeanMiPai data) {
 
+                        Log.e(TAG, "onSuccess: " + JSONObject.toJSON(data));
 
                         int total = Integer.parseInt(data.getData().getTotalpage());
 
@@ -300,27 +301,28 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                     //删除订单
                     String confirm = getResources().getString(R.string.Confirm);
                     String cancle = getResources().getString(R.string.Cancel);
-                    Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "删除订单", "您确定要删除此订单么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                        @Override
-                        public void onCancleClick(SweetAlertDialog sDialog) {
-                            sDialog.dismiss();
-
-                        }
-
-                        @Override
-                        public void onConfirmeClick(SweetAlertDialog sDialog) {
-                            sDialog.dismiss();
-                            ShopApi.delete(item.getLog_id(), new ResponseImpl<Object>() {
+                    DialogManager.getInstance().initSimpleDialog(_mActivity, "删除订单", "您确定要删除此订单么",
+                            cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
                                 @Override
-                                public void onSuccess(Object data) {
-                                    ToastUtil.toast("删除成功");
-                                    onRefresh();
+                                public void negativeClick(Dialog dialog) {
+                                    dialog.dismiss();
                                 }
-                            }, Object.class);
 
-                        }
-                    });
-                    pDialog.show();
+                                @Override
+                                public void positiveClick(Dialog dialog) {
+                                    dialog.dismiss();
+                                    ShopApi.delete(item.getLog_id(), new ResponseImpl<Object>() {
+                                        @Override
+                                        public void onSuccess(Object data) {
+                                            ToastUtil.toast("删除成功");
+                                            onRefresh();
+                                        }
+                                    }, Object.class);
+                                }
+                            }).show();
+
+
+
                 }
             });
 
@@ -459,20 +461,28 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
 
                 @Override
                 public void onClick(View v) {
-                    // 从这里跳转到  订单评论 ;
-                    Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
-                            EshopActionActivity.Action_order_add_comment);
+                    // 从这里跳转到  订单评价 ;
 
 
-                    bundle.putString("id", item.getLog_id());
-                    bundle.putString("url", item.getLogo());
+                    String caseid = item.getCaseid();
 
-                    // 传递 caseId 和 orderNumber ;
-                    bundle.putString(MzConstant.KEY_ORDER_CASE_ID, item.getCaseid());
-                    // bundle.putString(MzConstant.KEY_ORDER_ID, item.getOrder_number());
+                    if (!TextUtils.isEmpty(caseid)) {
+                        Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                                EshopActionActivity.Action_order_add_comment);
 
 
-                    EshopActionActivity.start(_mActivity, bundle);
+                        bundle.putString("id", item.getLog_id());
+                        bundle.putString("url", item.getLogo());
+
+                        // 传递 caseId 和 orderNumber ;
+
+                        bundle.putString(MzConstant.KEY_ORDER_CASE_ID, caseid);
+                        // bundle.putString(MzConstant.KEY_ORDER_ID, item.getOrder_number());
+                        EshopActionActivity.start(_mActivity, bundle);
+                    } else {
+                        // TODO  caseid 为空怎么处理
+                        ToastUtil.toast("订单异常，暂不能评价");
+                    }
 
                 }
             });
@@ -624,7 +634,6 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
             btn_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
 
 
                     // comment_id 可能为空... 有问题啊。

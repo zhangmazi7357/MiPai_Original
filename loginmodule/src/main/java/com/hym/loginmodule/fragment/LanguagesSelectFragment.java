@@ -27,6 +27,8 @@ import cn.hym.superlib.languages.utils.AppLanguageUtils;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -127,16 +129,16 @@ public class LanguagesSelectFragment extends BaseListFragment<LanguageItemBean> 
         String cancle = getResources().getString(R.string.Cancel);
         String title = "切换语言";
         String message = "您确定要切换语言么?";
-        Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, title, message, cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-            @Override
-            public void onCancleClick(SweetAlertDialog sDialog) {
-                sDialog.dismiss();
 
+        DialogManager.getInstance().initSimpleDialog(_mActivity, title, message, cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
+            @Override
+            public void negativeClick(Dialog dialog) {
+                dialog.dismiss();
             }
 
             @Override
-            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                sDialog.dismiss();
+            public void positiveClick(Dialog dialog) {
+                dialog.dismiss();
                 LoginApi.changeLanguage(language, token, new ResponseImpl<ChangeLanguageBean>() {
                     @Override
                     public void onSuccess(ChangeLanguageBean data) {
@@ -151,10 +153,8 @@ public class LanguagesSelectFragment extends BaseListFragment<LanguageItemBean> 
                         _mActivity.finish();
                     }
                 }, ChangeLanguageBean.class);
-
             }
-        });
-        pDialog.show();
+        }).show();
 
     }
 

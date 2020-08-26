@@ -1027,15 +1027,21 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     btn4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
-                                    EshopActionActivity.Action_order_add_comment);
-                            bundle.putString("id", item.getLog_id());
-                            bundle.putString("url", item.getLogo());
+                            String caseid = item.getCaseid();
+                            if (!TextUtils.isEmpty(caseid)) {
 
-                            bundle.putString(MzConstant.KEY_ORDER_CASE_ID, item.getCaseid());
+                                Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
+                                        EshopActionActivity.Action_order_add_comment);
+                                bundle.putString("id", item.getLog_id());
+                                bundle.putString("url", item.getLogo());
+                                bundle.putString(MzConstant.KEY_ORDER_CASE_ID, caseid);
 
-                            EshopActionActivity.start(_mActivity, bundle);
+                                EshopActionActivity.start(_mActivity, bundle);
 
+                            } else {
+                                // TODO   caseId 为空 ;
+                                ToastUtil.toast("订单异常，暂不能评价");
+                            }
                         }
                     });
                 }

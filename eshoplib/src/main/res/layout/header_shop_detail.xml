@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--    性别  -->
     <LinearLayout
         android:id="@+id/ll_gender"
         android:layout_width="match_parent"
@@ -133,7 +134,9 @@
         android:background="#f1f1f1"
         android:visibility="gone" />
 
+    <!--    个人简介 -->
     <LinearLayout
+        android:id="@+id/ll_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -156,13 +159,16 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/v_remark"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#f1f1f1" />
 
+    <!--   奖项 -->
     <LinearLayout
+        android:id="@+id/ll_award"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -233,7 +239,9 @@
         android:background="#f1f1f1"
         android:visibility="gone" />
 
+    <!--    毕业院校 -->
     <LinearLayout
+        android:id="@+id/ll_school"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -273,7 +281,9 @@
         android:layout_marginRight="15dp"
         android:background="#f1f1f1" />
 
+    <!--    专业 -->
     <LinearLayout
+        android:id="@+id/ll_zhuanye"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -302,7 +312,9 @@
         android:layout_marginRight="15dp"
         android:background="#f1f1f1" />
 
+    <!--    学历 -->
     <LinearLayout
+        android:id="@+id/ll_xueli"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -360,7 +372,9 @@
         android:background="#f1f1f1"
         android:visibility="gone" />
 
+    <!--    从业经历 -->
     <LinearLayout
+        android:id="@+id/ll_work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

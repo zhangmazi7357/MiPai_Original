@@ -46,9 +46,9 @@ public abstract class BaseActivity extends SupportActivity {
         if (showToolBar() && getToolBarResId() > 0) {
             //如果需要显示自定义toolbar,并且资源id存在的情况下，实例化baseView;
             baseView = LayoutInflater.from(this).inflate(R.layout.activity_base, null, false);//根布局
-            ll_root = (LinearLayout) baseView.findViewById(R.id.ll_base_root);
-            ViewStub mVs_toolbar = (ViewStub) baseView.findViewById(R.id.vs_toolbar);//toolbar容器
-            FrameLayout fl_container = (FrameLayout) baseView.findViewById(R.id.fl_container);//子布局容器
+            ll_root =  baseView.findViewById(R.id.ll_base_root);
+            ViewStub mVs_toolbar =  baseView.findViewById(R.id.vs_toolbar);//toolbar容器
+            FrameLayout fl_container = baseView.findViewById(R.id.fl_container);//子布局容器
             mVs_toolbar.setLayoutResource(getToolBarResId());//toolbar资源id
             mVs_toolbar.inflate();//填充toolbar
             LayoutInflater.from(this).inflate(layoutResID, fl_container, true);//子布局
@@ -76,7 +76,9 @@ public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         if (CommonConfig.USE_MUILTY_LANGUAGES) {
-            super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase, newBase.getString(R.string.app_language_pref_key)));
+            super.attachBaseContext(AppLanguageUtils.attachBaseContext(newBase,
+                    newBase.getString(R.string.app_language_pref_key)));
+
         } else {
             super.attachBaseContext(newBase);
         }

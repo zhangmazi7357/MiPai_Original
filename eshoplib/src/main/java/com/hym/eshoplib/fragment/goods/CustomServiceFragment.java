@@ -2,7 +2,9 @@ package com.hym.eshoplib.fragment.goods;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,6 +26,8 @@ import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -64,7 +68,7 @@ public class CustomServiceFragment extends BaseKitFragment {
     @Override
     public void doLogic() {
         SoftHideKeyBoardUtil.assistActivity(_mActivity);
-        spid=getArguments().getString("id");
+        spid = getArguments().getString("id");
         setLeft_iv(R.drawable.ic_close_x, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,41 +89,39 @@ public class CustomServiceFragment extends BaseKitFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                    tvCount.setText(s.toString().length()+"/300");
+                tvCount.setText(s.toString().length() + "/300");
             }
         });
         etExpect.setHint("您的咨询将以邮件的方式，发送给商家，请将您要咨询的内容，和您的联系方式正确填写以保证商家可以第一时间联系您。（您发送的内容不会在软件中出现，只有商家才可以查看。）");
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String content=etExpect.getText().toString();
-                if(TextUtils.isEmpty(content)){
+                final String content = etExpect.getText().toString();
+                if (TextUtils.isEmpty(content)) {
                     ToastUtil.toast("请输入咨询信息");
                     return;
                 }
-                String confirm = getResources().getString(R.string.Confirm);
-                String cancle = getResources().getString(R.string.Cancel);
-                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "提示", "为了保证卖家联系到您，您是否已经留下了正确的联系方式？", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                    @Override
-                    public void onCancleClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
 
-                    }
-
-                    @Override
-                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
-                        GoodsApi.FeedBack(_mActivity, spid, content, new ResponseImpl<Object>() {
+                DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "为了保证卖家联系到您，您是否已经留下了正确的联系方式？",
+                        "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
                             @Override
-                            public void onSuccess(Object data) {
-                                ToastUtil.toast("反馈成功稍后客服回联系您");
-                                _mActivity.finish();
-
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
                             }
-                        },Object.class);
-                    }
-                });
-                pDialog.show();
+
+                            @Override
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
+                                GoodsApi.FeedBack(_mActivity, spid, content, new ResponseImpl<Object>() {
+                                    @Override
+                                    public void onSuccess(Object data) {
+                                        ToastUtil.toast("反馈成功稍后客服回联系您");
+                                        _mActivity.finish();
+
+                                    }
+                                }, Object.class);
+                            }
+                        }).show();
 
 
             }

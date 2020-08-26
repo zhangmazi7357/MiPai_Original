@@ -27,6 +27,8 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.fragment.base.BaseListFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.http.HttpResultUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -235,30 +237,33 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
                     @Override
                     public void onBtnTwoClick(Dialog dialog) {
                         dialog.dismiss();
-                        DialogUtil.getTowButtonDialog(_mActivity, "提示", "您确定要删除此产品么", "取消", "确定", new DialogUtil.OnDialogHandleListener() {
-                            @Override
-                            public void onCancleClick(SweetAlertDialog sDialog) {
-
-                            }
-
-                            @Override
-                            public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                //删除产品
-                                ShopApi.deleteProduct(item.getCase_id(), new ResponseImpl<Object>() {
+                        DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您确定要删除此产品么",
+                                "取消", "确定", new SimpleDialog.SimpleDialogOnClickListener() {
                                     @Override
-                                    public void onSuccess(Object data) {
-                                        onRefresh();
+                                    public void negativeClick(Dialog dialog) {
+                                        dialog.dismiss();
                                     }
-                                }, Object.class);
 
-                            }
-                        }).show();
+                                    @Override
+                                    public void positiveClick(Dialog dialog) {
+                                        dialog.dismiss();
+                                        //删除产品
+                                        ShopApi.deleteProduct(item.getCase_id(), new ResponseImpl<Object>() {
+                                            @Override
+                                            public void onSuccess(Object data) {
+                                                onRefresh();
+                                            }
+                                        }, Object.class);
+                                    }
+                                }).show();
+
 
                     }
                 });
 
             }
         });
+
         ImageUtil.getInstance().loadImage(ShopProductListFragment.this, item.getImage_default(), iv_image);
         tv_name.setText(item.getTitle() + "");
 

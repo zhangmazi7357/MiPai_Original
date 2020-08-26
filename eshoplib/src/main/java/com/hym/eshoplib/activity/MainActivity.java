@@ -71,7 +71,7 @@ public class MainActivity extends BaseMainActivity {
         super.onSaveInstanceState(outState);
 
 //        UMShareAPI.get(this).onSaveInstanceState(outState);
-        
+
     }
 
 

@@ -132,10 +132,10 @@ public class AddCommentsFragment extends BaseKitFragment {
         shopLogoUrl = bundle.getString("url", "");
         mzCaseId = bundle.getString(MzConstant.KEY_ORDER_CASE_ID);
 
-//        Log.e(TAG, "caseId =  " + mzCaseId);
 
         ImageUtil.getInstance()
-                .loadCircleImage(AddCommentsFragment.this, shopLogoUrl, ivShopLogo);
+                .loadCircleImage(AddCommentsFragment.this,
+                        shopLogoUrl, ivShopLogo);
 
 
         setTitle("订单评价");
@@ -211,7 +211,6 @@ public class AddCommentsFragment extends BaseKitFragment {
             public void onClick(View v) {
 
                 upLoadComment();
-
 
             }
         });

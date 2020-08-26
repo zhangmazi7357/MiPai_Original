@@ -241,21 +241,30 @@
     </LinearLayout>
     <!-- 基本信息 end -->
 
-    <!--  团队介绍 -->
-    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
+
+    <!--  工作室介绍 -->
+    <LinearLayout
+        android:id="@+id/ll_shop_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:detailTitle="团队介绍"
-        app:title_textSize="14sp" />
+        android:orientation="vertical">
 
-    <include layout="@layout/header_shop_detail" />
+        <cn.hym.superlib.mz.widgets.MzShopDetailTitleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:detailTitle="工作室介绍"
+            app:title_textSize="14sp" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@drawable/draw_platform_support" />
+        <include layout="@layout/header_shop_detail" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:background="@drawable/draw_platform_support" />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_view"

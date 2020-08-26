@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -569,7 +570,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     private void initfooter(View footer) {
         rvFooter = (RecyclerView) footer.findViewById(R.id.rv_footer);
-        rvFooter.setLayoutManager(new GridLayoutManager(_mActivity, 2, LinearLayoutManager.VERTICAL, false));
+        rvFooter.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         SpecialTimeLimteBean.DataBean.VideoBean videoBean = new SpecialTimeLimteBean.DataBean.VideoBean();
         rvFooterComment.add(videoBean);
         //  列表 adapter
@@ -619,6 +620,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             }
         });
         rvFooter.setAdapter(shopListAdapter);
+
     }
 
     // 辣眼睛...
@@ -766,51 +768,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     private void initMap() {
 
-
-//        if (TextUtils.isEmpty(SharePreferenceUtil.getStringData(_mActivity, "region_name"))) {
-////            mLocationClient.startLocation();
-//        }
-//
-//        MapManager.getInstance()
-//                .location(App.instance, true, new AMapLocationListener() {
-//                    @Override
-//                    public void onLocationChanged(AMapLocation amapLocation) {
-//                        if (amapLocation != null) {
-//                            if (amapLocation.getErrorCode() == 0) {
-//                                //可在其中解析amapLocation获取相应内容。
-//                                Logger.d("城市=" + amapLocation.getCity());
-//                                //tvLeft.setText(amapLocation.getCity());
-//
-//                                double longitude = amapLocation.getLongitude();
-//                                double latitude = amapLocation.getLatitude();
-//
-//                                Log.e("===", "longitude = " + longitude
-//                                        + ",latitude = " + latitude);
-//
-//                                final String city = amapLocation.getCity();
-//
-//                                HomeApi.ChangeRegion(city, new ResponseImpl<RegionBean>() {
-//                                    @Override
-//                                    public void onSuccess(RegionBean data) {
-//
-//                                        SharePreferenceUtil.setStringData(_mActivity, "region_name", city);
-//                                        SharePreferenceUtil.setStringData(_mActivity, "region_id", data.getData().getRegion_id());
-//
-//                                        tvLeft.setText(city);
-//
-//                                    }
-//                                }, RegionBean.class);
-//
-//                            } else {
-//                                //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-//                                Logger.d("location Error, ErrCode:"
-//                                        + amapLocation.getErrorCode() + ", errInfo:"
-//                                        + amapLocation.getErrorInfo());
-//                                tvLeft.setText("定位失败...");
-//                            }
-//                        }
-//                    }
-//                });
 
         mLocationClient = new AMapLocationClient(App.instance);
         mLocationListener = new AMapLocationListener() {
@@ -1684,7 +1641,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                                                                     if (mHightLight2 != null) {
                                                                         mHightLight2.remove();
                                                                     }
-                                                                    EventBus.getDefault().post(new ShowGuideEvent());
+                                                                    //   EventBus.getDefault().post(new ShowGuideEvent());
                                                                 }
                                                             }).show();
                                                 }
@@ -1716,10 +1673,13 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             }
             //引导出现后，则设置第一次启动完毕，同时不再出现
             SharePreferenceUtil.setBooleanData(_mActivity, key, true);
+
         } else {
+
             if (!hasinit) {
-                EventBus.getDefault().post(new ShowGuideEvent());
+                //  EventBus.getDefault().post(new ShowGuideEvent());
             }
+
         }
     }
 

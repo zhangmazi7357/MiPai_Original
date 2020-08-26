@@ -142,6 +142,15 @@ public class SpecialTimeLimteBean implements Serializable {
             private String videotype;
             private String views;
             private String weight;
+            private String tags;
+
+            public String getTags() {
+                return tags;
+            }
+
+            public void setTags(String tags) {
+                this.tags = tags;
+            }
 
             public String getAgree() {
                 return agree;

@@ -34,6 +34,8 @@ import cn.hym.superlib.event.UpdateDataEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
@@ -211,27 +213,28 @@ public class OrderDetailFragment extends BaseKitFragment {
                                 // ToastUtil.toast("确认收货");
                                 String confirm = getResources().getString(R.string.Confirm);
                                 String cancle = getResources().getString(R.string.Cancel);
-                                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, getResources().getString(R.string.ConfirmOrder), "请确认货物已经收到", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                    @Override
-                                    public void onCancleClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismiss();
 
-                                    }
-
-                                    @Override
-                                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismiss();
-                                        OrderApi.ConfirmOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                                DialogManager.getInstance().initSimpleDialog(_mActivity, getResources().getString(R.string.ConfirmOrder),
+                                        "请确认货物已经收到", cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
                                             @Override
-                                            public void onSuccess(Object data) {
-                                                EventBus.getDefault().post(new UpdateDataEvent());
-                                                _mActivity.finish();
+                                            public void negativeClick(Dialog dialog) {
+                                                dialog.dismiss();
                                             }
-                                        }, Object.class);
 
-                                    }
-                                });
-                                pDialog.show();
+                                            @Override
+                                            public void positiveClick(Dialog dialog) {
+                                                dialog.dismiss();
+                                                OrderApi.ConfirmOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                                                    @Override
+                                                    public void onSuccess(Object data) {
+                                                        EventBus.getDefault().post(new UpdateDataEvent());
+                                                        _mActivity.finish();
+                                                    }
+                                                }, Object.class);
+                                            }
+                                        }).show();
+
+
                             }
                         });
                         //待收货订单显示确认时间
@@ -270,28 +273,29 @@ public class OrderDetailFragment extends BaseKitFragment {
                             // ToastUtil.toast("取消订单");
                             String confirm = getResources().getString(R.string.Confirm);
                             String cancle = getResources().getString(R.string.Cancel);
-                            Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, getResources().getString(R.string.Cancel), "确定要取消订单吗?", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                                @Override
-                                public void onCancleClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
 
-                                }
-
-                                @Override
-                                public void onConfirmeClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismiss();
-                                    OrderApi.CancelOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                            DialogManager.getInstance().initSimpleDialog(_mActivity, getResources().getString(R.string.Cancel),
+                                    "确定要取消订单吗?", cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
                                         @Override
-                                        public void onSuccess(Object data) {
-                                            EventBus.getDefault().post(new UpdateDataEvent());
-                                            _mActivity.finish();
-
+                                        public void negativeClick(Dialog dialog) {
+                                            dialog.dismiss();
                                         }
-                                    }, Object.class);
 
-                                }
-                            });
-                            pDialog.show();
+                                        @Override
+                                        public void positiveClick(Dialog dialog) {
+                                            dialog.dismiss();
+                                            OrderApi.CancelOrder(_mActivity, data.getData().getChild_order_id(), new ResponseImpl<Object>() {
+                                                @Override
+                                                public void onSuccess(Object data) {
+                                                    EventBus.getDefault().post(new UpdateDataEvent());
+                                                    _mActivity.finish();
+
+                                                }
+                                            }, Object.class);
+                                        }
+                                    }).show();
+
+
                         }
                     });
                     btn2.setOnClickListener(new View.OnClickListener() {

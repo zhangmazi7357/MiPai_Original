@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
@@ -112,6 +113,7 @@ public class CommentDetailFragment extends BaseKitFragment {
             @Override
             public void onSuccess(CommentDetailBean data) {
 
+              //  Log.e(TAG, "评价详情 = " + JSONObject.toJSONString(data));
 
                 ImageUtil.getInstance()
                         .loadCircleImage(CommentDetailFragment.this,
@@ -120,6 +122,7 @@ public class CommentDetailFragment extends BaseKitFragment {
                 tvName.setText(data.getData().getNickname() + "");
                 tvTime.setText(data.getData().getCtime());
                 String rank_type = data.getData().getRank_type();
+
                 if (!TextUtils.isEmpty(rank_type)) {
                     ratingbar.setRating(Float.parseFloat(rank_type));
                 }
@@ -207,7 +210,7 @@ public class CommentDetailFragment extends BaseKitFragment {
             @Override
             public void dataRes(int code, String data) {
                 super.dataRes(code, data);
-             //   Log.e(TAG, "dataRes: " + data);
+                //   Log.e(TAG, "dataRes: " + data);
             }
         }, CommentDetailBean.class);
 

@@ -27,6 +27,8 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.fragment.base.BaseListFragment;
 import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
 import cn.hym.superlib.widgets.snapstep.listener.SnappingStepperValueChangeListener;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -69,39 +71,44 @@ public class ShoppingcartFragment extends BaseListFragment<ShoppingcatrtListBean
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
                 String confirm = getResources().getString(R.string.Confirm);
                 String cancle = getResources().getString(R.string.Cancel);
-                Dialog pDialog = DialogUtil.getTowButtonDialog(_mActivity, "提示", "您确定要删这个商品么", cancle, confirm, new DialogUtil.OnDialogHandleListener() {
-                    @Override
-                    public void onCancleClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
 
-                    }
-
-                    @Override
-                    public void onConfirmeClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
-                        ShoppingCarApi.deleGoods(_mActivity, getAdapter().getData().get(position).getCart_id(), new ResponseImpl<Object>() {
+                DialogManager.getInstance().initSimpleDialog(_mActivity, "提示", "您确定要删这个商品么",
+                        cancle, confirm, new SimpleDialog.SimpleDialogOnClickListener() {
                             @Override
-                            public void onStart(int mark) {
-                                setShowProgressDialog(true);
-                                super.onStart(mark);
+                            public void negativeClick(Dialog dialog) {
+                                dialog.dismiss();
                             }
 
                             @Override
-                            public void onFinish(int mark) {
-                                super.onFinish(mark);
-                                setShowProgressDialog(false);
+                            public void positiveClick(Dialog dialog) {
+                                dialog.dismiss();
+                                ShoppingCarApi.deleGoods(_mActivity, getAdapter().getData().get(position).getCart_id(),
+                                        new ResponseImpl<Object>() {
+                                            @Override
+                                            public void onStart(int mark) {
+                                                setShowProgressDialog(true);
+                                                super.onStart(mark);
+                                            }
+
+                                            @Override
+                                            public void onFinish(int mark) {
+                                                super.onFinish(mark);
+                                                setShowProgressDialog(false);
+                                            }
+
+                                            @Override
+                                            public void onSuccess(Object data) {
+                                                onRefresh();
+
+                                            }
+                                        },
+                                        Object.class);
+
+
                             }
+                        }).show();
 
-                            @Override
-                            public void onSuccess(Object data) {
-                                onRefresh();
 
-                            }
-                        }, Object.class);
-
-                    }
-                });
-                pDialog.show();
                 return false;
             }
         });

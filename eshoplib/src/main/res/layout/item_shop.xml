@@ -90,25 +90,15 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_tag"
-            android:layout_width="wrap_content"
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/flowLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/rl"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/mz_bg_tag"
-            android:ellipsize="end"
-            android:maxEms="5"
-            android:paddingLeft="3dp"
-            android:paddingTop="2dp"
-            android:paddingRight="3dp"
-            android:paddingBottom="2dp"
-            android:singleLine="true"
-            android:textColor="@color/red"
-            android:textSize="13sp"
-            android:visibility="gone"
-            tools:text="标签" />
+            android:layout_below="@+id/rl"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp" />
     </RelativeLayout>
 
 </RelativeLayout>
