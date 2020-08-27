@@ -177,7 +177,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
 
                 String caseId = item.getCase_id();
 
-                LngLonModel lngLonModel = new LngLonModel(item.getLon(), item.getLat(), item.getAddress());
+//                LngLonModel lngLonModel = new LngLonModel(item.getLon(), item.getLat(), item.getAddress());
 
                 HomeApi.getProductDetailData(new ResponseImpl<GoodDetailModel>() {
                     @Override
@@ -194,7 +194,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                             bundle.putSerializable("data", data);
 
                             // 产品 地址 经纬度。
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
+//                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
 
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(getActivity(), bundle);
@@ -209,7 +209,7 @@ public class MzSearchAllFragment extends MzBaseFragment implements SwipeRefreshL
                             bundle.putSerializable("data", data);
 
                             // item 包含了 经纬度 ;
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
+//                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
 
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(getActivity(), bundle);

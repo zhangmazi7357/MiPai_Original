@@ -25,22 +25,35 @@
         android:textStyle="bold"
         tools:text="title" />
 
-    <TextView
-        android:id="@+id/rightTv"
+    <!--  右边文字  -->
+    <LinearLayout
+        android:id="@+id/l_rightTv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:gravity="center"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/mipaiTextColorSelect" />
+        android:layout_gravity="right|center_vertical"
+        android:gravity="center">
 
+        <TextView
+            android:id="@+id/rightTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/mipaiTextColorSelect"
+            tools:text="确定" />
+
+    </LinearLayout>
+
+    <!--  右边图片  -->
     <LinearLayout
         android:id="@+id/l_rightIv"
         android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/rightIv"

@@ -140,7 +140,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
 
                 String case_id = bean.getCase_id();
 
-                LngLonModel lngLonModel = new LngLonModel(bean.getLon(), bean.getLat(), bean.getAddress());
+//                LngLonModel lngLonModel = new LngLonModel(bean.getLon(), bean.getLat(), bean.getAddress());
 
 //                Log.e(TAG, " == " + JSONObject.toJSONString(bean));
 
@@ -159,7 +159,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                             bundle.putSerializable("data", data);
 
                             // 产品 地址 经纬度。
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
+//                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
 
 
                             bundle.putString("title", "产品详情");
@@ -173,7 +173,7 @@ public class MzProductListActivity extends MzBaseActivity implements AMapLocatio
                                     ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
 
-                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
+//                            bundle.putSerializable(MzConstant.KEY_HOME_ICON_PRODUCT, lngLonModel);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(MzProductListActivity.this, bundle);
 

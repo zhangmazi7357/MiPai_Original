@@ -889,6 +889,15 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 break;
             case R.id.tv_report:
 
+                DialogView dialog = DialogManager.getInstance()
+                        .initView(_mActivity, R.layout.mz_dialog_shopdetail_report, Gravity.CENTER);
+                dialog.show();
+                dialog.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 break;
             case R.id.rl_click_workhome:
                 Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopDetail);
@@ -1054,14 +1063,13 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
     // 计算距离
     private void addAddressDistance() {
-        Bundle bundle = getArguments();
-        LngLonModel item = (LngLonModel) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+
+        String lon = data.getData().getLon();
+        String lat = data.getData().getLat();
+        String address = data.getData().getAddress();
 
 
-        String lon = item.getLon();
-        String lat = item.getLat();
 
-        String address = item.getAddress();
         proAddress.setText(address);
 
         if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {

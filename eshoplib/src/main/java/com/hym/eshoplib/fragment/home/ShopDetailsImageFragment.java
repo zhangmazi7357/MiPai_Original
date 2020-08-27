@@ -992,6 +992,17 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
             case R.id.tv_report:                    // 举报
 
+                DialogView dialog = DialogManager.getInstance()
+                        .initView(_mActivity, R.layout.mz_dialog_shopdetail_report, Gravity.CENTER);
+                dialog.show();
+                dialog.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
                 break;
             case R.id.rl_click_workhome:            // 进入工作室页面 ；
 
@@ -1158,15 +1169,15 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
     // 计算距离
     private void addAddressDistance() {
-        Bundle bundle = getArguments();
-        LngLonModel item =
-                (LngLonModel) bundle.getSerializable(MzConstant.KEY_HOME_ICON_PRODUCT);
+
+        GoodDetailModel.DataBean item = this.data.getData();
 
 
         String lon = item.getLon();
         String lat = item.getLat();
-
         String address = item.getAddress();
+
+
         proAddress.setText(address);
 
         if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {
@@ -1206,7 +1217,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     // 工作室详情
     private void setDetailData(ServiceDetailBean data) {
 
-        Log.e(TAG, "工作室详情 = " + JSONObject.toJSONString(data));
+        // Log.e(TAG, "工作室详情 = " + JSONObject.toJSONString(data));
 
         ServiceDetailBean.DataBean shopDetailData = data.getData();
         // 个人简介

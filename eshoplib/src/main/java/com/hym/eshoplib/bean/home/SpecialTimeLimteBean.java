@@ -143,6 +143,24 @@ public class SpecialTimeLimteBean implements Serializable {
             private String views;
             private String weight;
             private String tags;
+            private String lon;
+            private String lat;
+
+            public String getLon() {
+                return lon;
+            }
+
+            public void setLon(String lon) {
+                this.lon = lon;
+            }
+
+            public String getLat() {
+                return lat;
+            }
+
+            public void setLat(String lat) {
+                this.lat = lat;
+            }
 
             public String getTags() {
                 return tags;

@@ -2,13 +2,11 @@ package com.hym.eshoplib.fragment.home;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -33,7 +30,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.lib_amap.MapManager;
 import com.hym.eshoplib.BuildConfig;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -47,7 +43,6 @@ import com.hym.eshoplib.bean.home.HomeVadieoListBean;
 import com.hym.eshoplib.bean.home.SpecialTimeLimteBean;
 import com.hym.eshoplib.bean.home.SystemMessageListBean;
 import com.hym.eshoplib.bean.home.TipsMessageBean;
-import com.hym.eshoplib.event.ShowGuideEvent;
 import com.hym.eshoplib.http.goods.GoodsApi;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.mz.MzConstant;
@@ -55,7 +50,6 @@ import com.hym.eshoplib.mz.iconproduct.MzProductListActivity;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.OnBottomPosCallback2;
 import com.hym.eshoplib.util.OnTopPosCallbac3;
-import com.hym.eshoplib.widgets.JzvdStdVolumeAfterFullscreen;
 import com.hym.loginmodule.activity.LoginMainActivity;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -67,7 +61,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -95,7 +88,6 @@ import cn.hym.superlib.utils.view.SystemBarUtil;
 import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import io.rong.imkit.RongIM;
 import io.rong.pushperm.ResultCallback;
 import io.rong.pushperm.RongPushPremissionsCheckHelper;
@@ -422,7 +414,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
         View footer = LayoutInflater.from(_mActivity).inflate(R.layout.home_item_footer_view, null, false);
         findViews(header);
-        initfooter(footer);
+        initFooter(footer);
 
         firstPagerShopItemAdapter.addHeaderView(header);
         firstPagerShopItemAdapter.addFooterView(footer);
@@ -466,7 +458,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         case_id = firstPagerShopBeans.get(1).getVideo().get(1).getCase_id();
                         shopDetail(case_id);
                         break;
-                    case R.id.tv_tehui_odd_more:
+                    case R.id.tv_tehui_odd_more:            // 特惠 更多 ;
                         SpecialTimeLimteBean.DataBean tehuiAddMore = firstPagerShopBeans.get(0);
                         Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                 ActionActivity.moreshop);
@@ -474,7 +466,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         bundle.putSerializable("title", "限时特惠");
                         ActionActivity.start(_mActivity, bundle);
                         break;
-                    case R.id.tv_strict_select_more:
+                    case R.id.tv_strict_select_more:        // 严选 更多
                         SpecialTimeLimteBean.DataBean yanXuanAddMore = firstPagerShopBeans.get(1);
                         Bundle bundle1 = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
                                 ActionActivity.moreshop);
@@ -524,12 +516,14 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     // 获取到商品详情然后跳转到商品详情页;
     private void shopDetail(String case_id) {
 
+        // API  - 产品详情 ;
         HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
             @Override
             public void onSuccess(GoodDetailModel data) {
                 if (data.getData().getType().equals("1")) {
 
-                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
+                    Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home,
+                            ActionActivity.ShopVideoDetail);
                     bundle.putSerializable("data", data);
                     bundle.putString("title", "产品详情");
 
@@ -557,18 +551,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     }
 
 
-    private void SetTraslateToorble() {
-        toolbar.setBackgroundColor(Color.argb(0, 255, 255, 255));
-        viewHead.setBackgroundColor(ContextCompat.getColor(_mActivity, R.color.transparent));
-        tvLeft.setTextColor(ContextCompat.getColor(_mActivity, R.color.white));
-        tvLeft.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
-        ivToolbarRight.setImageResource(R.drawable.ic_gologin);
-        flSearch.setBackgroundResource(R.drawable.shape_white_oval);
-        ivSearch.setImageResource(R.drawable.ic_search);
-        tvSearch.setHintTextColor(Color.parseColor("#a0a0a0"));
-    }
-
-    private void initfooter(View footer) {
+    private void initFooter(View footer) {
         rvFooter = (RecyclerView) footer.findViewById(R.id.rv_footer);
         rvFooter.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         SpecialTimeLimteBean.DataBean.VideoBean videoBean = new SpecialTimeLimteBean.DataBean.VideoBean();
@@ -767,7 +750,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     }
 
     private void initMap() {
-
 
         mLocationClient = new AMapLocationClient(App.instance);
         mLocationListener = new AMapLocationListener() {
@@ -1006,10 +988,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         flSearch.setBackgroundResource(R.drawable.shape_white_oval);
                         ivSearch.setImageResource(R.drawable.ic_search);
                         tvSearch.setHintTextColor(Color.parseColor("#a0a0a0"));
-//                        Log.e("大于0", "大于0");
-                        //refreshLayout.setEnabled(true);
                     } else {
-//                        Log.e("大于0", "小于0");
                         //滑动
                         toolbar.setBackgroundResource(R.color.white);
                         viewHead.setBackgroundResource(R.drawable.shape_toolbar_bg);
@@ -1044,16 +1023,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 LoginMainActivity.start(_mActivity, bundle);
             }
         });
-//        tvFunction1.setOnClickListener(this);
-//        tvFunction2.setOnClickListener(this);
-//        tvFunction3.setOnClickListener(this);
-//        tvFunction4.setOnClickListener(this);
-//        tvFunction5.setOnClickListener(this);
-//        tvFunction6.setOnClickListener(this);
-//        tvFunction7.setOnClickListener(this);
-//        tvFunction8.setOnClickListener(this);
-//        tvFunction9.setOnClickListener(this);
-//        tvFunction10.setOnClickListener(this);
 
         homeTab1.setOnClickListener(this);
         homeTab2.setOnClickListener(this);
@@ -1119,31 +1088,17 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         homeTab9 = header.findViewById(R.id.home_tab_9);
         homeTab10 = header.findViewById(R.id.home_tab_10);
 
-//        tvFunction1 = header.findViewById(R.id.ll_function_tab_1);
-//        tvFunction2 = header.findViewById(R.id.ll_function_tab_2);
-//        tvFunction3 = header.findViewById(R.id.ll_function_tab_3);
-//        tvFunction4 = header.findViewById(R.id.ll_function_tab_4);
-//        tvFunction5 = header.findViewById(R.id.ll_function_tab_5);
-//        tvFunction6 = header.findViewById(R.id.ll_function_tab_6);
-//        tvFunction7 = header.findViewById(R.id.ll_function_tab_7);
-//        tvFunction8 = header.findViewById(R.id.ll_function_tab_8);
-//        tvFunction9 = header.findViewById(R.id.ll_function_tab_9);
-//        tvFunction10 = header.findViewById(R.id.ll_function_tab_10);
 
-
-        // setFunctionName();
         tv_more_news = header.findViewById(R.id.tv_more_news);
         tv_more_vadieos = header.findViewById(R.id.tv_more_vadieo);
         TextView tvNeedTitle = header.findViewById(R.id.tv_need_title);
         TextView tvIWhat = header.findViewById(R.id.tv_need_i_what);
-        // newMarquee = header.findViewById(R.id.news_marqueen);
         banner = header.findViewById(R.id.banner);
         simpleMarqueeView = header.findViewById(R.id.simpleMarqueeView);
         fl_banner = header.findViewById(R.id.fl_banner);
         needsMarqueen = header.findViewById(R.id.upview1);
         etInput = header.findViewById(R.id.et_input);
         tvForMe = header.findViewById(R.id.tv_for_me);
-        //tvNeedTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
         tvIWhat.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
         tvForMe.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
     }
@@ -1229,44 +1184,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     int p = 1;
 
-    public void getVideoList(final boolean refresh, final int pageNum) {
-
-        if (SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true)) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HomeApi.GetVideo(pageNum + "", new ResponseImpl<HomeVadieoListBean>() {
-                        @Override
-                        public void onSuccess(HomeVadieoListBean data) {
-                            int total = data.getData().getTotalpage();
-                            if (refresh) {
-                                p = HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getVideo(), adapter);
-                            } else {
-                                p = HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getVideo(), adapter);
-                            }
-                        }
-                    }, HomeVadieoListBean.class);
-                }
-            }, 500);
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HomeApi.GetVideo(pageNum + "", new ResponseImpl<HomeVadieoListBean>() {
-                        @Override
-                        public void onSuccess(HomeVadieoListBean data) {
-                            int total = data.getData().getTotalpage();
-                            if (refresh) {
-                                p = HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getVideo(), adapter);
-                            } else {
-                                p = HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getVideo(), adapter);
-                            }
-                        }
-                    }, HomeVadieoListBean.class);
-                }
-            }, 200);
-        }
-    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -1288,7 +1205,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-        //这个...
         HomeApi.GetAdvert(new ResponseImpl<HomeDataBean>() {
             @Override
             public void onStart(int mark) {
@@ -1380,6 +1296,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     private void initHomeComment(final int page) {
         commentPage = page;
         HomeApi.getHomeCommentData(page, new ResponseImpl<SpecialTimeLimteBean>() {
+
             @Override
             public void onSuccess(SpecialTimeLimteBean data) {
                 SpecialTimeLimteBean.DataBean data1 = data.getData();
@@ -1397,6 +1314,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     shopListAdapter.notifyDataSetChanged();
                     refreshLayout.finishLoadMore(true);
                 }
+
             }
         }, SpecialTimeLimteBean.class);
     }
@@ -1407,15 +1325,18 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         HomeApi.getTakePhotoData(page, new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(SpecialTimeLimteBean data) {
+
                 SpecialTimeLimteBean.DataBean data1 = data.getData();
                 List<SpecialTimeLimteBean.DataBean.VideoBean> video = data1.getVideo();
                 if (takePhotoPage == 1) {
                     if (rvFooterTakePhoto.size() > 0) {
                         rvFooterTakePhoto.clear();
                     }
+
                     rvFooterTakePhoto.addAll(video);
                     shopListAdapter.setNewData(video);
                     shopListAdapter.notifyDataSetChanged();
+
                 } else {
                     rvFooterTakePhoto.addAll(video);
                     shopListAdapter.addData(video);
@@ -1424,6 +1345,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                     refreshLayout.finishLoadMore(true);
                     shopListAdapter.loadMoreComplete();
                 }
+
             }
         }, SpecialTimeLimteBean.class);
     }
@@ -1434,6 +1356,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         HomeApi.getTakeVedioData(page, new ResponseImpl<SpecialTimeLimteBean>() {
             @Override
             public void onSuccess(SpecialTimeLimteBean data) {
+
                 SpecialTimeLimteBean.DataBean data1 = data.getData();
                 List<SpecialTimeLimteBean.DataBean.VideoBean> video = data1.getVideo();
                 if (page == 1) {
@@ -1455,44 +1378,47 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                         firstPagerShopItemAdapter.loadMoreEnd();
                     }*/
                 }
+
             }
         }, SpecialTimeLimteBean.class);
     }
 
     // 觅拍严选
     private void initSelectData() {
-        HomeApi.getStrictSelectData(String.valueOf(1), "", "", new ResponseImpl<SpecialTimeLimteBean>() {
+        HomeApi.getStrictSelectData(String.valueOf(1), "", "",
+                new ResponseImpl<SpecialTimeLimteBean>() {
 
-            @Override
-            public void onSuccess(SpecialTimeLimteBean data) {
+                    @Override
+                    public void onSuccess(SpecialTimeLimteBean data) {
 
-                SpecialTimeLimteBean.DataBean data1 = data.getData();
-                data1.setItemType(2);
-                firstPagerShopBeans.add(data1);
+                        SpecialTimeLimteBean.DataBean data1 = data.getData();
+                        data1.setItemType(2);
+                        firstPagerShopBeans.add(data1);
 
-                SpecialTimeLimteBean.DataBean dataBean = new SpecialTimeLimteBean.DataBean();
-                dataBean.setSelected(tabSelect);
-                dataBean.setItemType(3);
-                firstPagerShopBeans.add(dataBean);
+                        SpecialTimeLimteBean.DataBean dataBean = new SpecialTimeLimteBean.DataBean();
+                        dataBean.setSelected(tabSelect);
+                        dataBean.setItemType(3);
+                        firstPagerShopBeans.add(dataBean);
 
-                firstPagerShopItemAdapter.setNewData(firstPagerShopBeans);
-                firstPagerShopItemAdapter.notifyDataSetChanged();
-            }
+                        firstPagerShopItemAdapter.setNewData(firstPagerShopBeans);
+                        firstPagerShopItemAdapter.notifyDataSetChanged();
+                    }
 
-            @Override
-            public void onDataError(String status, String errormessage) {
-                super.onDataError(status, errormessage);
-            }
+                    @Override
+                    public void onDataError(String status, String errormessage) {
+                        super.onDataError(status, errormessage);
+                    }
 
-            @Override
-            public void onFailed(Exception e) {
-                super.onFailed(e);
-            }
+                    @Override
+                    public void onFailed(Exception e) {
+                        super.onFailed(e);
+                    }
 
-        }, SpecialTimeLimteBean.class);
+                },
+                SpecialTimeLimteBean.class);
     }
 
-    // 中间部分 为我推荐
+    // 中间部分 为我推荐 --- 搜索
     private void initCommentForMe() {
         GoodsApi.getCommentForMeData(new ResponseImpl<CommentForMeBean>() {
             @Override
@@ -1523,29 +1449,32 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     // 限时特惠
     private void initSpecialTimeLimteData() {
-        HomeApi.getSpecialTimeLimteData(1 + "", "", "", new ResponseImpl<SpecialTimeLimteBean>() {
-            @Override
-            public void onSuccess(SpecialTimeLimteBean data) {
-                if (firstPagerShopBeans.size() > 0) {
-                    firstPagerShopBeans.clear();
-                }
-                SpecialTimeLimteBean.DataBean data1 = data.getData();
-                data1.setItemType(1);
-                firstPagerShopBeans.add(data1);
-                initSelectData();
-            }
 
-            @Override
-            public void onDataError(String status, String errormessage) {
-                super.onDataError(status, errormessage);
-            }
+        HomeApi.getSpecialTimeLimteData("1", "", "",
+                new ResponseImpl<SpecialTimeLimteBean>() {
+                    @Override
+                    public void onSuccess(SpecialTimeLimteBean data) {
+                        if (firstPagerShopBeans.size() > 0) {
+                            firstPagerShopBeans.clear();
+                        }
+                        SpecialTimeLimteBean.DataBean data1 = data.getData();
+                        data1.setItemType(1);
+                        firstPagerShopBeans.add(data1);
+                        initSelectData();
+                    }
 
-            @Override
-            public void onFailed(Exception e) {
-                super.onFailed(e);
+                    @Override
+                    public void onDataError(String status, String errormessage) {
+                        super.onDataError(status, errormessage);
+                    }
 
-            }
-        }, SpecialTimeLimteBean.class);
+                    @Override
+                    public void onFailed(Exception e) {
+                        super.onFailed(e);
+
+                    }
+                },
+                SpecialTimeLimteBean.class);
     }
 
     // 显示引导页   使用布局高亮 ;
@@ -1739,46 +1668,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         intent.putExtra(MzConstant.KEY_HOME_ICON_ID, iconId);
         startActivity(intent);
 
-        // 布局靠上网格布局中的 职位;
-//        int type = 1;
-//        switch (v.getId()) {
-//            case R.id.ll_function_tab_1:
-//                type = 1;
-//                break;
-//            case R.id.ll_function_tab_2:
-//                type = 8;
-//                break;
-//            case R.id.ll_function_tab_3:
-//                type = 3;
-//                break;
-//            case R.id.ll_function_tab_4:
-//                type = 4;
-//                break;
-//            case R.id.ll_function_tab_5:
-//                type = 5;
-//                break;
-//            case R.id.ll_function_tab_6:
-//                type = 6;
-//                break;
-//            case R.id.ll_function_tab_7:
-//                type = 7;
-//                break;
-//            case R.id.ll_function_tab_8:
-//                type = 2;
-//                break;
-//            case R.id.ll_function_tab_9:
-//                //演员
-//                type = 46;
-//                break;
-//            case R.id.ll_function_tab_10:
-//                //化妆师
-//                type = 40;
-//                break;
-//        }
-//
-//        Bundle bundle = getActionBundle(ActionActivity.ModelType_Shop, ActionActivity.Action_ShopList);
-//        bundle.putInt("type", type);
-//        ActionActivity.start(_mActivity, bundle);
 
     }
 
@@ -1794,52 +1683,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     public void onPause() {
         super.onPause();
         Jzvd.releaseAllVideos();
-    }
-
-    // 自动播放视频
-    private void autoPlayVideo(RecyclerView view) {
-        if (!JCUtils.isWifiConnected(getContext()) || SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true) == false) {
-            return;
-        }
-        RecyclerView.LayoutManager layoutManager = view.getLayoutManager();
-        for (int i = 0; i < visibleCount; i++) {
-            if (view != null && view.getChildAt(i) != null && view.getChildAt(i).findViewById(R.id.ll_vedieo_contailnner) != null) {
-                JzvdStdVolumeAfterFullscreen videoPlayerStandard1 = (JzvdStdVolumeAfterFullscreen) view.getChildAt(i).findViewById(R.id.videoplayer);
-                LinearLayout linearLayout = view.getChildAt(i).findViewById(R.id.ll_vedieo_contailnner);
-                Rect rect = new Rect();
-                linearLayout.getLocalVisibleRect(rect);
-                int videoheight3 = linearLayout.getHeight();
-                //当前播放器能完全显示
-                if (rect.top == 0 && rect.bottom == videoheight3) {
-                    if (videoPlayerStandard1.currentState == Jzvd.CURRENT_STATE_NORMAL || videoPlayerStandard1.currentState == Jzvd.CURRENT_STATE_ERROR) {
-                        //调用开始播放的按钮
-                        videoPlayerStandard1.startButton.performClick();
-
-                    }
-                    return;
-                }
-
-            }
-//            if (view != null && view.getChildAt(i) != null && view.getChildAt(i).findViewById(R.id.videoplayer) != null) {
-//                JzvdStdVolumeAfterFullscreen videoPlayerStandard1 = (JzvdStdVolumeAfterFullscreen) view.getChildAt(i).findViewById(R.id.videoplayer);
-//                Rect rect = new Rect();
-//                videoPlayerStandard1.getLocalVisibleRect(rect);
-//                int videoheight3 = videoPlayerStandard1.getHeight();
-//                //当前播放器能完全显示
-//                if (rect.top == 0 && rect.bottom == videoheight3) {
-//                    if (videoPlayerStandard1.currentState == Jzvd.CURRENT_STATE_NORMAL || videoPlayerStandard1.currentState == Jzvd.CURRENT_STATE_ERROR) {
-//                        //调用开始播放的按钮
-//                        videoPlayerStandard1.startButton.performClick();
-//
-//                    }
-//                    return;
-//                }
-//
-//            }
-
-        }
-        Jzvd.releaseAllVideos();
-
     }
 
 

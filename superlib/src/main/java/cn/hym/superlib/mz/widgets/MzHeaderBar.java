@@ -21,6 +21,7 @@ public class MzHeaderBar extends FrameLayout {
 
     private LinearLayout back;
     private TextView tvTitle;
+    private LinearLayout lRightTv;
     private TextView tvRight;
     private LinearLayout lRightIv;
     private ImageView rightIv;
@@ -43,6 +44,7 @@ public class MzHeaderBar extends FrameLayout {
 
         back = root.findViewById(R.id.back);
         tvTitle = root.findViewById(R.id.title);
+        lRightTv = root.findViewById(R.id.l_rightTv);
         tvRight = root.findViewById(R.id.rightTv);
         rightIv = root.findViewById(R.id.rightIv);
         lRightIv = root.findViewById(R.id.l_rightIv);
@@ -75,7 +77,7 @@ public class MzHeaderBar extends FrameLayout {
         });
 
 
-        tvRight.setOnClickListener(new OnClickListener() {
+        lRightTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (headerBarListener != null) {
