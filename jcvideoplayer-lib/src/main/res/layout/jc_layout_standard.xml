@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:descendantFocusability="blocksDescendants"
-    app:cardCornerRadius="6dp"
-    >
+    app:cardCornerRadius="6dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,19 +15,18 @@
         <FrameLayout
             android:id="@+id/surface_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
+            android:layout_height="match_parent"></FrameLayout>
 
         <ImageView
             android:id="@+id/thumb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:background="#000000"
             android:scaleType="fitXY" />
 
@@ -37,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="14dp"
             android:layout_marginLeft="14dp"
+            android:layout_marginBottom="14dp"
             android:text="列表标题"
             android:textColor="#ffffff"
             android:visibility="gone" />
@@ -47,13 +45,13 @@
             android:id="@+id/tv_see_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="14dp"
             android:paddingBottom="10dp"
-            tools:text="1.2万次观看"
             android:textColor="#ffffff"
-            />
+            tools:text="1.2万次观看" />
+
         <TextView
             android:id="@+id/tv_time_long"
             android:layout_width="wrap_content"
@@ -62,8 +60,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginBottom="10dp"
-            tools:text="1'15"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            tools:text="1'15" />
+
         <LinearLayout
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
@@ -92,10 +91,10 @@
                 android:max="100"
                 android:maxHeight="1dp"
                 android:minHeight="1dp"
-                android:paddingBottom="8dp"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp"
                 android:progressDrawable="@drawable/jc_bottom_seek_progress"
                 android:thumb="@drawable/jc_bottom_seek_thumb" />
 
@@ -148,8 +147,8 @@
             android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/jc_title_bg"
             android:gravity="center_vertical">
@@ -158,11 +157,11 @@
                 android:id="@+id/back"
                 android:layout_width="23dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:paddingLeft="12dp"
                 android:paddingStart="12dp"
+                android:paddingLeft="12dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/jc_click_back_selector" />
 
@@ -171,12 +170,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_toEndOf="@+id/back"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_toLeftOf="@+id/battery_time_layout"
+                android:layout_toEndOf="@+id/back"
                 android:layout_toRightOf="@+id/back"
                 android:ellipsize="end"
                 android:maxLines="2"

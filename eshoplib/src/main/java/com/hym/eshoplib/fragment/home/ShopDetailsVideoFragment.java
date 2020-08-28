@@ -1,15 +1,19 @@
 package com.hym.eshoplib.fragment.home;
 
 import android.app.Dialog;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +87,9 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.listener.FragmentKeyDownListener;
 import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.mz.utils.MzUtil;
 import cn.hym.superlib.mz.utils.SizeUtils;
 import cn.hym.superlib.mz.widgets.MzShopDetailTitleView;
 import cn.hym.superlib.mz.widgets.TabWithScrollView;
@@ -103,7 +109,10 @@ import io.rong.imlib.RongIMClient;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-public class ShopDetailsVideoFragment extends BaseKitFragment implements View.OnClickListener {
+import static android.media.AudioManager.STREAM_MUSIC;
+
+public class ShopDetailsVideoFragment extends BaseKitFragment
+        implements View.OnClickListener, FragmentKeyDownListener {
 
 
     private String TAG = "ShopDetailsVideoFragment";
@@ -114,10 +123,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     TextView tvReport;
     @BindView(R.id.tv_before_price)
     TextView tvBeforePrice;
-    @BindView(R.id.iv_notify)
-    ImageView ivNotify;
-    @BindView(R.id.tv_01)
-    TextView tv01;
+
+
     @BindView(R.id.tv_total_price)
     TextView tvTotalPrice;
     @BindView(R.id.tv_buy_count)
@@ -143,19 +150,10 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     @BindView(R.id.rl_right)
     RelativeLayout rlRight;
 
+    @BindView(R.id.speaker)
+    ImageView speaker;
 
-    //    @BindView(R.id.tv_1)
-//    TextView tv1;
-//    @BindView(R.id.tv_team_introduction)
-//    TextView tvTeamIntroduction;
-//    @BindView(R.id.tv_2)
-//    TextView tv2;
-//    @BindView(R.id.tv_project_content)
-//    TextView tvProjectContent;
-//    @BindView(R.id.tv_3)
-//    TextView tv3;
-//    @BindView(R.id.tv_recommend_goods)
-//    TextView tvRecommendGoods;
+
     @BindView(R.id.rv_recommend_goods)
     RecyclerView rvRecommendGoods;
     @BindView(R.id.iv_b_01)
@@ -215,7 +213,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     @BindView(R.id.ll_school)
     LinearLayout llSchool;
     @BindView(R.id.tv_study_level)
-    TextView mzSchool;         // 毕业院校
+    TextView mzSchool;
 
     // 专业
     @BindView(R.id.ll_zhuanye)
@@ -235,11 +233,13 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     @BindView(R.id.tv_work)
     TextView mzJob;
 
+    // 获得奖项 认证
     @BindView(R.id.tv_renzheng_1)
-    TextView mzRenzheng1;      // 获得奖项 认证
+    TextView mzRenzheng1;
 
+    // 毕业院校认证;
     @BindView(R.id.tv_renzheng_2)
-    TextView mzRenzheng2;        // 毕业院校认证;
+    TextView mzRenzheng2;
 
     @BindView(R.id.ll_gender)
     LinearLayout ll_gender;
@@ -353,7 +353,9 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
@@ -413,15 +415,10 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         // 点击地址导航
         lAddress.setOnClickListener(this);
 
-        // 这里完全是个彩蛋。
+        // 彩蛋。
         colorEgg.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-//                //  需要的参数   log_id   LogoUrl ;
-//                Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
-//                        EshopActionActivity.Action_order_add_comment);
-//
-//                EshopActionActivity.start(_mActivity, bundle);
 
                 if (!TextUtils.isEmpty(colorEgg_caseID)) {
                     //  需要的参数   log_id   LogoUrl ;
@@ -535,6 +532,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 final List<SpecialTimeLimteBean.DataBean.VideoBean> vbData = data.getData().getVideo();
                 ShopListAdapter shopListAdapter = new ShopListAdapter(R.layout.item_shop, vbData);
                 rvRecommendGoods.setAdapter(shopListAdapter);
+
                 shopListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -605,7 +603,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
                 }, ServiceDetailBean.class);
 
 
-        //视频
+        //////////////////////////       视频
         videoplayer.setUp(data.getData().getFilepath(),
                 JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 data.getData().getTitle() + "");
@@ -622,7 +620,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
 
     }
-
 
     @Override
     public int getContentViewResId() {
@@ -1051,9 +1048,13 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     }
 
     private void autoPlayVideo() {
-        if (!JCUtils.isWifiConnected(getContext()) || SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true) == false) {
+        // wifi 自动播放 ;
+        if (!JCUtils.isWifiConnected(getContext())
+                || SharePreferenceUtil.getBooleangData(_mActivity, "wifyautoplay", true) == false) {
             return;
         }
+        // 自动播放  而且 静音播放 ;
+        videoplayer.setMute(true);
         videoplayer.startButton.performClick();
     }
 
@@ -1123,6 +1124,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     }
 
 
+    // 设置工作室详情
     private void setDetailData(ServiceDetailBean data) {
 
         // Log.e(TAG, "工作室详情 = " + JSONObject.toJSONString(data));
@@ -1467,5 +1469,34 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
 
     }
+
+
+    /**
+     * 监听按键  ;
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+//        AudioManager am = (AudioManager) _mActivity.getSystemService(Service.AUDIO_SERVICE);
+
+        switch (keyCode) {
+
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+
+
+                return true;
+        }
+        return false;
+
+    }
+
 
 }

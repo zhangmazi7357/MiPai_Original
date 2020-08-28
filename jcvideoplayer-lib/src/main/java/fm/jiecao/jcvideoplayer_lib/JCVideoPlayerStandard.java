@@ -56,7 +56,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView tv_title_list;//列表中的视频标题
     public TextView tv_see_count;//观看次数
     public TextView tv_time_long;//时长
-    int type=0;//0正常模式，1详情模式
+    int type = 0;               //0正常模式，1详情模式
 
     public int getType() {
         return type;
@@ -81,9 +81,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void init(Context context) {
         super.init(context);
         //自定义
-        tv_title_list= (TextView) findViewById(R.id.tv_title_list);
-        tv_see_count= (TextView) findViewById(R.id.tv_see_count);
-        tv_time_long= (TextView) findViewById(R.id.tv_time_long);
+        tv_title_list = (TextView) findViewById(R.id.tv_title_list);
+        tv_see_count = (TextView) findViewById(R.id.tv_see_count);
+        tv_time_long = (TextView) findViewById(R.id.tv_time_long);
 
         batteryTimeLayout = (LinearLayout) findViewById(R.id.battery_time_layout);
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
@@ -108,10 +108,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.setUp(urlMap, defaultUrlMapIndex, screen, objects);
         if (objects.length == 0) return;
         titleTextView.setText(objects[0].toString());
+
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             //全屏
             tv_see_count.setVisibility(GONE);
-           // tv_title_list.setVisibility(GONE);
+            // tv_title_list.setVisibility(GONE);
             tv_time_long.setVisibility(GONE);
             titleTextView.setVisibility(VISIBLE);
             fullscreenButton.setImageResource(R.drawable.jc_shrink);
@@ -723,23 +724,26 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
                                       int thumbImg, int coverImg, int bottomPro) {
         //TODO 这个地方由于前边的各种状态不是太明白，所以暂时只能这样写一下（目前没发现问题），作者可以优化一下
-        if (!isVideoRendingStart && currentScreen != SCREEN_WINDOW_FULLSCREEN && currentScreen != SCREEN_WINDOW_TINY) {
+        if (!isVideoRendingStart
+                && currentScreen != SCREEN_WINDOW_FULLSCREEN
+                && currentScreen != SCREEN_WINDOW_TINY) {
             //只要没开始播放，一直显示缩略图
             thumbImg = VISIBLE;
         }
 
+
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
-        if(bottomCon==View.INVISIBLE&&type==0){
+        if (bottomCon == View.INVISIBLE && type == 0) {
             //tv_title_list.setVisibility(VISIBLE);
             tv_time_long.setVisibility(VISIBLE);
             tv_see_count.setVisibility(VISIBLE);
-            Log.d("aa","列表中");
-        }else {
-           // tv_title_list.setVisibility(GONE);
+            Log.d("aa", "列表中");
+        } else {
+            // tv_title_list.setVisibility(GONE);
             tv_time_long.setVisibility(GONE);
             tv_see_count.setVisibility(GONE);
-            Log.d("aaa,","全屏");
+            Log.d("aaa,", "全屏");
         }
 
         startButton.setVisibility(startBtn);
@@ -927,11 +931,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                             startButton.setVisibility(View.INVISIBLE);
 
                             //tv_title_list.setVisibility(VISIBLE);
-                            if(type==0){
+                            if (type == 0) {
                                 tv_time_long.setVisibility(VISIBLE);
                                 tv_see_count.setVisibility(VISIBLE);
                             }
-
 
 
                             if (clarityPopWindow != null) {

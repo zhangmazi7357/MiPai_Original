@@ -43,6 +43,7 @@ import cn.hym.superlib.utils.view.SystemBarUtil;
 public abstract class BaseKitFragment extends BaseFragment {
 
     private static String TAG = "===BaseFragment = ";
+
     private Toolbar toolbar;
     private TextView tv_title, tv_left, tv_right;
     private ImageView iv_right, iv_right2, iv_left;

@@ -420,13 +420,12 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                     Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
                             EshopActionActivity.Action_order_add_comment);
 
-
                     // caseId
                     bundle.putString(MzConstant.KEY_ORDER_CASE_ID, colorEgg_caseID);
 
                     EshopActionActivity.start(_mActivity, bundle);
                 } else {
-                    ToastUtil.toast("caseId 为空 ");
+//                    ToastUtil.toast("caseId 为空 ");
                 }
 
                 return false;

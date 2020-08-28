@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingRight="10dp">
 
             <com.hym.eshoplib.widgets.JzvdStdVolumeAfterFullscreen
                 android:id="@+id/videoplayer"
@@ -33,12 +33,13 @@
                 android:layout_marginLeft="8dp"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="1dp" />
+
             <ImageView
+                android:id="@+id/iv_vip"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:id="@+id/iv_vip"
                 android:layout_gravity="bottom"
-                android:layout_marginLeft="40dp"/>
+                android:layout_marginLeft="40dp" />
         </FrameLayout>
 
         <LinearLayout
@@ -83,10 +84,9 @@
                 android:layout_height="18dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_like"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -94,7 +94,9 @@
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="261"
-                android:textColor="@color/mipaiTextColorNormal" />
+                android:textColor="@color/mipaiTextColorNormal"
+                android:visibility="gone" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

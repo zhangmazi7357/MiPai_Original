@@ -3,6 +3,7 @@ package com.hym.eshoplib.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import androidx.fragment.app.Fragment;
 
@@ -321,5 +322,16 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
         }
 
         return fragment;
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        // 视频 详情特有的 ;
+        ShopDetailsVideoFragment fragment = new ShopDetailsVideoFragment();
+        fragment.onKeyDown(keyCode, event);
+
+        return super.onKeyDown(keyCode, event);
     }
 }
