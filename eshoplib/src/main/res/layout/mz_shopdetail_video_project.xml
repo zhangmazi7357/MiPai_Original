@@ -7,11 +7,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/videoplayer"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/videoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <ImageView
+            android:id="@+id/speaker"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ic_launcher"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -282,253 +298,5 @@
         </RelativeLayout>
     </RelativeLayout>
 
-
-<!--    &lt;!&ndash; 基本信息 &ndash;&gt;-->
-<!--    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        app:detailTitle="基本信息"-->
-<!--        app:title_textSize="14sp" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="14dp"-->
-<!--                android:layout_height="14dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:background="@mipmap/time_long" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="@string/time"-->
-<!--                android:textColor="#646464"-->
-<!--                android:textSize="12sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_shoot_time"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:text="1分钟"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#f2f2f2" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="14dp"-->
-<!--                android:layout_height="14dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:background="@mipmap/icon_location" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="@string/local"-->
-<!--                android:textColor="#646464"-->
-<!--                android:textSize="12sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_loca"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:text="地点"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#f2f2f2" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="14dp"-->
-<!--                android:layout_height="14dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:background="@mipmap/icon_equipment" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="摄影器材"-->
-<!--                android:textColor="#646464"-->
-<!--                android:textSize="12sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_qicai"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:text="1分钟"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#f2f2f2" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="14dp"-->
-<!--                android:layout_height="14dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:background="@mipmap/icon_take_day" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="拍摄天数"-->
-<!--                android:textColor="#646464"-->
-<!--                android:textSize="12sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/shooting_day_time"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:text="天数"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#f2f2f2" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="14dp"-->
-<!--                android:layout_height="14dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:background="@mipmap/icon_staffing" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:text="人员配置"-->
-<!--                android:textColor="#646464"-->
-<!--                android:textSize="12sp" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_staffing"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:text="1分钟"-->
-<!--                android:textColor="#000000"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:background="#f2f2f2" />-->
-<!--    </LinearLayout>-->
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rv_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:nestedScrollingEnabled="false"-->
-<!--        android:visibility="gone" />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="#f2f2f2" />-->
-
-<!--    &lt;!&ndash; 团队介绍&ndash;&gt;-->
-<!--    <cn.hym.superlib.mz.widgets.MzShopDetailTitleView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        app:detailTitle="团队介绍"-->
-<!--        app:title_textSize="14sp" />-->
-
-<!--    <include layout="@layout/header_shop_detail" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/tv_team_introduce"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/white"-->
-<!--        android:padding="15dp"-->
-<!--        android:textColor="#000000"-->
-<!--        android:textSize="13sp"-->
-<!--        android:visibility="gone" />-->
 
 </LinearLayout>

@@ -322,7 +322,6 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                             }).show();
 
 
-
                 }
             });
 
@@ -440,13 +439,16 @@ public class MyOrderListFragment extends BaseListFragment<OrderListBeanMiPai.Dat
                                 @Override
                                 public void positiveClick(Dialog dialog) {
                                     dialog.dismiss();
-                                    ShopApi.editeOrder(item.getLog_id(), "5", "", "", new ResponseImpl<Object>() {
-                                        @Override
-                                        public void onSuccess(Object data) {
-                                            ToastUtil.toast("确认收货成功，请给个评价吧^_^");
-                                            onRefresh();
-                                        }
-                                    }, Object.class);
+                                    ShopApi.editeOrder(item.getLog_id(), "5", "",
+                                            "", new ResponseImpl<Object>() {
+                                                @Override
+                                                public void onSuccess(Object data) {
+
+                                                    ToastUtil.toast("确认收货成功，请给个评价吧^_^");
+                                                    onRefresh();
+
+                                                }
+                                            }, Object.class);
                                 }
                             }).show();
                 }

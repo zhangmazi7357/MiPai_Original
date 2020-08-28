@@ -1028,6 +1028,7 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                         @Override
                         public void onClick(View v) {
                             String caseid = item.getCaseid();
+
                             if (!TextUtils.isEmpty(caseid)) {
 
                                 Bundle bundle = BaseActionActivity.getActionBundle(EshopActionActivity.ModelType_Order,
@@ -1063,6 +1064,7 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                         }
                     });
                 }
+
                 //通用 查看评价 进入评价详情
                 if (buttonBean.getCheck_comm() == 1) {
                     //查看评价相当于项目完成
@@ -1122,6 +1124,7 @@ public class MipaiOrderDetailFragment extends BaseKitFragment {
                     }
 
                 }
+
                 if (buttonBean.getDelete() == 1) {
                     btn4.setVisibility(View.VISIBLE);
                     btn4.setText("删除订单");
