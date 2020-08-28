@@ -200,23 +200,40 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
 
 
     //////////////////////// 工作室详情  ///////////////////
+    @BindView(R.id.ll_des)
+    LinearLayout llRemark;
     @BindView(R.id.tv_des)
-    TextView mzRemark;    //   个人简介;
+    TextView mzRemark;
 
+    // 获得奖项;
+    @BindView(R.id.ll_award)
+    LinearLayout llAward;
     @BindView(R.id.tv_award_name)
-    TextView mzAward;       // 获得奖项;
+    TextView mzAward;
 
+    // 毕业院校
+    @BindView(R.id.ll_school)
+    LinearLayout llSchool;
     @BindView(R.id.tv_study_level)
     TextView mzSchool;         // 毕业院校
 
+    // 专业
+    @BindView(R.id.ll_zhuanye)
+    LinearLayout llMajor;
     @BindView(R.id.tv_zhuanye)
-    TextView mzMajor;   // 专业
+    TextView mzMajor;
 
+    //学历
+    @BindView(R.id.ll_xueli)
+    LinearLayout llEducation;
     @BindView(R.id.tv_xueli)
-    TextView mzEducation;          //学历
+    TextView mzEducation;
 
+    //  从业经历
+    @BindView(R.id.ll_work)
+    LinearLayout llJob;
     @BindView(R.id.tv_work)
-    TextView mzJob;            //  从业经历
+    TextView mzJob;
 
     @BindView(R.id.tv_renzheng_1)
     TextView mzRenzheng1;      // 获得奖项 认证
@@ -1069,7 +1086,6 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         String address = data.getData().getAddress();
 
 
-
         proAddress.setText(address);
 
         if (TextUtils.isEmpty(lon) || TextUtils.isEmpty(lat)) {
@@ -1107,14 +1123,77 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
     }
 
 
-    // 工作室详情
     private void setDetailData(ServiceDetailBean data) {
-        mzRemark.setText(TextUtils.isEmpty(data.getData().getRemark()) ? "暂无" : data.getData().getRemark());//个人简介
-        mzJob.setText(TextUtils.isEmpty(data.getData().getJob()) ? "暂无" : data.getData().getJob());
-        mzAward.setText(TextUtils.isEmpty(data.getData().getAwards_memo()) ? "暂无" : data.getData().getAwards_memo());
-        mzSchool.setText(TextUtils.isEmpty(data.getData().getUniversity()) ? "暂无" : data.getData().getUniversity());
-        mzEducation.setText(TextUtils.isEmpty(data.getData().getEducation()) ? "暂无" : data.getData().getEducation());
-        mzMajor.setText(TextUtils.isEmpty(data.getData().getMajor()) ? "暂无" : data.getData().getMajor());
+
+        // Log.e(TAG, "工作室详情 = " + JSONObject.toJSONString(data));
+
+        ServiceDetailBean.DataBean shopDetailData = data.getData();
+        // 个人简介
+        String remark = shopDetailData.getRemark();
+        // 从业经历
+        String job = shopDetailData.getJob();
+        // 获得奖项
+        String awards_memo = shopDetailData.getAwards_memo();
+        // 毕业学校
+        String university = shopDetailData.getUniversity();
+        // 教育经历
+        String education = shopDetailData.getEducation();
+        // 专业
+        String major = shopDetailData.getMajor();
+
+
+        if (TextUtils.isEmpty(remark)) {
+//            mzRemark.setText("暂无");
+            llRemark.setVisibility(View.GONE);
+        } else {
+            llRemark.setVisibility(View.VISIBLE);
+            mzRemark.setText(remark);
+        }
+
+        if (TextUtils.isEmpty(job)) {
+//            mzJob.setText("暂无");
+            llJob.setVisibility(View.GONE);
+
+        } else {
+            llJob.setVisibility(View.VISIBLE);
+            mzJob.setText(job);
+        }
+
+        if (TextUtils.isEmpty(awards_memo)) {
+//            mzAward.setText("暂无");
+            llAward.setVisibility(View.GONE);
+        } else {
+            llAward.setVisibility(View.VISIBLE);
+            mzAward.setText(awards_memo);
+        }
+
+        if (TextUtils.isEmpty(university)) {
+//            mzSchool.setText("暂无");
+            llSchool.setVisibility(View.GONE);
+        } else {
+            llSchool.setVisibility(View.VISIBLE);
+            mzSchool.setText(university);
+        }
+
+        if (TextUtils.isEmpty(education)) {
+//            mzEducation.setText("暂无");
+            llEducation.setVisibility(View.GONE);
+
+        } else {
+            llEducation.setVisibility(View.VISIBLE);
+            mzEducation.setText(education);
+        }
+
+        if (TextUtils.isEmpty(major)) {
+//            mzMajor.setText("暂无");
+            llMajor.setVisibility(View.GONE);
+        } else {
+            llMajor.setVisibility(View.VISIBLE);
+            mzMajor.setText(major);
+        }
+
+
+        // 认证 ;
         if (data.getData().getCertificate_auth().equals("1")) {
             mzRenzheng1.setText("已认证");
         } else {
@@ -1125,6 +1204,8 @@ public class ShopDetailsVideoFragment extends BaseKitFragment implements View.On
         } else {
             mzRenzheng2.setText("未认证");
         }
+
+
     }
 
 
