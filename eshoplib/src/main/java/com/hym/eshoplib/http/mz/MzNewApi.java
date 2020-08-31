@@ -182,4 +182,22 @@ public class MzNewApi {
         post(request, listener, clazz);
 
     }
+
+
+    /**
+     * get  七牛 token
+     *
+     * @param listener
+     * @param clazz
+     * @param <T>
+     */
+    public static <T> void getQiniuToken(IHttpResultListener<T> listener,
+                                         Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Store");
+        request.setClassName("GetqiniuToken");
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+
+        post(request, listener, clazz);
+    }
 }

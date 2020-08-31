@@ -17,12 +17,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
+import com.hym.eshoplib.fragment.home.AllShopCommentActivity;
 import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 
 import java.util.Arrays;
 import java.util.List;
 
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.utils.view.ScreenUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 
@@ -100,10 +103,21 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
             ShopCommentPicAdapterAll picAdapterAll = new ShopCommentPicAdapterAll(mContext);
 
             commentImgRv.setAdapter(picAdapterAll);
-
-
             commentImgRv.setVisibility(View.VISIBLE);
             List<String> imgList = Arrays.asList(strings);
+
+
+            // 图片的点击事件
+            picAdapterAll.setOnPicItemClickListener(new ShopCommentPicAdapterAll.OnPicItemClickListener() {
+                @Override
+                public void onPicClick(int position) {
+                    int width = ScreenUtil.getScreenWidth(mContext);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(mContext,
+                            imgList, position, imageSize);
+                }
+            });
+
 
             picAdapterAll.setDatas(imgList);
 

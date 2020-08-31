@@ -20,14 +20,16 @@ import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.utils.view.ScreenUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 
 /**
  * 商品评论 ;
  */
-public class ShopCommentAdapter extends BaseQuickAdapter<MzShopCommentBean.DataBean.InfoBean,
+public class ShopCommentAdapter<T> extends BaseQuickAdapter<MzShopCommentBean.DataBean.InfoBean,
         BaseViewHolder> {
 
     public ShopCommentAdapter(@Nullable List<MzShopCommentBean.DataBean.InfoBean> data) {
@@ -76,10 +78,24 @@ public class ShopCommentAdapter extends BaseQuickAdapter<MzShopCommentBean.DataB
         String images = item.getImages();
         String[] strings = MzStringUtil.splitComma(images);
 
+
         if (strings != null && strings.length > 0) {
             commentImgRv.setVisibility(View.VISIBLE);
             List<String> imgList = Arrays.asList(strings);
             picAdapter.setNewData(imgList);
+
+
+            picAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                    int width = ScreenUtil.getScreenWidth(mContext);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(mContext, imgList, position, imageSize);
+
+                }
+            });
+
         } else {
             commentImgRv.setVisibility(View.GONE);
         }

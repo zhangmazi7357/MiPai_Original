@@ -34,11 +34,13 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.MzBaseActivity;
 import cn.hym.superlib.mz.widgets.MzHeaderBar;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.DialogView;
+import cn.hym.superlib.utils.view.ScreenUtil;
 
 /**
  * 商品全部评论 ;
@@ -112,8 +114,6 @@ public class AllShopCommentActivity extends MzBaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-
             }
         });
 

@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import app.App;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -52,6 +53,7 @@ import cn.hym.superlib.bean.local.UpLoadImageBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.MzOrderImageAdapter;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
@@ -221,6 +223,8 @@ public class AddCommentsFragment extends BaseKitFragment {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+        Log.e(TAG, "token : " + UserUtil.getToken(App.instance));
+
         // 标签
         ShopApi.GetCommentLabel(log_id, new ResponseImpl<CommentLableListBean>() {
             @Override
@@ -269,33 +273,24 @@ public class AddCommentsFragment extends BaseKitFragment {
             }
         });
 
-        // 拿到七牛 token ;
-        ShopApi.getProductsList("1", new ResponseImpl<ShopProductsBean>() {
-                    @Override
-                    public void onSuccess(ShopProductsBean data) {
-                    }
 
-                    @Override
-                    public void dataRes(int code, String data) {
-                        super.dataRes(code, data);
-//                        Log.e(TAG, "qiniu token =");
-                        try {
-                            org.json.JSONObject j = new org.json.JSONObject(data);
-                            org.json.JSONObject data1 = j.getJSONObject("data");
+        MzNewApi.getQiniuToken(new ResponseImpl<Object>() {
+            @Override
+            public void onSuccess(Object data) {
+                String token = JSONObject.toJSONString(data);
+                try {
+                    org.json.JSONObject j = new org.json.JSONObject(token);
+                    org.json.JSONObject data1 = j.getJSONObject("data");
 
-                            qiniuToken = data1.getString("qiniu_token");
+                    qiniuToken = data1.getString("qiniu_token");
+                    mzAdapter.setToken(qiniuToken);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                            mzAdapter.setToken(qiniuToken);
+            }
+        }, Object.class);
 
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                },
-                ShopProductsBean.class);
 
     }
 

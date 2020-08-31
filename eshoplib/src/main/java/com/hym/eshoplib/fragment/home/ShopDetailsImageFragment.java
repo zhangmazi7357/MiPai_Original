@@ -75,6 +75,9 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -299,6 +302,11 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     // 评论
     @BindView(R.id.ll_shop_comment)
     LinearLayout llShopComment;
+
+
+    // 评论  标签 ;
+    @BindView(R.id.commentTabLayout)
+    TagFlowLayout commentTabLayout;
 
     @BindView(R.id.commentAll)
     TextView commentAll;
@@ -525,6 +533,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 int width = (screenWidth - ScreenUtil.dip2px(_mActivity, 40)) / 3;
                 layoutParam.height = width;
                 layoutParam.width = width;
+
                 if (position % 3 == 0) {
                     //左侧
                     layoutParam.setMargins(ScreenUtil.dip2px(_mActivity, 8), 0, 0, ScreenUtil.dip2px(_mActivity, 15));
@@ -534,6 +543,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 } else {
                     layoutParam.setMargins(ScreenUtil.dip2px(_mActivity, 8), 0, 0, ScreenUtil.dip2px(_mActivity, 15));
                 }
+
                 ImageUtil.getInstance().loadImage(ShopDetailsImageFragment.this, item, iv);
 
             }
@@ -564,9 +574,12 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 int width = ScreenUtil.getScreenWidth(_mActivity);
                 ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
                 ImagePagerActivity.startImagePagerActivity(_mActivity, adapter.getData(), position, imageSize);
+
+
             }
         });
 
@@ -1440,6 +1453,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         ShopCommentAdapter adapter = new ShopCommentAdapter(null);
         commentRv.setAdapter(adapter);
 
+
         // 查看全部评论
         commentAll.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
@@ -1468,8 +1482,22 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
                         // 标签 ;
                         List<MzShopCommentBean.DataBean.TagsBean> tagList = data.getData().getTags();
+                        if (tagList != null && tagList.size() > 0) {
 
-                        // TODO  这里的标签要不要展示c
+                            commentTabLayout.setAdapter(new TagAdapter<MzShopCommentBean.DataBean.TagsBean>(tagList) {
+                                @Override
+                                public View getView(FlowLayout parent, int position, MzShopCommentBean.DataBean.TagsBean tagsBean) {
+
+                                    TextView root = (TextView) LayoutInflater.from(parent.getContext())
+                                            .inflate(R.layout.mz_tag_comment_mini, parent, false);
+
+                                    String tagText = tagsBean.getName() + "   " + tagsBean.getNums();
+                                    root.setText(tagText);
+                                    return root;
+                                }
+                            });
+                        }
+
 
                         if (infoBeanList.size() == 0) {
                             commentNoView.setVisibility(View.VISIBLE);

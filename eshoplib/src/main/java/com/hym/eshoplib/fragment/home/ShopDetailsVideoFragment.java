@@ -76,13 +76,18 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
@@ -294,6 +299,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
     // 评论
     @BindView(R.id.ll_shop_comment)
     LinearLayout llShopComment;
+
+    // 评论  标签 ;
+    @BindView(R.id.commentTabLayout)
+    TagFlowLayout commentTabLayout;
+
     @BindView(R.id.commentAll)
     TextView commentAll;
     @BindView(R.id.commentRv)
@@ -1368,10 +1378,10 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
 //        List<MzShopCommentBean.DataBean.InfoBean> commentList = new ArrayList<>();
         commentRv.setLayoutManager(new LinearLayoutManager(_mActivity));
 
-        ShopCommentAdapter adapter = new ShopCommentAdapter(null);
+        ShopCommentAdapter<MzShopCommentBean.DataBean.InfoBean> adapter = new ShopCommentAdapter(null);
         commentRv.setAdapter(adapter);
 
-        // 查看全部评论
+
         commentAll.setOnClickListener(v -> {
             Intent intent = new Intent(_mActivity, AllShopCommentActivity.class);
             intent.putExtra(MzConstant.KEY_DETAIL_COMMENT_CASE_ID, caseId);
@@ -1395,7 +1405,25 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
 
                         List<MzShopCommentBean.DataBean.InfoBean> infoBeanList = data.getData().getInfo();
 
-                        // Log.e(TAG, "评论列表 onSuccess: " + JSONObject.toJSONString(data));
+                        // 标签 ;
+                        List<MzShopCommentBean.DataBean.TagsBean> tagList = data.getData().getTags();
+                        if (tagList != null && tagList.size() > 0) {
+
+
+                            commentTabLayout.setAdapter(new TagAdapter<MzShopCommentBean.DataBean.TagsBean>(tagList) {
+                                @Override
+                                public View getView(FlowLayout parent, int position, MzShopCommentBean.DataBean.TagsBean tagsBean) {
+
+                                    TextView root = (TextView) LayoutInflater.from(parent.getContext())
+                                            .inflate(R.layout.mz_tag_comment_mini, parent, false);
+
+                                    String tagText = tagsBean.getName() + "   " + tagsBean.getNums();
+                                    root.setText(tagText);
+                                    return root;
+                                }
+                            });
+                        }
+
 
                         if (infoBeanList.size() == 0) {
                             commentNoView.setVisibility(View.VISIBLE);

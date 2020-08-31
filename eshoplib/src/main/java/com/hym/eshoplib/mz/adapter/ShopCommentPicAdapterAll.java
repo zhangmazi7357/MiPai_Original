@@ -35,6 +35,11 @@ public class ShopCommentPicAdapterAll extends RecyclerView.Adapter<ShopCommentPi
     private LayoutInflater inflater;
     private List<String> datas;
 
+    private OnPicItemClickListener onPicItemClickListener;
+
+    public void setOnPicItemClickListener(OnPicItemClickListener onPicItemClickListener) {
+        this.onPicItemClickListener = onPicItemClickListener;
+    }
 
     public ShopCommentPicAdapterAll(Context context) {
         this.mContext = context;
@@ -71,6 +76,16 @@ public class ShopCommentPicAdapterAll extends RecyclerView.Adapter<ShopCommentPi
                 .placeholder(R.drawable.picture_icon_placeholder)
                 .into(holder.iv);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onPicItemClickListener != null) {
+                    onPicItemClickListener.onPicClick(position);
+                }
+
+            }
+        });
+
     }
 
 
@@ -98,5 +113,10 @@ public class ShopCommentPicAdapterAll extends RecyclerView.Adapter<ShopCommentPi
         fl.getLayoutParams().width = ScreenUtil.dip2px(mContext, size);
         fl.getLayoutParams().height = ScreenUtil.dip2px(mContext, size);
 
+    }
+
+
+    public interface OnPicItemClickListener {
+        void onPicClick(int position);
     }
 }

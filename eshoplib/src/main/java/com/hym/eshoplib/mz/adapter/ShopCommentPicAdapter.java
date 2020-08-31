@@ -33,5 +33,8 @@ public class ShopCommentPicAdapter extends BaseQuickAdapter<String, BaseViewHold
                 .placeholder(R.drawable.picture_icon_placeholder)
                 .into(view);
 
+
+        helper.addOnClickListener(R.id.pic);
+
     }
 }

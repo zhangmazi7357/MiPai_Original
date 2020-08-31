@@ -46,6 +46,7 @@
             android:textColor="#777777"
             android:textSize="12sp" />
 
+
     </FrameLayout>
 
     <View
@@ -55,7 +56,7 @@
 
 
     <com.zhy.view.flowlayout.TagFlowLayout
-        android:id="@+id/flowLayout"
+        android:id="@+id/commentTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

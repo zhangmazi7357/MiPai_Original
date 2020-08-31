@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_tag"
+    android:layout_width="wrap_content"
+    android:layout_height="20dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/mz_bg_comment_tag_mini"
+    android:paddingLeft="8dp"
+    android:paddingTop="3dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="3dp"
+    android:textColor="@color/black"
+    android:textSize="10sp"
+    tools:text="红红火火恍恍惚惚" />
+
+
