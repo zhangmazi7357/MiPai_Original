@@ -240,6 +240,8 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+
+
         ShopApi.GetContentDetail(shop_id, new ResponseImpl<ServiceDetailBean>() {
             @Override
             public void onSuccess(ServiceDetailBean data) {

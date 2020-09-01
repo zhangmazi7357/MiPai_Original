@@ -349,8 +349,6 @@ public class ShopApi {
         request.addParamsNotEmpty("tags", tags);
 
 
-
-
         post(request, listener, clazz);
 
     }

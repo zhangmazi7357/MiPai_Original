@@ -135,13 +135,22 @@ public class AllShopCommentActivity extends MzBaseActivity {
         }, binding.mRecyclerView);
 
 
+        // 这里是 商家回复评论 ;
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_replay:
                         MzShopCommentBean.DataBean.InfoBean item = (MzShopCommentBean.DataBean.InfoBean) adapter.getItem(position);
-                        replay(item);
+
+                        List<MzShopCommentBean.DataBean.InfoBean.ReplayBean> replay = item.getReplay();
+
+
+                        if (replay.size() == 0) {
+                            replay(item);
+                        }
+
+
                         break;
                 }
             }
@@ -168,6 +177,10 @@ public class AllShopCommentActivity extends MzBaseActivity {
 
                 // 评论列表 ;
                 setData(infoBeanList);
+
+                // 能不能回复;
+                int is_replay = dataBean.getIs_replay();
+                adapter.setIsReplay(is_replay);
 
 
             }
@@ -280,7 +293,8 @@ public class AllShopCommentActivity extends MzBaseActivity {
                         @Override
                         public void onSuccess(Object data) {
 
-                            Log.e(TAG, "replay - onSuccess: ");
+
+                            // Log.e(TAG, "replay - onSuccess: ");
 
                             // 评论回复成功以后 刷新 评论列表 ;
 

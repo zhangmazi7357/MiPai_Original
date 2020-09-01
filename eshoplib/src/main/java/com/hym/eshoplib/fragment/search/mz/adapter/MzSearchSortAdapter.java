@@ -17,7 +17,7 @@ import com.hym.eshoplib.R;
  */
 public class MzSearchSortAdapter extends RecyclerView.Adapter<MzSearchSortAdapter.ViewHolder> {
 
-    private String[] sorts = {"时间", "价格", "好评优先", "星级"};
+    private String[] sorts = {"智能排序", "价格排序", "好评优先", "星级排序"};
 
     private SearchSortClickListener searchSortClickListener;
     private Context context;

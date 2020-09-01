@@ -41,6 +41,7 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
     public void setIsReplay(int isReplay) {
         this.isReplay = isReplay;
 
+        notifyDataSetChanged();
     }
 
     public ShopCommentAdapterAll(@Nullable List<MzShopCommentBean.DataBean.InfoBean> data) {
@@ -129,6 +130,7 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
         // 回复
         List<MzShopCommentBean.DataBean.InfoBean.ReplayBean> replay = item.getReplay();
         ConstraintLayout replayContainer = helper.getView(R.id.container_replay);
+
         if (replay != null && replay.size() > 0) {
             replayContainer.setVisibility(View.VISIBLE);
             MzShopCommentBean.DataBean.InfoBean.ReplayBean replayBean = replay.get(0);
@@ -137,10 +139,10 @@ public class ShopCommentAdapterAll extends BaseQuickAdapter<MzShopCommentBean.Da
 
         } else {
             replayContainer.setVisibility(View.GONE);
-
         }
 
         ImageView ivReplay = helper.getView(R.id.iv_replay);
+
 
         // isReplay = 0 不可以回复
         if (isReplay == 0) {

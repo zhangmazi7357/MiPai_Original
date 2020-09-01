@@ -3,6 +3,7 @@ package com.hym.eshoplib.fragment.goods;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,18 +62,20 @@ public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean
     @Override
     public void excuteLogic() {
         detailBean = (ServiceDetailBean) getArguments().getSerializable("data");
+
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {
-                        if (data.getData().getType().equals("1")){
+                        if (data.getData().getType().equals("1")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopVideoDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
                             ActionActivity.start(_mActivity, bundle);
-                        }else if (data.getData().getType().equals("2")){
+                        } else if (data.getData().getType().equals("2")) {
                             Bundle bundle = BaseActionActivity.getActionBundle(ActionActivity.ModelType_Home, ActionActivity.ShopDetail);
                             bundle.putSerializable("data", data);
                             bundle.putString("title", "产品详情");
@@ -111,6 +114,8 @@ public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean
             ToastUtil.toast("数据异常");
             return;
         }
+
+        Log.e("===========", "getData: ");
         ShopApi.getProductsList2(detailBean.getData().getStore_id(), pageNum + "", new ResponseImpl<ShopProductsBean>() {
             @Override
             public void onSuccess(ShopProductsBean data) {
@@ -145,14 +150,14 @@ public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean
             //iv_play.setVisibility(View.GONE);
             // tv_time_long.setVisibility(View.GONE);
         }
-        if (item.getOriginal_price().equals("0") ||TextUtils.isEmpty(item.getOriginal_price())){
+        if (item.getOriginal_price().equals("0") || TextUtils.isEmpty(item.getOriginal_price())) {
             beforePrice.setVisibility(View.GONE);
-        }else{
-            beforePrice.setText("¥"+item.getOriginal_price());
+        } else {
+            beforePrice.setText("¥" + item.getOriginal_price());
         }
         tv_title.setText(item.getTitle() + "");
         tv_see_time.setText(item.getPresent_price());
-        tv_time_long.setText(item.getWeight()+"人付款");
+        tv_time_long.setText(item.getWeight() + "人付款");
         ImageView iv = helper.getView(R.id.iv_vadieo);
         ScreenUtil.ViewAdapter(_mActivity, iv, 16, 9, 20);
         Glide.with(_mActivity).load(item.getImage_default()).into(iv);
