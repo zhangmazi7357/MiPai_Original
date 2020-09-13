@@ -193,6 +193,7 @@ public class EditImageFragment extends BaseKitFragment {
         setShowProgressDialog(true);
         showBackButton();
         setTitle("编辑产品");
+
         setRight_tv("保存", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -655,8 +656,13 @@ public class EditImageFragment extends BaseKitFragment {
                 etRemarks.setText(data.getRemarks());
                 etPresentPrice.setText(data.getPresent_price());
                 etLocatiom.setText(data.getOther());//可以复用
+
+
+
+
                 List<UpLoadImageBean> list = new ArrayList<>();
                 List<String> urls = EditImageFragment.this.data.getData().getAttachment();
+
                 if (urls != null) {
                     for (int i = 0; i < urls.size(); i++) {
                         String url = urls.get(i);

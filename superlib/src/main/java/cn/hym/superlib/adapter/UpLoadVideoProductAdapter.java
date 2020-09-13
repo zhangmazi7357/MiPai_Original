@@ -3,7 +3,6 @@ package cn.hym.superlib.adapter;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,6 +42,7 @@ import cn.hym.superlib.utils.view.ScreenUtil;
 public class UpLoadVideoProductAdapter extends
         BaseMultiItemQuickAdapter<UpLoadImageBean, BaseViewHolder> {
 
+    private String TAG = "UpLoadVideoProductAdapter";
     Fragment fragment;
     onDeleteListener listener;
     boolean showMain = true;//显示主图
@@ -88,7 +88,7 @@ public class UpLoadVideoProductAdapter extends
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
                 .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
-                .connectTimeout(10)           // 链接超时。默认10秒
+                .connectTimeout(30)           // 链接超时。默认10秒
                 .useHttps(true)               // 是否使用https上传域名
                 .responseTimeout(60)          // 服务器响应超时。默认60秒
                 //.recorder(recorder)           // recorder分片上传时，已上传片记录器。默认null
@@ -162,7 +162,11 @@ public class UpLoadVideoProductAdapter extends
                 final ProgressBar progressBar = helper.getView(R.id.progressbar);
                 tv_percent.setText("上传中..." + "0%");
                 progressBar.setProgress(0);
+
+                // Uri
                 final String path = item.getImage().getCompressPath();
+
+                String filePath = item.getImage().getOriginalPath();
 //
 //                MediaMetadataRetriever retr = new MediaMetadataRetriever();
 //                retr.setDataSource(path);
@@ -191,7 +195,8 @@ public class UpLoadVideoProductAdapter extends
                     iv_icon.setVisibility(View.GONE);
 
 
-                    uploadManager.put(path,
+
+                    uploadManager.put(filePath,
                             qiniufile_name,
                             token,
                             new UpCompletionHandler() {
@@ -207,11 +212,11 @@ public class UpLoadVideoProductAdapter extends
                                             item.setHasUpload(true);
                                             item.setQiniuFileName(key);
                                         } else {
-
+//                                            Log.e(TAG, "upload Fail");
 
                                             //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                                         }
-                                        Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);
+//                                        Log.e(TAG, "key=" + key + ",\r\n " + info + ",\r\n " + response);
                                     } catch (Exception e) {
                                         Logger.d(e.toString());
                                     }
@@ -222,7 +227,6 @@ public class UpLoadVideoProductAdapter extends
                                     false,
                                     new UpProgressHandler() {
                                         public void progress(String key, double percent) {
-                                            Log.e(TAG, "progress: " + percent);
                                             try {
                                                 int percent_int = (int) (percent * 100);
                                                 //Logger.d("key="+key + ",percent " + percent);

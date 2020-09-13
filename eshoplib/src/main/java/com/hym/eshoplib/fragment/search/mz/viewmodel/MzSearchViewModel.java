@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.hym.eshoplib.bean.mz.upload.ProductTwoTypeBean;
 import com.hym.eshoplib.fragment.search.mz.model.MzSearchAllModel;
 import com.hym.eshoplib.fragment.search.mz.model.MzSearchShopModel;
 import com.hym.eshoplib.http.mz.MzNewApi;
@@ -31,6 +32,17 @@ public class MzSearchViewModel extends MzAbsViewModel {
     // 城市
     private MutableLiveData<String> regionId = new MutableLiveData<>();
 
+    // 标签
+    private MutableLiveData<ProductTwoTypeBean.DataBean> tagLiveData = new MutableLiveData<>();
+
+
+    public MutableLiveData<ProductTwoTypeBean.DataBean> getTagLiveData() {
+        return tagLiveData;
+    }
+
+    public void setTag(ProductTwoTypeBean.DataBean dataBean) {
+        tagLiveData.postValue(dataBean);
+    }
 
     ///////////////////////  搜索内容  /////////////////
     public MutableLiveData<String> getContent() {

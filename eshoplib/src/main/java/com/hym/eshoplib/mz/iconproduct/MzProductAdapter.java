@@ -22,7 +22,7 @@ import java.util.List;
 
 import cn.hym.superlib.mz.utils.MzStringUtil;
 
-class MzProductAdapter extends BaseQuickAdapter<HomeIconProductBean.DataBean.VideoBean, MzProductAdapter.ViewHolder> {
+public class MzProductAdapter extends BaseQuickAdapter<HomeIconProductBean.DataBean.VideoBean, MzProductAdapter.ViewHolder> {
 
     private Context mContext;
     private LatLonPoint dest;

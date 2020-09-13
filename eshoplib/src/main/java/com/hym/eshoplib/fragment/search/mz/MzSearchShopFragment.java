@@ -86,11 +86,13 @@ public class MzSearchShopFragment extends Fragment implements SwipeRefreshLayout
         Integer value = viewModel.getType().getValue();
 
         if (value == 2) {
+
+
+
             // 搜索内容改变  去 搜索 ;
             viewModel.getContent().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
-
                     search(true);
 
                 }

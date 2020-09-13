@@ -1,5 +1,6 @@
 package cn.hym.superlib.mz;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -76,9 +77,10 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
         this.fragment = fragment;
         addItemType(UpLoadImageBean.type_normal, R.layout.item_upload_image);
         addItemType(UpLoadImageBean.type_add, R.layout.mz_item_add_image);
+
         config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
-                .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
+//                .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
                 .connectTimeout(10)           // 链接超时。默认10秒
                 .useHttps(true)               // 是否使用https上传域名
                 .responseTimeout(60)          // 服务器响应超时。默认60秒
@@ -164,6 +166,7 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                     uploadManager.put(path, qiniufile_name, token, new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info, JSONObject response) {
+                            Log.e(TAG, "complete: ");
                             //res包含hash、key等信息，具体字段取决于上传策略的设置
                             try {
                                 if (info.isOK()) {
@@ -172,12 +175,12 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                                     ll_uploading.setVisibility(View.GONE);
                                     item.setHasUpload(true);
                                     item.setQiniuFileName(key);
-                                    Logger.d("qiniu=" + "Upload Success");
+//                                    Logger.d("qiniu=" + "Upload Success");
                                 } else {
-                                    Logger.d("qiniu=" + "Upload Fail");
+//                                    Logger.d("qiniu=" + "Upload Fail");
                                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                                 }
-                                Logger.d("key=" + key + ",\r\n " + info + ",\r\n " + response);
+                                Log.e(TAG, "key=" + key + ",\r\n " + info + ",\r\n " + response);
                             } catch (Exception e) {
                                 Logger.d(e.toString());
                             }
@@ -185,6 +188,7 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                     }, new UploadOptions(null, null, false,
                             new UpProgressHandler() {
                                 public void progress(String key, double percent) {
+
                                     try {
                                         int percent_int = (int) (percent * 100);
                                         //Logger.d("key="+key + ",percent " + percent);

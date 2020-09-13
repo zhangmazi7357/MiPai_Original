@@ -52,6 +52,10 @@ public class SettingFragment extends BaseKitFragment {
     SuperTextView tv3;
     @BindView(R.id.tv_4)
     SuperTextView tv4;
+
+    @BindView(R.id.tv_5)
+    SuperTextView tv5;
+
     @BindView(R.id.btn_logout)
     Button btnLogout;
     Unbinder unbinder;
@@ -78,6 +82,8 @@ public class SettingFragment extends BaseKitFragment {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+        tv5.setVisibility(View.GONE);
+        
     }
 
     @Override

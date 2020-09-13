@@ -115,7 +115,8 @@ public class DropDownMenuUpdate extends LinearLayout {
      * @param popupViews
      * @param contentView
      */
-    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews, @NonNull View contentView) {
+    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews,
+                                @NonNull View contentView) {
         if (tabTexts.size() != popupViews.size()) {
             throw new IllegalArgumentException("params not match, tabTexts.size() should be equal popupViews.size()");
         }
@@ -151,6 +152,15 @@ public class DropDownMenuUpdate extends LinearLayout {
         }
 
     }
+
+
+    public void clearDropDownMenu() {
+        // 清空顶部
+        tabMenuView.removeAllViews();
+        containerView.removeAllViews();
+        popupMenuViews.removeAllViews();
+    }
+
 
     private void addTab(@NonNull List<String> tabTexts, int i) {
         final FrameLayout containner = new FrameLayout(getContext());

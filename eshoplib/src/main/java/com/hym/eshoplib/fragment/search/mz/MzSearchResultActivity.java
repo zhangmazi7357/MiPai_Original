@@ -1,5 +1,6 @@
 package com.hym.eshoplib.fragment.search.mz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +22,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.android.material.tabs.TabLayout;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.city.ServerCityBean;
+import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
+import com.hym.eshoplib.bean.mz.upload.ProductTwoTypeBean;
 import com.hym.eshoplib.databinding.MzActivitySearchResultBinding;
 import com.hym.eshoplib.fragment.search.mz.adapter.MzSearchSortAdapter;
 import com.hym.eshoplib.fragment.search.mz.viewmodel.MzSearchViewModel;
+import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.mz.MzConstant;
 
@@ -55,11 +60,19 @@ public class MzSearchResultActivity extends MzBaseActivity {
     private String keyWord = "";
     private String regionId = "";           // 城市id ;
 
+    // 十大 icon  标签
+    private BaseListAdapter<ProductOneTypeBean.DataBean> oneTagAdapter;
+    private BaseListAdapter<ProductTwoTypeBean.DataBean> twoTagAdapter;
+    private int tagPosition = 0;
+    private String twoTagId = "";
+
+
     private MzSearchViewModel searchViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         binding = MzActivitySearchResultBinding
                 .inflate(LayoutInflater.from(this));
@@ -75,9 +88,26 @@ public class MzSearchResultActivity extends MzBaseActivity {
         binding.etSearch.setText(keyWord);
         searchViewModel.setContent(keyWord);
 
-        initTab();
-        intDropDownMenu();
 
+        initTab();
+        intDropDownMenu1();
+
+        // tab 监听
+        searchViewModel.getType().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                binding.dropDownMenu.clearDropDownMenu();
+
+                switch (integer) {
+                    case 1:
+                        intDropDownMenu1();
+                        break;
+                    case 2:
+                        intDropDownMenu2();
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -114,15 +144,16 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
     private void initTab() {
 
-
         MzSearchAllFragment allFragment = new MzSearchAllFragment();
         MzSearchShopFragment shopFragment = new MzSearchShopFragment();
 
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        containerView = LayoutInflater.from(this).inflate(R.layout.mz_result_container_view,
-                null, false);
+        containerView = LayoutInflater.from(this)
+                .inflate(R.layout.mz_result_container_view,
+                        null, false);
+
         transaction.add(R.id.mz_container, allFragment).show(allFragment);
         transaction.add(R.id.mz_container, shopFragment).hide(shopFragment);
 
@@ -135,7 +166,6 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
         // 类型 切换
         binding.mzTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -158,12 +188,10 @@ public class MzSearchResultActivity extends MzBaseActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -171,41 +199,49 @@ public class MzSearchResultActivity extends MzBaseActivity {
     }
 
 
-    private void intDropDownMenu() {
+    private void intDropDownMenu1() {
         List<String> tabs = new ArrayList<>();
-        tabs.add("全国");
-        tabs.add("智能排序");
-        tabs.add("全部");
-
         List<View> pops = new ArrayList<>();
 
-        View viewCity = popsView_City();
-        pops.add(viewCity);
+        tabs.add("全部");
+        tabs.add("智能排序");
+        tabs.add("全国");
+
+
+        View viewAll = popsView_All();
+        pops.add(viewAll);
 
         View viewSort = popsView_Sort();
         pops.add(viewSort);
 
-        View viewAll = new View(this);
-        pops.add(viewAll);
 
+        View viewCity = popsView_City();
+        pops.add(viewCity);
 
         binding.dropDownMenu.setDropDownMenu(tabs, pops, containerView);
-
-
-        //  4   因为还有竖向分割线 ;  单独把 全部拿出来修改一下 ;
-        FrameLayout containerAll = binding.dropDownMenu.getContainer(4);
-        TextView tabAll = (TextView) containerAll.getChildAt(0);
-        tabAll.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_down), null);
-
-        // 全部 点击事件
-        containerAll.setOnClickListener(v -> {
-            binding.dropDownMenu.closeMenu();
-
-        });
-
-
     }
 
+    private void intDropDownMenu2() {
+        List<String> tabs = new ArrayList<>();
+        List<View> pops = new ArrayList<>();
+
+//        tabs.add("全部");
+        tabs.add("智能排序");
+        tabs.add("全国");
+
+
+//        View viewAll = popsView_All();
+//        pops.add(viewAll);
+
+        View viewSort = popsView_Sort();
+        pops.add(viewSort);
+
+
+        View viewCity = popsView_City();
+        pops.add(viewCity);
+
+        binding.dropDownMenu.setDropDownMenu(tabs, pops, containerView);
+    }
 
     // 全国的 View ;
     private View popsView_City() {
@@ -318,7 +354,6 @@ public class MzSearchResultActivity extends MzBaseActivity {
         return root;
     }
 
-
     // 智能排序 View;
     private View popsView_Sort() {
         RecyclerView sortRv = new RecyclerView(this);
@@ -372,6 +407,142 @@ public class MzSearchResultActivity extends MzBaseActivity {
         sortRv.setAdapter(adapter);
 
         return sortRv;
+    }
+
+    // 全部  十大 icon  ;
+    private View popsView_All() {
+        View root = LayoutInflater.from(this)
+                .inflate(R.layout.fragment_select_city_2, null, false);
+
+        RecyclerView oneTagRv = root.findViewById(R.id.rv_list_1);
+        RecyclerView twoTagRv = root.findViewById(R.id.rv_list_2);
+
+        oneTagRv.setLayoutManager(new LinearLayoutManager(this));
+        twoTagRv.setLayoutManager(new LinearLayoutManager(this));
+
+        oneTagAdapter = new BaseListAdapter<ProductOneTypeBean.DataBean>(R.layout.item_check,
+                null) {
+            @Override
+            public void handleView(BaseViewHolder helper, ProductOneTypeBean.DataBean item, int position) {
+                TextView text = helper.getView(R.id.text);
+                text.setText(String.valueOf(item.getTitle()));
+
+                if (tagPosition == position) {
+                    text.setTextColor(ContextCompat.getColor(MzSearchResultActivity.this,
+                            R.color.mipaiTextColorSelect));
+
+                } else {
+                    text.setTextColor(ContextCompat.getColor(MzSearchResultActivity.this,
+                            R.color.black));
+
+                }
+
+            }
+
+        };
+
+        oneTagRv.setAdapter(oneTagAdapter);
+
+        oneTagAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                tagPosition = position;
+                oneTagAdapter.notifyDataSetChanged();
+
+                if (position == 0) {
+
+                    binding.dropDownMenu.setTabText("全部");
+                    binding.dropDownMenu.closeMenu();
+
+                } else {
+
+                    String oneTypeId = oneTagAdapter.getData().get(position).getOnetype_id();
+
+                    MzNewApi.getTwoType(new ResponseImpl<ProductTwoTypeBean>() {
+                        @Override
+                        public void onSuccess(ProductTwoTypeBean data) {
+
+                            List<ProductTwoTypeBean.DataBean> allList = data.getData();
+
+                            // 过滤 二级标签
+                            List<ProductTwoTypeBean.DataBean> twoTypeList = new ArrayList<>();
+
+                            for (int i = 0; i < allList.size(); i++) {
+                                ProductTwoTypeBean.DataBean dataBean = allList.get(i);
+
+                                if (oneTypeId.equals(dataBean.getOnetype_id())) {
+                                    twoTypeList.add(dataBean);
+                                }
+
+                            }
+
+                            twoTagAdapter.setNewData(twoTypeList);
+
+                        }
+                    }, ProductTwoTypeBean.class);
+
+                }
+
+
+            }
+        });
+
+
+        twoTagAdapter = new BaseListAdapter<ProductTwoTypeBean.DataBean>(R.layout.item_check, null) {
+            @Override
+            public void handleView(BaseViewHolder helper, ProductTwoTypeBean.DataBean item, int position) {
+                TextView text = helper.getView(R.id.text);
+
+                text.setText(String.valueOf(item.getTitle()));
+
+                if (twoTagId.equals(item.getTwotype_id())) {
+                    text.setTextColor(ContextCompat.getColor(MzSearchResultActivity.this,
+                            R.color.mipaiTextColorSelect));
+                } else {
+                    text.setTextColor(ContextCompat.getColor(MzSearchResultActivity.this,
+                            R.color.black));
+                }
+            }
+        };
+
+        twoTagRv.setAdapter(twoTagAdapter);
+
+        twoTagAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+
+                ProductTwoTypeBean.DataBean dataBean = twoTagAdapter.getData().get(position);
+                twoTagAdapter.notifyDataSetChanged();
+                binding.dropDownMenu.setTabText(dataBean.getTitle());
+                binding.dropDownMenu.closeMenu();
+
+
+                searchViewModel.setTag(dataBean);
+
+
+            }
+        });
+
+
+        // 一级 标签;
+        MzNewApi.getOneType(new ResponseImpl<ProductOneTypeBean>() {
+            @Override
+            public void onSuccess(ProductOneTypeBean data) {
+
+                List<ProductOneTypeBean.DataBean> tags = new ArrayList<>();
+                ProductOneTypeBean.DataBean bean = new ProductOneTypeBean.DataBean();
+
+                bean.setTitle("全部");
+                tags.add(bean);
+                tags.addAll(data.getData());
+
+                oneTagAdapter.setNewData(tags);
+            }
+        }, ProductOneTypeBean.class);
+
+
+        return root;
     }
 
 

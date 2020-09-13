@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ import io.rong.common.FileUtils;
 public class UpLoadVideoFragment extends BaseKitFragment {
 
     private UpLoadVideoProductAdapter adapter;
+
+    private String TAG = "UpLoadVideoFragment";
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -696,7 +699,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
                     // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
                     for (LocalMedia media : selectList) {
-                        Logger.d("视频路径》" + media.getPath());
+                        Log.e(TAG, "视频路径》" + media.getPath());
                         String path = ""; //相当于缩略图的地址
                         String duration = timeParse(media.getDuration());//视频时长
                         if (media.isCut() && !media.isCompressed()) {
@@ -708,6 +711,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                         } else {
                             // 原图
                             path = media.getPath();
+
                         }
                         File file = new File(path);
                         long size = FileUtils.getFileSize(file);
@@ -719,6 +723,10 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                         }
                         TImage tImage = new TImage(path, TImage.FromType.OTHER);
                         tImage.setCompressPath(path);
+
+
+                        tImage.setOriginalPath(media.getRealPath());
+
                         UpLoadImageBean bean = new UpLoadImageBean(tImage);
                         bean.setDuration(duration);
                         list.add(bean);

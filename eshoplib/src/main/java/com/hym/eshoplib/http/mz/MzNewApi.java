@@ -76,6 +76,26 @@ public class MzNewApi {
     }
 
 
+    // 搜索页  全部 ;
+    public static <T> void getProductList(String iconId,
+                                          String p,
+                                          String twotype,
+                                          IHttpResultListener<T> listener,
+                                          Class<T> clazz) {
+
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Store");
+        request.setClassName("GetProductionList");
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("p", p);
+        request.addParamsNotEmpty("twotype", twotype);
+        request.addParamsNotEmpty("psize", "10");
+        request.addParamsNotEmpty("icon_id", iconId);
+
+        post(request, listener, clazz);
+    }
+
+
     /**
      * 发表评价
      *

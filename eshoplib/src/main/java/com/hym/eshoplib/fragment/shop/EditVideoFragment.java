@@ -325,11 +325,11 @@ public class EditVideoFragment extends BaseKitFragment {
         LinearLayout llTitle = footer.findViewById(R.id.ll_title);
         LinearLayout llRegin = footer.findViewById(R.id.ll_region);
 
-        RequiredTextView rl = footer.findViewById(R.id.rtv_location);
+        TextView rl = footer.findViewById(R.id.rtv_location);
         rl.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView rp = footer.findViewById(R.id.rtv_price);
+        TextView rp = footer.findViewById(R.id.rtv_price);
         rp.setTextColor(Color.parseColor("#ff3333"));
-        RequiredTextView tvTitle = footer.findViewById(R.id.rtv_title);
+        TextView tvTitle = footer.findViewById(R.id.rtv_title);
         tvTitle.setTextColor(Color.parseColor("#ff3333"));
 
         et_title = footer.findViewById(R.id.et_title);
