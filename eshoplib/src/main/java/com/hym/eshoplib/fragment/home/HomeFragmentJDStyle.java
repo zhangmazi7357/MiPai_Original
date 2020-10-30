@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -255,28 +256,32 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
         //引导设置推送权限
         if (!SharePreferenceUtil.getBooleangData(_mActivity, "isSet")) {
-            RongPushPremissionsCheckHelper.checkPermissionsAndShowDialog(_mActivity, new ResultCallback() {
-                @Override
-                public void onAreadlyOpened(String value) {
 
-                }
+            RongPushPremissionsCheckHelper.checkPermissionsAndShowDialog(_mActivity,
+                    new ResultCallback() {
+                        @Override
+                        public void onAreadlyOpened(String value) {
 
-                @Override
-                public boolean onBeforeShowDialog(String value) {
-                    return false;
-                }
+                        }
 
-                @Override
-                public void onGoToSetting(String value) {
+                        @Override
+                        public boolean onBeforeShowDialog(String value) {
+                            return false;
+                        }
 
-                }
+                        @Override
+                        public void onGoToSetting(String value) {
 
-                @Override
-                public void onFailed(String value, FailedType type) {
+                        }
 
-                }
-            });
+                        @Override
+                        public void onFailed(String value, FailedType type) {
+
+                        }
+                    });
+
             SharePreferenceUtil.setBooleanData(_mActivity, "isSet", true);
+
         }
     }
 
@@ -515,6 +520,8 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
 
     // 获取到商品详情然后跳转到商品详情页;
     private void shopDetail(String case_id) {
+
+        Log.e("Home", "case_id =" + case_id);
 
         // API  - 产品详情 ;
         HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
@@ -1254,7 +1261,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
                 // Banner 左下角的跑马灯 ;
                 initMarqueen();
                 // 显示需要引导的高亮布局
-                checkFirst(4);
+//                checkFirst(4);
                 hasinit = true;
                 //获取产品
                 p = 1;

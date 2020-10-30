@@ -310,23 +310,27 @@ public class OpenShopStep2 extends BaseKitFragment {
             return;
         }
         String study = tvStudy.getText().toString();
-        if (TextUtils.isEmpty(study)) {
-            ToastUtil.toast("请选择学历");
-            return;
-        }
+
+//        if (TextUtils.isEmpty(study)) {
+//            ToastUtil.toast("请选择学历");
+//            return;
+//        }
         String school = etSchool.getText().toString();
-        if (TextUtils.isEmpty(school)) {
-            ToastUtil.toast("请输入毕业院校");
-            return;
-        }
+//        if (TextUtils.isEmpty(school)) {
+//            ToastUtil.toast("请输入毕业院校");
+//            return;
+//        }
+
         if (TextUtils.isEmpty(refund_type) || refund_type.equals("0")) {
             ToastUtil.toast("请选择退款情况");
             return;
         }
+
         if (TextUtils.isEmpty(invoice) || invoice.equals("2")) {
             ToastUtil.toast("请选择发票情况");
             return;
         }
+
         String urls_1 = "";
         String urls_2 = "";
         if (!TextUtils.isEmpty(url1)) {
@@ -353,10 +357,13 @@ public class OpenShopStep2 extends BaseKitFragment {
 //            ToastUtil.toast("请输入专业");
 //            return;
 //        }
-        ShopApi.EditShop2(etYears.getText().toString(), circle, expect,
+        ShopApi.EditShop2(etYears.getText().toString(),
+                circle, expect,
                 refund_type, invoice, study,
-                school, etExperience.getText().toString(), etPrize.getText().toString(),
+                school, etExperience.getText().toString(),
+                etPrize.getText().toString(),
                 urls_1, urls_2, major,
+
                 new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {

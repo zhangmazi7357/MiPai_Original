@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ import com.orhanobut.logger.Logger;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,6 +69,7 @@ import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
+import cn.hym.superlib.widgets.view.ClearEditText;
 import cn.hym.superlib.widgets.view.RequiredTextView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -80,6 +83,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class EditVideoFragment extends BaseKitFragment {
+
+    private String TAG = "EditVideoFragment";
+
+    // 上传视频
     UpLoadVideoProductAdapter adapter;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -136,6 +143,7 @@ public class EditVideoFragment extends BaseKitFragment {
     private UploadItemView mzProductSort;                     // 产品分类
     private UploadItemView mzSubProductSort;                  // 二级产品分类
     private UploadItemView mzProductTag;                      //  产品标签
+    private ClearEditText mzEtAddress;
     private UploadItemView mzLocation;                        // 摄影棚地址；
 
 
@@ -361,6 +369,7 @@ public class EditVideoFragment extends BaseKitFragment {
         mzProductSort = footer.findViewById(R.id.mz_productSort);
         mzSubProductSort = footer.findViewById(R.id.mz_subProductSort);
         mzProductTag = footer.findViewById(R.id.mz_productTag);
+        mzEtAddress = footer.findViewById(R.id.mz_et_address);
         mzLocation = footer.findViewById(R.id.mz_location);
 
         View.OnClickListener mzClickListener = new View.OnClickListener() {
@@ -402,7 +411,7 @@ public class EditVideoFragment extends BaseKitFragment {
 
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2")) {
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llStaffing.setVisibility(View.VISIBLE);
             llShootingTime.setVisibility(View.VISIBLE);
             llEquipment.setVisibility(View.VISIBLE);
@@ -415,7 +424,7 @@ public class EditVideoFragment extends BaseKitFragment {
         } else if (cateId.equals("8")) {
 
             llShopTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llEquipment.setVisibility(View.VISIBLE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
@@ -460,7 +469,7 @@ public class EditVideoFragment extends BaseKitFragment {
         } else if (cateId.equals("40")) {
 
             llTime.setVisibility(View.VISIBLE);
-            llLocation.setVisibility(View.VISIBLE);
+            llLocation.setVisibility(View.GONE);
             llDetail.setVisibility(View.VISIBLE);
             llRemarks.setVisibility(View.VISIBLE);
             llBeforePrice.setVisibility(View.VISIBLE);
@@ -504,11 +513,13 @@ public class EditVideoFragment extends BaseKitFragment {
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2") || cateId.equals("8")) {
 
             location = etLocatiom.getText().toString();
-            if (TextUtils.isEmpty(location)) {
-                ToastUtil.toast("请输入地点");
-                return;
-            }
+//            if (TextUtils.isEmpty(location)) {
+//                ToastUtil.toast("请输入地点");
+//                return;
+//            }
+
             otherOrLocation = location;
+
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
                 ToastUtil.toast("请输入价格");
@@ -580,9 +591,14 @@ public class EditVideoFragment extends BaseKitFragment {
         }
 
 
-        ShopApi.editVideoProduct(id, image_default, attachment, title, industry_id, image_type_id, region_id, otherOrLocation, length,
-                etPrice, remarks, originalPrice, staffing, shootingTime, equipment, introduce,
-                detail, tyid, shopTime, paisheCount, huazhuang, sheyingshi, shejishi, time, huazhuangping, cehua,
+        ShopApi.editVideoProduct(id, image_default, attachment, title,
+                industry_id, image_type_id, region_id, otherOrLocation,
+                length,
+                etPrice, remarks, originalPrice, staffing,
+                shootingTime, equipment, introduce,
+                detail, tyid, shopTime, paisheCount,
+                huazhuang, sheyingshi, shejishi,
+                time, huazhuangping, cehua,
                 mzOneType,
                 mzTwoType,
                 project_img,
@@ -644,6 +660,42 @@ public class EditVideoFragment extends BaseKitFragment {
                 etRemarks.setText(data.getRemarks());
                 etPresentPrice.setText(data.getPresent_price());
                 etLocatiom.setText(data.getOther());//可以复用
+
+
+                // 一级分类
+                mzOneType = data.getOnetype();
+                mzProductSort.setContent(data.getOnetypeStr());
+
+                // 二级分类
+                mzTwoType = data.getTwotype();
+                mzSubProductSort.setContent(data.getTwotypeStr());
+
+                // 标签
+                mzTagContent = data.getTags();
+                mzProductTag.setContent(mzTagContent);
+
+                // 地址
+                mzAddress = data.getAddress();
+                mzEtAddress.setText(mzAddress);
+
+
+                mzLon = Double.parseDouble(data.getLon());
+                mzLat = Double.parseDouble(data.getLat());
+
+
+                // 图片详情 ;
+                String project_img = data.getProject_img();
+                String[] projectImgArr = MzStringUtil.splitComma(project_img);
+
+                List<String> projectImgList = Arrays.asList(projectImgArr);
+
+                List<UpLoadImageBean> picDetailList = listPic(projectImgList);
+                mzProDetailAdapter.setNewData(picDetailList);
+
+
+
+
+                // 产品 视频
                 List<UpLoadImageBean> list = new ArrayList<>();
                 TImage tImage = new TImage(result.getData().getFilepath(), TImage.FromType.OTHER);
                 tImage.setCompressPath(result.getData().getFilepath());
@@ -776,6 +828,7 @@ public class EditVideoFragment extends BaseKitFragment {
                                     message.sendToTarget();
                                     break;
                                 case 3:
+                                    getImageData(mzProDetailAdapter, resultCamara);
                                     break;
                             }
 
@@ -895,7 +948,6 @@ public class EditVideoFragment extends BaseKitFragment {
         String result = "";
         for (int i = 0; i < mzProDetailAdapter.getData().size(); i++) {
             String file_name = mzProDetailAdapter.getData().get(i).getQiniuFileName();
-
             if (!TextUtils.isEmpty(file_name)) {
                 result += file_name + ",";
             }
@@ -995,6 +1047,33 @@ public class EditVideoFragment extends BaseKitFragment {
             e.printStackTrace();
             return "0:00";
         }
+    }
+
+    // 图片详情 转换 List;
+    private List<UpLoadImageBean> listPic(List<String> urls) {
+        List<UpLoadImageBean> list = new ArrayList<>();
+
+
+        if (urls != null) {
+            for (int i = 0; i < urls.size(); i++) {
+                String url = urls.get(i);
+                TImage tImage = new TImage(url, TImage.FromType.OTHER);
+                tImage.setCompressPath(url);
+                UpLoadImageBean bean = new UpLoadImageBean(tImage);
+                bean.setDuration(data.getData().getLength());
+                bean.setHasUpload(true);
+                String subUrl = url.substring(url.indexOf("//") + 2);
+                String finishUrl = subUrl.substring(subUrl.indexOf("/") + 1);
+                bean.setQiniuFileName(finishUrl);
+                //bean.setQiniuFileName(url.substring(url.indexOf("mobi/")+5));
+                list.add(bean);
+            }
+        }
+        if (list.size() < 9) {
+            list.add(new UpLoadImageBean());
+        }
+
+        return list;
     }
 
 }

@@ -108,6 +108,7 @@ public class ShopCommentPicAdapterAll extends RecyclerView.Adapter<ShopCommentPi
     }
 
 
+
     // 改变尺寸 ;
     private void changeSize(FrameLayout fl, int size) {
         fl.getLayoutParams().width = ScreenUtil.dip2px(mContext, size);

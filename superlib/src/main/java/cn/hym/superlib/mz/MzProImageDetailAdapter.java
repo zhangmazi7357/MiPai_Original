@@ -151,6 +151,7 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
                 tv_percent.setText("上传中..." + "0%");
                 progressBar.setProgress(0);
                 final String path = item.getImage().getCompressPath();
+
                 String qiniufile_name = System.currentTimeMillis() / 1000 +
                         "_" + path.substring(path.lastIndexOf("/") + 1);
 
@@ -209,6 +210,7 @@ public class MzProImageDetailAdapter extends BaseMultiItemQuickAdapter<UpLoadIma
 
                 break;
             case UpLoadImageBean.type_add:
+
                 TextView tv_add = helper.getView(R.id.tv_add);
                 tv_add.getLayoutParams().width = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);
                 tv_add.getLayoutParams().height = width / 3 - ScreenUtil.dip2px(fragment.getContext(), 15);

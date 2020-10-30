@@ -13,11 +13,11 @@ import com.hym.eshoplib.R;
 import java.util.List;
 
 /**
- * 商品评论图片 -
+ * 商品 ...... 图片
  */
-public class ShopCommentPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class ShopPicAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-    public ShopCommentPicAdapter(@Nullable List<String> data) {
+    public ShopPicAdapter(@Nullable List<String> data) {
         super(R.layout.mz_shop_comment_pic, data);
     }
 

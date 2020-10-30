@@ -267,7 +267,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="学历"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_study"
@@ -300,9 +300,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/red"
                     android:gravity="center_vertical"
-                    android:text="毕业院校" />
+                    android:text="毕业院校"
+                    android:textColor="@color/black" />
 
                 <cn.hym.superlib.widgets.view.ClearEditText
                     android:id="@+id/et_school"

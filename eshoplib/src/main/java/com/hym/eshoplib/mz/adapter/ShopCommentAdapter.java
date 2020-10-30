@@ -1,7 +1,6 @@
 package com.hym.eshoplib.mz.adapter;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -71,7 +70,7 @@ public class ShopCommentAdapter<T> extends BaseQuickAdapter<MzShopCommentBean.Da
         // 图片
         RecyclerView commentImgRv = helper.getView(R.id.commentImgRv);
         commentImgRv.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-        ShopCommentPicAdapter picAdapter = new ShopCommentPicAdapter(null);
+        ShopPicAdapter picAdapter = new ShopPicAdapter(null);
 
         commentImgRv.setAdapter(picAdapter);
 

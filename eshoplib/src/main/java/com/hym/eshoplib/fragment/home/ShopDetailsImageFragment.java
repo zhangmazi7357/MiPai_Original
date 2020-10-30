@@ -52,9 +52,7 @@ import com.hym.eshoplib.bean.me.MedetailBean;
 import com.hym.eshoplib.bean.shop.AddFavouriteBean;
 import com.hym.eshoplib.bean.shop.AttachResultBean;
 import com.hym.eshoplib.bean.shop.ServiceDetailBean;
-import com.hym.eshoplib.bean.shop.ShopCommentsBean;
 import com.hym.eshoplib.fragment.order.mipai.MipaiOrderDetailFragment;
-import com.hym.eshoplib.fragment.search.mz.model.LngLonModel;
 import com.hym.eshoplib.http.home.HomeApi;
 import com.hym.eshoplib.http.me.MeApi;
 import com.hym.eshoplib.http.mz.MzNewApi;
@@ -63,7 +61,8 @@ import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
-import com.hym.eshoplib.mz.iconproduct.HomeIconProductBean;
+import com.hym.eshoplib.mz.adapter.ShopPicAdapter;
+import com.hym.eshoplib.mz.adapter.ShopProjectPicAdapter;
 import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
@@ -80,6 +79,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -163,13 +163,34 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     TextView tvLoca;
     @BindView(R.id.tv_qicai)
     TextView tvQicai;
+
+    @BindView(R.id.tv_pic_count)
+    TextView tvPicCount;
+
     @BindView(R.id.shooting_day_time)
     TextView shootingDayTime;
-    @BindView(R.id.tv_staffing)
-    TextView tvStaffing;
 
-    @BindView(R.id.tv_project_detail)
-    TextView tvProjectDetail;
+
+    // 摄影师
+    @BindView(R.id.tv_photographer)
+    TextView tvPhotographer;
+
+    // 化妆师
+    @BindView(R.id.tv_dresser)
+    TextView tvDresser;
+
+
+    // ---
+    @BindView(R.id.v_shooting_day_time)
+    TextView vShootingDayTime;
+
+    @BindView(R.id.v_photographer)
+    TextView vPhotographer;
+
+    @BindView(R.id.v_dresser)
+    TextView vDresser;
+
+
     @BindView(R.id.rl_click_workhome)
     RelativeLayout rlClickWorkhome;
     @BindView(R.id.iv_vip)
@@ -299,6 +320,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     @BindView(R.id.ll_shop_project)
     LinearLayout llShopProject;
 
+
     // 评论
     @BindView(R.id.ll_shop_comment)
     LinearLayout llShopComment;
@@ -325,6 +347,11 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
     @BindView(R.id.ll_shop_detail)
     LinearLayout llShopDetail;
 
+    @BindView(R.id.tv_project_detail)
+    TextView tvProjectDetail;
+
+    @BindView(R.id.rv_project_detail)
+    RecyclerView rvProjectDetail;
 
     // 工作室详情 ;
     @BindView(R.id.ll_shop_container)
@@ -449,6 +476,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         data = (GoodDetailModel) bundle.getSerializable("data");
 
+        Log.e(TAG, " 商品详情 = " + JSONObject.toJSONString(data));
 
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
@@ -483,36 +511,64 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             LinearLayout llShootTime = (LinearLayout) tvShootTime.getParent();
             llShootTime.setVisibility(View.GONE);
         }
+        tvShootTime.setText(db.getLength());
 
-        tvShootTime.setText(db.getEquipment());
+        // 拍摄器材
         if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvQicai.getParent();
             llShootTime.setVisibility(View.GONE);
         }
-
         tvQicai.setText(db.getEquipment());
-        if (!TextUtils.isEmpty(db.getShooting_time())) {
 
+        // 拍摄张数
+        if (TextUtils.isEmpty(db.getNums())) {
+            LinearLayout llPicCount = (LinearLayout) tvPicCount.getParent();
+            llPicCount.setVisibility(View.GONE);
+        }
+        tvPicCount.setText(db.getNums());
+
+
+        if (!TextUtils.isEmpty(db.getShooting_time())) {
             shootingDayTime.setText(db.getShooting_time());
         } else {
             LinearLayout llShootTime = (LinearLayout) shootingDayTime.getParent();
             llShootTime.setVisibility(View.GONE);
+            vShootingDayTime.setVisibility(View.GONE);
             shootingDayTime.setText("");
         }
 
-        if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")) {
-            LinearLayout llShootTime = (LinearLayout) tvStaffing.getParent();
+        // 摄影师
+        if (TextUtils.isEmpty(db.getPhotographer()) || db.getPhotographer().equals("0")) {
+            LinearLayout llShootTime = (LinearLayout) tvPhotographer.getParent();
             llShootTime.setVisibility(View.GONE);
+            vPhotographer.setVisibility(View.GONE);
         }
+        tvPhotographer.setText(db.getPhotographer());
+
+        // 化妆师
+        if (TextUtils.isEmpty(db.getDresser()) || db.getDresser().equals("0")) {
+            LinearLayout llDresser = (LinearLayout) tvDresser.getParent();
+            llDresser.setVisibility(View.GONE);
+            vDresser.setVisibility(View.GONE);
+        }
+        tvDresser.setText(db.getDresser());
+
         if (TextUtils.isEmpty(db.getOther()) || db.getOther().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvLoca.getParent();
             llShootTime.setVisibility(View.GONE);
         }
-        tvStaffing.setText(db.getStaffing());
 
 
+        // 项目详情 ;
         tvProjectDetail.setText(db.getDetails());
-        tvLoca.setText(db.getOther());
+
+        // 项目详情的图片 ;
+        String project_img = db.getProject_img();
+        projectImage(project_img);
+
+        // 基本信息里的地点 ,
+        tvLoca.setText(db.getAddress());
+
         if (db.getAuth() == 1) {
             ivVip.setVisibility(View.VISIBLE);
             ivVip.setImageResource(R.drawable.ic_person_rt);
@@ -1564,6 +1620,47 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         dialogView.findViewById(R.id.aMap).setOnClickListener(listener);
         dialogView.findViewById(R.id.baiduMap).setOnClickListener(listener);
         dialogView.findViewById(R.id.tentcentMap).setOnClickListener(listener);
+
+
+    }
+
+
+    // 项目详情图片 ;
+    private void projectImage(String images) {
+
+        String[] strings = MzStringUtil.splitComma(images);
+
+
+        rvProjectDetail.setLayoutManager(new LinearLayoutManager(_mActivity));
+        ShopProjectPicAdapter adapter = new ShopProjectPicAdapter(null);
+
+
+        rvProjectDetail.setAdapter(adapter);
+
+
+        if (strings != null && strings.length > 0) {
+
+            rvProjectDetail.setVisibility(View.VISIBLE);
+            List<String> imgList = Arrays.asList(strings);
+            adapter.setNewData(imgList);
+
+
+            adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                    int width = ScreenUtil.getScreenWidth(_mActivity);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(_mActivity, imgList, position, imageSize);
+
+                }
+            });
+
+        } else {
+
+            rvProjectDetail.setVisibility(View.GONE);
+
+        }
 
 
     }

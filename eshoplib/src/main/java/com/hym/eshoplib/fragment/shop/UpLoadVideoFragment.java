@@ -698,10 +698,12 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                     // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
                     // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
                     // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+
                     for (LocalMedia media : selectList) {
                         Log.e(TAG, "视频路径》" + media.getPath());
                         String path = ""; //相当于缩略图的地址
                         String duration = timeParse(media.getDuration());//视频时长
+
                         if (media.isCut() && !media.isCompressed()) {
                             // 裁剪过
                             path = media.getCutPath();
@@ -732,6 +734,7 @@ public class UpLoadVideoFragment extends BaseKitFragment {
                         list.add(bean);
 
                     }
+
                     adapter.setNewData(list);
 
 

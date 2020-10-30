@@ -67,6 +67,7 @@ public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 HomeApi.getProductDetailData(new BaseFragment.ResponseImpl<GoodDetailModel>() {
                     @Override
                     public void onSuccess(GoodDetailModel data) {
@@ -93,6 +94,8 @@ public class ShopVideoListFragment extends BaseListGridFragment<ShopProductsBean
                         super.onDataError(status, errormessage);
                     }
                 }, GoodDetailModel.class, getAdapter().getData().get(position).getCase_id());
+
+
             }
         });
         View emptyView = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_shoppingcart, null, false);

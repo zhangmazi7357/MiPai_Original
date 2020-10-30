@@ -247,9 +247,17 @@ public class App extends KitBaseApplication {
             //如果用户已经登录并且连接已经断开的情况下调用连接
             reconnect(UserUtil.getRongYunToken(this));
         }
+
         //初始化极光
         JPushInterface.setDebugMode(isDebug());
         JPushInterface.init(this);
+
+
+//        JPushInterface.addTags(this,10001,);
+        JPushInterface.setAlias(this,10001,"Jp");
+
+
+
         //static 代码段可以防止内存泄露
 
 
@@ -265,8 +273,9 @@ public class App extends KitBaseApplication {
 
     @Override
     public boolean isDebug() {
-        return false;
+        return true;
     }
+
     public static String getCurProcessName(Context context) {
         int pid = android.os.Process.myPid();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -348,4 +357,5 @@ public class App extends KitBaseApplication {
 
         return isInBackground;
     }
+
 }

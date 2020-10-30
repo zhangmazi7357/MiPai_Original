@@ -134,7 +134,9 @@
             android:value="${CHANNEL_NAME}" />
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" /> <!-- 融云 -->
+            android:value="2.4" />
+        <!-- 融云 -->
+
         <!-- 会话界面 -->
         <activity
             android:name=".activity.RongConversationaActivity"
@@ -150,12 +152,15 @@
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
-        </activity> <!-- 高德 -->
-        <service android:name="com.amap.api.location.APSService" />
+        </activity>
 
+        <!-- 高德 -->
+        <service android:name="com.amap.api.location.APSService" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="4f0c923440638a6e6eff2d43f54a0f40" /> <!-- 高德 -->
+            android:value="4f0c923440638a6e6eff2d43f54a0f40" />
+        <!-- 高德 -->
+
         <!-- 极光接收器 -->
         <receiver
             android:name=".receiver.MyReceiver"
@@ -169,8 +174,13 @@
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
 
                 <category android:name="com.hym.eshoplib" />
+
             </intent-filter>
-        </receiver> <!-- 极光接收器 -->
+        </receiver>
+        <!-- 极光接收器 -->
+
+
+
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
         <!-- 否则使用拍照功能时，会崩溃 -->
         <provider
@@ -181,16 +191,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
-        </provider> <!-- mzFileProvider -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.hym.eshoplib.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepath" />
         </provider>
+
+
 
         <activity
             android:name=".fragment.search.mz.MzSearchResultActivity"

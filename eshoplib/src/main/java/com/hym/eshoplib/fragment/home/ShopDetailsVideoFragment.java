@@ -65,6 +65,8 @@ import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
+import com.hym.eshoplib.mz.adapter.ShopPicAdapter;
+import com.hym.eshoplib.mz.adapter.ShopProjectPicAdapter;
 import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
 import com.hym.eshoplib.util.RemoveZeroUtil;
@@ -181,13 +183,32 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
     TextView tvLoca;
     @BindView(R.id.tv_qicai)
     TextView tvQicai;
+
+    @BindView(R.id.tv_pic_count)
+    TextView tvPicCount;
+
     @BindView(R.id.shooting_day_time)
     TextView shootingDayTime;
-    @BindView(R.id.tv_staffing)
-    TextView tvStaffing;
 
-    @BindView(R.id.tv_project_detail)
-    TextView tvProjectDetail;
+    // 摄影师
+    @BindView(R.id.tv_photographer)
+    TextView tvPhotographer;
+
+    // 化妆师
+    @BindView(R.id.tv_dresser)
+    TextView tvDresser;
+
+    //----------
+    @BindView(R.id.v_shooting_day_time)
+    TextView vShootingDayTime;
+
+    @BindView(R.id.v_photographer)
+    TextView vPhotographer;
+
+    @BindView(R.id.v_dresser)
+    TextView vDresser;
+
+
     @BindView(R.id.rl_click_workhome)
     RelativeLayout rlClickWorkhome;
     @BindView(R.id.iv_vip)
@@ -315,6 +336,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
 
     @BindView(R.id.ll_shop_detail)
     LinearLayout llShopDetail;
+
+    @BindView(R.id.tv_project_detail)
+    TextView tvProjectDetail;
+    @BindView(R.id.rv_project_detail)
+    RecyclerView rvProjectDetail;
 
     @BindView(R.id.ll_shop_recommend)
     LinearLayout llShopRecommend;
@@ -481,12 +507,21 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
             LinearLayout llShootTime = (LinearLayout) tvShootTime.getParent();
             llShootTime.setVisibility(View.GONE);
         }
-        tvShootTime.setText(db.getEquipment());
+        tvShootTime.setText(db.getLength());
 
+        //拍摄器材
         if (TextUtils.isEmpty(db.getEquipment()) || db.getEquipment().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvQicai.getParent();
             llShootTime.setVisibility(View.GONE);
         }
+
+        if (TextUtils.isEmpty(db.getNums())) {
+            LinearLayout llPicCount = (LinearLayout) tvPicCount.getParent();
+            llPicCount.setVisibility(View.GONE);
+        }
+        tvPicCount.setText(db.getNums());
+
+
         tvBuyCount.setText("销量" + data.getData().getWeight());
         tvDescribe.setText(db.getTitle());
         tvWhoWork.setText(db.getStore_name());
@@ -500,31 +535,48 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
 
         tvShootTime.setText(db.getLength());
         tvQicai.setText(db.getEquipment());
+
         if (!TextUtils.isEmpty(db.getShooting_time())) {
-           /* long shootTime = Long.parseLong(db.getShooting_time());
-            long day = shootTime / 1000 / (60 * 60 * 24);
-            shootingDayTime.setText(day + "天");*/
+
             shootingDayTime.setText(db.getShooting_time());
         } else {
             LinearLayout llShootTime = (LinearLayout) shootingDayTime.getParent();
             llShootTime.setVisibility(View.GONE);
             shootingDayTime.setText("");
+            vShootingDayTime.setVisibility(View.GONE);
         }
 
-        if (TextUtils.isEmpty(db.getStaffing()) || db.getStaffing().equals("0")) {
-            LinearLayout llShootTime = (LinearLayout) tvStaffing.getParent();
+        // 摄影师
+        if (TextUtils.isEmpty(db.getPhotographer()) || db.getPhotographer().equals("0")) {
+            LinearLayout llShootTime = (LinearLayout) tvPhotographer.getParent();
             llShootTime.setVisibility(View.GONE);
+            vPhotographer.setVisibility(View.GONE);
         }
+        tvPhotographer.setText(db.getPhotographer());
+
+        // 化妆师
+        if (TextUtils.isEmpty(db.getDresser()) || db.getDresser().equals("0")) {
+            LinearLayout llDresser = (LinearLayout) tvDresser.getParent();
+            llDresser.setVisibility(View.GONE);
+            vDresser.setVisibility(View.GONE);
+        }
+        tvDresser.setText(db.getDresser());
+
         if (TextUtils.isEmpty(db.getOther()) || db.getOther().equals("0")) {
             LinearLayout llShootTime = (LinearLayout) tvLoca.getParent();
             llShootTime.setVisibility(View.GONE);
+
         }
 
-        tvStaffing.setText(db.getStaffing());
 //        tvTeamIntroduce.setText(db.getIntroduce());
 
         tvProjectDetail.setText(db.getDetails());
-        tvLoca.setText(db.getOther());
+
+        String project_img = db.getProject_img();
+        projectImage(project_img);
+
+        tvLoca.setText(db.getAddress());
+
         if (db.getAuth() == 1) {
             ivVip.setVisibility(View.VISIBLE);
             ivVip.setImageResource(R.drawable.ic_person_rt);
@@ -1524,6 +1576,43 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
                 return true;
         }
         return false;
+
+    }
+
+    // 项目详情图片 ;
+    private void projectImage(String images) {
+
+        String[] strings = MzStringUtil.splitComma(images);
+
+        rvProjectDetail.setLayoutManager(new GridLayoutManager(_mActivity, 3));
+        ShopPicAdapter adapter = new ShopPicAdapter(null);
+
+//        rvProjectDetail.setLayoutManager(new LinearLayoutManager(_mActivity));
+//        ShopProjectPicAdapter adapter = new ShopProjectPicAdapter(null);
+
+        rvProjectDetail.setAdapter(adapter);
+
+        if (strings != null && strings.length > 0) {
+            rvProjectDetail.setVisibility(View.VISIBLE);
+            List<String> imgList = Arrays.asList(strings);
+            adapter.setNewData(imgList);
+
+
+            adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                    int width = ScreenUtil.getScreenWidth(_mActivity);
+                    ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                    ImagePagerActivity.startImagePagerActivity(_mActivity, imgList, position, imageSize);
+
+                }
+            });
+
+        } else {
+            rvProjectDetail.setVisibility(View.GONE);
+        }
+
 
     }
 

@@ -113,7 +113,7 @@ public class CommentDetailFragment extends BaseKitFragment {
             @Override
             public void onSuccess(CommentDetailBean data) {
 
-              //  Log.e(TAG, "评价详情 = " + JSONObject.toJSONString(data));
+                Log.e(TAG, "评价详情 = " + JSONObject.toJSONString(data));
 
                 ImageUtil.getInstance()
                         .loadCircleImage(CommentDetailFragment.this,

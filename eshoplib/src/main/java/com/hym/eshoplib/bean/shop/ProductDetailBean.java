@@ -138,6 +138,90 @@ public class ProductDetailBean {
         private List<String> attachment;
         private List<String> attachment_key;
 
+
+        // 后加的
+        private String onetype;
+        private String twotype;
+        private String lon;
+        private String lat;
+        private String address;
+        private String project_img;
+        private String tags;
+        private String onetypeStr;
+        private String twotypeStr;
+
+        public String getOnetypeStr() {
+            return onetypeStr;
+        }
+
+        public void setOnetypeStr(String onetypeStr) {
+            this.onetypeStr = onetypeStr;
+        }
+
+        public String getTwotypeStr() {
+            return twotypeStr;
+        }
+
+        public void setTwotypeStr(String twotypeStr) {
+            this.twotypeStr = twotypeStr;
+        }
+
+        public String getProject_img() {
+            return project_img;
+        }
+
+        public void setProject_img(String project_img) {
+            this.project_img = project_img;
+        }
+
+        public String getTags() {
+            return tags;
+        }
+
+        public void setTags(String tags) {
+            this.tags = tags;
+        }
+
+        public String getOnetype() {
+            return onetype;
+        }
+
+        public void setOnetype(String onetype) {
+            this.onetype = onetype;
+        }
+
+        public String getTwotype() {
+            return twotype;
+        }
+
+        public void setTwotype(String twotype) {
+            this.twotype = twotype;
+        }
+
+        public String getLon() {
+            return lon;
+        }
+
+        public void setLon(String lon) {
+            this.lon = lon;
+        }
+
+        public String getLat() {
+            return lat;
+        }
+
+        public void setLat(String lat) {
+            this.lat = lat;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
         public String getAgree_count() {
             return agree_count;
         }

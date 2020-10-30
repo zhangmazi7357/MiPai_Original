@@ -2,18 +2,28 @@ package com.hym.eshoplib.fragment.shop;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
@@ -22,6 +32,9 @@ import com.hym.eshoplib.bean.shop.ShopProductsBean;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.imagelib.ImageUtil;
 import com.orhanobut.logger.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.fragment.base.BaseListFragment;
@@ -264,7 +277,12 @@ public class ShopProductListFragment extends BaseListFragment<ShopProductsBean.D
             }
         });
 
-        ImageUtil.getInstance().loadImage(ShopProductListFragment.this, item.getImage_default(), iv_image);
+        ImageUtil.getInstance().loadImage(ShopProductListFragment.this,
+                item.getImage_default(), iv_image);
+
+
+
+
         tv_name.setText(item.getTitle() + "");
 
         switch (item.getIs_verify()) {

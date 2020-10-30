@@ -6,7 +6,7 @@
     <string name="errcode_unknown">发送返回</string>
     <string name="look_more">查看更多</string>
     <string name="changeLike">点赞是很认真的行为，不许反悔哦:)</string>
-    <string name="time">时&#8195;&#8195;长</string>
+    <string name="time">拍摄时长</string>
     <string name="local">地&#8195;&#8195;点</string>
     <string name="mz_product_sort_hint">请选择产品分类</string>
     <string name="mz_sub_product_sort_hint">请选择二级分类</string>

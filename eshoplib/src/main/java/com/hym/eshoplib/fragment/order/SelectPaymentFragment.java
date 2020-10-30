@@ -266,6 +266,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                     case 1:
                         //ToastUtil.toast("微信支付开发中，请选择支付宝支付");
                         //微信
+
                         OrderApi.WxPay(_mActivity, child_order_id, "activity", new ResponseImpl<WxpayBean>() {
                             @Override
                             public void onSuccess(WxpayBean data) {
@@ -274,6 +275,7 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                                 IWXAPI api = WXAPIFactory.createWXAPI(_mActivity, Constants.APP_ID);
                                 api.registerApp(Constants.APP_ID);
                                 PayReq req = new PayReq();
+
                                 req.appId = Constants.APP_ID;
                                 req.nonceStr = data.getData().getNonce_str();
                                 req.packageValue = "Sign=WXPay";
@@ -294,6 +296,8 @@ public class SelectPaymentFragment extends BaseKitFragment implements AliPay.Pay
                                 super.onDataError(status, errormessage);
                             }
                         }, WxpayBean.class);
+
+
                         break;
                     case 2:
                         // ToastUtil.toast("支付宝支付");

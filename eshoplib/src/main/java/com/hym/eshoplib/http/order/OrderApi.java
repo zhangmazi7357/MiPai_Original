@@ -2,7 +2,9 @@ package com.hym.eshoplib.http.order;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.httplib.interfaces.IHttpResultListener;
 
 import app.App;
@@ -137,6 +139,8 @@ public class OrderApi {
         request.AddParems("child_order_number", child_order_number);
         request.AddParems("type", type);
         post(request, listener, clazz);
+
+//        Log.e("TAG", "微信支付 = " + JSONObject.toJSONString(request));
 
     }
 

@@ -477,6 +477,7 @@ public class ShopApi {
         request.addParamsNotEmpty("cosmetics", huazhuangping);
 
 
+        //后加的
         request.addParamsNotEmpty("onetype", oneType);
         request.addParamsNotEmpty("twotype", twoType);
         request.addParamsNotEmpty("project_img", project_img);

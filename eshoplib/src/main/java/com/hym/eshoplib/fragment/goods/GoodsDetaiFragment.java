@@ -718,6 +718,9 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
             case R.id.tv_add_shoppingcart:
                 showSelectTypeDialog(1);
                 break;
+
+
+                // 立即预约
             case R.id.tv_buy_now:
                 if (detailBean == null) {
                     return;

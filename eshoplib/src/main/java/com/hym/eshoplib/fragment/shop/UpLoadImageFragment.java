@@ -156,6 +156,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
     public void doLogic() {
         SoftHideKeyBoardUtil.assistActivity(_mActivity);
 
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -396,6 +397,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
             tyid = "1";
 
         } else if (cateId.equals("8")) {
+
+
             llShopTime.setVisibility(View.VISIBLE);
             llLocation.setVisibility(View.GONE);                // 不显示
             llEquipment.setVisibility(View.VISIBLE);
