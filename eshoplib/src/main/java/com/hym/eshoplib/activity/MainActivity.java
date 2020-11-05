@@ -388,7 +388,7 @@ public class MainActivity extends BaseMainActivity {
     }
 
 
-    // 暂时先不放 Service ;
+
     private void rongCloudService() {
         // 连接RongCloud；
         if (!TextUtils.isEmpty(UserUtil.getRongYunToken(this))) {
@@ -419,8 +419,6 @@ public class MainActivity extends BaseMainActivity {
                     // 通知 各部门 更新消息
                     EventBus.getDefault().post(new MessageEvent());
 
-                    // 刷新会话列表
-                    EventBus.getDefault().post(new RefreshChatListEvent());
 
                     return false;
                 }
