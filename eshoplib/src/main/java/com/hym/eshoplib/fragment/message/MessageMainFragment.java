@@ -2,6 +2,7 @@ package com.hym.eshoplib.fragment.message;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import cn.hym.superlib.event.lgoin.LoginEvent;
 import cn.hym.superlib.fragment.base.BaseTabViewPagerFragment;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.SystemBarUtil;
+import io.rong.common.fwlog.LogEntity;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
@@ -58,7 +60,9 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
 
     @Override
     public Fragment[] getSupportFragments() {
+
         initConversationList();
+
         fragments[0] = SystemMessageFragment.newInstance(new Bundle());
         fragments[1] = mConversationListFragment;
         fragments[2] = OrderMessageFragment.newInstance(new Bundle());
@@ -124,6 +128,7 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
                         .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                         .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "true")
                         .build();
+
                 mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
                         Conversation.ConversationType.GROUP,
                         Conversation.ConversationType.PUBLIC_SERVICE,
@@ -133,6 +138,7 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
                 };
 
             } else {
+
                 uri = Uri.parse("rong://" + _mActivity.getApplicationInfo().packageName).buildUpon()
                         .appendPath("conversationlist")
                         .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
@@ -159,6 +165,7 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+
         if (UserUtil.getIsLogin(_mActivity)) {
             App.reconnect(UserUtil.getRongYunToken(_mActivity));
             //更新数据
@@ -203,15 +210,21 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
             };
             mConversationListFragment.setUri(uri);
 
-
         }
-
 
     }
 
+    /**
+     *  收到RongIM 消息的通知
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void upDataMsg(MessageEvent event) {
         updateMessageCount();
+
+        mConversationListFragment.onRestoreUI();
+
+
     }
 
     private void updateMessageCount() {
@@ -224,6 +237,7 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
             public void onSuccess(UnReadMessageBean data) {
                 final int system = Integer.parseInt(data.getData().getSystem());
                 final int order = Integer.parseInt(data.getData().getOrder());
+
                 if (system > 0) {
                     getTabLayout().showMsg(0, system);
                 } else {
@@ -236,26 +250,33 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
                 }
 
 
-                RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
-                    @Override
-                    public void onSuccess(Integer integer) {
-                        try {
-                            if (integer > 0) {
-                                getTabLayout().showMsg(1, integer);
-                            } else {
-                                getTabLayout().hideMsg(1);
+                RongIM.getInstance()
+                        .getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
+                            @Override
+                            public void onSuccess(Integer integer) {
+
+                                try {
+                                    if (integer > 0) {
+                                        getTabLayout().showMsg(1, integer);
+                                    } else {
+                                        getTabLayout().hideMsg(1);
+                                    }
+
+                                } catch (Exception e) {
+                                    Logger.d("消息异常=" + e.toString());
+                                }
                             }
-                        } catch (Exception e) {
-                            Logger.d("消息异常=" + e.toString());
-                        }
-                    }
 
-                    @Override
-                    public void onError(RongIMClient.ErrorCode errorCode) {
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
 
-                    }
-                });
+                            }
+                        });
+
             }
         }, UnReadMessageBean.class);
+
+
     }
+
 }

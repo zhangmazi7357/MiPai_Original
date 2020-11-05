@@ -156,43 +156,48 @@ public class GetCashFragment extends BaseKitFragment {
                             MeApi.PoundageInfo(etMoney.getText().toString(), new ResponseImpl<GetCashInfoBean>() {
                                 @Override
                                 public void onSuccess(GetCashInfoBean data) {
-                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity, "￥" + data.getData().getTotal(), data.getData().getMemo(), new PayPsdInputView.onPasswordListener() {
-                                        @Override
-                                        public void onDifference(String oldPsd, String newPsd) {
-
-                                        }
-
-                                        @Override
-                                        public void onEqual(String psd) {
-
-                                        }
-
-                                        @Override
-                                        public void inputFinished(String inputPsd) {
-                                            MipaiDialogUtil.dismiss();
-                                            //提现
-                                            MeApi.WithdrawsCash(bean.getUserbank_id(), etMoney.getText().toString(), inputPsd, new ResponseImpl<Object>() {
+                                    PayPsdInputView et = MipaiDialogUtil.showInputPwdDialog(_mActivity,
+                                            "￥" + data.getData().getTotal(),
+                                            data.getData().getMemo(),
+                                            new PayPsdInputView.onPasswordListener() {
                                                 @Override
-                                                public void onSuccess(Object data) {
-                                                    ToastUtil.toast("提现申请成功，平台会尽快处理您的提现请求");
-                                                    EventBus.getDefault().post(new UpdateDataEvent());
-                                                    pop();
+                                                public void onDifference(String oldPsd, String newPsd) {
+
                                                 }
-                                            }, Object.class);
+
+                                                @Override
+                                                public void onEqual(String psd) {
+
+                                                }
+
+                                                @Override
+                                                public void inputFinished(String inputPsd) {
+                                                    MipaiDialogUtil.dismiss();
+                                                    //提现
+                                                    MeApi.WithdrawsCash(bean.getUserbank_id(), etMoney.getText().toString(),
+                                                            inputPsd, new ResponseImpl<Object>() {
+                                                                @Override
+                                                                public void onSuccess(Object data) {
+
+                                                                    ToastUtil.toast("提现申请成功，平台会尽快处理您的提现请求");
+                                                                    EventBus.getDefault().post(new UpdateDataEvent());
+                                                                    pop();
+                                                                }
+                                                            }, Object.class);
 
 
-                                        }
-                                    }, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            //ToastUtil.toast("忘记密码");
-                                            //忘记支付密码
-                                            Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
-                                            bundle.putInt("type", 3);
-                                            ActionActivity.start(_mActivity, bundle);
+                                                }
+                                            }, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    //ToastUtil.toast("忘记密码");
+                                                    //忘记支付密码
+                                                    Bundle bundle = getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_SetPayPwd);
+                                                    bundle.putInt("type", 3);
+                                                    ActionActivity.start(_mActivity, bundle);
 
-                                        }
-                                    });
+                                                }
+                                            });
                                     showSoftInput(et);
                                 }
                             }, GetCashInfoBean.class);

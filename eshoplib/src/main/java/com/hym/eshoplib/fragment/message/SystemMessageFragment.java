@@ -74,15 +74,18 @@ public class SystemMessageFragment extends BaseListFragment<SystemMessageListBea
         tv_message.setText("暂无平台消息");
         tv_message.setTextColor(Color.parseColor("#999999"));
         getAdapter().setEmptyView(emptyView);
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+
                 HomeApi.ReadMsg(getAdapter().getData().get(position).getMsg_id(), new ResponseImpl<Object>() {
                     @Override
                     public void onSuccess(Object data) {
                         MessageEvent event = new MessageEvent();
                         event.type = 1;
                         EventBus.getDefault().post(event);
+
                         getAdapter().getData().get(position).setStatus("0");
                         getAdapter().notifyDataSetChanged();
                         //进入系统消息详情

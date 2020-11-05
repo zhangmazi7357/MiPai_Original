@@ -408,8 +408,8 @@ public class MeFragment extends BaseKitFragment {
                 //我的收藏
                 ActionActivity.start(_mActivity, getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_MyCollect));
                 break;
-            case R.id.tv_myInviteCode:
-                //我的邀请码
+            case R.id.tv_myInviteCode:    //我的邀请码   === > 替换成我的收款码
+
                 ActionActivity.start(_mActivity, getActionBundle(ActionActivity.ModelType_me, ActionActivity.Action_MyInviteCode));
                 break;
             case R.id.tv_service_1:

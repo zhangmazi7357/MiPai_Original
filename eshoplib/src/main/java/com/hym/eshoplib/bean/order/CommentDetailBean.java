@@ -68,6 +68,8 @@ public class CommentDetailBean {
         private String rank_type;
         private int auth_store;
         private int auth_user;
+        private String content;
+        private String images;
         private List<LabelListBean> label_list;
 
 
@@ -233,5 +235,21 @@ public class CommentDetailBean {
             this.label_list = label_list;
         }
 
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getImages() {
+            return images;
+        }
+
+        public void setImages(String images) {
+            this.images = images;
+        }
     }
 }

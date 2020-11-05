@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_bg_invite_code">
+
     <!--邀请码-->
     <ImageView
         android:layout_width="wrap_content"
@@ -68,4 +69,5 @@
             android:layout_below="@id/tv_my_invite_person"
             android:layout_margin="20dp"></androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
+
 </FrameLayout>

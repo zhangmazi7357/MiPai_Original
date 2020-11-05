@@ -20,6 +20,7 @@ import com.hym.eshoplib.fragment.home.ShopDetailsVideoFragment;
 import com.hym.eshoplib.fragment.me.AuthFragment;
 import com.hym.eshoplib.fragment.me.ChangePhoneFragment;
 import com.hym.eshoplib.fragment.me.MeDetailFragment;
+import com.hym.eshoplib.fragment.me.MyCollectionCodeFragment;
 import com.hym.eshoplib.fragment.me.MyInviteCodeFragment;
 import com.hym.eshoplib.fragment.me.Openshop.ActorInfoFragment;
 import com.hym.eshoplib.fragment.me.Openshop.CommonSelectFragment;
@@ -296,8 +297,9 @@ public class ActionActivity extends BaseActionActivity implements IFragmentActio
                 case Action_MyLogDetail:
                     fragment = MyDetailMainFragment.newInstance(getIntent().getExtras());
                     break;
-                case Action_MyInviteCode:
-                    fragment = MyInviteCodeFragment.newInstance(getIntent().getExtras());
+                case Action_MyInviteCode:     //  原邀请码 ==>  改成收款码
+//                    fragment = MyInviteCodeFragment.newInstance(getIntent().getExtras());
+                    fragment = MyCollectionCodeFragment.newInstance(getIntent().getExtras());
                     break;
                 case Action_LogDetail:
                     fragment = LogDetailFragment.newInstance(getIntent().getExtras());

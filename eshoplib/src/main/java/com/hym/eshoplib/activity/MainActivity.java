@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.home.UnReadMessageBean;
 import com.hym.eshoplib.event.MessageEvent;
@@ -55,6 +56,8 @@ import cn.hym.superlib.widgets.bottombar.BottomBarLayout;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 import me.yokeyword.fragmentation.SupportFragment;
 import zhy.com.highlight.HighLight;
 import zhy.com.highlight.interfaces.HighLightInterface;
@@ -272,7 +275,7 @@ public class MainActivity extends BaseMainActivity {
     @Override
     public void onItemSelected(BottomBarItem bottomBarItem, int position) {
         if (position == 2) {
-            //平台推荐
+            // 客服推荐
             startChat();
         } else {
             super.onItemSelected(bottomBarItem, position);
@@ -370,21 +373,68 @@ public class MainActivity extends BaseMainActivity {
         String channelid = SharePreferenceUtil.getStringData(this, "channelid");
         if (TextUtils.isEmpty(channelid)) {
             SharePreferenceUtil.setStringData(this, "channelid", JPushInterface.getRegistrationID(this));
-//            Log.e("====", "channelId = " + channelid);
+            Log.e("TAG", "channelId = " + channelid);
         } else {
 //            Logger.d("id不为空=" + channelid);
         }
+
+        rongCloudService();
+
+        //更新  第二个 tab 上面消息数
         updateMessageCount();
+
+
+    }
+
+
+    // 暂时先不放 Service ;
+    private void rongCloudService() {
+        // 连接RongCloud；
+        if (!TextUtils.isEmpty(UserUtil.getRongYunToken(this))) {
+
+            RongIMClient.connect(UserUtil.getRongYunToken(this),
+                    new RongIMClient.ConnectCallback() {
+                        @Override
+                        public void onTokenIncorrect() {
+                            Log.e(TAG, " Main中连接Rong - onTokenIncorrect: ");
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+                            Log.e(TAG, "Main中连接Rong - onSuccess: " + s);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Log.e(TAG, "Main中连接Rong - onError: " + errorCode);
+                        }
+                    });
+
+            RongIMClient.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+                @Override
+                public boolean onReceived(Message message, int i) {
+
+
+                    // 通知 各部门 更新消息
+                    EventBus.getDefault().post(new MessageEvent());
+
+
+                    return false;
+                }
+            });
+        }
 
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void upDataMsg(MessageEvent event) {
+        //  Log.e(TAG, "收到通知的推送，更新系统消息");
         updateMessageCount();
     }
 
 
+    // 更新 第二个tab 上的消息数字 ;
     private void updateMessageCount() {
         if (!UserUtil.getIsLogin(this)) {
             //清空聊天数字
@@ -402,6 +452,7 @@ public class MainActivity extends BaseMainActivity {
             public void onSuccess(UnReadMessageBean data) {
                 final int system = Integer.parseInt(data.getData().getSystem());
                 final int order = Integer.parseInt(data.getData().getOrder());
+
                 RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
@@ -467,7 +518,9 @@ public class MainActivity extends BaseMainActivity {
 
             @Override
             public void onSuccess(String s) {
-                Logger.d("---onSuccess--" + s);
+
+
+                Log.e(TAG, "融云 connect =" + s);
                 //连接成功后进入 聊天界面
 //                if (mDialog != null)
 //                    mDialog.dismiss();
@@ -479,7 +532,8 @@ public class MainActivity extends BaseMainActivity {
             @Override
             public void onError(RongIMClient.ErrorCode e) {
                 ToastUtil.toast("聊天异常：" + e.toString());
-                Logger.d("聊天异常：" + e.toString());
+//                Logger.d("聊天异常：" + e.toString());
+                Log.e(TAG, "融云 onError: ");
             }
         });
 
@@ -507,7 +561,6 @@ public class MainActivity extends BaseMainActivity {
         });
         mHightLight.show();
     }
-
 
 
 }
