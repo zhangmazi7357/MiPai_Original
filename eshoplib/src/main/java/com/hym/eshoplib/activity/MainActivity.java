@@ -388,7 +388,6 @@ public class MainActivity extends BaseMainActivity {
     }
 
 
-
     private void rongCloudService() {
         // 连接RongCloud；
         if (!TextUtils.isEmpty(UserUtil.getRongYunToken(this))) {
@@ -411,7 +410,7 @@ public class MainActivity extends BaseMainActivity {
                         }
                     });
 
-            RongIMClient.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+            RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
                 @Override
                 public boolean onReceived(Message message, int i) {
 
@@ -419,6 +418,7 @@ public class MainActivity extends BaseMainActivity {
                     // 通知 各部门 更新消息
                     EventBus.getDefault().post(new MessageEvent());
 
+                    EventBus.getDefault().post(new RefreshChatListEvent());
 
                     return false;
                 }
