@@ -267,6 +267,7 @@
                     app:sRightTextColor="@color/mipaiTextColorSelect"
                     app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
 
+                <!--  原邀请码 现改成收款码  -->
                 <com.allen.library.SuperTextView
                     android:id="@+id/tv_myInviteCode"
                     android:layout_width="match_parent"
@@ -275,7 +276,7 @@
                     app:sBackgroundDrawableRes="@color/white"
                     app:sDividerLineType="bottom"
                     app:sLeftTextColor="@color/black"
-                    app:sLeftTextString="邀请码"
+                    app:sLeftTextString="收款码"
                     app:sRightTextColor="@color/mipaiTextColorSelect"
                     app:sRightTvDrawableRight="@drawable/ic_arrow_right" />
 

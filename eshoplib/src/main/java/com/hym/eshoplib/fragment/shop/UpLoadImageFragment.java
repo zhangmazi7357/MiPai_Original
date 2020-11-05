@@ -484,9 +484,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
 
         String project_img = getProDetailPic();
 
-//        Log.e(TAG, "attachment: " + attachment);
-
-//        Log.e(TAG, "项目详情 图片: " + project_img);
 
         if (TextUtils.isEmpty(attachment)) {
             ToastUtil.toast("请上传产品");

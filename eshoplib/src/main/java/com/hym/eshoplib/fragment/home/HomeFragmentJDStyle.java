@@ -238,6 +238,10 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
     public void doLogic() {
 
         SharePreferenceUtil.setBooleanData(_mActivity, "isauth", false);
+
+        // 不是第一次进来了
+        SharePreferenceUtil.setBooleanData(_mActivity, key, true);
+
         //设置状态栏高度
         int statusBarheight = SystemBarUtil.getSystemBarHeight(_mActivity);
         viewHead.getLayoutParams().height = statusBarheight;

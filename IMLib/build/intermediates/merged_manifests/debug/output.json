@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "applicationId": "io.rong.imlib",
+  "variantType": "LIBRARY",
+  "elements": [
+    {
+      "outputType": {
+        "type": "MERGED_MANIFESTS"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": 2018070910,
+        "versionName": "2.9.2 Dev",
+        "outputFile": "IMLib-debug.aar",
+        "fullName": "debug",
+        "baseName": "debug",
+        "dirName": ""
+      },
+      "path": "../../library_manifest/debug/AndroidManifest.xml",
+      "properties": {
+        "packageId": "io.rong.imlib",
+        "split": ""
+      }
+    }
+  ]
+}

@@ -220,4 +220,18 @@ public class MzNewApi {
 
         post(request, listener, clazz);
     }
+
+
+    public static <T> void collectionCode( String amount,
+                                           IHttpResultListener<T> listener,
+                                          Class<T> clazz) {
+        HttpUtil.BaseHttpRequest request = HttpUtil.getRequest();
+        request.setApp("Bts");
+        request.setClassName("WxMake");
+        request.addParamsNotEmpty("token", UserUtil.getToken(App.instance));
+        request.addParamsNotEmpty("amount", amount);
+        post(request, listener, clazz);
+
+
+    }
 }

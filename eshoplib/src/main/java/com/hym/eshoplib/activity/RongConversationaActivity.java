@@ -43,12 +43,18 @@ public class RongConversationaActivity extends BasekitActivity {
         SoftHideKeyBoardUtil.assistActivity(this);
         String title = getIntent().getData().getQueryParameter("title");//获取消息title
         final String targetId = getIntent().getData().getQueryParameter("targetId");//
-        setTitle(title);
+//        setTitle(title);
         if (!TextUtils.isEmpty(targetId)) {
             MeApi.getUserinfo(targetId, new ResponseImpl<MedetailBean>() {
                 @Override
                 public void onSuccess(MedetailBean data) {
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(data.getData().getUserid(), data.getData().getNickname(), Uri.parse(data.getData().getAvatar())));
+                    String nickname = data.getData().getNickname();
+                    setTitle(nickname);
+
+                    RongIM.getInstance()
+                            .refreshUserInfoCache(new UserInfo(data.getData().getUserid(),
+                                    data.getData().getNickname(),
+                                    Uri.parse(data.getData().getAvatar())));
 
                 }
 

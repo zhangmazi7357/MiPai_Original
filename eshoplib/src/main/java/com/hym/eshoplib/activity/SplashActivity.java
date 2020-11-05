@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.hym.eshoplib.R;
 import com.hym.httplib.interfaces.IHttpResultListener;
@@ -28,8 +29,8 @@ import cn.hym.superlib.utils.user.UserUtil;
 /**
  * 开屏页
  */
-
 public class SplashActivity extends AppCompatActivity {
+
     private static Handler handler = new Handler();
 
     @Override
@@ -65,9 +66,11 @@ public class SplashActivity extends AppCompatActivity {
 
         }
 
-        handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable()
+        {
             @Override
             public void run() {
+
                 if (!SharePreferenceUtil.getBooleangData(SplashActivity.this, "first_guide")) {
                     //如果是第一次使用软件则进入引导页面，
                     Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
@@ -80,6 +83,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+
 //                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 //                startActivity(intent);
 //                startActivity(new Intent(SplashActivity.this,MainActivity.class));
@@ -96,6 +100,7 @@ public class SplashActivity extends AppCompatActivity {
 //                    startActivity(new Intent(SplashActivity.this,MainActivity.class));
 //                    finish();
 //                }
+
             }
         }, 3000);
 

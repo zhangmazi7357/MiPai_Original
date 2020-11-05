@@ -52,6 +52,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView retryTextView;
     public TextView clarity;
     public PopupWindow clarityPopWindow;
+
     //自定义
     public TextView tv_title_list;//列表中的视频标题
     public TextView tv_see_count;//观看次数

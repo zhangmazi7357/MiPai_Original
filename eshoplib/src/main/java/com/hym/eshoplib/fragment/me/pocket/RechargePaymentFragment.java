@@ -3,6 +3,7 @@ package com.hym.eshoplib.fragment.me.pocket;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,7 @@ public class RechargePaymentFragment extends BaseKitFragment implements AliPay.P
                 switch (payPosition) {
                     case 1:
                         //微信
+
                         OrderApi.WxPay(_mActivity, child_order_id, "vip", new ResponseImpl<WxpayBean>() {
                             @Override
                             public void onSuccess(WxpayBean data) {
@@ -137,6 +139,7 @@ public class RechargePaymentFragment extends BaseKitFragment implements AliPay.P
                             }
                         }, WxpayBean.class);
                         break;
+
                     case 2:
                         //支付宝
                         OrderApi.aliPayMipai("vip", child_order_id, "","", new ResponseImpl<AliPayBean>() {

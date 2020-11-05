@@ -3,6 +3,8 @@ package com.hym.eshoplib.fragment.order.mipai;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,22 +18,28 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.allen.library.SuperButton;
 import com.allen.library.SuperTextView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.order.CommentDetailBean;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
+import com.hym.eshoplib.mz.adapter.ShopPicAdapter;
 import com.hym.imagelib.ImageUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.mz.utils.MzStringUtil;
+import cn.hym.superlib.utils.view.ScreenUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
@@ -80,8 +88,14 @@ public class CommentDetailFragment extends BaseKitFragment {
     FrameLayout flAvatar;
     @BindView(R.id.iv_vip_shop)
     ImageView ivVipShop;
-    @BindView(R.id.fl_commnents)
-    TagFlowLayout flCommnents;
+//    @BindView(R.id.fl_commnents)
+//    TagFlowLayout flCommnents;
+
+    @BindView(R.id.tv_comment)
+    TextView tvComment;
+
+    @BindView(R.id.rv_comment)
+    RecyclerView rvComment;
 
     public static CommentDetailFragment newInstance(Bundle args) {
         CommentDetailFragment fragment = new CommentDetailFragment();
@@ -113,7 +127,7 @@ public class CommentDetailFragment extends BaseKitFragment {
             @Override
             public void onSuccess(CommentDetailBean data) {
 
-                Log.e(TAG, "评价详情 = " + JSONObject.toJSONString(data));
+//                Log.e(TAG, "评价详情 = " + JSONObject.toJSONString(data));
 
                 ImageUtil.getInstance()
                         .loadCircleImage(CommentDetailFragment.this,
@@ -143,47 +157,84 @@ public class CommentDetailFragment extends BaseKitFragment {
                 tvTotalPrice.setRightString("￥：" + data.getData().getMoney());
 
 
+                // TODO 显示评价详情 ;
+
+                tvComment.setText(item.getContent());
+
+                String images = item.getImages();
+                String[] strings = MzStringUtil.splitComma(images);
+
+                rvComment.setLayoutManager(new LinearLayoutManager(_mActivity, RecyclerView.HORIZONTAL, false));
+                ShopPicAdapter picAdapter = new ShopPicAdapter(null);
+
+                rvComment.setAdapter(picAdapter);
+
+
+
+                if (strings != null && strings.length > 0) {
+                    rvComment.setVisibility(View.VISIBLE);
+                    List<String> imgList = Arrays.asList(strings);
+                    picAdapter.setNewData(imgList);
+
+
+                    picAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                        @Override
+                        public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                            int width = ScreenUtil.getScreenWidth(_mActivity);
+                            ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(width, width / 2);
+                            ImagePagerActivity.startImagePagerActivity(_mActivity, imgList, position, imageSize);
+
+                        }
+                    });
+
+                } else {
+                    rvComment.setVisibility(View.GONE);
+                }
+
+
+
                 // 还有标签 ；
-                List<CommentDetailBean.DataBean.LabelListBean> labels = data.getData().getLabel_list();
-                ArrayList<String> arr = new ArrayList<String>();
-                for (int i = 0; i < labels.size(); i++) {
-                    arr.add(labels.get(i).getLabel_name());
-                }
-                flCommnents.setAdapter(new TagAdapter<String>(arr) {
-                    @Override
-                    public View getView(FlowLayout parent, final int p, String s) {
-                        final SuperButton textView = (SuperButton) LayoutInflater.from(_mActivity).inflate(R.layout.item_comment_tab, parent, false);
-                        textView.setText(s);
-                        textView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                            }
-                        });
-                        return textView;
-                    }
-                });
-
-                switch (labels.size()) {
-                    case 1:
-                        laybel1.setVisibility(View.VISIBLE);
-                        laybel1.setText(labels.get(0).getLabel_name());
-                        break;
-                    case 2:
-                        laybel1.setVisibility(View.VISIBLE);
-                        laybel1.setText(labels.get(0).getLabel_name());
-                        laybel2.setVisibility(View.VISIBLE);
-                        laybel2.setText(labels.get(1).getLabel_name());
-                        break;
-                    case 3:
-                        laybel1.setVisibility(View.VISIBLE);
-                        laybel1.setText(labels.get(0).getLabel_name());
-                        laybel2.setVisibility(View.VISIBLE);
-                        laybel2.setText(labels.get(1).getLabel_name());
-                        laybel3.setVisibility(View.VISIBLE);
-                        laybel3.setText(labels.get(2).getLabel_name());
-                        break;
-                }
+//                List<CommentDetailBean.DataBean.LabelListBean> labels = data.getData().getLabel_list();
+//                ArrayList<String> arr = new ArrayList<String>();
+//                for (int i = 0; i < labels.size(); i++) {
+//                    arr.add(labels.get(i).getLabel_name());
+//                }
+//                flCommnents.setAdapter(new TagAdapter<String>(arr) {
+//                    @Override
+//                    public View getView(FlowLayout parent, final int p, String s) {
+//                        final SuperButton textView = (SuperButton) LayoutInflater.from(_mActivity).inflate(R.layout.item_comment_tab, parent, false);
+//                        textView.setText(s);
+//                        textView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//
+//                            }
+//                        });
+//                        return textView;
+//                    }
+//                });
+//
+//                switch (labels.size()) {
+//                    case 1:
+//                        laybel1.setVisibility(View.VISIBLE);
+//                        laybel1.setText(labels.get(0).getLabel_name());
+//                        break;
+//                    case 2:
+//                        laybel1.setVisibility(View.VISIBLE);
+//                        laybel1.setText(labels.get(0).getLabel_name());
+//                        laybel2.setVisibility(View.VISIBLE);
+//                        laybel2.setText(labels.get(1).getLabel_name());
+//                        break;
+//                    case 3:
+//                        laybel1.setVisibility(View.VISIBLE);
+//                        laybel1.setText(labels.get(0).getLabel_name());
+//                        laybel2.setVisibility(View.VISIBLE);
+//                        laybel2.setText(labels.get(1).getLabel_name());
+//                        laybel3.setVisibility(View.VISIBLE);
+//                        laybel3.setText(labels.get(2).getLabel_name());
+//                        break;
+//                }
                 if (data.getData().getAuth_user() == 1) {
                     ivVip.setVisibility(View.VISIBLE);
                     ivVip.setImageResource(R.drawable.ic_person_circle);

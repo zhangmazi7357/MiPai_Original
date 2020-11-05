@@ -177,6 +177,10 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
         mItemViews.get(position).setUnreadNum(unreadNum);
     }
 
+    public void  getUnRead(){
+
+    }
+
     /**
      * 设置提示消息
      * @param position 底部标签的下标
