@@ -1,14 +1,27 @@
 package com.hym.eshoplib.receiver;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.MultiTapKeyListener;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
+import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.MainActivity;
+import com.hym.eshoplib.activity.RongConversationaActivity;
+import com.hym.eshoplib.event.MainMessageEvent;
 import com.hym.eshoplib.event.MessageEvent;
 import com.orhanobut.logger.Logger;
 
@@ -19,6 +32,9 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imlib.model.Message;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * 自定义接收器
@@ -29,14 +45,15 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JIGUANG-Example";
+    private static final int NOTIFICATION_ID = 1005;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         try {
             Bundle bundle = intent.getExtras();
-//            Log.e(TAG, "[MyReceiver] onReceive - " + intent.getAction() +
-//                    ", extras: " + printBundle(bundle));
+            Log.e(TAG, "[MyReceiver] onReceive - " + intent.getAction() +
+                    ", extras: " + printBundle(bundle));
 
 
             // 注册极光推送
@@ -47,7 +64,9 @@ public class MyReceiver extends BroadcastReceiver {
 
                 // 自定义消息
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-                Log.e(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+
+                Log.e(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " +
+                        bundle.getString(JPushInterface.EXTRA_MESSAGE));
 
 
                 // 通知
@@ -59,6 +78,7 @@ public class MyReceiver extends BroadcastReceiver {
 //
 
                 receivingNotification(context, bundle);
+
 
                 //SharePreferenceUtil.setBooleanData(context,"newmsg",true);
                 EventBus.getDefault().post(new MessageEvent());
@@ -146,6 +166,9 @@ public class MyReceiver extends BroadcastReceiver {
         Log.e(TAG, "message : " + message);
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
         Log.e(TAG, "extras : " + extras);
+
+//        sendNotification(context);
+        EventBus.getDefault().post(new MainMessageEvent());
     }
 
     // 用户打开了 通知
@@ -175,5 +198,6 @@ public class MyReceiver extends BroadcastReceiver {
 //            context.startActivity(mIntent);
 //        }
     }
+
 
 }

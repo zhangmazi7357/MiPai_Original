@@ -43,6 +43,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class OrderMessageFragment extends BaseListFragment<OrderMessageListBean.DataBean.InfoBean> {
+
     public static OrderMessageFragment newInstance(Bundle args) {
         OrderMessageFragment fragment = new OrderMessageFragment();
         fragment.setArguments(args);
@@ -71,6 +72,7 @@ public class OrderMessageFragment extends BaseListFragment<OrderMessageListBean.
         tv_message.setText("暂无交易提醒");
         tv_message.setTextColor(Color.parseColor("#999999"));
         getAdapter().setEmptyView(emptyView);
+
         getAdapter().setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
@@ -91,6 +93,7 @@ public class OrderMessageFragment extends BaseListFragment<OrderMessageListBean.
 
             }
         });
+
         getAdapter().setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
@@ -126,12 +129,14 @@ public class OrderMessageFragment extends BaseListFragment<OrderMessageListBean.
 
     @Override
     public void getData(final boolean refresh, int pageSize, final int pageNum) {
+
         HomeApi.GetMsg(pageNum + "", new ResponseImpl<OrderMessageListBean>() {
             @Override
             public void onSuccess(OrderMessageListBean data) {
                 int total = Integer.parseInt(data.getData().getTotalpage());
                 if (refresh) {
-                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
+                    setPageNum(HttpResultUtil.onRefreshSuccess(total, pageNum,
+                            data.getData().getInfo(), getAdapter()));
                 } else {
                     setPageNum(HttpResultUtil.onLoardMoreSuccess(total, pageNum, data.getData().getInfo(), getAdapter()));
                 }

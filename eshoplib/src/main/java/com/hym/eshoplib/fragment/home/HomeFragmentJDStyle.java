@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -693,6 +694,7 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
         tvVideoLine.setVisibility(View.INVISIBLE);
     }
 
+    // 检查更新
     private void checkUpload(List<HomeDataBean.DataBean.AndroidVersionBean> data) {
         /**
          *  应用宝 https://a.app.qq.com/o/simple.jsp?pkgname=com.hym.eshoplib
@@ -1234,11 +1236,14 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             @Override
             public void onSuccess(HomeDataBean data) {
                 List<HomeDataBean.DataBean.AndroidVersionBean> bean = data.getData().getAndroid_version();
-                Logger.d("版本更新=" + bean);
-                Logger.d(BuildConfig.VERSION_CODE + "");
+
+
+
                 if (bean != null) {
                     checkUpload(bean);
                 }
+
+
                 refreshLayout.finishRefresh(true);//传入false表示刷新失败
                 //banner
                 bannerBeen = data.getData().getBanner();

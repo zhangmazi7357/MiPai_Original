@@ -225,13 +225,15 @@ public class MessageMainFragment extends BaseTabViewPagerFragment {
 
         updateMessageCount();
 
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refreshChatList(RefreshChatListEvent event) {
+
+
         // 收到消息以后刷新会话列表
         mConversationListFragment.onRestoreUI();
+
     }
 
     private void updateMessageCount() {

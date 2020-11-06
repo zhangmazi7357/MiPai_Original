@@ -98,6 +98,11 @@ public class App extends KitBaseApplication {
         instance = this;
         ToastUtil.init(this);
 
+
+        // 注册全局捕获异常
+        CrashHandler.getInstance().init(this);
+
+
         //
         UMShareAPI.get(this);
         PlatformConfig.setWeixin("wx425c93f17a0de199", "b6df3f90ada2704b129457d51e8a1ab0");
@@ -199,13 +204,24 @@ public class App extends KitBaseApplication {
         RongIM.getInstance().setMessageAttachedUserInfo(true);
 
         RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
-            @Override
-            public void onCountChanged(int i) {
-                //Logger.d("未读消息数="+i); 发送通知更新消息数
-                EventBus.getDefault().post(new MessageEvent());
-            }
-        },
+                                                                      @Override
+                                                                      public void onCountChanged(int i) {
+                                                                          //Logger.d("未读消息数="+i); 发送通知更新消息数
+                                                                          EventBus.getDefault().post(new MessageEvent());
+                                                                      }
+                                                                  },
                 Conversation.ConversationType.PRIVATE);
+
+
+
+
+//        RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+//            @Override
+//            public boolean onReceived(Message message, int i) {
+//                return false;
+//            }
+//        });
+
 
         if (UserUtil.getIsLogin(this)) {
             //如果用户已经登录并且连接已经断开的情况下调用连接
@@ -218,7 +234,7 @@ public class App extends KitBaseApplication {
 
 
 //        JPushInterface.addTags(this,10001,);
-     //   JPushInterface.setAlias(this, 10001, "Jp");
+        //   JPushInterface.setAlias(this, 10001, "Jp");
 
 
         //static 代码段可以防止内存泄露
@@ -283,24 +299,25 @@ public class App extends KitBaseApplication {
     }
 
 
-
     class AppLifecycleObserver implements LifecycleObserver {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_START)
         public void onEnterForeground() {
 
+//            Log.e("TAG", "前台 : ");
 
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         public void onEnterBackground() {
+//            Log.e("TAG", " 在后台 : ");
 
-            RongIMClient.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+            RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
                 @Override
                 public boolean onReceived(Message message, int i) {
 
-
-                    sendNotification(message);
+//                    Log.e("TAG", " 后台 onReceived: ");
+//                    sendNotification(message);
 
 
                     return false;
@@ -332,7 +349,8 @@ public class App extends KitBaseApplication {
                 .setWhen(System.currentTimeMillis());//设置通知时间，默认为系统发出通知的时间，通常不用设置
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("001", "my_channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("001", "my_channel",
+                    NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.GREEN); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知

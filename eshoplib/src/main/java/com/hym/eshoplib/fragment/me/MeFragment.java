@@ -190,24 +190,37 @@ public class MeFragment extends BaseKitFragment {
                                 ActionActivity.start(_mActivity, bundle);
                             }
                         });
+
+                        // 收款码  工作室显示
+                        tvMyInviteCode.setVisibility(View.VISIBLE);
                         break;
+
                     case "-2":
                         //不是工作室
                         ratingbar.setVisibility(View.GONE);
                         tvFunction.setText("申请开设工作室");
+
+                        tvMyInviteCode.setVisibility(View.GONE);
+
                         break;
                     case "0":
                         ratingbar.setVisibility(View.GONE);
                         tvFunction.setText("审核中");
+
+                        tvMyInviteCode.setVisibility(View.GONE);
                         break;
                     case "-1":
                         ratingbar.setVisibility(View.GONE);
                         tvFunction.setText("审核未通过");
+
+                        tvMyInviteCode.setVisibility(View.GONE);
                         break;
                     case "2":
                         //待提交
                         ratingbar.setVisibility(View.GONE);
                         tvFunction.setText("待提交审核");
+
+                        tvMyInviteCode.setVisibility(View.GONE);
                         break;
                 }
 
@@ -441,7 +454,7 @@ public class MeFragment extends BaseKitFragment {
                 break;
             case R.id.tv_tv_service_3:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "010-52903805");
+                Uri data = Uri.parse("tel:" + "010-52903650");
                 intent.setData(data);
                 startActivity(intent);
                 break;

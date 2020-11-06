@@ -476,7 +476,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         data = (GoodDetailModel) bundle.getSerializable("data");
 
-        Log.e(TAG, " 商品详情 = " + JSONObject.toJSONString(data));
+//        Log.e(TAG, " 商品详情 = " + JSONObject.toJSONString(data));
 
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());
