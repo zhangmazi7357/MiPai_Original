@@ -20,5 +20,5 @@ public class StringConstants {
     public static final String tab_9="演员/模特";
     public static final String tab_10="化妆师";
 
-    public static final String Slogan="拍视频，上觅拍！";
+    public static final String Slogan="拍照片，拍视频，上觅拍！";
 }

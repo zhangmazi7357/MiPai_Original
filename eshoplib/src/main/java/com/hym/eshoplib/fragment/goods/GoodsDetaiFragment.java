@@ -241,7 +241,6 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
     public void initData(@Nullable Bundle savedInstanceState) {
 
 
-
         ShopApi.GetContentDetail(shop_id, new ResponseImpl<ServiceDetailBean>() {
             @Override
             public void onSuccess(ServiceDetailBean data) {
@@ -720,7 +719,7 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
                 break;
 
 
-                // 立即预约
+            // 立即预约
             case R.id.tv_buy_now:
                 if (detailBean == null) {
                     return;
@@ -1018,7 +1017,11 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
                         //分享
                         //mShareListener = new CustomShareListener(_mActivity);
                         mShareAction = new ShareAction(_mActivity).setDisplayList(
-                                SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA);
+                                SHARE_MEDIA.WEIXIN_CIRCLE,
+                                SHARE_MEDIA.WEIXIN,
+                                SHARE_MEDIA.QQ,
+                                SHARE_MEDIA.QZONE,
+                                SHARE_MEDIA.SINA);
                         ShareBoardConfig config = new ShareBoardConfig();
                         config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
                         try {
@@ -1031,13 +1034,19 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
 
                         }
                         UMWeb web = new UMWeb(detailBean.getData().getShare_url());
-                        web.setTitle(detailBean.getData().getStore_name() + " | " + StringConstants.Slogan);
-                        web.setThumb(new UMImage(_mActivity, detailBean.getData().getLogo()));
-                        if (!TextUtils.isEmpty(detailBean.getData().getRemark())) {
-                            web.setDescription(detailBean.getData().getRemark());
+
+
+                        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                            web.setTitle(detailBean.getData().getStore_name() + " | " + StringConstants.Slogan);
                         } else {
-                            web.setDescription(" ");
+                            web.setTitle(detailBean.getData().getStore_name());
+
                         }
+
+                        web.setThumb(new UMImage(_mActivity, detailBean.getData().getLogo()));
+
+                        web.setDescription(StringConstants.Slogan);
+
                         mShareAction.withMedia(web);
                         mShareAction.setCallback(new UMShareListener() {
                             @Override
@@ -1063,6 +1072,7 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
                             }
                         });
                         mShareAction.open(config);
+
                         break;
 
                 }

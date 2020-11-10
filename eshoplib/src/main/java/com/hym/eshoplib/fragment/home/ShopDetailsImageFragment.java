@@ -101,6 +101,7 @@ import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
 import cn.hym.superlib.widgets.snapstep.listener.SnappingStepperValueChangeListener;
+import constant.StringConstants;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -1204,6 +1205,13 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             image = data.getData().getImage_default();
         }
         UMWeb web = new UMWeb(url + "&share=1");
+
+        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+            title = title + " | " + StringConstants.Slogan;
+        } else {
+            memo = StringConstants.Slogan;
+        }
+
         web.setTitle(title);
         web.setThumb(new UMImage(_mActivity, image));
         web.setDescription(memo);

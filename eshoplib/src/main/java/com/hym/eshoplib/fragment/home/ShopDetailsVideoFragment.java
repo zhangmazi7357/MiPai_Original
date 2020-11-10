@@ -108,6 +108,7 @@ import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
 import cn.hym.superlib.widgets.snapstep.listener.SnappingStepperValueChangeListener;
+import constant.StringConstants;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -1327,6 +1328,11 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
             image = data.getData().getImage_default();
         }
         UMWeb web = new UMWeb(url + "&share=1");
+        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+            title = title + " | " + StringConstants.Slogan;
+        }else{
+            memo =StringConstants.Slogan;
+        }
         web.setTitle(title);
         web.setThumb(new UMImage(_mActivity, image));
         web.setDescription(memo);

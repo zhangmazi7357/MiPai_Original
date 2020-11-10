@@ -193,14 +193,19 @@ public class ImageDetailFragment extends BaseKitFragment {
                                 SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,
                                 SHARE_MEDIA.SINA)
                                 .setCallback(mShareListener);
+
                         setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 ShareBoardConfig config = new ShareBoardConfig();
                                 config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
                                 UMWeb web = new UMWeb(data.getData().getShare_url());
-                                // web.setTitle(data.getData().getTitle()+" | "+ StringConstants.Slogan);
-                                web.setTitle(data.getData().getTitle());
+                                if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                    web.setTitle(data.getData().getTitle() + " | " + StringConstants.Slogan);
+                                } else {
+                                    web.setTitle(data.getData().getTitle());
+                                }
+
                                 web.setThumb(new UMImage(_mActivity, data.getData().getImage_default()));
                                 web.setDescription(StringConstants.Slogan);
                                 mShareAction.withMedia(web);

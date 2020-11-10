@@ -83,8 +83,11 @@ public class NewsDetailFragment extends BaseKitFragment {
         setTitle("需求详情");
         mShareListener = new CustomShareListener(_mActivity);
         mShareAction = new ShareAction(_mActivity).setDisplayList(
-                SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA)
+                SHARE_MEDIA.WEIXIN_CIRCLE,
+                SHARE_MEDIA.WEIXIN,
+                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA)
                 .setCallback(mShareListener);
+
         setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

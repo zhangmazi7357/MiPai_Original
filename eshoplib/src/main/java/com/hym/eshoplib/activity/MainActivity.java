@@ -574,7 +574,7 @@ public class MainActivity extends BaseMainActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receiveMessage(MainMessageEvent event) {
 
-//        Log.e(TAG, "弹 他 啊啊啊: ");
+
         sendNotification();
 
     }

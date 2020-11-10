@@ -41,6 +41,7 @@ import cn.hym.superlib.mz.widgets.MzHeaderBar;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.DialogView;
 import cn.hym.superlib.utils.view.ScreenUtil;
+import constant.StringConstants;
 
 /**
  * 商品全部评论 ;
@@ -267,6 +268,12 @@ public class AllShopCommentActivity extends MzBaseActivity {
             image = data.getData().getImage_default();
         }
         UMWeb web = new UMWeb(url + "&share=1");
+        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+            title = title + " | " + StringConstants.Slogan;
+
+        } else {
+            memo = StringConstants.Slogan;
+        }
         web.setTitle(title);
         web.setThumb(new UMImage(this, image));
         web.setDescription(memo);
