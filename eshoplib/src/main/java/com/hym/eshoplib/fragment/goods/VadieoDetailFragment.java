@@ -32,6 +32,8 @@ import butterknife.Unbinder;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.event.UpdateDataEvent;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.manager.ShareBean;
+import cn.hym.superlib.manager.ShareDialog;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
@@ -161,22 +163,26 @@ public class VadieoDetailFragment extends BaseKitFragment {
                         mShareAction = new ShareAction(_mActivity).setDisplayList(
                                 SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA)
                                 .setCallback(mShareListener);
+
+
                         setRight_iv(R.drawable.ic_share, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ShareBoardConfig config = new ShareBoardConfig();
-                                config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
-                                UMWeb web = new UMWeb(data.getData().getShare_url());
-
-                                if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                                    web.setTitle(data.getData().getTitle() + " | " + StringConstants.Slogan);
-                                } else {
-                                    web.setTitle(data.getData().getTitle());
-                                }
-                                web.setThumb(new UMImage(_mActivity, data.getData().getImage_default()));
-                                web.setDescription(StringConstants.Slogan);
-                                mShareAction.withMedia(web);
-                                mShareAction.open(config);
+//                                ShareBoardConfig config = new ShareBoardConfig();
+//                                config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
+//                                UMWeb web = new UMWeb(data.getData().getShare_url());
+//
+//                                if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+//                                    web.setTitle(data.getData().getTitle() + " | " + StringConstants.Slogan);
+//                                } else {
+//                                    web.setTitle(data.getData().getTitle());
+//                                }
+//                                web.setThumb(new UMImage(_mActivity, data.getData().getImage_default()));
+//                                web.setDescription(StringConstants.Slogan);
+//                                mShareAction.withMedia(web);
+//                                mShareAction.open(config);
+                                ProductDetailBean.DataBean data = VadieoDetailFragment.this.data.getData();
+                                share2(data);
                             }
                         });
                         llBtns.setVisibility(View.VISIBLE);
@@ -317,5 +323,16 @@ public class VadieoDetailFragment extends BaseKitFragment {
             return;
         }
         videoplayer.startButton.performClick();
+    }
+
+    private void share2(ProductDetailBean.DataBean data) {
+
+        String url = data.getShare_url();
+        String title = data.getStore_name();
+        String details = StringConstants.Slogan;
+        String image = data.getImage_default();
+
+        ShareBean bean = new ShareBean(url, title, details, image);
+        new ShareDialog(bean).show(getChildFragmentManager(), "1");
     }
 }

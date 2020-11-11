@@ -94,6 +94,8 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.manager.ShareBean;
+import cn.hym.superlib.manager.ShareDialog;
 import cn.hym.superlib.mz.listener.FragmentKeyDownListener;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.utils.MzUtil;
@@ -1042,7 +1044,7 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
 
                 break;
             case R.id.shop_share:
-                share();
+                share2();
 
                 break;
 
@@ -1340,6 +1342,16 @@ public class ShopDetailsVideoFragment extends BaseKitFragment
         mShareAction.open(config);
     }
 
+    private void share2() {
+        GoodDetailModel.DataBean data = this.data.getData();
+        String url = data.getShare_url();
+        String title = data.getTitle();
+        String details = data.getDetails();
+        String image_default = data.getImage_default();
+
+        ShareBean bean = new ShareBean(url, title, details, image_default);
+        new ShareDialog(bean).show(getChildFragmentManager(), "1");
+    }
 
     // 设置状态栏高度
     private int statusBarHeight() {

@@ -42,7 +42,11 @@ public class ShopListAdapter extends BaseQuickAdapter<SpecialTimeLimteBean.DataB
         }
         ImageView ivView = helper.getView(R.id.iv_view);
         ScreenUtil.ViewAdapter(mContext, ivView, 16, 9, 20);
-        Glide.with(mContext).load(item.getImage_default()).into(ivView);
+
+        Glide.with(mContext)
+                .load(item.getImage_default())
+                .into(ivView);
+
         TextView tvBeforePrice = helper.getView(R.id.tv_before_price);
         if (TextUtils.isEmpty(item.getOriginal_price()) || item.getOriginal_price().equals("0")) {
             tvBeforePrice.setVisibility(View.GONE);

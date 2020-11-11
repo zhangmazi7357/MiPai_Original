@@ -1,63 +1,76 @@
 package cn.hym.superlib.manager;
 
+import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.SharedMemory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.hym.imagelib.ImageUtil;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.hym.superlib.R;
 
 /**
  * 用来分享的 Dialog ;
  */
-public class ShareDialog extends DialogFragment {
-    private RecyclerView mShareRv;
-    private TextView cancelTv;
+public class ShareDialog extends DialogFragment implements View.OnClickListener {
+
+    private LinearLayout shareWxCircle;
+    private LinearLayout shareWx;
+    private LinearLayout shareQq;
+    private LinearLayout shareQZone;
+    private LinearLayout shareWb;
+    private TextView cancel;
 
 
-    private String[] titles = {"微信朋友圈", "微信", "QQ", "微博"};
+    private ShareBean shareBean;
 
 
-    public static ShareDialog newInstance(String webUrl) {
+    public ShareDialog(ShareBean bean) {
+        this.shareBean = bean;
 
-        Bundle args = new Bundle();
-        args.putString("webUrl", webUrl);
-        ShareDialog fragment = new ShareDialog();
-        fragment.setArguments(args);
-        return fragment;
     }
+
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dilaog_share_platform, container, false);
-        mShareRv = rootView.findViewById(R.id.share_rv);
-        cancelTv = rootView.findViewById(R.id.share_cancel);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
-        mShareRv.setLayoutManager(new GridLayoutManager(container.getContext(), 4));
-        ShareAdapter adapter = new ShareAdapter();
-        mShareRv.setAdapter(adapter);
+        View rootView = inflater.inflate(R.layout.dialog_share, container, false);
+        ButterKnife.bind(this, rootView);
+        shareWxCircle = rootView.findViewById(R.id.share_wx);
+        shareWx = rootView.findViewById(R.id.share_wx_c);
+        shareQq = rootView.findViewById(R.id.share_qq);
+        shareQZone = rootView.findViewById(R.id.share_qqkj);
+        shareWb = rootView.findViewById(R.id.share_wb);
+        cancel = rootView.findViewById(R.id.cancel);
 
+        shareWxCircle.setOnClickListener(this);
+        shareWx.setOnClickListener(this);
+        shareQq.setOnClickListener(this);
+        shareQZone.setOnClickListener(this);
+        shareWb.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
 
         return rootView;
     }
@@ -74,70 +87,88 @@ public class ShareDialog extends DialogFragment {
     }
 
 
-    class ShareAdapter extends RecyclerView.Adapter<ViewHolder> {
+    @OnClick
+    public void onClick(View view) {
 
 
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_share_platform, parent, false);
-            ViewHolder holder = new ViewHolder(rootView);
+        int id = view.getId();
+        if (id == R.id.share_wx_c) {
 
-            return holder;
+            UMWeb web = new UMWeb(shareBean.getUrl());
+            String title = shareBean.getTitle();
+            web.setTitle(title + " | 拍照片、拍视频、上觅拍");//标题
+            web.setThumb(new UMImage(getActivity(), shareBean.getImgUrl()));  //缩略图
+            new ShareAction(getActivity())
+                    .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .withMedia(web)
+                    .share();
+            dismiss();
+
+        } else if (id == R.id.share_wx) {
+
+            share(SHARE_MEDIA.WEIXIN);
+            dismiss();
+
+        } else if (id == R.id.share_qq) {
+
+
+            share(SHARE_MEDIA.QQ);
+
+        } else if (id == R.id.share_qqkj) {
+
+            share(SHARE_MEDIA.QZONE);
+
+        } else if (id == R.id.share_wb) {
+
+            share(SHARE_MEDIA.SINA);
+            dismiss();
+
+        } else if (id == R.id.cancel) {
+
+            dismiss();
+        }
+    }
+
+
+    private void share(SHARE_MEDIA platform) {
+
+        UMWeb web = new UMWeb(shareBean.getUrl());
+
+        String title = shareBean.getTitle();
+        if (platform == SHARE_MEDIA.WEIXIN_CIRCLE) {
+            title = shareBean.getTitle() + "| 找觅拍";
         }
 
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-            for (int i = 0; i < titles.length; i++) {
-                String title = titles[position];
-                holder.shareTv.setText(title);
-            }
+        web.setTitle(title);
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SHARE_MEDIA platform = null;
+        web.setDescription("拍照片、拍视频、上觅拍！");
+        web.setThumb(new UMImage(getActivity(), shareBean.getImgUrl()));
 
-                    switch (position) {
-                        case 0:
-                            platform = SHARE_MEDIA.WEIXIN_CIRCLE;
-                            break;
-                        case 1:
-                            platform = SHARE_MEDIA.WEIXIN;
-                            break;
-                        case 2:
-                            platform = SHARE_MEDIA.QQ;
-                            break;
-                        case 3:
-                            platform = SHARE_MEDIA.SINA;
-                            break;
+
+        new ShareAction(getActivity())
+                .setPlatform(platform)
+                .withMedia(web)
+                .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
                     }
 
-//                    OtherPlatformManager.getInstance()
-//                            .share(getActivity(),  null,"觅拍",);
-                }
-            });
-        }
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
 
+                    }
 
-        @Override
-        public int getItemCount() {
-            return titles.length;
-        }
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+
+                    }
+                }).share();
+
     }
-
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView shareIv;
-        TextView shareTv;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            shareIv = itemView.findViewById(R.id.share_iv);
-            shareTv = itemView.findViewById(R.id.share_tv);
-        }
-    }
-
-
 }

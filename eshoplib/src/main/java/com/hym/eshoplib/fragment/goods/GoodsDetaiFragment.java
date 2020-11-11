@@ -37,6 +37,7 @@ import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.activity.MainActivity;
 import com.hym.eshoplib.alipay.AliPay;
+import com.hym.eshoplib.bean.goods.GoodDetailModel;
 import com.hym.eshoplib.bean.me.MedetailBean;
 import com.hym.eshoplib.bean.order.AliPayBean;
 import com.hym.eshoplib.bean.order.PayTypeBean;
@@ -80,6 +81,8 @@ import cn.hym.superlib.activity.ImagePagerActivity;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.manager.ShareBean;
+import cn.hym.superlib.manager.ShareDialog;
 import cn.hym.superlib.pay.Constants;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.user.UserUtil;
@@ -1016,62 +1019,65 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
                     case R.id.menu4:
                         //分享
                         //mShareListener = new CustomShareListener(_mActivity);
-                        mShareAction = new ShareAction(_mActivity).setDisplayList(
-                                SHARE_MEDIA.WEIXIN_CIRCLE,
-                                SHARE_MEDIA.WEIXIN,
-                                SHARE_MEDIA.QQ,
-                                SHARE_MEDIA.QZONE,
-                                SHARE_MEDIA.SINA);
-                        ShareBoardConfig config = new ShareBoardConfig();
-                        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
-                        try {
-                            if (detailBean == null || detailBean.getData() == null || TextUtils.isEmpty(detailBean.getData().getShare_url())) {
-                                ToastUtil.toast("数据异常");
-                                return;
-                            }
-                        } catch (Exception e) {
 
+                        share2();
 
-                        }
-                        UMWeb web = new UMWeb(detailBean.getData().getShare_url());
-
-
-                        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                            web.setTitle(detailBean.getData().getStore_name() + " | " + StringConstants.Slogan);
-                        } else {
-                            web.setTitle(detailBean.getData().getStore_name());
-
-                        }
-
-                        web.setThumb(new UMImage(_mActivity, detailBean.getData().getLogo()));
-
-                        web.setDescription(StringConstants.Slogan);
-
-                        mShareAction.withMedia(web);
-                        mShareAction.setCallback(new UMShareListener() {
-                            @Override
-                            public void onStart(SHARE_MEDIA share_media) {
-
-                            }
-
-                            @Override
-                            public void onResult(SHARE_MEDIA share_media) {
-                                //Logger.d("分享成功");
-
-
-                            }
-
-                            @Override
-                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                                //Logger.d("分享失败");
-                            }
-
-                            @Override
-                            public void onCancel(SHARE_MEDIA share_media) {
-                                // Logger.d("取消分享");
-                            }
-                        });
-                        mShareAction.open(config);
+//                        mShareAction = new ShareAction(_mActivity).setDisplayList(
+//                                SHARE_MEDIA.WEIXIN_CIRCLE,
+//                                SHARE_MEDIA.WEIXIN,
+//                                SHARE_MEDIA.QQ,
+//                                SHARE_MEDIA.QZONE,
+//                                SHARE_MEDIA.SINA);
+//                        ShareBoardConfig config = new ShareBoardConfig();
+//                        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
+//                        try {
+//                            if (detailBean == null || detailBean.getData() == null || TextUtils.isEmpty(detailBean.getData().getShare_url())) {
+//                                ToastUtil.toast("数据异常");
+//                                return;
+//                            }
+//                        } catch (Exception e) {
+//
+//
+//                        }
+//                        UMWeb web = new UMWeb(detailBean.getData().getShare_url());
+//
+//
+//                        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+//                            web.setTitle(detailBean.getData().getStore_name() + " | " + StringConstants.Slogan);
+//                        } else {
+//                            web.setTitle(detailBean.getData().getStore_name());
+//
+//                        }
+//
+//                        web.setThumb(new UMImage(_mActivity, detailBean.getData().getLogo()));
+//
+//                        web.setDescription(StringConstants.Slogan);
+//
+//                        mShareAction.withMedia(web);
+//                        mShareAction.setCallback(new UMShareListener() {
+//                            @Override
+//                            public void onStart(SHARE_MEDIA share_media) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onResult(SHARE_MEDIA share_media) {
+//                                //Logger.d("分享成功");
+//
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+//                                //Logger.d("分享失败");
+//                            }
+//
+//                            @Override
+//                            public void onCancel(SHARE_MEDIA share_media) {
+//                                // Logger.d("取消分享");
+//                            }
+//                        });
+//                        mShareAction.open(config);
 
                         break;
 
@@ -1115,5 +1121,16 @@ public class GoodsDetaiFragment extends BaseKitFragment implements AliPay.PayRes
 
     }
 
+
+    private void share2() {
+        ServiceDetailBean.DataBean data = detailBean.getData();
+        String url = data.getShare_url();
+        String title = data.getStore_name();
+        String details = StringConstants.Slogan;
+        String image_default = data.getLogo();
+
+        ShareBean bean = new ShareBean(url, title, details, image_default);
+        new ShareDialog(bean).show(getChildFragmentManager(), "1");
+    }
 
 }

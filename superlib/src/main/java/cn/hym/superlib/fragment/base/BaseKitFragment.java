@@ -508,6 +508,8 @@ public abstract class BaseKitFragment extends BaseFragment {
             }
 
 
+
+
         }
 
         @Override

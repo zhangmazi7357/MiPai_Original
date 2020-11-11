@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.audiofx.DynamicsProcessing;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -90,6 +91,8 @@ import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.adapter.BaseListAdapter;
 import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.manager.ShareBean;
+import cn.hym.superlib.manager.ShareDialog;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.utils.SizeUtils;
 import cn.hym.superlib.mz.widgets.MzShopDetailTitleView;
@@ -1160,7 +1163,11 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
                 break;
 
             case R.id.shop_share:
-                share();
+
+
+                share2();
+
+
                 break;
 
             case R.id.l_address:
@@ -1205,13 +1212,6 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
             image = data.getData().getImage_default();
         }
         UMWeb web = new UMWeb(url + "&share=1");
-
-        if (mShareAction.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-            title = title + " | " + StringConstants.Slogan;
-        } else {
-            memo = StringConstants.Slogan;
-        }
-
         web.setTitle(title);
         web.setThumb(new UMImage(_mActivity, image));
         web.setDescription(memo);
@@ -1219,6 +1219,19 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
         mShareAction.open(config);
     }
 
+
+
+
+    private void share2() {
+        GoodDetailModel.DataBean data = this.data.getData();
+        String url = data.getShare_url();
+        String title = data.getTitle();
+        String details = data.getDetails();
+        String image_default = data.getImage_default();
+
+        ShareBean bean = new ShareBean(url, title, details, image_default);
+        new ShareDialog(bean).show(getChildFragmentManager(), "1");
+    }
 
     private void reconnect(String token) {
 
