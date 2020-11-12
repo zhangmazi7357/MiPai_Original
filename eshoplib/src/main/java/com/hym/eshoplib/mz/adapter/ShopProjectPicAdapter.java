@@ -55,20 +55,11 @@ public class ShopProjectPicAdapter extends BaseQuickAdapter<String, BaseViewHold
                         lp.width = screenWidth;
                         img.setLayoutParams(lp);
 
-                        // 压缩图片
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        int options = 90;
-                        while (baos.toByteArray().length / 1024 > 800) { // 循环判断如果压缩后图片是否大于800kb,大于继续压缩
-                            baos.reset(); // 重置baos即清空baos
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
-                            options -= 10;// 每次都减少10
-                        }
 
-                        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
-                        Bitmap newBitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
 
-                        img.setImageBitmap(newBitmap);
+                        Glide.with(mContext)
+                                .load(item)
+                                .into(img);
 
                     }
                 });

@@ -168,6 +168,7 @@ public class MeFragment extends BaseKitFragment {
 
                 //tvPreview.setVisibility(View.GONE);
                 //-------------是否为工作室，1：是，0：待审核，-1：审核未通过，-2：否
+
                 switch (isStore) {
                     case "1":
                         //是工作室，显示等级，显示如何提升星级

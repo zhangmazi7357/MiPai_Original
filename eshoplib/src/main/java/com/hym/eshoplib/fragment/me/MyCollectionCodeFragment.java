@@ -37,11 +37,13 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
     Unbinder unbinder;
     @BindView(R.id.et_amount)
     EditText etAmount;
-    @BindView(R.id.bt_makeCode)
-    Button btMakeCode;
+    //    @BindView(R.id.bt_makeCode_wx)
+//    Button btMakeCode;
     @BindView(R.id.iv_collection)
     ImageView ivCollection;
 
+    @BindView(R.id.ivType)
+    ImageView ivType;
 
     public static MyCollectionCodeFragment newInstance(Bundle args) {
         MyCollectionCodeFragment fragment = new MyCollectionCodeFragment();
@@ -68,15 +70,25 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
 
     }
 
-    @OnClick(R.id.bt_makeCode)
-    public void onClick() {
-
+    @OnClick({R.id.bt_makeCode_wx, R.id.bt_makeCode_ali})
+    public void onClick(View view) {
         String amount = etAmount.getText().toString();
         if (TextUtils.isEmpty(amount)) {
             Toast.makeText(_mActivity, "请输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
-        makeCode(amount);
+        switch (view.getId()) {
+            case R.id.bt_makeCode_wx:
+
+                makeCode(amount, "wx");
+
+                break;
+            case R.id.bt_makeCode_ali:
+
+                makeCode(amount, "zfb");
+
+                break;
+        }
 
 
     }
@@ -96,19 +108,42 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
     }
 
 
-    private void makeCode(String amount) {
+    private void makeCode(String amount, String payType) {
 
-        MzNewApi.collectionCode(amount, new ResponseImpl<CollectionCodeBean>() {
+        MzNewApi.collectionCode(amount, payType, new ResponseImpl<CollectionCodeBean>() {
             @Override
             public void onSuccess(CollectionCodeBean data) {
 
                 String code_url = data.getData().getCode_url();
+                ivType.setVisibility(View.VISIBLE);
+
+                switch (payType) {
+                    case "wx":
+                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_wechat_pay));
+
+                        break;
+                    case "zfb":
+
+                        ivType.setImageDrawable(getResources().getDrawable(R.drawable.ic_alipay));
+
+                        break;
+                }
+
                 if (!TextUtils.isEmpty(code_url)) {
                     QRCodeUtil.createQRCode(_mActivity, code_url, ivCollection);
                 }
             }
 
+            @Override
+            public void dataRes(int code, String data) {
+                super.dataRes(code, data);
+            }
 
+            @Override
+            public void onDataError(String status, String errormessage) {
+                super.onDataError(status, errormessage);
+                ivType.setVisibility(View.GONE);
+            }
         }, CollectionCodeBean.class);
     }
 
