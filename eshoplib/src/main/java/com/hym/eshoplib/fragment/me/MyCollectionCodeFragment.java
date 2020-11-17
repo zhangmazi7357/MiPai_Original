@@ -2,11 +2,13 @@ package com.hym.eshoplib.fragment.me;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
+import cn.hym.superlib.utils.common.dialog.DialogView;
 import utils.QRCodeUtil;
 
 /**
@@ -155,10 +159,26 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showCollection(CollectionEvent event) {
 
-//        Log.e("Collection = ", "showCollection: 收款成功");
-        Toast.makeText(_mActivity, "收款成功", Toast.LENGTH_SHORT).show();
 
-        pop();
+        showDialog();
+
+
+    }
+
+
+    private void showDialog() {
+        DialogView dialogView = DialogManager.getInstance()
+                .initView(_mActivity, R.layout.mz_dialog_collection, Gravity.CENTER);
+        dialogView.show();
+
+
+        TextView close = dialogView.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
 }

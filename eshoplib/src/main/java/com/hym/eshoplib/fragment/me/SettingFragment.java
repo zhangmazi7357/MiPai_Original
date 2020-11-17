@@ -3,13 +3,12 @@ package com.hym.eshoplib.fragment.me;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.annotation.Nullable;
 
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
@@ -26,13 +25,11 @@ import butterknife.Unbinder;
 import cn.hym.superlib.activity.base.BaseActionActivity;
 import cn.hym.superlib.fragment.WebFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.user.UserUtil;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.rong.imkit.RongIM;
 
 /**
@@ -127,7 +124,8 @@ public class SettingFragment extends BaseKitFragment {
                 break;
             case R.id.btn_logout:
 
-                DialogManager.getInstance().initSimpleDialog(getContext(), "提示",
+                DialogManager.getInstance()
+                        .initSimpleDialog(getContext(), "提示",
                         "您确定要退出吗", "取消", "确认", new SimpleDialog.SimpleDialogOnClickListener() {
                             @Override
                             public void negativeClick(Dialog dialog) {

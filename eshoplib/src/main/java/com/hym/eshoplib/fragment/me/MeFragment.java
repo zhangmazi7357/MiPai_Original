@@ -3,10 +3,6 @@ package com.hym.eshoplib.fragment.me;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allen.library.SuperTextView;
 import com.hym.eshoplib.R;
@@ -346,6 +345,7 @@ public class MeFragment extends BaseKitFragment {
             case R.id.iv_avatar:
                 //头像
                 goUserCenter();
+
                 break;
             case R.id.iv_go_Userdetail:
                 //右箭头
