@@ -2,23 +2,22 @@ package com.hym.eshoplib.fragment.me;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.mz.upload.CollectionCodeBean;
+import com.hym.eshoplib.event.CollectionEvent;
 import com.hym.eshoplib.http.mz.MzNewApi;
 
-import org.json.JSONException;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -147,5 +146,19 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
         }, CollectionCodeBean.class);
     }
 
+
+    @Override
+    public boolean openEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showCollection(CollectionEvent event) {
+
+//        Log.e("Collection = ", "showCollection: 收款成功");
+        Toast.makeText(_mActivity, "收款成功", Toast.LENGTH_SHORT).show();
+
+        pop();
+    }
 
 }

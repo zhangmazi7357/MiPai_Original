@@ -1,26 +1,14 @@
 package com.hym.eshoplib.receiver;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.MultiTapKeyListener;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-
-import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.MainActivity;
-import com.hym.eshoplib.activity.RongConversationaActivity;
+import com.hym.eshoplib.event.CollectionEvent;
 import com.hym.eshoplib.event.MainMessageEvent;
 import com.hym.eshoplib.event.MessageEvent;
 import com.orhanobut.logger.Logger;
@@ -32,9 +20,6 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
-import io.rong.imlib.model.Message;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * 自定义接收器
@@ -52,8 +37,8 @@ public class MyReceiver extends BroadcastReceiver {
 
         try {
             Bundle bundle = intent.getExtras();
-            Log.e(TAG, "[MyReceiver] onReceive - " + intent.getAction() +
-                    ", extras: " + printBundle(bundle));
+//            Log.e(TAG, "[MyReceiver] onReceive - " + intent.getAction() +
+//                    ", extras: " + printBundle(bundle));
 
 
             // 注册极光推送
@@ -76,13 +61,32 @@ public class MyReceiver extends BroadcastReceiver {
 //                int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 //                Log.e(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 //
+                String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+                String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+                String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
-                receivingNotification(context, bundle);
+
+//                Log.e(TAG, "收到推送 = title = " + title + " \n"
+//                        + "message = " + message + "\n"
+//                        + "extra = " + extra);
+
+                // TODO 通知收款页 收款成功;
+                if ("收款成功".equals(title)) {
+
+                    EventBus.getDefault().post(new CollectionEvent());
+//                    Toast.makeText(context, "收款成功", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    // 去告知首页 ,您有一条新消息 ;
+                    EventBus.getDefault().post(new MainMessageEvent());
 
 
-                //SharePreferenceUtil.setBooleanData(context,"newmsg",true);
-                EventBus.getDefault().post(new MessageEvent());
+                    //SharePreferenceUtil.setBooleanData(context,"newmsg",true);
+                    // 更新未读消息 ;
+                    EventBus.getDefault().post(new MessageEvent());
 
+                }
 
                 // 用户点开了 通知
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
@@ -160,15 +164,15 @@ public class MyReceiver extends BroadcastReceiver {
 
     // 接收 推送过来的通知 ;
     private void receivingNotification(Context context, Bundle bundle) {
-        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-        Log.e(TAG, " title : " + title);
-        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
-        Log.e(TAG, "message : " + message);
-        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-        Log.e(TAG, "extras : " + extras);
+//        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+//        Log.e(TAG, " title : " + title);
+//        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+//        Log.e(TAG, "message : " + message);
+//        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+//        Log.e(TAG, "extras : " + extras);
 
 //        sendNotification(context);
-        EventBus.getDefault().post(new MainMessageEvent());
+
     }
 
     // 用户打开了 通知
