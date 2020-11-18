@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hjq.toast.ToastUtils;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.mz.upload.ProductOneTypeBean;
@@ -228,6 +226,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
         iv_image = header.findViewById(R.id.iv_image);
         tv_add = header.findViewById(R.id.tv_add);
 
+        // 封面 ;
         iv_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -496,7 +495,6 @@ public class UpLoadImageFragment extends BaseKitFragment {
         }
         if (cateId.equals("5") || cateId.equals("3") || cateId.equals("2") || cateId.equals("8")) {
 
-
             otherOrLocation = location;
             etPrice = etPresentPrice.getText().toString();
             if (TextUtils.isEmpty(etPrice)) {
@@ -693,7 +691,7 @@ public class UpLoadImageFragment extends BaseKitFragment {
                             if (imageType == 1) {
                                 File[] files;
                                 ArrayList<File> arr = new ArrayList<>();
-                                String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                String url = PhotoUtil.getFilePath(resultCamara.get(0));
                                 arr.add(new File(url));
                                 files = arr.toArray(new File[arr.size()]);
                                 Message message = handler.obtainMessage();
@@ -718,7 +716,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
                             if (imageType == 1) {
                                 File[] files;
                                 ArrayList<File> arr = new ArrayList<>();
-                                String url = PhotoUtil.getFilePash(resultGalary.get(0));
+
+                                String url = PhotoUtil.getFilePath(resultGalary.get(0));
                                 arr.add(new File(url));
                                 files = arr.toArray(new File[arr.size()]);
                                 Message message = handler.obtainMessage();
@@ -804,8 +803,8 @@ public class UpLoadImageFragment extends BaseKitFragment {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 
         for (LocalMedia bean : source) {
-            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
-            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            TImage tImage = new TImage(PhotoUtil.getFilePath(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePath(bean));
             imageBeen.add(new UpLoadImageBean(tImage));
         }
 

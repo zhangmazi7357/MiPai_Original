@@ -2,12 +2,6 @@ package com.hym.eshoplib.fragment.order.mipai;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,16 +14,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.order.CommentLableListBean;
-import com.hym.eshoplib.bean.shop.ShopProductsBean;
 import com.hym.eshoplib.http.mz.MzNewApi;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.eshoplib.mz.MzConstant;
-import com.hym.eshoplib.mz.decoration.SpacesItemDecoration;
 import com.hym.imagelib.ImageUtil;
 import com.hym.photolib.utils.PhotoUtil;
 import com.jph.takephoto.model.TImage;
@@ -325,8 +322,8 @@ public class AddCommentsFragment extends BaseKitFragment {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 
         for (LocalMedia bean : source) {
-            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
-            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            TImage tImage = new TImage(PhotoUtil.getFilePath(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePath(bean));
             imageBeen.add(new UpLoadImageBean(tImage));
         }
 

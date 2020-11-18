@@ -6,12 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
 import com.allen.library.SuperTextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
@@ -297,7 +294,7 @@ public class MeDetailFragment extends BaseKitFragment {
                 public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                     arr.add(new File(url));
                     ImageUtil.getInstance().loadCircleImage(MeDetailFragment.this, url, ivHeadIcon);
                     files = arr.toArray(new File[arr.size()]);
@@ -312,7 +309,7 @@ public class MeDetailFragment extends BaseKitFragment {
                 public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                     arr.add(new File(url));
                     ImageUtil.getInstance().loadCircleImage(MeDetailFragment.this, url, ivHeadIcon);
                     files = arr.toArray(new File[arr.size()]);

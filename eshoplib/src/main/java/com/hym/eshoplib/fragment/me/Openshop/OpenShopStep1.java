@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.annotation.Nullable;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hym.eshoplib.R;
@@ -38,14 +37,12 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.hym.superlib.bean.UploadFilesBean;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
-import cn.hym.superlib.utils.common.dialog.DialogManager;
-import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
+import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.ClearEditText;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by 胡彦明 on 2018/8/27.
@@ -630,7 +627,7 @@ public class OpenShopStep1 extends BaseKitFragment {
                 public void onResultCamera(ArrayList<LocalMedia> resultCamera) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamera.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamera.get(0));
                     arr.add(new File(url));
                     files = arr.toArray(new File[arr.size()]);
                     Message message = handler.obtainMessage();
@@ -651,7 +648,7 @@ public class OpenShopStep1 extends BaseKitFragment {
                 public void onResultGalary(ArrayList<LocalMedia> resultCamera) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamera.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamera.get(0));
                     arr.add(new File(url));
                     files = arr.toArray(new File[arr.size()]);
                     Message message = handler.obtainMessage();

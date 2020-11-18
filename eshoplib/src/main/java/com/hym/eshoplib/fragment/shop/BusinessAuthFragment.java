@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.shop.BusinessAuthInfoBean;
@@ -499,7 +500,7 @@ public class BusinessAuthFragment extends BaseKitFragment {
                 public void onResultCamera(ArrayList<LocalMedia> resultCamara) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                     arr.add(new File(url));
                     files = arr.toArray(new File[arr.size()]);
                     Message message = handler.obtainMessage();
@@ -516,7 +517,7 @@ public class BusinessAuthFragment extends BaseKitFragment {
                 public void onResultGalary(ArrayList<LocalMedia> resultCamara) {
                     File[] files;
                     ArrayList<File> arr = new ArrayList<>();
-                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                     arr.add(new File(url));
                     files = arr.toArray(new File[arr.size()]);
                     Message message = handler.obtainMessage();

@@ -2,7 +2,6 @@ package com.hym.photolib.utils;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -180,7 +179,7 @@ public class PhotoUtil {
                                         .enablePreviewAudio(true) // 是否可播放音频
                                         .isCamera(true)
                                         .enableCrop(isCrop)
-                                        .compress(true)
+                                        .compress(true)           // 开启压缩
                                         .glideOverride(160, 160)
                                         .previewEggs(true)
                                         .withAspectRatio(1, 1)
@@ -369,7 +368,7 @@ public class PhotoUtil {
         void onResultGalary(ArrayList<LocalMedia> resultGalary);
     }
 
-    public static String getFilePash(LocalMedia media) {
+    public static String getFilePath(LocalMedia media) {
         String path = "";
         if (media.isCut() && !media.isCompressed()) {
             // 裁剪过

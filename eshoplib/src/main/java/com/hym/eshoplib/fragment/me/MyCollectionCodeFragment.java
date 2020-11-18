@@ -162,7 +162,6 @@ public class MyCollectionCodeFragment extends BaseKitFragment {
 
         showDialog();
 
-
     }
 
 

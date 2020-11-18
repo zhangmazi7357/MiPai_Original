@@ -6,13 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
@@ -63,15 +61,12 @@ import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.MzProImageDetailAdapter;
 import cn.hym.superlib.mz.utils.MzStringUtil;
 import cn.hym.superlib.mz.widgets.UploadItemView;
-import cn.hym.superlib.utils.common.DialogUtil;
 import cn.hym.superlib.utils.common.SoftHideKeyBoardUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.common.dialog.DialogManager;
 import cn.hym.superlib.utils.common.dialog.SimpleDialog;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.view.ClearEditText;
-import cn.hym.superlib.widgets.view.RequiredTextView;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 /**
@@ -791,7 +786,7 @@ public class EditVideoFragment extends BaseKitFragment {
                                 case 1:
                                     File[] files;
                                     ArrayList<File> arr = new ArrayList<>();
-                                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                                     arr.add(new File(url));
                                     files = arr.toArray(new File[arr.size()]);
                                     Message message = handler.obtainMessage();
@@ -817,7 +812,7 @@ public class EditVideoFragment extends BaseKitFragment {
                                 case 1:
                                     File[] files;
                                     ArrayList<File> arr = new ArrayList<>();
-                                    String url = PhotoUtil.getFilePash(resultCamara.get(0));
+                                    String url = PhotoUtil.getFilePath(resultCamara.get(0));
                                     arr.add(new File(url));
                                     files = arr.toArray(new File[arr.size()]);
                                     Message message = handler.obtainMessage();
@@ -902,8 +897,8 @@ public class EditVideoFragment extends BaseKitFragment {
         List<UpLoadImageBean> imageBeen = new ArrayList<UpLoadImageBean>();
 
         for (LocalMedia bean : source) {
-            TImage tImage = new TImage(PhotoUtil.getFilePash(bean), TImage.FromType.OTHER);
-            tImage.setCompressPath(PhotoUtil.getFilePash(bean));
+            TImage tImage = new TImage(PhotoUtil.getFilePath(bean), TImage.FromType.OTHER);
+            tImage.setCompressPath(PhotoUtil.getFilePath(bean));
             imageBeen.add(new UpLoadImageBean(tImage));
         }
 

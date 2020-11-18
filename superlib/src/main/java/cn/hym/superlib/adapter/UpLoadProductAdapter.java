@@ -1,14 +1,13 @@
 package cn.hym.superlib.adapter;
 
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -104,6 +103,7 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
 
     @Override
     protected void convert(final BaseViewHolder helper, final UpLoadImageBean item) {
+
         int width = ScreenUtil.getScreenWidth(fragment.getContext())
                 - ScreenUtil.dip2px(fragment.getContext(), 40);
 
@@ -155,6 +155,7 @@ public class UpLoadProductAdapter extends BaseMultiItemQuickAdapter<UpLoadImageB
 
                 progressBar.setProgress(0);
                 final String path = item.getImage().getCompressPath();
+
                 String qiniufile_name = System.currentTimeMillis() / 1000 + "_"
                         + path.substring(path.lastIndexOf("/") + 1);
 
