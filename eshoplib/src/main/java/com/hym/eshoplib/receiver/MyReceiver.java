@@ -1,15 +1,26 @@
 package com.hym.eshoplib.receiver;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
+
+import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.MainActivity;
 import com.hym.eshoplib.event.CollectionEvent;
-import com.hym.eshoplib.event.MainMessageEvent;
 import com.hym.eshoplib.event.MessageEvent;
 import com.orhanobut.logger.Logger;
 
@@ -19,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
+import cn.hym.superlib.utils.view.SystemBarUtil;
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -62,29 +74,24 @@ public class MyReceiver extends BroadcastReceiver {
 //                Log.e(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 //
                 String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-                String message = bundle.getString(JPushInterface.EXTRA_ALERT);
-                String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
-
-//                Log.e(TAG, "收到推送 = title = " + title + " \n"
-//                        + "message = " + message + "\n"
-//                        + "extra = " + extra);
 
                 // TODO 通知收款页 收款成功;
                 if ("收款成功".equals(title)) {
 
                     EventBus.getDefault().post(new CollectionEvent());
-//                    Toast.makeText(context, "收款成功", Toast.LENGTH_SHORT).show();
 
                 } else {
 
-                    // 去告知首页 ,您有一条新消息 ;
-                    EventBus.getDefault().post(new MainMessageEvent());
+
+                    customNotification(context, bundle);
+                    toast(context, bundle);
 
 
                     //SharePreferenceUtil.setBooleanData(context,"newmsg",true);
                     // 更新未读消息 ;
                     EventBus.getDefault().post(new MessageEvent());
+
 
                 }
 
@@ -162,19 +169,6 @@ public class MyReceiver extends BroadcastReceiver {
     }
 
 
-    // 接收 推送过来的通知 ;
-    private void receivingNotification(Context context, Bundle bundle) {
-//        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-//        Log.e(TAG, " title : " + title);
-//        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
-//        Log.e(TAG, "message : " + message);
-//        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//        Log.e(TAG, "extras : " + extras);
-
-//        sendNotification(context);
-
-    }
-
     // 用户打开了 通知
     private void openNotification(Context context, Bundle bundle) {
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
@@ -203,5 +197,65 @@ public class MyReceiver extends BroadcastReceiver {
 //        }
     }
 
+
+    // 自定义通知栏 ;
+    private void customNotification(Context context, Bundle bundle) {
+
+        NotificationManager manager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
+        // 使用notification
+        // 使用广播或者通知进行内容的显示
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(title);
+
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+        manager.notify(2, builder.build());
+
+    }
+
+    private void toast(Context context, Bundle bundle) {
+        View layoutView = LayoutInflater.from(context)
+                .inflate(R.layout.toast_top, null);
+
+        //设置文本的参数 设置加载文本文件的参数，必须通过LayoutView获取。
+        TextView timeView = layoutView.findViewById(R.id.tv_assist_toast_time);
+        TextView contentView = layoutView.findViewById(R.id.tv_assist_toast_content);
+        TextView titletView = layoutView.findViewById(R.id.tv_assist_toast_title);
+
+        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+        String message = bundle.getString(JPushInterface.EXTRA_ALERT);
+        String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
+//        timeView.setText(title);
+        titletView.setText(title);
+        contentView.setText(message);
+
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置TextView的宽度为 屏幕宽度
+        layoutView.setLayoutParams(layoutParams);
+        //获得屏幕的宽度
+        //创建toast对象，
+        Toast toast = new Toast(context);
+        //把要Toast的布局文件放到toast的对象中
+        toast.setView(layoutView);
+        toast.setDuration(toast.LENGTH_LONG);
+
+
+        // 状态栏高度
+        int statusBarHeight = SystemBarUtil.getSystemBarHeight(context);
+
+        toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, statusBarHeight);
+
+        toast.getView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置Toast可以布局到系统状态栏的下面
+        toast.show();
+    }
 
 }
