@@ -3,24 +3,35 @@ package com.hym.eshoplib.activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.home.UnReadMessageBean;
 import com.hym.eshoplib.event.MainMessageEvent;
 import com.hym.eshoplib.event.MessageEvent;
 import com.hym.eshoplib.event.RefreshChatListEvent;
 import com.hym.eshoplib.event.ShowGuideEvent;
+import com.hym.eshoplib.event.ShowToastEvent;
 import com.hym.eshoplib.fragment.home.HomeFragmentJDStyle;
 import com.hym.eshoplib.fragment.home.TestFragment;
 import com.hym.eshoplib.fragment.me.MeFragment;
@@ -59,13 +70,15 @@ import cn.hym.superlib.utils.common.SharePreferenceUtil;
 import cn.hym.superlib.utils.common.ToastUtil;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
+import cn.hym.superlib.utils.view.SystemBarUtil;
 import cn.hym.superlib.widgets.bottombar.BottomBarItem;
 import cn.hym.superlib.widgets.bottombar.BottomBarLayout;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
+import io.rong.imlib.model.UserInfo;
 import me.yokeyword.fragmentation.SupportFragment;
 import zhy.com.highlight.HighLight;
 import zhy.com.highlight.interfaces.HighLightInterface;
@@ -386,6 +399,10 @@ public class MainActivity extends BaseMainActivity {
 //            Logger.d("id不为空=" + channelid);
         }
 
+
+        // 动态注册广播;
+//        registerBrocast();
+
         rongCloudService();
 
         //更新  第二个 tab 上面消息数
@@ -422,10 +439,20 @@ public class MainActivity extends BaseMainActivity {
                 public boolean onReceived(Message message, int i) {
 
 
+                    Log.e(TAG, " 接收消息 = " + JSONObject.toJSONString(message));
+
+
                     // 通知 各部门 更新消息
                     EventBus.getDefault().post(new MessageEvent());
 
                     EventBus.getDefault().post(new RefreshChatListEvent());
+
+
+                    // 显示消息 Toast;
+                    ShowToastEvent showToastEvent = new ShowToastEvent();
+                    showToastEvent.setMessage(message);
+                    EventBus.getDefault().post(showToastEvent);
+
 
                     return false;
                 }
@@ -439,6 +466,8 @@ public class MainActivity extends BaseMainActivity {
     public void upDataMsg(MessageEvent event) {
         //  Log.e(TAG, "收到通知的推送，更新系统消息");
         updateMessageCount();
+
+
     }
 
 
@@ -610,5 +639,102 @@ public class MainActivity extends BaseMainActivity {
         //3、manager.notify()
         manager.notify(2, n);
     }
+
+
+    private void registerBrocast() {
+        Intent it = new Intent("io.rong.push.intent.MESSAGE_ARRIVED");
+        it.setComponent(new ComponentName("com.hym.eshoplib.receiver",
+                "com.hym.eshoplib.receiver.RongIMPushMessageReceiver"));
+
+        sendBroadcast(it);
+
+    }
+
+
+    /**
+     * 显示接收到消息的 toast
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showRongIMToast(ShowToastEvent event) {
+
+        toast(this, event.message);
+    }
+
+    private void toast(Context context, Message message) {
+        View layoutView = LayoutInflater.from(context)
+                .inflate(R.layout.toast_top, null);
+
+        //设置文本的参数 设置加载文本文件的参数，必须通过LayoutView获取。
+        ImageView header = layoutView.findViewById(R.id.header);
+        TextView timeView = layoutView.findViewById(R.id.tv_assist_toast_time);
+        TextView contentView = layoutView.findViewById(R.id.tv_assist_toast_content);
+        TextView titletView = layoutView.findViewById(R.id.tv_assist_toast_title);
+
+        // message 信息
+        String obj = message.getObjectName();
+
+        MessageContent content = message.getContent();
+        UserInfo userInfo = content.getUserInfo();
+        String name = userInfo.getName();
+        Uri portraitUri = userInfo.getPortraitUri();
+        String userId = userInfo.getUserId();
+
+
+        Glide.with(this).load(portraitUri).into(header);
+        titletView.setText(name);
+        contentView.setText("");
+
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = 20;
+        layoutParams.rightMargin = 20;
+
+        //设置TextView的宽度为 屏幕宽度
+        layoutView.setLayoutParams(layoutParams);
+        //获得屏幕的宽度
+        //创建toast对象，
+        Toast toast = new Toast(context);
+        //把要Toast的布局文件放到toast的对象中
+        toast.setView(layoutView);
+        toast.setDuration(toast.LENGTH_LONG);
+
+
+        // 状态栏高度
+        int statusBarHeight = SystemBarUtil.getSystemBarHeight(context);
+
+        toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, statusBarHeight);
+
+        toast.getView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置Toast可以布局到系统状态栏的下面
+        toast.show();
+
+        layoutView.setClickable(true);
+        layoutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(MainActivity.this,
+                        RongConversationaActivity.class);
+                intent.setAction(Intent.ACTION_VIEW);
+
+                Uri uri;
+                uri = Uri.parse("rong://" + getPackageName()).buildUpon()
+                        .appendPath("conversation")
+                        .appendPath(message.getConversationType().getName().toLowerCase())
+                        .appendQueryParameter("title", "name")
+                        .appendQueryParameter("targetId", userId)
+                        .build();
+                intent.setData(uri);
+
+                startActivity(intent);
+
+            }
+        });
+
+    }
+
 
 }

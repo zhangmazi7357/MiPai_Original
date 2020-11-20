@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="收款成功"
             android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
 
         <View
