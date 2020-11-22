@@ -674,17 +674,37 @@ public class MainActivity extends BaseMainActivity {
 
         // message 信息
         String obj = message.getObjectName();
+        String targetId = message.getTargetId();
 
         MessageContent content = message.getContent();
+
+        List<String> searchableWord = content.getSearchableWord();
+
+        String sss = searchableWord.toString();
+        String msgContent = sss.substring(1, sss.length() - 1);
+
         UserInfo userInfo = content.getUserInfo();
-        String name = userInfo.getName();
-        Uri portraitUri = userInfo.getPortraitUri();
-        String userId = userInfo.getUserId();
+        if (userInfo != null) {
+            String name = userInfo.getName();
+            Uri portraitUri = userInfo.getPortraitUri();
 
 
-        Glide.with(this).load(portraitUri).into(header);
-        titletView.setText(name);
-        contentView.setText("");
+            if (portraitUri != null) {
+                Glide.with(this).load(portraitUri).into(header);
+            }
+            if (!TextUtils.isEmpty(name)) {
+                titletView.setText(name);
+            } else {
+                titletView.setText("收到一条新消息");
+            }
+        } else {
+
+            Glide.with(this).load(R.mipmap.ic_launcher).into(header);
+            titletView.setText("收到一条新消息");
+        }
+
+
+        contentView.setText(TextUtils.isEmpty(msgContent) ? "" : msgContent);
 
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -725,7 +745,7 @@ public class MainActivity extends BaseMainActivity {
                         .appendPath("conversation")
                         .appendPath(message.getConversationType().getName().toLowerCase())
                         .appendQueryParameter("title", "name")
-                        .appendQueryParameter("targetId", userId)
+                        .appendQueryParameter("targetId", targetId)
                         .build();
                 intent.setData(uri);
 
@@ -733,6 +753,7 @@ public class MainActivity extends BaseMainActivity {
 
             }
         });
+
 
     }
 
