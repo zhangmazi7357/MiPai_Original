@@ -27,6 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.bean.home.UnReadMessageBean;
+import com.hym.eshoplib.bean.me.MedetailBean;
 import com.hym.eshoplib.event.MainMessageEvent;
 import com.hym.eshoplib.event.MessageEvent;
 import com.hym.eshoplib.event.RefreshChatListEvent;
@@ -38,6 +39,7 @@ import com.hym.eshoplib.fragment.me.MeFragment;
 import com.hym.eshoplib.fragment.message.MessageMainFragment;
 import com.hym.eshoplib.fragment.shoppingcart.ShoppingcartFragment;
 import com.hym.eshoplib.http.home.HomeApi;
+import com.hym.eshoplib.http.me.MeApi;
 import com.hym.eshoplib.util.ChatUtils;
 import com.hym.eshoplib.util.OnTopPosCallbac2;
 import com.hym.loginmodule.activity.LoginMainActivity;
@@ -78,7 +80,6 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
-import io.rong.imlib.model.UserInfo;
 import me.yokeyword.fragmentation.SupportFragment;
 import zhy.com.highlight.HighLight;
 import zhy.com.highlight.interfaces.HighLightInterface;
@@ -597,6 +598,7 @@ public class MainActivity extends BaseMainActivity {
             }
         });
         mHightLight.show();
+
     }
 
 
@@ -662,6 +664,9 @@ public class MainActivity extends BaseMainActivity {
         toast(this, event.message);
     }
 
+    String nickname = "";
+    String headerUrl = "";
+
     private void toast(Context context, Message message) {
         View layoutView = LayoutInflater.from(context)
                 .inflate(R.layout.toast_top, null);
@@ -676,32 +681,41 @@ public class MainActivity extends BaseMainActivity {
         String obj = message.getObjectName();
         String targetId = message.getTargetId();
 
-        MessageContent content = message.getContent();
+        if (TextUtils.isEmpty(targetId))
+            return;
 
+
+        MessageContent content = message.getContent();
         List<String> searchableWord = content.getSearchableWord();
 
         String sss = searchableWord.toString();
         String msgContent = sss.substring(1, sss.length() - 1);
 
-        UserInfo userInfo = content.getUserInfo();
-        if (userInfo != null) {
-            String name = userInfo.getName();
-            Uri portraitUri = userInfo.getPortraitUri();
 
+        MeApi.getUserinfo(targetId, new ResponseImpl<MedetailBean>() {
+            @Override
+            public void onSuccess(MedetailBean data) {
 
-            if (portraitUri != null) {
-                Glide.with(this).load(portraitUri).into(header);
+                Log.e(TAG, "onSuccess: " + JSONObject.toJSONString(data));
+                nickname = data.getData().getNickname();
+                headerUrl = data.getData().getAvatar();
+
+                titletView.setText(TextUtils.isEmpty(nickname) ? "" : nickname);
+                if (!TextUtils.isEmpty(headerUrl)) {
+                    Glide.with(MainActivity.this).load(headerUrl)
+                            .into(header);
+                } else {
+                    Glide.with(MainActivity.this).load(R.mipmap.ic_launcher).into(header);
+                }
+
             }
-            if (!TextUtils.isEmpty(name)) {
-                titletView.setText(name);
-            } else {
-                titletView.setText("收到一条新消息");
-            }
-        } else {
 
-            Glide.with(this).load(R.mipmap.ic_launcher).into(header);
-            titletView.setText("收到一条新消息");
-        }
+            @Override
+            public void onDataError(String status, String errormessage) {
+
+            }
+
+        }, MedetailBean.class);
 
 
         contentView.setText(TextUtils.isEmpty(msgContent) ? "" : msgContent);

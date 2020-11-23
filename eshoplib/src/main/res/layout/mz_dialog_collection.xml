@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="收款成功"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
 
         <View
@@ -36,6 +36,6 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="关闭"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </FrameLayout>
