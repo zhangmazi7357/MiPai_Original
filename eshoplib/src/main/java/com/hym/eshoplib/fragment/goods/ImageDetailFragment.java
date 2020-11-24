@@ -1,13 +1,7 @@
 package com.hym.eshoplib.fragment.goods;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +10,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
 import com.hym.eshoplib.bean.shop.AddFavouriteBean;
 import com.hym.eshoplib.bean.shop.ProductDetailBean;
-import com.hym.eshoplib.bean.shop.ServiceDetailBean;
 import com.hym.eshoplib.http.shopapi.ShopApi;
 import com.hym.imagelib.ImageUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMWeb;
-import com.umeng.socialize.shareboard.ShareBoardConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -325,7 +319,7 @@ public class ImageDetailFragment extends BaseKitFragment {
     private void share2(ProductDetailBean.DataBean data) {
 
         String url = data.getShare_url();
-        String title = data.getStore_name();
+        String title = data.getTitle();
         String details = StringConstants.Slogan;
         String image = data.getImage_default();
 
