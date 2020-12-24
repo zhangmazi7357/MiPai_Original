@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -82,7 +80,6 @@ import cn.hym.superlib.fragment.base.BaseFragment;
 import cn.hym.superlib.fragment.base.BaseKitFragment;
 import cn.hym.superlib.mz.widgets.DrawableTextView;
 import cn.hym.superlib.utils.common.SharePreferenceUtil;
-import cn.hym.superlib.utils.http.HttpResultUtil;
 import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.GlideBanerImageLoader;
 import cn.hym.superlib.utils.view.ScreenUtil;
@@ -1236,7 +1233,6 @@ public class HomeFragmentJDStyle extends BaseKitFragment implements
             @Override
             public void onSuccess(HomeDataBean data) {
                 List<HomeDataBean.DataBean.AndroidVersionBean> bean = data.getData().getAndroid_version();
-
 
 
                 if (bean != null) {

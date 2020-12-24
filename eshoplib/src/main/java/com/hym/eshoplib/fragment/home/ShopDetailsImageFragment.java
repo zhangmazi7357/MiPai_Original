@@ -4,19 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.audiofx.DynamicsProcessing;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.ColorRes;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,6 +18,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
@@ -62,7 +60,6 @@ import com.hym.eshoplib.http.shoppingcar.ShoppingCarApi;
 import com.hym.eshoplib.listener.GoToPayDialogInterface;
 import com.hym.eshoplib.mz.MzConstant;
 import com.hym.eshoplib.mz.adapter.ShopCommentAdapter;
-import com.hym.eshoplib.mz.adapter.ShopPicAdapter;
 import com.hym.eshoplib.mz.adapter.ShopProjectPicAdapter;
 import com.hym.eshoplib.mz.shopdetail.MzShopCommentBean;
 import com.hym.eshoplib.util.MipaiDialogUtil;
@@ -104,7 +101,6 @@ import cn.hym.superlib.utils.user.UserUtil;
 import cn.hym.superlib.utils.view.ScreenUtil;
 import cn.hym.superlib.widgets.snapstep.SnappingStepper;
 import cn.hym.superlib.widgets.snapstep.listener.SnappingStepperValueChangeListener;
-import constant.StringConstants;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -480,7 +476,7 @@ public class ShopDetailsImageFragment extends BaseKitFragment implements
 
         data = (GoodDetailModel) bundle.getSerializable("data");
 
-//        Log.e(TAG, " 商品详情 = " + JSONObject.toJSONString(data));
+        Log.e(TAG, " 商品详情 = " + JSONObject.toJSONString(data));
 
         db = data.getData();
         String presentPrice = RemoveZeroUtil.subZeroAndDot(db.getPresent_price());

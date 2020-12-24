@@ -623,7 +623,7 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <cn.hym.superlib.widgets.view.RequiredTextView
             android:layout_width="match_parent"
@@ -644,6 +644,10 @@
             android:textColor="@color/black"
             android:textColorHint="#9c9c9c"
             android:textSize="12sp" />
+
+
+
+
     </LinearLayout>
 
     <!--    化妆品 -->

@@ -1,9 +1,10 @@
 package cn.hym.superlib.mz.utils;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MzStringUtil {
 
@@ -101,5 +102,21 @@ public class MzStringUtil {
         return newName;
     }
 
+
+    /**
+     * 判断 字符串中是否包含数字 ;
+     *
+     * @param content
+     * @return
+     */
+    public  static boolean HasDigit(String content) {
+        boolean flag = false;
+        Pattern p = Pattern.compile(".*\\d+.*");
+        Matcher m = p.matcher(content);
+        if (m.matches()) {
+            flag = true;
+        }
+        return flag;
+    }
 
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hym.eshoplib.R;
 import com.hym.eshoplib.activity.ActionActivity;
@@ -350,10 +348,11 @@ public class EditImageFragment extends BaseKitFragment {
         etDetail = footer.findViewById(R.id.et_detailed);
         etShopTime = footer.findViewById(R.id.et_shop_time);//时长 差
         etPaisheCount = footer.findViewById(R.id.et_paishe_count);
+
         etHuazhuang = footer.findViewById(R.id.et_huazhuang);
         etSheyingshi = footer.findViewById(R.id.et_sheyingshi);
         etShejishi = footer.findViewById(R.id.et_shejishi);
-        etTime = footer.findViewById(R.id.et_time);
+        etTime = footer.findViewById(R.id.et_time);         // 时间  1- 3天；
         etHuazhuangping = footer.findViewById(R.id.et_huazhuangping);
         etLocatiom = footer.findViewById(R.id.et_location);  //差
         etCeHua = footer.findViewById(R.id.et_cehuashi);
@@ -556,13 +555,15 @@ public class EditImageFragment extends BaseKitFragment {
         String shopTime = etShopTime.getText().toString();
         //拍摄张数
         String paisheCount = etPaisheCount.getText().toString();
+
+
         //化妆
         String huazhuang = etHuazhuang.getText().toString();
         //摄影师
         String sheyingshi = etSheyingshi.getText().toString();
         //设计师
         String shejishi = etShejishi.getText().toString();
-        //
+        //  时间 ;
         String time = etTime.getText().toString();
         //化妆品
         String huazhuangping = etHuazhuangping.getText().toString();
@@ -584,6 +585,7 @@ public class EditImageFragment extends BaseKitFragment {
         }
 
 
+        // 编辑上传产品;
         ShopApi.editImageProduct(id, image_default,
                 attachment, title, industry_id,
                 image_type_id, region_id, otherOrLocation,
@@ -649,13 +651,13 @@ public class EditImageFragment extends BaseKitFragment {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-        Log.e(TAG, "编辑产品 id = " + id);
+//        Log.e(TAG, "编辑产品 id = " + id);
 
         ShopApi.getProductDetail(id, new ResponseImpl<ProductDetailBean>() {
             @Override
             public void onSuccess(final ProductDetailBean result) {
 
-                Log.e(TAG, " == result =" + JSONObject.toJSONString(result));
+//                Log.e(TAG, " == result =" + JSONObject.toJSONString(result));
 
                 data = result;
                 et_title.setText(data.getData().getTitle() + "");
@@ -672,11 +674,12 @@ public class EditImageFragment extends BaseKitFragment {
                 ProductDetailBean.DataBean dataBean = EditImageFragment.this.data.getData();
                 etCeHua.setText(dataBean.getPlanner());
                 etHuazhuangping.setText(dataBean.getCosmetics());
-                etTime.setText(dataBean.getTimes());
+                etTime.setText(dataBean.getTimes());           //时间
                 etShejishi.setText(dataBean.getDesigner());
                 etSheyingshi.setText(dataBean.getPhotographer());
                 etHuazhuang.setText(dataBean.getDresser());
-                etPaisheCount.setText(dataBean.getNums() + "张");
+                etPaisheCount.setText(dataBean.getNums());
+
                 etShopTime.setText(dataBean.getTimes());
                 etDetail.setText(dataBean.getDetails());
                 etIntroduce.setText(dataBean.getIntroduce());
@@ -718,7 +721,7 @@ public class EditImageFragment extends BaseKitFragment {
                     List<UpLoadImageBean> picDetailList = listPic(projectImgList);
                     mzProDetailAdapter.setNewData(picDetailList);
 
-                }else{
+                } else {
 
                     //如果图片详情 = null
 //                    mzProDetailAdapter.setNewData());
